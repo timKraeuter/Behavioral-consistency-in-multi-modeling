@@ -1,0 +1,13 @@
+This repository contains our paper's sources and **additional artifacts** for EMCFA 2022. The paper has been **submitted for review** (27.02.2022).
+
+# Artifacts
+The following additional artifacts can be found in this repository.
+## Use case models
+
+All use case models can be found [here](./artifacts/use_case/README.md), including instructions on running the BPMN models.
+
+## Graph transformation execution semantics
+
+- The graph grammar for the **traffic light model** can be found [here](./artifacts/graphGrammars/trafficLight.gps/README.md), along with instructions on using it for state space generation.
+- The graph grammar for the **T-Junction controller** and **bus controller** can be found [here](./artifacts/graphGrammars/T-Junction.gps/README.md), along with instructions on using it for state space generation.
+- The graph grammar describing the **global system** can be found [here](./artifacts/graphGrammars/global.gps/README.md), along with instructions on using for state space generation and global consistency checking.
