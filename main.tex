@@ -60,6 +60,7 @@ Heterogeneous models
 \newacronym{bpmn}{BPMN}{Business Process Modeling Notation}
 \newacronym{uml}{UML}{Unified Modeling Language}
 \newacronym{csp}{CSP}{Communication Sequential Processes}
+\newacronym{ccsl}{CCSL}{Clock Constraint Specification Language}
 
 % correct bad hyphenation here
 \hyphenation{be-ha-vi-o-ral}
@@ -615,7 +616,7 @@ Together with a system configuration, the set of global rules results in a graph
 Each state in this state space is an instance of the global snapshot metamodel.
 Consequently, this can be used to check the behavioral consistency of the multi-model.
 
-We will now explain how the graph transformation executions semantics are generated for the use case.
+We will now explain how the graph transformation execution semantics are generated for the use case.
 To apply our approach to the use case, we need to define model transformations from state machines and \gls*{bpmn} processes to graph transformation rules.
 
 \subsection{State machine semantics}
@@ -723,7 +724,8 @@ In addition, it was shown that many formalisms, for example, the $\pi$-calculus 
 % Gemoc Studio/BCOOL?
 % Approach is quite technical (i.e. execution engine. No formal execution semantics?)
 \cite{deantoniModelingBehavioralSemantics2016} tackles the problem of dealing with relationships between heterogeneous behavioral models.
-They coordinate the different models using a dedicated coordination language \cite{varalarsenBCoolBehavioralCoordination2016}, similar to the interactions we define between behavioral models.
+They coordinate the different models using their coordination language B-COoL \cite{varalarsenBCoolBehavioralCoordination2016}, similar to the interactions we define between behavioral models.
+To execute the models and their coordination, they transform them into \gls*{ccsl} models.  
 Their work also results in plugins for GEMOC studio, which support running and debugging the models.
 % Ptolemy
 \cite{ekerTamingHeterogeneityPtolemy2003, leeDisciplinedHeterogeneousModeling2010} propose an actor-oriented solution to the model composition problem in the presence of heterogeneity.
@@ -731,7 +733,7 @@ Their approach results in the tool Ptolemy \cite{ptolemaeusSystemDesignModeling2
 
 % very nice but only simulation no model checking + outdated i.e. eclipse based
 However, both approaches focus on simulation rather than consistency or model-checking.
-As far as we can tell, neither provide concrete means to define atomic propositions and check global behavioral properties.
+Neither provides concrete means to define atomic propositions and check global behavioral properties.
 
 \section{Conclusion and future work} \label{sec:conclusion_and_future_work}
 % Conclusion
