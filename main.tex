@@ -620,20 +620,22 @@ In this section, we will evaluate our approach in terms of scalability to estima
 We start with the multi-model from the use case and then increase the number of approaching buses to simulate growing complexity.
 \autoref{table:runtime} shows the results of our experiments.
 
-% Put some table here with the experiment
+% Preliminary numbers on the laptop. Need some explanation for them
+% Adding buses is quite bad since they nearly run independent from the rest. And we are doing a full state space exploration.
+% Partial order reduction would have huge potential here.
 \begin{table}
 \centering
-\begin{tabular}{|c || c | c | c | c|}
+\begin{tabular}{|c || c | c | c |}
  \hline
- Use case & Prop (1) & Prop (2) & Prop (3) & Prop (4) \\
+ Use case & States & Rewrites & Exploration time \\
  \hline\hline
- With 2 buses & & & & \\
+ No buses & 168 & 663 & ~10 ms \\
  \hline
- With 3 buses & & & & \\
+ 1 bus & 3.304 & 20.117 & ~190 ms \\
  \hline
- With 4 buses & & & & \\
+ 2 buses & 67.624 & 549.509 & ~5.500 ms \\
  \hline
- With 5 buses & & & & \\
+ 3 buses & 716.912 & 7.183.505 & ~69.600 ms \\
  \hline
 \end{tabular}
 \caption{Model checking runtime}
@@ -680,7 +682,7 @@ Especially integrating the $\pi$-calculus, which was formalized using graph gram
 % Could write about a different implementation than gt. Maybe a spin code generation for more scalable model checking.
 % Could write about continuous time models to be included in the future.
 
-\bibliography{bibliography}
+\bibliography{bib}
 \section*{About the authors}
 
 \shortbio{Tim Kräuter}{is a Ph.D. research fellow at the Western Norway University of Applied Sciences, Bergen, Norway.
