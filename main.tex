@@ -22,7 +22,6 @@
 
 \title{Towards behavioral consistency in multi-modeling}
 
-% 14 pages hard limit and conform to the JOT template!
 \author[$\ast$]{Tim Kräuter}
 % Arbitrary co-author order. Everyone contributed significantly.
 \author[$\ast\dagger$]{Harald König}
@@ -84,7 +83,7 @@ Although our approach is independent of a particular formalism as an underlying 
 % TODO: Comment in after acceptance and helpful feedback.
 % \acknowledgment{We want to thank the anonymous reviewers for their valuable comments and helpful suggestions.}
 
-\begin{document}
+\begin{document}    
 \maketitle
 \urlstyle{rm}
 
@@ -115,12 +114,12 @@ However, current approaches either only allow for consistency checking of two be
 % % Our approach summarized.
 We propose a novel approach for consistency management of heterogeneous multi-models, which allows us to define and check \emph{global} behavioral properties.
 Our approach allows specifying \emph{interactions} between potentially heterogeneous behavioral models, which are in turn used to generate global execution semantics.
-Although our approach is independent of a particular formalism as an underlying global execution semantics, the current implementation utilizes graph transformations for this purpose (see \autoref{sec:gt_execution_semantics}).
+Although our approach is independent of a particular formalism as an underlying global execution semantics, the current implementation utilizes the rewriting logic tool Maude (see \autoref{sec:maude_execution_semantics}).
 
 % Paper outline
 The remainder of this paper is structured as follows.
 We introduce a simplified use case (\autoref{sec:usecase}) before explaining our behavioral consistency management approach in detail (\autoref{sec:behavioral_consistency_checking}).
-Afterward, we show how our approach can use graph transformation as execution semantics (\autoref{sec:gt_execution_semantics}).
+Afterward, we show how we can use the Maude system based on equational and rewriting logic as execution semantics (\autoref{sec:maude_execution_semantics}).
 Finally, we discuss related work in \autoref{sec:related_work} and conclude in \autoref{sec:conclusion_and_future_work}.
 
 \section{Use Case} \label{sec:usecase}
@@ -569,148 +568,10 @@ An unsuccessful consistency check leads to a consistency restoration process, wh
 We describe consistency checking for the use case and its result in the next section.
 In addition, the appendix contains \autoref{fig:allConcepts}, which gives an overview of the introduced concepts and their usage.
 
-\section{State space explosion}
-% Discuss state space explosion
-% Obviously, it is a problem. Especially the more behaviors are interacting.
-% However, if you want to check a global behavior, all individual behaviors are needed (to a certain degree)
+\section{Maude execution semantics} \label{sec:maude_execution_semantics}
 
-% Huge potential for partial order reduction to reduce the state space. Why?
-% Might already be implemented in Maude! We should finish the implementation and make some tests!
-\cite{clarkeHandbookModelChecking2018}
+% TODO: Briefly describe maude execution semantics
 
-\section{Graph transformation execution semantics} \label{sec:gt_execution_semantics}
-% Graph transformation rules and their generation from the behavioral models
-This section describes one possible semantics to use in our approach to behavioral consistency management.
-We will use graph transformation semantics based on graph grammars, see \autoref{def:graphGrammar}.
-
-\begin{definition}[Graph grammar] \label{def:graphGrammar}
-A graph grammar $GG=(S, P)$ consists of a start graph $S$ and a set of production rules $P$ \cite{ehrigFundamentalsAlgebraicGraph2006}. 
-\end{definition}
-
-The idea of a graph grammar is to begin with a start graph and then continuously apply all possible production rules.
-Thus, one obtains a state space where each state is a graph, and each transition is a rule application.
-Rules can be applied using different approaches, such as double-pushout (DPO) \cite{ehrigFundamentalsAlgebraicGraph2006} or single-pushout (SPO) \cite{loweAlgebraicApproachSinglepushout1993}.
-Production rules for DPO are defined in \autoref{def:productionRule}.
-Informally speaking, elements in $R$ but not in $L$ are added by a rule, while elements in $L$ and $R$ are preserved, and a rule deletes elements that are in $L$ but not in $R$.
-
-\begin{definition}[Production rule] \label{def:productionRule}
-A production rule $P= L \overset{l}{\leftarrow} K \overset{r}{\to} R$ consists of graphs L, K, R, and graph morphisms $l: K \to L$ and $r: K \to R$ \cite{ehrigFundamentalsAlgebraicGraph2006}. 
-\end{definition}
-
-The first step to generate global execution semantics is to generate a set of production rules for each behavioral model contained in the multi-model. % Relation from elements to rules needed!
-Each set of rules must describe the behavior of the given behavioral model by manipulating instances of the snapshot metamodels.
-For example, a production rule for a transition in a state machine changes the current state of a corresponding state machine snapshot from the source to the target state of the transition. 
-
-Thus, we need a \emph{model transformation} to a set of graph transformation rules for each behavioral language.
-However, each model transformation can be implemented once by an \gls*{mde} tool developer and made available, for example, as a plugin, such that it can then be reused in any future setting the language is needed.
-In addition, each model transformation must keep traces of the generated set of rules.
-Concretely, it has to save which rules originated from which state-changing elements in the behavioral model.
-Coming back to the state machine example, we must know which transition results in which production rule.
-In general, multiple rules may be associated with one state-changing element of a behavioral model.
-For example, a receive task in a \gls*{bpmn} process cannot be represented by only one rule, since it starts and then waits for an incoming message before finishing.
-
-We apply the following steps to merge the obtained rules into rules describing the global execution semantics.
-\begin{enumerate}
-    \item All rules generated from state-changing elements not part of interactions remain unchanged and are added to the global rule set.
-    \item For each interaction, we do the following:
-     \begin{enumerate}
-         \item Find the corresponding production rule\footnote{If one state-changing element results in more than one rule, one can define a strategy to pick the appropriate rule.
-         For example, if one wants to synchronize with the start of a \gls*{bpmn} task, one can use a strategy to pick that rule.} $P_0$ for the interaction host of the interaction and find the rules $P_1, P_2, \ldots P_n$ for the state-changing elements taking part in the interaction using the saved traces.
-         \item Calculate the parallel production \cite[Definition 3.2.7]{baldanConcurrentSemanticsAlgebraic1999} $P_0 + P_1 + \ldots + P_n$ for the found rules.
-         Intuitively, applying a parallel production can be seen as applying multiple rules simultaneously, i.e., synchronizing the state changes of the behavioral models.
-         \item For each part of the interaction, add a behavioral relationship from the behavioral model in $P_0$ to the behavioral model in $P_i$, for 0 < i $\leq$ n.
-         The behavioral relationship is essentially a copy of the behavioral relationship referenced by that interaction part.
-     \end{enumerate}
-\end{enumerate}
-
-Together with a system configuration, the set of global rules results in a graph grammar generating a state space.
-Each state in this state space is an instance of the global snapshot metamodel.
-Consequently, this can be used to check the behavioral consistency of the multi-model.
-
-We will now explain how the graph transformation execution semantics are generated for the use case.
-To apply our approach to the use case, we need to define model transformations from state machines and \gls*{bpmn} processes to graph transformation rules.
-
-\subsection{State machine semantics}
-The generation of production rules to implement finite state machine execution semantics is straightforward.
-Each transition leads to a production rule.
-For example, \autoref{fig:sm_rules} shows the production rules for the transitions \textsf{turn red-amber} and \textsf{turn green} of the traffic light model.
-It uses the concrete syntax introduced in \autoref{fig:fsm_snapshot_model} to depict state machine snapshots and their current state.
-We depict a production rule by showing its graph $L$ on the left, pointing with a named white arrow to its graph $R$ on the right.
-
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.425\textwidth]{figures/sm_rules.pdf}
-    \caption{Production rules for \emph{turn red-amber} and \emph{turn green}}
-    \label{fig:sm_rules}
-\end{figure}
-
-Using a traffic light snapshot with the state red as a start graph results in a graph grammar\footnote{\label{footnote:GGinRepo}All generated graph grammars, including further instructions regarding execution and consistency checking, can be found at \url{https://github.com/timKraeuter/ECMFA-2022}.}, which will generate the same state space as the traffic light state machine.
-We evaluated our approach by executing the graph grammar with the graph transformation tool Groove \cite{ghamarianModellingAnalysisUsing2012, rensinkGROOVESimulatorTool2004}.
-However, in the future, we can also experiment with other graph transformation tools since rule-generation can be adapted without much effort.
-% Programming against a clear defined interface makes this possible. But that's not important for this paper.
-
-\subsection{BPMN semantics}
-The generation of production rules for \gls*{bpmn} processes is challenging, and we are currently only supporting a subset of the \gls*{bpmn} semantics, similar to the extent supported by \cite{vangorpVisualTokenbasedFormalization2013}.
-Generally, we construct one or more rules for each flow node contained in a \gls*{bpmn} process.
-\autoref{fig:bpmn_example_rules} shows production rules for some flow nodes of the T-Junction controller (see \autoref{fig:t_junction}).
-It uses the concrete syntax introduced earlier to represent process snapshots containing tokens.
-
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.475\textwidth]{figures/bpmn_rules.pdf}
-    \caption{Production rules for the T-Junction controller}
-    \label{fig:bpmn_example_rules}
-\end{figure}
-
-However, we cannot show all possible rules resulting from our \gls*{bpmn} semantics implementation.
-Especially the implementation of signal events, message events, event-based gateways, and subprocesses needs further explanation but does not matter for the overall approach presented in this paper, as long as it conforms to the \gls*{bpmn} semantics.
-We compared the state space resulting from our implementation with the possible token flows realizable using the \emph{bpmn-js token simulation}\cref{footnote:GGinRepo}, which claims to conform to the \gls*{bpmn} semantics.
-This resulted in finding bugs in the bpmn-js simulator and our rule generator.
-
-Our semantics is inspired by \cite{vangorpVisualTokenbasedFormalization2013} but differs in some aspects.
-One key difference is that they define a fixed rule set that describes the semantics of \gls*{bpmn} models, while we generate a specific rule set for each model to enable interaction with specific parts of each model.
-
-Following this procedure, we can generate production rules that implement the behavioral semantics of the \gls*{bpmn} models used in the use case\cref{footnote:GGinRepo}.
-
-\subsection{Global execution semantics}
-The interactions we have defined change the rules for switching to phases 1 and 2.
-\autoref{fig:parallel_rule} shows the resulting rule for switching to phase 1.
-We decided that the interactions between the traffic lights and the T-Junction controller should synchronize with the end of the task, not the start.
-
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.475\textwidth]{figures/parallel_rule.pdf}
-    \caption{Parallel production rule to switch to phase 1}
-    \label{fig:parallel_rule}
-\end{figure}
-
-The rule changes all traffic lights simultaneously and finishes the task.
-The corresponding individual rules do not exist anymore, such that a synchronization of the behavior is guaranteed.
-A similar rule exists for switching to phase 2, resulting from the second interaction.
-All other rules are left untouched during the construction of the merged graph grammar.
-
-Finally, we can generate the global state space of the system using the merged graph grammar\cref{footnote:GGinRepo}.
-
-\subsection{Global consistency checking}
-To check the requirements formalized by properties 1-4, we must ensure the generated state space contains the needed atomic propositions.
-We formulate all atomic propositions as instances of $M_s^+$ and implement them as graph conditions in Groove.
-Graph conditions in Groove are rules which do not change any elements and can be used for model checking.
-
-Properties 1 and 2 hold, while properties 3 and 4 do not hold\cref{footnote:GGinRepo}.
-The counterexamples for properties 3 and 4 show an unexpected race condition that must be handled.
-After the T-Junction controller signals that the traffic light A/B is green, bus B1/B2 can advance to the \textsf{Pass Junction} activity.
-However, at the same time, the T-Junction controller can enter the subprocess for the next phase, which can be interrupted by the associated timer event.
-This can happen before the bus B1/B2 passes the junction, resulting in an invalid state.
-
-The system developers have different options to handle the uncovered inconsistencies.
-One option is to keep the models unchanged and pay special attention to the found race condition during system implementation.
-This can be an acceptable solution since the \textsf{Pass Junction} activity is also modeled as a user activity, i.e., the bus driver decides when to cross the T-Junction.
-Furthermore, tolerating inconsistencies can be a viable option in \gls*{mde} \cite{weidmannToleranceModelDrivenEngineering2021}.
-
-Another option is to change the models until the inconsistency is resolved.
-For example, the T-Junction controller could wait for the bus to pass before changing the traffic lights again.
-Currently, we are using discrete-time execution semantics for the use case.
-However, it already shows that continuous-time execution semantics might be needed in some scenarios. % find some paper which has timed graph rules or something like that and link it here.
 \section{Related work} \label{sec:related_work}
 This contribution builds on our previous publication \cite{krauterBehavioralConsistencyHeterogeneous2021}.
 However, we refined the behavioral consistency management workflow by introducing new concepts such as the system relationship model and snapshot metamodel.
@@ -787,11 +648,17 @@ One technique is to abstract models further such that they only contain informat
 Thus, minimal models are synchronized leading to smaller state spaces.
 However, finding correct minimal models might not be trivial.
 
-Partial-order reduction in Maude? The potential for state space reduction is huge, especially for model-checking concurrent systems.
+Partial-order reduction in Maude? The potential for state space reduction is huge, especially for model-checking concurrent systems \cite{clarkeHandbookModelChecking2018}.
 % There is at least a theoretical paper about this.
 % Partial order reduction already implemented in maude?
 % Ask paco.
 
+% Discuss state space explosion
+% Obviously, it is a problem. Especially the more behaviors are interacting.
+% However, if you want to check a global behavior, all individual behaviors are needed (to a certain degree)
+
+% Huge potential for partial order reduction to reduce the state space. Why?
+% Might already be implemented in Maude! We should finish the implementation and make some tests!
 \section{Conclusion and future work} \label{sec:conclusion_and_future_work}
 % Conclusion
 Our work represents the first general fully-formalized approach to behavioral consistency management in a heterogeneous modeling scenario, enabling formulating and checking \emph{global} properties.
