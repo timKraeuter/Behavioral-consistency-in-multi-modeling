@@ -623,6 +623,9 @@ We start with the multi-model from the use case and then increase the number of 
 % Preliminary numbers on the laptop. Need some explanation for them
 % Adding buses is quite bad since they nearly run independent from the rest. And we are doing a full state space exploration.
 % Partial order reduction would have huge potential here.
+% Cite comparable performance with Spin?
+% Maude is single threaded but interesting queries can be run in parallel.
+% This should be faster on a desktop or even stronger server CPU. Can be run during CI/CD. At least the most expensive ones.
 \begin{table}
 \centering
 \begin{tabular}{|c || c | c | c |}
@@ -644,16 +647,16 @@ We start with the multi-model from the use case and then increase the number of 
 
 % Discuss the results and talk about ways to mitigate state space explosion.
 The results in \autoref{table:runtime} were obtained without explicitly applying any optimization techniques.
-The Maude LTL model-checker has similar performance as the SPIN model checker. %cite real-time paper.
+The Maude LTL model-checker has performance comparable to the popular SPIN model checker \cite{ekerMaudeLTLModel2004}.
 In the future, one could use different techniques to further mitigate the state space explosion problem.
 One technique is to abstract models further such that they only contain information relevant for the set of properties to be checked.
 Thus, minimal models are synchronized leading to smaller state spaces.
 However, finding correct minimal models might not be trivial.
 
-Partial-order reduction in Maude? The potential for state space reduction is huge, especially for model-checking concurrent systems \cite{clarkeHandbookModelChecking2018}.
-% There is at least a theoretical paper about this.
-% Partial order reduction already implemented in maude?
-% Ask paco.
+Partial-order reduction is a well-known and successful technique to mitigate the state space explosion problem.
+It is currently not implemented in the Maude LTL model-checker but there is promising work to integrate partial-order reduction into the model-checker \cite{farzanPartialOrderReduction2007}.
+The potential to reduce the state space using this technique is huge, especially for model-checking concurrent systems \cite{clarkeHandbookModelChecking2018}.
+The systems our approach analyzes are concurrent systems with some interaction.
 
 % Discuss state space explosion
 % Obviously, it is a problem. Especially the more behaviors are interacting.
