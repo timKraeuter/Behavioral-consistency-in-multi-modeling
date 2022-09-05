@@ -1,5 +1,10 @@
 This repository contains our paper's sources and **additional artifacts** for X. The paper has been **submitted for review**.
 
+# Evaluation & State space explosion
+
+A description how to run this experimenet can be found [here](./artifacts/maude/README.md).
+
+
 # Artifacts
 The following additional artifacts can be found in this repository.
 ## Use case models
