@@ -164,7 +164,7 @@ We model two processes, one for the T-Junction and the Bus.
 Each process is modeled in its own \gls*{bpmn} \emph{pool}.
 A pool is depicted as a vertical lane with a name on the left and allows to draw message flows (arrows with dashed lines) between two different pools.
 
-\autoref{fig:t_junction} shows how a possible controller for a T-Junction behaves in the traffic management system\footnote{All models and their source files can be found at \url{https://github.com/timKraeuter/ECMFA-2022}.\label{footnote:fullModels}}.
+\autoref{fig:t_junction} shows how a possible controller for a T-Junction behaves in the traffic management system\footnote{All models and their source files can be found at \cite{timkrauterBehavioralConsistencyMultimodeling2022}.\label{footnote:fullModels}}.
 When a T-Junction controller is started, we assume that the traffic lights are showing the colors according to phase 1 (see \autoref{fig:junction-phases}).
 Thus, the controller enters a subprocess called phase 1, which we describe later.
 However, when a fixed amount of time has passed, the subprocess is interrupted by the attached timer boundary event.
@@ -615,8 +615,8 @@ Neither provides concrete means to define atomic propositions and check global b
 % Evaluation against other approaches not done yet but part of future work.
 % Evaluate the maude and GT implementation. Maybe start with the maude one.
 % What do we evaluate? Runtime and scalability i.e. state space explosion.
-State space explosion is one of the most important issues when applying model checking to complex systems as they are often found in real-world applications.
-In this section, we will evaluate our approach in terms of scalability to estimate the effect of state space explosion.
+State space explosion is one of the predominant issues when applying model checking to complex systems as they are often found in real-world applications.
+In this section, we will briefly evaluate and discuss our approach in terms of scalability to estimate the effect of state space explosion.
 We start with the multi-model from the use case and then increase the number of approaching buses to simulate growing complexity.
 \autoref{table:runtime} shows the results of our experiments.
 
@@ -641,9 +641,13 @@ We start with the multi-model from the use case and then increase the number of 
  3 buses & 716.912 & 7.183.505 & ~69.600 ms \\
  \hline
 \end{tabular}
-\caption{Model checking runtime}
+\caption[Model checking runtime]{Model checking runtime\footnotemark}
 \label{table:runtime}
 \end{table}
+
+% TODO: Fill in real specs and link to a repo where the experiment is detailed.
+\footnotetext{The results were obtained using a machine with X processor and Y GB of RAM running Maude version 3.2.1.
+A description how to run the experiment can be found at \cite{timkrauterBehavioralConsistencyMultimodeling2022}.}
 
 % Discuss the results and talk about ways to mitigate state space explosion.
 The results in \autoref{table:runtime} were obtained without explicitly applying any optimization techniques.
