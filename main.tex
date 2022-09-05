@@ -645,12 +645,12 @@ We start with the multi-model from the use case and then increase the number of 
 \label{table:runtime}
 \end{table}
 
-% TODO: Fill in real specs and link to a repo where the experiment is detailed.
+% TODO: Fill in real specs.
 \footnotetext{The results were obtained using a machine with X processor and Y GB of RAM running Maude version 3.2.1.
 A description how to run the experiment can be found at \cite{timkrauterBehavioralConsistencyMultimodeling2022}.}
 
 % Discuss the results and talk about ways to mitigate state space explosion.
-The results in \autoref{table:runtime} were obtained without explicitly applying any optimization techniques.
+The results in \autoref{table:runtime} were obtained without applying any optimization techniques.
 The Maude LTL model-checker has performance comparable to the popular SPIN model checker \cite{ekerMaudeLTLModel2004}.
 In the future, one could use different techniques to further mitigate the state space explosion problem.
 One technique is to abstract models further such that they only contain information relevant for the set of properties to be checked.
