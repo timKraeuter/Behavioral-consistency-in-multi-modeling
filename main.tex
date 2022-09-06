@@ -445,6 +445,8 @@ The interaction of behavioral models is only possible through instances of the \
 \end{figure}
 
 An \textsf{Interaction} has an \textsf{interactionHost}, a set of interaction \textsf{parts} and an \textsf{InteractionType}.
+Currently, there are the two \textsf{InteractionType}s \textsf{synchronous} and \textsf{asynchronous}.
+However, more interaction types could be added in the future.
 Each \textsf{InteractionPart} references one \textsf{BehavioralRelationship} and one \textsf{StateChangingElement}.
 
 The \textsf{interactionHost} and the elements of the \textsf{InteractionPart}s describe a state change for their concrete behavioral model.
@@ -454,20 +456,13 @@ In addition, each \textsf{InteractionPart} must be based on a \textsf{Behavioral
 Thus, one can only define interactions for behavioral models connected by behavioral relationships.
 
 We allow the definition of as many interactions as desired.
-The interactions restrict the local behavior of the models since some parts of its behavior must synchronize, i.e., certain behavior cannot happen locally anymore.
-If two interactions share elements that should be synchronized, the interactions do not influence each other, such that either of them can happen.
-
-% causality/asynchronous communication can be defined using synchronous communication and an intermediate model
-Currently, interactions only specify synchronization and not causality between models, i.e., this state change should happen before/after the other one.
-However, causality between state changes can be modeled using only synchronization.
-% A --> B. A synchronizes with a state-changing element in new intermediate behavioral model (acting as a buffer).
-% The subsequent element in the new behavioral model synchronizes with B.
-In the future, one could support causality directly, effectively introducing \emph{syntactic sugar} for interactions.
+The interactions restrict the local behavior of the models since some parts of their behavior must synchronize or be delayed.
+If two interactions share elements, they do not influence each other so that either interaction can happen.
 
 In the use case, the T-Junction controller interacts with the three traffic lights, \textbf{A}, \textbf{B}, and \textbf{C}.
-\autoref{lst:interactions} defines the interactions synchronizing the traffic lights with the T-Junction controller, using a textual \gls*{dsl}.
-It has three \textsf{InteractionPart}s specifying the synchronization with each traffic light.
-We are using the concrete syntax of interactions, defined in the interaction metamodel (see \autoref{fig:interaction_metamodel}).
+\autoref{lst:interactions} defines two interactions synchronizing the traffic lights with the T-Junction controller, using a textual \gls*{dsl}.
+Each interaction has three \textsf{InteractionPart}s specifying a state-changing element and a behavioral relationship.
+The \textbf{synchronizes} keyword specifies the \textsf{InteractionType} to be \textsf{synchronous}.
 
 \lstdefinelanguage{Interaction}[]{Java}{
     morekeywords={synchronizes}
@@ -483,12 +478,10 @@ label=lst:interactions,
 language=Interaction,
 caption=Interactions for the use case]{figures/interactions.txt}
 
-We can explain the interaction as follows.
-The connection of the interaction to the task \textsf{Switch to P1} defines that the execution of the task in a \textsf{T-Junction controller} should be part of a synchronization.
-\textsf{Switch to P1} is the interaction host and its behavioral model the \textsf{TJunction} is connected with the traffic lights in the system relationship model.
-Furthermore, the three bubbles and their connections to the two other models state which transitions of which traffic lights should participate in the synchronization.
-For example, bubble \textbf{A} determines that a \textsf{TrafficLight} connected by an A-typed behavioral relationship should be present and \textsf{turn green} simultaneously with the execution of the task.
-A corresponding interaction exists for the activity \textsf{Switch to P2} but is not shown in \autoref{lst:interactions}.
+We can explain the interactions as follows.
+The first interaction defines that the task \textsf{Switch to P1} of a \textsf{T-Junction} should synchronize with three elements, for example the element \textit{turn green} connected by the relationship \textit{A}.
+Thus, the interaction defines a synchronization of a task execution and three traffic light transitions. 
+The second interaction defines a synchronization for the task \textsf{Switch to P2} with three other traffic light transitions.
 
 \subsection{Generate execution semantics} \label{subsec:executionSemantics}
 To execute the models, we must be able to represent the global system state, which is composed of the individual states of each behavioral model.
