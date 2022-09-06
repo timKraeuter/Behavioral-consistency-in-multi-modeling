@@ -131,7 +131,7 @@ First, it must guarantee safe traffic by changing the three traffic lights, A, B
 Second, it should prioritize arriving buses, i.e., switch the traffic lights quicker than usual to let an approaching bus pass (early green).
 This so-called bus priority signal is a widely implemented technique to improve service and reduce delays in public transport.
 
-\begin{figure}[ht]
+\begin{figure}[h]
     \centering
     % warning is fine since it does not visually overflow.
     \includegraphics[width=0.5\textwidth]{figures/phases.pdf}
@@ -151,7 +151,7 @@ The behavior of a traffic light is straightforward since it uses only three colo
 \autoref{fig:trafficLight} shows the typical European\footnote{Traffic lights in other parts of the world might not show red and amber simultaneously before switching to green.} traffic light that switches from \textsf{red} to \textsf{red-amber}, \textsf{green}, \textsf{amber}, and back to \textsf{red}.
 The start state of the traffic light in \autoref{fig:trafficLight} is \textsf{red} but can be any of the four possible states.
 
-\begin{figure}[ht]
+\begin{figure}[h]
     \centering
     \includegraphics[width=0.35\textwidth]{figures/trafficLight.pdf}
     \caption{Traffic light state machine model}
@@ -218,7 +218,7 @@ The resulting model called the \emph{system relationship model} is shown in \aut
 It contains one class for each behavioral model and associations to depict behavioral relationships, leading to possible interactions.
 In addition, it contains enumerations to parameterize the behavioral models.
 
-\begin{figure}[ht]
+\begin{figure}[h]
     \centering
     \includegraphics[width=0.45\textwidth]{figures/systems.pdf}
     \caption{System relationship model of the traffic management system}
@@ -235,7 +235,7 @@ First, it contains three instances of the traffic light behavioral model, repres
 Second, it contains an instance of the T-Junction behavioral model, which is connected to the three traffic lights, and two instances of the bus behavioral model.
 Thus, the test system configuration describes a system that controls one T-Junction with three traffic lights and two buses approaching from directions A and C.
 
-\begin{figure}[ht]
+\begin{figure}[h]
     \centering
     \includegraphics[width=0.45\textwidth]{figures/test_config.pdf}
     \caption{Test system configuration}
@@ -286,7 +286,7 @@ In the remainder of this paper, we will describe our approach to address behavio
 \autoref{fig:approach} depicts our approach to behavioral consistency management using a \gls*{bpmn} diagram.
 We leave potential consistency restoration as a problem for future work.
 
-\begin{figure}[ht]
+\begin{figure}[h]
     \centering
     % https://cawemo.com/share/3323b181-61ec-4d73-a7cc-6ffccf4204dc
     \includegraphics[width=0.475\textwidth]{figures/workflow.pdf}
@@ -307,7 +307,7 @@ In addition, we require a snapshot metamodel for each behavioral metamodel used.
 A snapshot metamodel should represent the structure of a state for a given behavioral language, defined in a metamodel.
 For example, each state in a Petri net is defined by a set of tokens distributed over its places.
 
-\begin{figure}[ht]
+\begin{figure}[h]
     \centering
     \includegraphics[width=0.45\textwidth]{figures/modelTypes.pdf}
     \caption{Behavioral metamodels and snapshot metamodels}
@@ -329,7 +329,7 @@ The clouds define a concrete syntax for state machines inspired by \gls*{uml} st
 A model in this concrete syntax, such as the traffic light model (see \autoref{fig:trafficLight}), can automatically be translated to abstract syntax and typed in the metamodel.
 
 % state machine
-\begin{figure}[ht]
+\begin{figure}[h]
     \centering
     \includegraphics[width=0.275\textwidth]{figures/state_machine_metamodel.pdf}
     \caption{Finite state machine metamodel $M^1$}
@@ -344,7 +344,7 @@ Similarly, we must define a metamodel for the \gls*{bpmn} diagrams.
 Once more, we have attached concrete syntax elements.
 
 % bpmn (subset of the needed constructs)
-\begin{figure}[ht]
+\begin{figure}[h]
     \centering
     \includegraphics[width=0.475\textwidth]{figures/bpmn_metamodel.pdf}
     \caption{Simplified BPMN metamodel $M^2$ \cite{objectmanagementgroupBusinessProcessModel2013}}
@@ -360,7 +360,7 @@ We assume a set of behavioral models describing the system, which \emph{interact
 A system relationship model describes which behavioral models exist in the system and how they are related.
 The system relationship \emph{metamodel} is depicted in \autoref{fig:systemRelationshipMetamodel}.
 
-\begin{figure}[ht]
+\begin{figure}[h]
     \centering
     \includegraphics[width=0.45\textwidth]{figures/systemRelationshipMetamodel.pdf}
     \caption{System relationship metamodel \\ (without attributes and enumerations)}
@@ -392,7 +392,7 @@ The snapshot metamodel for a state machine is straightforward, since a state mac
 Since we are only interested in the current state and not the history of states, we call this a \emph{state machine snapshot}.
 We are reusing the concrete syntax elements from the metamodel level.
 In addition, each snapshot metamodel has a root element in our approach, highlighted in light blue in \autoref{fig:fsm_snapshot_model}.
-\begin{figure}[ht]
+\begin{figure}[h]
     \centering
     \includegraphics[width=0.22\textwidth]{figures/state_machine_s_model.pdf}
     \caption{Finite state machine snapshot metamodel $M_s^1$}
@@ -407,7 +407,7 @@ Furthermore, \textsf{ProcessSnapshot}s can also have \textsf{subprocesses} with 
 A \textsf{Token} indicates where it is located in the \gls*{bpmn} using its \textsf{position} attribute.
 A valid \textsf{position} is a sequence flow or a started but unfinished activity.
 
-\begin{figure}[ht]
+\begin{figure}[h]
     \centering
     \includegraphics[width=0.475\textwidth]{figures/bpmn_s_model.pdf}
     \caption{BPMN snapshot metamodel $M_s^2$}
@@ -437,7 +437,7 @@ Thus, the transitions are the \textsf{StateChangingElement}s of a state machine 
 Similarly, the flow nodes are the \textsf{StateChangingElement}s of a \gls*{bpmn} process (highlighted in purple, see \autoref{fig:bpmn_metamodel}).
 The interaction of behavioral models is only possible through instances of the \textsf{StateChangingElement}s.
 
-\begin{figure}[ht]
+\begin{figure}[h]
     \centering
     \includegraphics[width=0.475\textwidth]{figures/interaction_metamodel.pdf}
     \caption{Interaction metamodel}
@@ -499,7 +499,7 @@ The resulting artifact, the \emph{global snapshot metamodel}, describes all poss
 \autoref{fig:global_execution_model} depicts the global snapshot metamodel $M_s^+$ for the use case, describing the states of the traffic management system.
 We added three inheritance relations to construct $M_s^+$ for the use case and omitted unchanged parts from the system relationship model and the individual snapshot metamodels.
 
-\begin{figure}[ht]
+\begin{figure}[h]
     \centering
     \includegraphics[width=0.475\textwidth]{figures/global_s_model.pdf}
     \caption{Global snapshot metamodel $M_s^+$ for the use case}
@@ -530,7 +530,7 @@ We propose to use the global snapshot metamodel $M_s^+$ to formulate atomic prop
 \autoref{fig:atomic_propositions} shows how to formulate the atomic propositions $A_{green}$ and $B1_{passing}$, used in the global properties, stated earlier.
 Varying propositions with more or less complexity can be formulated using this approach.
 
-\begin{figure}[ht]
+\begin{figure}[h]
     \centering
     \includegraphics[width=0.475\textwidth]{figures/atomic_props.pdf}
     \caption{Atomic propositions $A_{green}$ and $B1_{passing}$}
@@ -545,7 +545,7 @@ This step should be fully automated, such that it can be executed as many times 
 Alternatively, to make formulating atomic propositions less cumbersome, one can use the concrete syntax of the individual snapshot metamodels to formulate atomic propositions.
 For example, \autoref{fig:atomic_propositions_concrete} shows the same atomic propositions as \autoref{fig:atomic_propositions} but uses the introduced concrete syntax.
 
-\begin{figure}[ht]
+\begin{figure}[h]
     \centering
     \includegraphics[width=0.4\textwidth]{figures/atomic_props_concrete.pdf}
     \caption{Concrete syntax for $A_{green}$ and $B1_{passing}$}
