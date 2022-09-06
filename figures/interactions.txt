@@ -1,0 +1,9 @@
+"Switch to P1" of T-Junction synchronizes with
+	"turn green" of "A"
+	"turn red" of "B"
+	"turn green" of "C",
+
+"Switch to P2" of T-Junction synchronizes with
+	"turn red" of "A"
+	"turn green" of "B"
+	"turn red" of "C"
