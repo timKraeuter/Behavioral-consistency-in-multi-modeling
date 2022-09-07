@@ -645,16 +645,14 @@ Thus, minimal models are synchronized leading to smaller state spaces.
 However, finding correct minimal models might not be trivial.
 
 Partial-order reduction is a well-known and successful technique to mitigate the state space explosion problem.
-It is currently not implemented in the Maude LTL model-checker but there is promising work to integrate partial-order reduction into the model-checker \cite{farzanPartialOrderReduction2007}.
+It is currently not implemented in the Maude LTL model-checker but there is promising work to integrate partial-order reduction into the model-checker \cite{farzanPartialOrderReduction2007}, showing substantial state space reductions.
 The potential to reduce the state space using this technique is huge, especially for model-checking concurrent systems \cite{clarkeHandbookModelChecking2018}.
-The systems our approach analyzes are concurrent systems with some interaction.
+The systems our approach analyzes are concurrent systems with some interaction and thus model-checking would greatly benefit from partial-order reduction.
 
 % Discuss state space explosion
 % Obviously, it is a problem. Especially the more behaviors are interacting.
 % However, if you want to check a global behavior, all individual behaviors are needed (to a certain degree)
 
-% Huge potential for partial order reduction to reduce the state space. Why?
-% Might already be implemented in Maude! We should finish the implementation and make some tests!
 \section{Conclusion and future work} \label{sec:conclusion_and_future_work}
 % Conclusion
 Our work represents the first general fully-formalized approach to behavioral consistency management in a heterogeneous modeling scenario, enabling formulating and checking \emph{global} properties.
@@ -670,8 +668,10 @@ Although our approach is independent of a particular formalism as an underlying 
 It is also interesting to extend the execution semantics to include other behavioral formalisms such as activity diagrams, hierarchical state machines, and the $\pi$-calculus.
 Especially integrating the $\pi$-calculus, which was formalized using graph grammars in \cite{gadducciGraphRewritingPcalculus2007}, will be beneficial since it is profoundly different from the currently supported formalisms.
 
-% Should write about data transfer between systems as future work (and things which are not supported yet by other formalisms). I guess we need a general model and map from/to it during interactions. Each formalism would have to implement some mapping from and to this universal model once. But we do not need mappings between all formalisms directly. This can be implemented using equations in maude or something like that.
-Furthermore, % data transfer future work also in BCOOL
+% Data transfer
+Furthermore, two systems often exchange data while interacting.
+The exchanged data then greatly influences the future behavior of the systems.
+Thus, adding data transfers to interactions between heterogeneous models is an important issue left for future work.
 % Could write about continuous time models to be included in the future.
 
 \bibliography{bib}
