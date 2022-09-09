@@ -1,9 +1,11 @@
-"Switch to P1" of T-Junction synchronizes with
-	"turn green" of "A"
-	"turn red" of "B"
-	"turn green" of "C",
+T-Junction {
+    synchronize(Switch_to_P1,
+                A.turn_green,
+                B.turn_red,
+                C.turn_green)
 
-"Switch to P2" of T-Junction synchronizes with
-	"turn red" of "A"
-	"turn green" of "B"
-	"turn red" of "C"
+    synchronize(Switch_to_P2,
+                A.turn_red,
+                B.turn_green,
+                C.turn_red)
+}
