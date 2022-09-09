@@ -75,6 +75,27 @@ One can check the properties in the following way:
 
 Properties (1) and (2) hold, while (3) and (4) do **not** hold.
 
+## State space exploration experiment
+
+Run the experiment, by running the following commands (in this directory).
+- No buses: 
+    ``` 
+    java -jar ../groove-5_8_1/bin/Generator.jar ../global.gps No_Buses_Property_1_and_2
+    ```
+
+- 1 bus:
+    ```
+    java -jar ../groove-5_8_1/bin/Generator.jar ../global.gps junction_with_B1
+    ```
+- 2 buses:
+    ```
+    java -jar ../groove-5_8_1/bin/Generator.jar ../global.gps junction_with_B1_and_B2
+    ```
+- 3 buses:
+    ```
+    java -jar ../groove-5_8_1/bin/Generator.jar ../global.gps junction_with_three_buses
+    ```
+
 ## Further resources:
 - Groove Demo: [Basic functionality](https://www.youtube.com/watch?v=R2beaSQ9-NM).
 - Groove Demo: [Editing Graphs and Rules](https://www.youtube.com/watch?v=R2beaSQ9-NM).
