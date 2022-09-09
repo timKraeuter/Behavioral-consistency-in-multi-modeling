@@ -1,0 +1,11 @@
+T-Junction {
+    synchronize(Switch_to_P1,
+                A.turn_green,
+                B.turn_red,
+                C.turn_green)
+
+    synchronize(Switch_to_P2,
+                A.turn_red,
+                B.turn_green,
+                C.turn_red)
+}

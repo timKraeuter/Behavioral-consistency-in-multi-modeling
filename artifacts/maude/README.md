@@ -6,9 +6,24 @@
 1. Clone this repository.
 2. Open a terminal in **this folder**.
 3. Start maude by running `maude`.
-4. Load the maude module by running `load fullUsecase.maude`.
+4. Load the maude module by running
+``` 
+load fullUsecase.maude
+```
 5. Run the experiment, by running the following commands.
-    - No buses: `search systemConfigNoBuses =>! X .`
-    - 1 bus: `search systemConfigOneBus =>! X .`
-    - 2 buses: `search systemConfig =>! X .`
-    - 3 buses: `search systemConfigThreeBuses =>! X .`
+    - No buses: 
+    ``` 
+    search systemConfigNoBuses =>! X .
+    ```
+    - 1 bus:
+    ```
+    search systemConfigOneBus =>! X .
+    ```
+    - 2 buses:
+    ```
+    search systemConfig =>! X .
+    ```
+    - 3 buses:
+    ```
+    search systemConfigThreeBuses =>! X .
+    ```

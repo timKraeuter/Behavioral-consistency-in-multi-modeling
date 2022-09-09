@@ -1,11 +1,14 @@
 % Journal of Object Technology 
 %
 % LaTeX style class
-% Version: 2.4, 2020/10/26
+% Version: 2.6, 2022/04/28
 %
+% Credits
+% 
+% Olivier Flückiger (author short bio fix)
 %
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{jot}[2020/10/26, v2.4]
+\ProvidesClass{jot}[2022/05/28, v2.6]
 
 \AtEndOfClass{\RequirePackage{microtype}\ifthenelse{\boolean{displaylineno}}{\linenumbers}{}}
 
@@ -526,7 +529,10 @@
 % AUTHOR EMAIL + HOMEPAGE
 
 \newcommand{\authorcontact}[2][]{You can contact the author at \href{mailto:#2?subject=Your paper "\@title"}{#2}\ifthenelse{\equal{#1}{}{}}{}{ or visit \url{#1}}.}
-\newcommand{\editorcontact}[2][]{You can contact him at \href{mailto:#2?subject=Your paper "\@title"}{#2}\ifthenelse{\equal{#1}{}{}}{}{ or visit \url{#1}}.}
+
+%\newcommand{\editorcontact}[2][]{You can contact them at \href{mailto:#2?subject=Your paper "\@title"}{#2}\ifthenelse{\equal{#1}{}{}}{}{ or visit \url{#1}}.}
+
+\newcommand{\editorcontact}[2][]{You can contact the editor at \href{mailto:#2?subject=Your paper "\@title"}{#2}\ifthenelse{\equal{#1}{}{}}{}{ or visit \url{#1}}.}
 
 \newcommand{\email}[1]{\href{mailto:#1}{#1}}
 
