@@ -634,16 +634,35 @@ We start with the multi-model from the use case and then increase the number of 
  3 buses & 716.912 & 7.183.505 & ~69.600 ms \\
  \hline
 \end{tabular}
-\caption[Model checking runtime]{Model checking runtime\footnotemark}
-\label{table:runtime}
+\caption[State space exploration time in Maude]{State space exploration time in Maude\footnotemark}
+\label{table:maudeRuntime}
 \end{table}
 
 % TODO: Fill in real specs.
 \footnotetext{The results were obtained using a machine with X processor and Y GB of RAM running Maude version 3.2.1.
 A description how to run the experiment can be found at \cite{timkrauterBehavioralConsistencyMultimodeling2022}.}
 
+\begin{table}
+\centering
+\begin{tabular}{|c || c | c | c |}
+ \hline
+ Use case & States & Transitions & Exploration time \\
+ \hline\hline
+ No buses & 168 & 438 & ~500 ms \\
+ \hline
+ 1 bus & 2.888 & 10.046 & ~2600 ms \\
+ \hline
+ 2 buses & 61.848 & 279.926 & ~22.500 ms \\
+ \hline
+ 3 buses & ? & ? & ~??? ms \\
+ \hline
+\end{tabular}
+\caption[State space exploration time in Groove]{State space exploration time in Groove}
+\label{table:grooveRuntime}
+\end{table}
+
 % Discuss the results and talk about ways to mitigate state space explosion.
-The results in \autoref{table:runtime} were obtained without applying any optimization techniques.
+The results in \autoref{table:maudeRuntime} were obtained without applying any optimization techniques.
 The Maude LTL model-checker has performance comparable to the popular SPIN model checker \cite{ekerMaudeLTLModel2004}.
 In the future, one could use different techniques to further mitigate the state space explosion problem.
 One technique is to abstract models further such that they only contain information relevant for the set of properties to be checked.
