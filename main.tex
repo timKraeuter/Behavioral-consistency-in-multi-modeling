@@ -602,22 +602,17 @@ Their approach results in the tool Ptolemy \cite{ptolemaeusSystemDesignModeling2
 However, both approaches focus on simulation rather than consistency or model-checking.
 Neither provides concrete means to define atomic propositions and check global behavioral properties.
 
-\section{Evaluation \& State space explosion}
+\section{State space explosion}
 % TODOS:
 % - Generally we not only support model checking but also simulation.
 % - Real-time systems can also be checked using maude. This could be mentioned somewhere and the oslo papers can be cited.
 
 % Evaluation against other approaches not done yet but part of future work.
-% Evaluate the maude and GT implementation. Maybe start with the maude one.
-% What do we evaluate? Runtime and scalability i.e. state space explosion.
 State space explosion is one of the predominant issues when applying model checking to complex systems as they are often found in real-world applications.
-In this section, we will briefly evaluate and discuss our approach in terms of scalability to estimate the effect of state space explosion.
-We start with the multi-model from the use case and then increase the number of approaching buses to simulate growing complexity.
-\autoref{table:runtime} shows the results of our experiments.
+As one can see in \autoref{table:maudeRuntime} and \autoref{table:grooveRuntime} our approach is not immune to state space explosion.
+The tables show the states, rewrites/transitions and exploration time of a full state space in the Maude and Groove based implementations.
+Four scenarios were executed starting with the use case multi-model without approaching buses and then increasing the number of buses up to three.
 
-% Adding buses is quite bad since they nearly run independent from the rest. And we are doing a full state space exploration.
-% Maude is single threaded but interesting queries can be run in parallel.
-% This should be faster on a desktop or even stronger server CPU. Can be run during CI/CD. At least the most expensive ones.
 \begin{table}
 \centering
 \begin{tabular}{|c || c | c | c |}
@@ -633,13 +628,13 @@ We start with the multi-model from the use case and then increase the number of 
  3 buses & 716.912 & 7.183.505 & ~69.600 ms \\
  \hline
 \end{tabular}
-\caption[Full state space exploration time in Maude]{Full state space exploration time in Maude\footnotemark}
+\caption[State space exploration in Maude]{State space exploration in Maude\footnotemark}
 \label{table:maudeRuntime}
 \end{table}
 
 % TODO: Fill in real specs.
-\footnotetext{The results were obtained using a machine with X processor and Y GB of RAM running Maude version 3.2.1.
-A description how to run the experiment can be found at \cite{timkrauterBehavioralConsistencyMultimodeling2022}.}
+\footnotetext{The results were obtained using a machine with X processor and Y GB of RAM running Maude version 3.2.1 and Groove version 5.8.1.
+A description how to run the state space exploration can be found at \cite{timkrauterBehavioralConsistencyMultimodeling2022}.}
 
 \begin{table}
 \centering
@@ -656,14 +651,23 @@ A description how to run the experiment can be found at \cite{timkrauterBehavior
  3 buses & ? & ? & ~??? ms \\
  \hline
 \end{tabular}
-\caption[Full state space exploration time in Groove]{Full state space exploration time in Groove}
+\caption[State space exploration in Groove]{State space exploration in Groove}
 \label{table:grooveRuntime}
 \end{table}
 
-% Discuss the results and talk about ways to mitigate state space explosion.
-The results in \autoref{table:maudeRuntime} were obtained without applying any optimization techniques.
-The Maude LTL model-checker has performance comparable to the popular SPIN model checker \cite{ekerMaudeLTLModel2004}.
-In the future, one could use different techniques to further mitigate the state space explosion problem.
+% Discussion
+% Full state space is not what you do. You check properties.
+As in our use case one is generally not interest in a full state space exploration as in \autoref{table:maudeRuntime} and \autoref{table:grooveRuntime} but rather the validity of a set of behavioral properties.
+Checking, for example, a property specified in \gls*{ltl}, does not necessarily lead to a full state space exploration.
+Furthermore, not every property is concerned with all behavioral models.
+For example, property (1) and (2) of the use case do not involve buses and can be checked on the much smaller state spaces not including approaching buses.
+In addition, checking a set of properties can be run in parallel.
+If some properties show to be computationally expensive, they can be run on dedicated hardware, for example, during a continuous integration pipeline once a day in case of behavioral model or interaction changes.
+Thus, checking the consistency of a multi-model can be seen as an additional test during \gls*{mde}, which can be run locally but, in addition, is a vital part of continuous integration.
+
+% Ways to mitigate state space explosion.
+The Maude \gls*{ltl} model-checker has performance comparable to the popular SPIN model checker \cite{ekerMaudeLTLModel2004} and thus is proven to have a good performance.
+However, one could use different techniques to further mitigate the state space explosion problem.
 One technique is to abstract models further such that they only contain information relevant for the set of properties to be checked.
 Thus, minimal models are synchronized leading to smaller state spaces.
 However, finding correct minimal models might not be trivial.
@@ -672,10 +676,7 @@ Partial-order reduction is a well-known and successful technique to mitigate the
 It is currently not implemented in the Maude LTL model-checker but there is promising work to integrate partial-order reduction into the model-checker \cite{farzanPartialOrderReduction2007}, showing substantial state space reductions.
 The potential to reduce the state space using this technique is huge, especially for model-checking concurrent systems \cite{clarkeHandbookModelChecking2018}.
 The systems our approach analyzes are concurrent systems with some interaction and thus model-checking would greatly benefit from partial-order reduction.
-
-% Discuss state space explosion
-% Obviously, it is a problem. Especially the more behaviors are interacting.
-% However, if you want to check a global behavior, all individual behaviors are needed (to a certain degree)
+Partial-order reduction is most likely a must to analyze models from real-world applications.
 
 \section{Conclusion and future work} \label{sec:conclusion_and_future_work}
 % Conclusion
