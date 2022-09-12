@@ -605,7 +605,6 @@ Neither provides concrete means to define atomic propositions and check global b
 \section{Evaluation \& State space explosion}
 % TODOS:
 % - Generally we not only support model checking but also simulation.
-% - Monitoring/Monitor generation / runtime verification of multi-models.
 % - Real-time systems can also be checked using maude. This could be mentioned somewhere and the oslo papers can be cited.
 
 % Evaluation against other approaches not done yet but part of future work.
@@ -697,6 +696,10 @@ Especially integrating the $\pi$-calculus, which was formalized using graph gram
 Furthermore, two systems often exchange data while interacting.
 The exchanged data then greatly influences the future behavior of the systems.
 Thus, adding data transfers to interactions between heterogeneous models is an important issue left for future work.
+
+% Runtime verification
+Finally, it is important to check that running systems are behaving as specified in their behavioral models including the defined interactions between them.
+Thus, extending runtime verification techniques to include systems specified by a multi-model with interactions constitutes a challenging problem.
 % Could write about continuous time models to be included in the future.
 
 \bibliography{bib}
