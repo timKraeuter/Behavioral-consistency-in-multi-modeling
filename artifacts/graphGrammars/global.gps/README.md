@@ -75,9 +75,9 @@ One can check the properties in the following way:
 
 Properties (1) and (2) hold, while (3) and (4) do **not** hold.
 
-## State space exploration experiment
+## State space exploration
 
-Run the experiment, by running the following commands (in this directory).
+Run the state space exploration, by executing the following commands (in this directory).
 - No buses: 
     ``` 
     java -jar ../groove-5_8_1/bin/Generator.jar ../global.gps No_Buses_Property_1_and_2
