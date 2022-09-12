@@ -2,7 +2,7 @@ This repository contains our paper's sources and **additional artifacts** for X.
 
 # Evaluation & State space explosion
 
-A description how to run this experimenet can be found [here](./artifacts/maude/README.md).
+A description how to run the **Maude state space exploration** can be found [here](./artifacts/maude/README.md), while the description for the **Groove state space exploration** can be found [here](./artifacts/graphGrammars/global.gps/README.md#state-space-exploration).
 
 
 # Artifacts
