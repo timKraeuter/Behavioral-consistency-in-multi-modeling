@@ -37,8 +37,9 @@
 Global behavioral consistency,
 Consistency verification,
 Multi-modeling,
-Graph transformation,
-Heterogeneous models
+Heterogeneous models,
+Rewriting Logic,
+Graph transformation
 }
 
 \runningtitle{Towards behavioral consistency in multi-modeling} % For use in the internal pages 
@@ -89,7 +90,7 @@ The approach introduces a workflow in which we
 (i) align the individual models and specify their \emph{interactions}, 
 (ii) generate a \emph{global execution semantics} for the multi-model, and finally,
 (iii) define and check \emph{global properties} which should be satisfied by the multi-model.
-Although our approach is independent of a particular formalism as an underlying global execution semantics, the current implementation utilizes graph transformations for this purpose.
+Our approach is independent of a particular formalism as an underlying global execution semantics, and the current two implementations utilize rewriting logic (Maude) or graph transformations (Groove), respectively.
 \end{abstract}
 
 % TODO: Comment in after acceptance and helpful feedback.
@@ -126,7 +127,7 @@ However, current approaches either only allow for consistency checking of two be
 % % Our approach summarized.
 We propose a novel approach for consistency management of heterogeneous multi-models, which allows us to define and check \emph{global} behavioral properties.
 Our approach allows specifying \emph{interactions} between potentially heterogeneous behavioral models, which are in turn used to generate global execution semantics.
-Although our approach is independent of a particular formalism as an underlying global execution semantics, the current implementation utilizes the rewriting logic tool Maude (see \autoref{sec:maude_execution_semantics}).
+Although our approach is independent of a particular formalism as an underlying global execution semantics, the current implementations utilize the rewriting logic tool Maude and the graph transformation tool set Groove (see \autoref{sec:maude_execution_semantics}).
 
 % Paper outline
 The remainder of this paper is structured as follows.
@@ -458,16 +459,17 @@ The interaction of behavioral models is only possible through instances of the \
 An \textsf{Interaction} has an \textsf{interactionHost}, a set of interaction \textsf{parts} and an \textsf{InteractionType}.
 Currently, there is only the \textsf{synchronous} \textsf{InteractionType}.
 However, more interaction types, for example asynchronous interactions or interactions with data, could be added in the future.
+Asynchronous interactions can also be modeled using two synchronous interactions with an additional behavioral model.
 Each \textsf{InteractionPart} references one \textsf{BehavioralRelationship} and one \textsf{StateChangingElement}.
 
 The \textsf{interactionHost} and the elements of the \textsf{InteractionPart}s describe a state change for their concrete behavioral model.
-By connecting them with a synchronous interaction, we define that all state changes must happen simultaneously in one atomic step, while an asynchronous interaction defines that the state change of the interaction host must happen before the state changes of the interaction parts. 
-Consequently, an interaction can define a synchronization or causal relationship between behavioral models.
+By connecting them with a synchronous interaction, we define that all state changes must happen simultaneously in one atomic step. 
+Consequently, an interaction can define a synchronization between behavioral models.
 In addition, each \textsf{InteractionPart} must be based on a \textsf{BehavioralRelationship} in the system relationship model, which must have the behavioral model containing the \textit{interactionHost} as a source and the behavioral model containing the \textsf{StateChangingElement} of the \textsf{InteractionPart} as a target.
 Thus, one can only define interactions for behavioral models connected by behavioral relationships.
 
 We allow the definition of as many interactions as desired.
-The interactions restrict the local behavior of the models since some parts of their behavior must synchronize or be delayed.
+The interactions restrict the local behavior of the models since some parts of their behavior must synchronize.
 Two interactions sharing state changing elements is forbidden.
 If such a situation occurs it must be resolved by the modeler, for example, by merging the two interactions into one.
 
@@ -525,7 +527,8 @@ One can then pick the most suitable semantics for the modeling scenario at hand 
 
 To summarize, we obtain execution semantics, which describes the global behavior of the system.
 Generating these execution semantics from the models and interactions must be fully automated to allow frequent model changes.
-Later in the paper, we introduce execution semantics based on graph transformations and apply them to the use case.
+Later in the paper, we introduce execution semantics based on rewriting logic in Maude and apply them to the use case.
+However, execution semantics based on graph transformations executable in the Groove tool set also exist. 
 
 \subsection{Check behavioral consistency}
 We use the previously constructed execution semantics for consistency checking to generate a state space based on a system configuration.
@@ -613,19 +616,20 @@ As one can see in \autoref{table:maudeRuntime} and \autoref{table:grooveRuntime}
 The tables show the states, rewrites/transitions and exploration time of a full state space in the Maude and Groove based implementations.
 Four scenarios were executed starting with the use case multi-model without approaching buses and then increasing the number of buses up to three.
 
+% Would be nice to have the experiment fully automized(running each instance 5x or more times and calculating the averge time)
 \begin{table}
 \centering
 \begin{tabular}{|c || c | c | c |}
  \hline
  Use case & States & Rewrites & Exploration time \\
  \hline\hline
- No buses & 168 & 663 & ~10 ms \\
+ No buses & 168 & 663 & \textasciitilde 10 ms \\
  \hline
- 1 bus & 3.304 & 20.117 & ~190 ms \\
+ 1 bus & 3.304 & 20.117 & \textasciitilde 190 ms \\
  \hline
- 2 buses & 67.624 & 549.509 & ~5.500 ms \\
+ 2 buses & 67.624 & 549.509 & \textasciitilde 5.500 ms \\
  \hline
- 3 buses & 716.912 & 7.183.505 & ~69.600 ms \\
+ 3 buses & 716.912 & 7.183.505 & \textasciitilde 69.600 ms \\
  \hline
 \end{tabular}
 \caption[State space exploration in Maude]{State space exploration in Maude\footnotemark}
@@ -642,13 +646,13 @@ A description how to run the state space exploration can be found at \cite{timkr
  \hline
  Use case & States & Transitions & Exploration time \\
  \hline\hline
- No buses & 168 & 438 & ~500 ms \\
+ No buses & 168 & 438 & \textasciitilde 500 ms \\
  \hline
- 1 bus & 2.888 & 10.046 & ~2600 ms \\
+ 1 bus & 2.888 & 10.046 & \textasciitilde 2600 ms \\
  \hline
- 2 buses & 61.848 & 279.926 & ~22.500 ms \\
+ 2 buses & 61.848 & 279.926 & \textasciitilde 22.500 ms \\
  \hline
- 3 buses & ? & ? & ~??? ms \\
+ 3 buses & ? & ? & ? ms \\
  \hline
 \end{tabular}
 \caption[State space exploration in Groove]{State space exploration in Groove}
