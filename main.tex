@@ -307,34 +307,46 @@ We leave potential consistency restoration as a problem for future work.
 \end{figure}
 
 Our approach can be summarized in three steps.
-First, we define interactions between the behavioral models, which describe parts of a system.
-Second, based on these interactions and the behavioral models, we generate execution semantics for the global system.
+First, we formulate the behavioral consistency requirement in terms of global behavioral properties for the given behavioral models.
+This step also leads to a system relationship model, describing which behavioral models can interact.
+Second, we define interactions between the behavioral models based on the system relationship model.
+Based on these interactions and the behavioral models, we automatically generate execution semantics for the global system.
 Finally, given a system configuration and consistency requirements, we can check these requirements using the generated global execution semantics.
+Consistency checking potentially leads to violations, describing counter-examples of how the global behavioral properties can be invalidated.
 
-We will now describe our approach in detail by introducing the different model types and explaining each step separately.
+We will now describe our approach in detail by first explaining the \textit{system relationship model} concept and then the three steps in the workflow.
 
-\subsection{Prerequisites}
-As prerequisites, we assume a set of behavioral models, including their metamodels, see \autoref{fig:modelTypes}.
-In addition, we require a snapshot metamodel for each behavioral metamodel used.
-A snapshot metamodel should represent the structure of a state for a given behavioral language, defined in a metamodel.
-For example, each state in a Petri net is defined by a set of tokens distributed over its places.
+\subsection{System relationship model}
+We assume a set of behavioral models describing the system, where each model must conform to a metamodel.
+A metamodel can be defined by a class diagram/grammar for graphical/textual modeling languages.
+The metamodel ensures that the corresponding models are machine-readable, which is crucial when automating parts of the consistency checking.
+In addition, some of the behavioral models \emph{interact} to realize the global system behavior.
+A system relationship model describes which behavioral models exist in the system and how they are related.
+The system relationship \emph{metamodel} is depicted in \autoref{fig:systemRelationshipMetamodel}.
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.2\textwidth]{figures/modelTypes.pdf}
-    \caption{Behavioral metamodels and snapshot metamodels}
-    \label{fig:modelTypes}
+    \includegraphics[width=0.45\textwidth]{figures/systemRelationshipMetamodel.pdf}
+    \caption{System relationship metamodel \\ (without attributes and enumerations)}
+    \label{fig:systemRelationshipMetamodel}
 \end{figure}
+% Also: Behavioral relationships have multiplicities to restrict possible system configurations. But already known for structural models and thus not really relevant here.
 
-Furthermore, we will later introduce the system relationship model, which is used to define behavioral relationships between the behavioral models.
-We will now explain the different model types in detail and give examples of them for the use case.
+Behavioral models typed in \textsf{BehavioralMetamodel}s can be connected by \textsf{BehavioralRelationship}s to allow for interactions.
+We are using a \gls*{uml} class diagram-like syntax to define system relationship models, where each class corresponds to a behavioral model (typed in a \textsf{BehavioralMetamodel}), while each association corresponds to a \textsf{BehavioralRelationship} (see concrete syntax depicted in clouds).
+Thus, a system relationship model does \emph{not} describe the structure of a system, but rather behavioral relationships between the behavioral models of a system.
+The behavioral relationships will be crucial to define interactions between the models in the first step of our approach.
 
-\subsubsection{Metamodels}
-Each behavioral model must conform to a metamodel (see \autoref{fig:modelTypes}).
-A metamodel can be defined by a class diagram/grammar for graphical/textual modeling languages.
-The metamodel ensures that the corresponding models are machine-readable, which is crucial when automating parts of the consistency checking.
+In addition, we allow enumerations and their use as attributes for behavioral models in the system relationship model.
+This helps not to duplicate behavioral models because we can use the attributes as parameters, for example, to define the start state in a state machine (see \autoref{fig:systemInteractionModel}).
+Different instances of the system relationship model can be used to analyze the global behavior of \emph{different} system configurations by changing the attribute values and behavioral model instances.
+
+The system relationship model in the use case (see \autoref{fig:systemInteractionModel}) contains three classes corresponding to the traffic light, T-Junction, and Bus behavioral models.
+A T-Junction has three relationships with the traffic light, which allows the T-Junction to interact with up to three traffic lights.
+In addition, we can analyze different scenarios by adding buses approaching from particular directions.
 
 The use case utilizes state machine and \gls*{bpmn} models.
+Thus, according to \autoref{fig:systemRelationshipMetamodel} there must be a metamodel for state machines and \gls*{bpmn} process models.
 \autoref{fig:fsm_metamodel} shows the metamodel for finite state machines (ignore the purple coloring for now).
 It is defined by a \gls*{uml} class diagram with additional information depicted in clouds.
 The clouds define a concrete syntax for state machines inspired by \gls*{uml} statecharts.
@@ -351,7 +363,7 @@ A model in this concrete syntax, such as the traffic light model (see \autoref{f
 A \textsf{StateMachine} has a \textsf{startState} and \textsf{transitions}, whereas each \textsf{Transition} connects two \textsf{State}s.
 The states of a state machine are not explicitly modeled, but can be derived from the states connected by the transitions of a state machine.
 
-Similarly, we must define a metamodel for the \gls*{bpmn} diagrams.
+Similarly, we must define a metamodel for \gls*{bpmn} process models.
 \autoref{fig:bpmn_metamodel} shows a simplified metamodel for \gls*{bpmn} (ignore the purple coloring for now).
 Once more, we have attached concrete syntax elements.
 
@@ -367,38 +379,15 @@ A \gls*{bpmn} \textsf{Process} contains a set of \textsf{FlowNode}s connected by
 A \textsf{FlowNode} can be an \textsf{Activity}, \textsf{Gateway}, or \textsf{Event}.
 Concrete activities, gateways and events are defined in the full \gls*{bpmn} metamodel \cite{objectmanagementgroupBusinessProcessModel2013}. % See BPMN class diagrams in figures 10.104/10.6/10.69.
 
-\subsubsection{System relationship model}
-We assume a set of behavioral models describing the system, which \emph{interact} to realize the global system behavior.
-A system relationship model describes which behavioral models exist in the system and how they are related.
-The system relationship \emph{metamodel} is depicted in \autoref{fig:systemRelationshipMetamodel}.
-
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.45\textwidth]{figures/systemRelationshipMetamodel.pdf}
-    \caption{System relationship metamodel \\ (without attributes and enumerations)}
-    \label{fig:systemRelationshipMetamodel}
-\end{figure}
-
-Behavioral models typed in \textsf{BehavioralMetamodel}s can be connected by \textsf{BehavioralRelationship}s to allow for interactions.
-We are using a \gls*{uml} class diagram-like syntax to define system relationship models, where each class corresponds to a behavioral model (typed in a \textsf{BehavioralMetamodel}), while each association corresponds to a \textsf{BehavioralRelationship} (see concrete syntax depicted in clouds).
-Thus, a system relationship model does \emph{not} describe the structure of a system, but rather behavioral relationships between the behavioral models of a system.
-The behavioral relationships will be crucial to define interactions between the models in the first step of our approach.
-
-In addition, we allow enumerations and their use as attributes for behavioral models in the system relationship model.
-This helps not to duplicate behavioral models because we can use the attributes as parameters, for example, to define the start state in a state machine (see \autoref{fig:systemInteractionModel}).
-Different instances of the system relationship model can be used to analyze the global behavior of \emph{different} system configurations by changing the attribute values and behavioral model instances.
-
-The system relationship model in the use case (see \autoref{fig:systemInteractionModel}) contains three classes corresponding to the traffic light, T-Junction, and Bus behavioral models.
-A T-Junction has three relationships with the traffic light, which allows the T-Junction to interact with up to three traffic lights.
-In addition, we can analyze different scenarios by adding buses approaching from particular directions.
-
+\subsection{Formulate behavioral consistency}
+% Come up with a system relationship model (potentially driven by the atomic properties).
 % snapshot metamodel
 \subsubsection{Snapshot metamodels}
 The provided metamodels are used to structurally define all possible models by requiring a typing from each model to its metamodel.
 In addition, we can add constraints to restrict all typed models further.
 
 However, we need additional or different concepts from those in the metamodel to describe the structure of instances of the behavioral models during execution.
-Consequently, we introduce a new model type called the \emph{snapshot metamodel}, which defines the structure of a state for a given formalism (see \autoref{fig:modelTypes}).
+Consequently, we introduce a new model type called the \emph{snapshot metamodel}, which defines the structure of a state for a given formalism (see \autoref{fig:systemRelationshipMetamodel}).
 
 The snapshot metamodel for a state machine is straightforward, since a state machine can only be in one state at a time, as shown in \autoref{fig:fsm_snapshot_model}.
 Since we are only interested in the current state and not the history of states, we call this a \emph{state machine snapshot}.
@@ -432,7 +421,6 @@ In addition, \textsf{Token}s are highlighted with green bubbles in the middle of
 The root of the \gls*{bpmn} snapshot metamodel is the \textsf{ProcessSnapshot}, highlighted in light green.
 
 % Describe the remaining steps of the workflow in detail by/while applying them to the use case.
-\subsection{Formulate behavioral consistency}
 
 \subsection{Define model interactions}
 Structural models in a multi-model might contain related information.
@@ -504,7 +492,7 @@ To calculate the global snapshot metamodel, one must merge all snapshot metamode
 The first step is to add all model elements to one global model, i.e., calculating their disjoint\footnote{Possible conflicts due to the naming of model elements can be resolved by user input or a fixed strategy, for example, prefixing model elements with the model name.} union.
 
 The second step is adding inheritance relations to connect behavioral models in the system relationship model with their corresponding snapshot metamodels.
-Each behavioral model is typed in a behavioral metamodel, which has a snapshot metamodel (\autoref{fig:modelTypes}) structurally describing its state.
+Each behavioral model is typed in a behavioral metamodel, which has a snapshot metamodel (\autoref{fig:systemRelationshipMetamodel}) structurally describing its state.
 Thus, we know how the states of each behavioral model are structured by referring to its metamodel.
 We make this knowledge explicit by adding an inheritance relation for each behavioral model to the root of the corresponding snapshot metamodel.
 The resulting artifact, the \emph{global snapshot metamodel}, describes all possible states of the global system, since each behavioral model inherits a description of its state.
@@ -739,7 +727,7 @@ Before that, Patrick did his Ph.D. at Western Norway University of Applied Scien
 \begin{figure*}[ht]
     \centering
     \includegraphics[width=1\textwidth]{figures/allConcepts.pdf}
-    \caption{Overview of all concepts and their use in the system relationship model}
+    \caption{Overview of all concepts and their usage in the use case}
     \label{fig:allConcepts}
 \end{figure*}
 
