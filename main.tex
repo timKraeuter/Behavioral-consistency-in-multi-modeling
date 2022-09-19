@@ -417,7 +417,8 @@ If the set of \textsf{Token}s is empty, the state \textsf{Terminated} is derived
 Otherwise, the process is still \textsf{Running}.
 Furthermore, \textsf{ProcessSnapshot}s can also have \textsf{subprocesses} with associated \textsf{Token}s.
 A \textsf{Token} indicates where it is located in the \gls*{bpmn} using its \textsf{position} attribute.
-A valid \textsf{position} is a sequence flow or a started but unfinished activity.
+A valid \textsf{position} is the ID of a flow element.
+A flow element can be any element appearing in a \textsf{Process} flow such as flow nodes and sequence flows \cite{objectmanagementgroupBusinessProcessModel2013}.
 
 \begin{figure}[h]
     \centering
