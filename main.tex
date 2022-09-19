@@ -300,7 +300,7 @@ We leave potential consistency restoration as a problem for future work.
 
 \begin{figure}[h]
     \centering
-    % https://cawemo.com/share/3323b181-61ec-4d73-a7cc-6ffccf4204dc
+    % https://cawemo.com/share/a531b027-0475-4050-8b7c-9de631abbe13
     \includegraphics[width=0.475\textwidth]{figures/workflow.pdf}
     \caption{Behavioral consistency management workflow}
     \label{fig:approach}
@@ -321,7 +321,7 @@ For example, each state in a Petri net is defined by a set of tokens distributed
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.45\textwidth]{figures/modelTypes.pdf}
+    \includegraphics[width=0.2\textwidth]{figures/modelTypes.pdf}
     \caption{Behavioral metamodels and snapshot metamodels}
     \label{fig:modelTypes}
 \end{figure}
@@ -432,6 +432,8 @@ In addition, \textsf{Token}s are highlighted with green bubbles in the middle of
 The root of the \gls*{bpmn} snapshot metamodel is the \textsf{ProcessSnapshot}, highlighted in light green.
 
 % Describe the remaining steps of the workflow in detail by/while applying them to the use case.
+\subsection{Formulate behavioral consistency}
+
 \subsection{Define model interactions}
 Structural models in a multi-model might contain related information.
 Thus, current approaches define so-called \emph{commonalities} to explicate these relationships and keep the information consistent \cite{stunkelComprehensiveSystemsFormal2021,klareCommonalitiesPreservingConsistency2019}.
@@ -492,7 +494,9 @@ C} are specified in the following two lines.
 Thus, the interaction defines a synchronization of a task execution and three traffic light transitions. 
 The second interaction defines a synchronization for the task \textsf{Switch to P2} and three other traffic light transitions.
 
-\subsection{Generate execution semantics} \label{subsec:executionSemantics}
+\subsection{Check behavioral consistency}
+
+\subsubsection{Generate execution semantics} \label{subsec:executionSemantics}
 To execute the models, we must be able to represent the global system state, which is composed of the individual states of each behavioral model.
 We call this model the \emph{global snapshot metamodel}.
 
@@ -531,7 +535,7 @@ Generating these execution semantics from the models and interactions must be fu
 Later in the paper, we introduce execution semantics based on rewriting logic in Maude and apply them to the use case.
 However, execution semantics based on graph transformations executable in the Groove tool set also exist. 
 
-\subsection{Check behavioral consistency}
+\subsubsection{Check behavioral consistency}
 We use the previously constructed execution semantics for consistency checking to generate a state space based on a system configuration.
 However, we also need atomic propositions interpreted on the global states to define and check global properties.
 
@@ -569,7 +573,7 @@ In addition, the appendix contains \autoref{fig:allConcepts}, which gives an ove
 
 \section{Maude execution semantics} \label{sec:maude_execution_semantics}
 
-% TODO: Briefly describe maude execution semantics
+% TODO: Briefly describe maude execution semantics.
 
 \section{Related work} \label{sec:related_work}
 This contribution builds on our previous publication \cite{krauterBehavioralConsistencyHeterogeneous2021}.
