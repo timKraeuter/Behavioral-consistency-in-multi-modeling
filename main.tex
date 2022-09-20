@@ -177,7 +177,7 @@ We model two processes, one for the T-Junction and the Bus.
 Each process is modeled in its own \gls*{bpmn} \emph{pool}.
 A pool is depicted as a vertical lane with a name on the left and allows to draw message flows (arrows with dashed lines) between two different pools.
 
-\autoref{fig:t_junction} shows how a possible controller for a T-Junction behaves in the traffic management system\footnote{All models and their source files can be found at \cite{timkrauterBehavioralConsistencyMultimodeling2022}.\label{footnote:fullModels}}.
+\autoref{fig:t_junction} shows how a possible controller for a T-Junction behaves in the traffic management system\footnote{All models and their source files can be found at \cite{krauterBehavioralConsistencyMultimodeling2022}.\label{footnote:fullModels}}.
 When a T-Junction controller is started, we assume that the traffic lights are showing the colors according to phase 1 (see \autoref{fig:junction-phases}).
 Thus, the controller enters a subprocess called phase 1, which we describe later.
 However, when a fixed amount of time has passed, the subprocess is interrupted by the attached timer boundary event.
@@ -426,7 +426,7 @@ The root of the \gls*{bpmn} snapshot metamodel is the \textsf{ProcessSnapshot}, 
 Structural models in a multi-model might contain related information.
 Thus, current approaches define so-called \emph{commonalities} to explicate these relationships and keep the information consistent \cite{stunkelComprehensiveSystemsFormal2021,klareCommonalitiesPreservingConsistency2019}.
 
-To check the behavioral consistency of a system, we are primarily interested in the global system behavior.
+To check the behavioral consistency of a system, we are primarily interested in global system behavior.
 However, global behavior depends not only on the local behavior of the models, but also on their interactions.
 Consequently, we call these inter-model relationships \emph{interactions} since they carry behavioral meaning while commonalities carry structural meaning \cite{krauterBehavioralConsistencyHeterogeneous2021}.
 
@@ -449,7 +449,7 @@ The interaction of behavioral models is only possible through instances of the \
 
 An \textsf{Interaction} has an \textsf{interactionHost}, a set of interaction \textsf{parts} and an \textsf{InteractionType}.
 Currently, there is only the \textsf{synchronous} \textsf{InteractionType}.
-However, more interaction types, for example asynchronous interactions or interactions with data, could be added in the future.
+However, more interaction types, for example, asynchronous interactions or interactions with data, could be added in the future.
 Asynchronous interactions can also be modeled using two synchronous interactions with an additional behavioral model.
 Each \textsf{InteractionPart} references one \textsf{BehavioralRelationship} and one \textsf{StateChangingElement}.
 
@@ -462,7 +462,7 @@ Thus, one can only define interactions for behavioral models connected by behavi
 We allow the definition of as many interactions as desired.
 The interactions restrict the local behavior of the models since some parts of their behavior must synchronize.
 Two interactions sharing state changing elements is forbidden.
-If such a situation occurs it must be resolved by the modeler, for example, by merging the two interactions into one.
+If such a situation occurs, it must be resolved by the modeler, for example, by merging the two interactions into one.
 
 In the use case, the T-Junction controller interacts with the three traffic lights, \textbf{A}, \textbf{B}, and \textbf{C}.
 \autoref{lst:interactions} defines two interactions synchronizing T-Junction controller and the traffic lights, using a textual \gls*{dsl}.
@@ -561,7 +561,7 @@ In addition, the appendix contains \autoref{fig:allConcepts}, which gives an ove
 
 \section{Maude execution semantics} \label{sec:maude_execution_semantics}
 
-% TODO: Briefly describe maude execution semantics.
+% TODO: Briefly describe Maude execution semantics.
 
 \section{Related work} \label{sec:related_work}
 This contribution builds on our previous publication \cite{krauterBehavioralConsistencyHeterogeneous2021}.
@@ -580,12 +580,12 @@ Consequently, they do not consider the general problem of behavioral consistency
 \cite{kienzleUnifyingFrameworkHomogeneous2019} proposes a unifying framework for homogeneous model composition.
 To combine behavioral models, they use Event structures \cite{winskelEventStructures1987} as an underlying formalism and show how different homogeneous behavioral models can be combined.
 Nonetheless, they do not apply their approach to heterogeneous models.
-Generally, their approach is compatible with ours, since we do not mandate a specific formalism in our approach.
-However, we have chosen graph production rules as the first formalism to use in our approach, since they operate on a higher abstraction level.
+Generally, their approach is compatible with ours since we do not mandate a specific formalism in our approach.
+However, we have chosen graph production rules as the first formalism to use in our approach since they operate on a higher abstraction level.
 In addition, it was shown that many formalisms, for example, the $\pi$-calculus \cite{gadducciGraphRewritingPcalculus2007}, can be implemented using graph production rules.
 
 % Gemoc Studio/BCOOL?
-% Approach is quite technical (i.e. execution engine. No formal execution semantics?)
+% Approach is quite technical (i.e., execution engine. No formal execution semantics?)
 \cite{deantoniModelingBehavioralSemantics2016} tackles the problem of dealing with relationships between heterogeneous behavioral models.
 They coordinate the different models using their coordination language B-COoL \cite{varalarsenBCoolBehavioralCoordination2016}, similar to the interactions we define between behavioral models.
 To execute the models and their coordination, they transform them into \gls*{ccsl} models.  
@@ -600,17 +600,18 @@ Neither provides concrete means to define atomic propositions and check global b
 
 \section{State space explosion}
 % TODOS:
-% - Generally we not only support model checking but also simulation.
-% - Real-time systems can also be checked using maude. This could be mentioned somewhere and the oslo papers can be cited.
+% - Generally, we support not only model checking but also simulation.
+% - Real-time systems can also be checked using Maude. This could be mentioned somewhere, and the Oslo papers can be cited.
 
 % Evaluation against other approaches not done yet but part of future work.
-State space explosion is one of the predominant issues when applying model checking to complex systems as they are often found in real-world applications.
+State space explosion is one of the predominant issues when applying model checking to complex systems, as they are often found in real-world applications.
 As one can see in \autoref{table:maudeRuntime} and \autoref{table:grooveRuntime} our approach is not immune to state space explosion.
-The tables show the states, rewrites/transitions and exploration time of a full state space in the Maude and Groove based implementations.
-Four scenarios were executed starting with the use case multi-model without approaching buses and then increasing the number of buses up to three.
+The tables show the states, rewrites/transitions, and average runtime of a full state space exploration in the Maude and Groove-based implementations.
+Four scenarios were benchmarked, starting with the use case multi-model without approaching buses and then increasing the number of buses up to three.
 
-% TODO: Add hyperfine to the repo. Benchmark should run out of the box.
-% TODO: Describe benchmark and methodology (cite hyperfine).
+To calculate the average runtime, we used the hyperfine benchmarking tool \cite{peterHyperfine2022} and ran state space exploration for each scenario ten times.
+Timing evaluations were done on a notebook with an AMD Ryzen PRO 3500U processor and 16 GB of RAM running Maude version 3.2.1 (inside the Windows Subsystem for Linux) and Groove version 5.8.1.
+
 \begin{table}
 \centering
 \begin{tabular}{|c || c | c | c |}
@@ -630,9 +631,7 @@ Four scenarios were executed starting with the use case multi-model without appr
 \label{table:maudeRuntime}
 \end{table}
 
-% TODO: Fill in real specs.
-\footnotetext{The results were obtained using a machine with X processor and Y GB of RAM running Maude version 3.2.1 and Groove version 5.8.1.
-A description how to run the state space exploration can be found at \cite{timkrauterBehavioralConsistencyMultimodeling2022}.}
+\footnotetext{A description how to run the benchmarks can be found at \cite{krauterBehavioralConsistencyMultimodeling2022}.}
 
 \begin{table}
 \centering
@@ -655,25 +654,25 @@ A description how to run the state space exploration can be found at \cite{timkr
 
 % Discussion
 % Full state space is not what you do. You check properties.
-As in our use case one is generally not interest in a full state space exploration as in \autoref{table:maudeRuntime} and \autoref{table:grooveRuntime} but rather the validity of a set of behavioral properties.
+As in our use case, one is generally not interested in a full state space exploration as in \autoref{table:maudeRuntime} and \autoref{table:grooveRuntime} but rather in the validity of a set of behavioral properties.
 Checking, for example, a property specified in \gls*{ltl}, does not necessarily lead to a full state space exploration.
 Furthermore, not every property is concerned with all behavioral models.
-For example, property (1) and (2) of the use case do not involve buses and can be checked on the much smaller state spaces not including approaching buses.
+For example, properties (1) and (2) of the use case do not involve buses and can be checked on the much smaller state spaces, not including approaching buses.
 In addition, checking a set of properties can be run in parallel.
 If some properties show to be computationally expensive, they can be run on dedicated hardware, for example, during a continuous integration pipeline once a day in case of behavioral model or interaction changes.
 Thus, checking the consistency of a multi-model can be seen as an additional test during \gls*{mde}, which can be run locally but, in addition, is a vital part of continuous integration.
 
 % Ways to mitigate state space explosion.
 The Maude \gls*{ltl} model-checker has performance comparable to the popular SPIN model checker \cite{ekerMaudeLTLModel2004} and thus is proven to have a good performance.
-However, one could use different techniques to further mitigate the state space explosion problem.
-One technique is to abstract models further such that they only contain information relevant for the set of properties to be checked.
-Thus, minimal models are synchronized leading to smaller state spaces.
+However, one could use different techniques to mitigate the state space explosion problem further.
+One technique is to abstract models further such that they only contain information relevant to the set of properties to be checked.
+Thus, minimal models are synchronized, leading to smaller state spaces.
 However, finding correct minimal models might not be trivial.
 
 Partial-order reduction is a well-known and successful technique to mitigate the state space explosion problem.
-It is currently not implemented in the Maude LTL model-checker but there is promising work to integrate partial-order reduction into the model-checker \cite{farzanPartialOrderReduction2007}, showing substantial state space reductions.
+It is currently not implemented in the Maude LTL model-checker, but there is promising work to integrate partial-order reduction into the model-checker \cite{farzanPartialOrderReduction2007}, showing substantial state space reductions.
 The potential to reduce the state space using this technique is huge, especially for model-checking concurrent systems \cite{clarkeHandbookModelChecking2018}.
-The systems our approach analyzes are concurrent systems with some interaction and thus model-checking would greatly benefit from partial-order reduction.
+Our approach analyzes concurrent systems with some interaction, and thus model-checking would greatly benefit from partial-order reduction.
 Partial-order reduction is most likely a must to analyze models from real-world applications.
 
 \section{Conclusion and future work} \label{sec:conclusion_and_future_work}
@@ -686,7 +685,7 @@ Our approach follows three key steps (see \autoref{fig:approach}).
 First, we align the behavioral models by defining their interactions.
 Then, we generate global execution semantics based on the defined interactions while preserving the original behavior of the models.
 Finally, we can check the global consistency of the system in different configurations with varying consistency requirements using the generated semantics.
-Although our approach is independent of a particular formalism as an underlying global execution semantics, the current implementation utilizes graph transformations for this purpose.
+Although our approach is independent of a particular formalism as an underlying global execution semantics, the current implementation utilizes graph transformations.
 
 It is also interesting to extend the execution semantics to include other behavioral formalisms such as activity diagrams, hierarchical state machines, and the $\pi$-calculus.
 Especially integrating the $\pi$-calculus, which was formalized using graph grammars in \cite{gadducciGraphRewritingPcalculus2007}, will be beneficial since it is profoundly different from the currently supported formalisms.
@@ -697,7 +696,7 @@ The exchanged data then greatly influences the future behavior of the systems.
 Thus, adding data transfers to interactions between heterogeneous models is an important issue left for future work.
 
 % Runtime verification
-Finally, it is important to check that running systems are behaving as specified in their behavioral models including the defined interactions between them.
+Finally, it is important to check that running systems are behaving as specified in their behavioral models, including the defined interactions between them.
 Thus, extending runtime verification techniques to include systems specified by a multi-model with interactions constitutes a challenging problem.
 % Could write about continuous time models to be included in the future.
 
