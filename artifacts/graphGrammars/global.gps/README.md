@@ -12,7 +12,7 @@ Then load the example by clicking ```File < Load Grammar``` and selecting the fo
 Using the generated production rules from the BPMN models, one can analyze different system configurations.
 
 For example, we can analyze the T-Junction without buses while it interacts with the traffic lights.
-With the corresponding start graph ```No_Buses_Property_1_and_2```, we generate the state space,
+With the corresponding start graph ```No_Buses```, we generate the state space,
 which has 168 states and 438 transitions (886 with graph conditions activated).
 
 The final state (a state without outgoing transitions) is the following:
@@ -22,7 +22,7 @@ The final state (a state without outgoing transitions) is the following:
 This state describes the situation in which the T-Junction controller stopped and
 the traffic lights were just in phase 1, and are now ready to switch to phase 2.
 
-Analyzing the T-Junction, with a bus approaching from direction B (start graph ```junction_with_B2```),
+Analyzing the T-Junction, with a bus approaching from direction B (start graph ```B2```),
 leads to a state space of 2888 states and 10046 transitions (17814 with graph conditions activated).
 
 One of the three final states is the following:
@@ -34,7 +34,7 @@ and the T-Junction controller stopped.
 The traffic lights are in phase 1 and ready to switch to phase 2.
 
 The configuration with buses approaching from directions A and B
-can be analyzed using the start graph ```junction_with_B1_and_B2```.
+can be analyzed using the start graph ```B1_and_B2```.
 It leads to a state space of 61848 states and 279926 (448606 with graph conditions activated).
 
 One of the nine final states is the following:
@@ -54,8 +54,8 @@ G!((A_green | A_amber) & (B_green | B_amber))
 ```
 G!((C_green | C_amber) & (B_green | B_amber))
 ```
-To check properties 1 or 2, use the start graph ```No_Buses_Property_1_and_2``` for faster state space generation,
-while for properties 3/4, one must use ```junction_with_B1```/```junction_with_B2``` or ```junction_with_B1_and_B2```.
+To check properties 1 or 2, use the start graph ```No_Buses``` for faster state space generation,
+while for properties 3/4, one must use ```B1```/```B2``` or ```B1_and_B2```.
 
 **Property (3):**
 ```
@@ -74,27 +74,6 @@ One can check the properties in the following way:
 ![check ltl property](./check_ltl.png)
 
 Properties (1) and (2) hold, while (3) and (4) do **not** hold.
-
-## State space exploration
-
-Run the state space exploration, by executing the following commands (in this directory).
-- No buses: 
-    ``` 
-    java -jar ../groove-5_8_1/bin/Generator.jar ../global.gps No_Buses_Property_1_and_2
-    ```
-
-- 1 bus:
-    ```
-    java -jar ../groove-5_8_1/bin/Generator.jar ../global.gps junction_with_B1
-    ```
-- 2 buses:
-    ```
-    java -jar ../groove-5_8_1/bin/Generator.jar ../global.gps junction_with_B1_and_B2
-    ```
-- 3 buses:
-    ```
-    java -jar ../groove-5_8_1/bin/Generator.jar ../global.gps junction_with_three_buses
-    ```
 
 ## Further resources:
 - Groove Demo: [Basic functionality](https://www.youtube.com/watch?v=R2beaSQ9-NM).

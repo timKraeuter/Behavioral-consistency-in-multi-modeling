@@ -1,3 +1,9 @@
+# Prerequisite
+Install the command-line benchmark tool [hyperfine](https://github.com/sharkdp/hyperfine#installation).
+The benchmark were run with hyperfine version **1.15.0**. See the _full benchmark_ command below.
+
+The hyperfine windows release **1.15.0** is contained in `artifacts/dependencies`.
+
 # Groove use case benchmarks
 
 Single benchmark for a given start graph (No_Buses):
