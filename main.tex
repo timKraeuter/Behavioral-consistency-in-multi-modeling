@@ -234,7 +234,7 @@ In addition, it contains enumerations to parameterize the behavioral models.
     \centering
     \includegraphics[width=0.45\textwidth]{figures/systems.pdf}
     \caption{System relationship model of the traffic management system}
-    \label{fig:systemInteractionModel}
+    \label{fig:systemRelationshipModel}
 \end{figure}
 
 A \textsf{TJunction} has three associated \textsf{TrafficLight}s, A, B, and C, and a set of currently approaching \textsf{Bus}es.
@@ -338,10 +338,10 @@ Thus, a system relationship model does \emph{not} describe the structure of a sy
 The behavioral relationships will be crucial to define interactions between the models in the first step of our approach.
 
 In addition, we allow enumerations and their use as attributes for behavioral models in the system relationship model.
-This helps not to duplicate behavioral models because we can use the attributes as parameters, for example, to define the start state in a state machine (see \autoref{fig:systemInteractionModel}).
+This helps not to duplicate behavioral models because we can use the attributes as parameters, for example, to define the start state in a state machine (see \autoref{fig:systemRelationshipModel}).
 Different instances of the system relationship model can be used to analyze the global behavior of \emph{different} system configurations by changing the attribute values and behavioral model instances.
 
-The system relationship model in the use case (see \autoref{fig:systemInteractionModel}) contains three classes corresponding to the traffic light, T-Junction, and Bus behavioral models.
+The system relationship model in the use case (see \autoref{fig:systemRelationshipModel}) contains three classes corresponding to the traffic light, T-Junction, and Bus behavioral models.
 A T-Junction has three relationships with the traffic light, which allows the T-Junction to interact with up to three traffic lights.
 In addition, we can analyze different scenarios by adding buses approaching from particular directions.
 
@@ -380,15 +380,28 @@ A \textsf{FlowNode} can be an \textsf{Activity}, \textsf{Gateway}, or \textsf{Ev
 Concrete activities, gateways and events are defined in the full \gls*{bpmn} metamodel \cite{objectmanagementgroupBusinessProcessModel2013}. % See BPMN class diagrams in figures 10.104/10.6/10.69.
 
 \subsection{Formulate behavioral consistency}
-% Come up with a system relationship model (potentially driven by the atomic properties).
-% snapshot metamodel
-\subsubsection{Snapshot metamodels}
-The provided metamodels are used to structurally define all possible models by requiring a typing from each model to its metamodel.
-In addition, we can add constraints to restrict all typed models further.
+% Create a system relationship model (driven by the atomic properties and potential interactions).
+The \textbf{first step} to formulate behavioral consistency is to create a system relationship model for the given multi-model.
+Typically, each behavior model in the multi-model is represented in the system relationship model, depicted as a box (see \autoref{fig:systemRelationshipMetamodel}.
+In addition, one has to add behavioral relationships between the behavioral models.
+To find out which behavioral relationships exist one should look at the desired interactions of the behaviors in the multi-model and the desired global behavioral properties.
 
-However, we need additional or different concepts from those in the metamodel to describe the structure of instances of the behavioral models during execution.
-Consequently, we introduce a new model type called the \emph{snapshot metamodel}, which defines the structure of a state for a given formalism (see \autoref{fig:systemRelationshipMetamodel}).
+First, interactions in the second step of the workflow can only be defined if there exists a behavioral relationship between the interacting behaviors.
+Second, if a global property applies to two behavioral models then there should be a behavioral relationship between the models.
+Otherwise, the global property could be divided into two local properties, which could be checked independently on the two behavioral models.
 
+For example, the system relationship model for the use case (see \autoref{fig:systemRelationshipModel}) has three behavioral relationships from \textsf{TJunction} to \textsf{TrafficLight} since a T-Junction controller interacts with three different traffic lights A, B and C.
+Furthermore, there is a behavioral relationship from \textsf{TJunction} to \textsf{Bus} because we want to check the safety properties \ref{eq:property3} and \ref{eq:property4}. 
+
+% Properties describe snapshots of systems thus we need additional models. The snapshot metamodels.
+The \textbf{second step} to formulate behavioral consistency is to define the global behavioral properties.
+These properties are defined using temporal logic, for example, \gls*{ltl} in the use case.
+Temporal logic properties are build upon a set of atomic propositions which are either true or false in a given state.
+However, there is currently no model describing how a state/\emph{snapshot} of a behavioral model is represented during execution.
+Consequently, we introduce a new model type called the \emph{snapshot metamodel}, which defines the structure of a state for a given formalism.
+There must be one snapshot metamodel for each formalism used in the multi-model.
+
+For example, in the use case we define a snapshot metamodel for state machines and \gls*{bpmn}.
 The snapshot metamodel for a state machine is straightforward, since a state machine can only be in one state at a time, as shown in \autoref{fig:fsm_snapshot_model}.
 Since we are only interested in the current state and not the history of states, we call this a \emph{state machine snapshot}.
 We are reusing the concrete syntax elements from the metamodel level.
@@ -420,7 +433,54 @@ A flow element can be any element appearing in a \textsf{Process} flow such as f
 In addition, \textsf{Token}s are highlighted with green bubbles in the middle of sequence flows or the top right of an activity.
 The root of the \gls*{bpmn} snapshot metamodel is the \textsf{ProcessSnapshot}, highlighted in light green.
 
-% Describe the remaining steps of the workflow in detail by/while applying them to the use case.
+% Propositions need the global snapshot metamodel
+Using the snapshot metamodels, one can only define atomic propositions for one model not spanning multiple models.
+Thus, we must somehow merge all snapshot metamodels and the system relationship model into one model, describing a state/snapshot of the multi-model.
+We call this model the \emph{global snapshot metamodel}.
+
+% Merge description
+To calculate the global snapshot metamodel, one must merge all snapshot metamodels with the system relationship model.
+The first step is to add all model elements to one global model, i.e., calculating their disjoint\footnote{Possible conflicts due to the naming of model elements can be resolved by user input or a fixed strategy, for example, prefixing model elements with the model name.} union.
+
+The second step is adding inheritance relations to connect behavioral models in the system relationship model with their corresponding snapshot metamodels.
+Each behavioral model is typed in a behavioral metamodel, which has a snapshot metamodel (\autoref{fig:systemRelationshipMetamodel}) structurally describing its state.
+Thus, we know how the states of each behavioral model are structured by referring to its metamodel.
+We make this knowledge explicit by adding an inheritance relation for each behavioral model to the root of the corresponding snapshot metamodel.
+The resulting artifact, the \emph{global snapshot metamodel}, describes all possible states of the global system since each behavioral model inherits a description of its state.
+
+% Merge example
+\autoref{fig:global_execution_model} depicts the global snapshot metamodel $M_s^+$ for the use case, describing the states of the traffic management system.
+We added three inheritance relations to construct $M_s^+$ for the use case and omitted unchanged parts from the system relationship model and the individual snapshot metamodels.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.475\textwidth]{figures/global_s_model.pdf}
+    \caption{Global snapshot metamodel $M_s^+$ for the use case}
+    \label{fig:global_execution_model}
+\end{figure}
+
+% Use case example propositions
+Atomic propositions are formulated by providing an instance of $M_s^+$.
+For example, \autoref{fig:atomic_propositions} shows how to formulate the atomic propositions $A_{green}$ and $B1_{passing}$, used in the global properties, stated earlier.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.475\textwidth]{figures/atomic_props.pdf}
+    \caption{Atomic propositions $A_{green}$ and $B1_{passing}$}
+    \label{fig:atomic_propositions}
+\end{figure}
+
+Alternatively, to make formulating atomic propositions less cumbersome, one can use the concrete syntax of the individual snapshot metamodels to formulate atomic propositions.
+For example, \autoref{fig:atomic_propositions_concrete} shows the same atomic propositions as \autoref{fig:atomic_propositions} but uses the introduced concrete syntax.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.4\textwidth]{figures/atomic_props_concrete.pdf}
+    \caption{Concrete syntax for $A_{green}$ and $B1_{passing}$}
+    \label{fig:atomic_propositions_concrete}
+\end{figure}
+
+Based upon the defined atomic propositions, one can then use temporal logic to define global behavioral properties such as the propositions \ref{eq:property1}-\ref{eq:property4} earlier.
 
 \subsection{Define model interactions}
 Structural models in a multi-model might contain related information.
@@ -474,7 +534,7 @@ language=Interaction,
 caption=Interactions for the use case]{figures/interactions.txt}
 
 We can explain the interactions as follows.
-The first line defines that the interactions are specified from the viewpoint of the T-Junction in the system relationship model, i.e., \autoref{fig:systemInteractionModel}.
+The first line defines that the interactions are specified from the viewpoint of the T-Junction in the system relationship model, i.e., \autoref{fig:systemRelationshipModel}.
 The first interaction defines that the task \textsf{Switch to P1} and three other state changing elements synchronize.
 Furthermore, line 3 specifies that one of the synchronization partners is the element \textit{turn green} connected by the relationship \textit{A}.
 Similarly, two other transitions of the traffic lights \textit{B} and \textit{
@@ -486,26 +546,6 @@ The second interaction defines a synchronization for the task \textsf{Switch to 
 
 \subsubsection{Generate execution semantics} \label{subsec:executionSemantics}
 To execute the models, we must be able to represent the global system state, which is composed of the individual states of each behavioral model.
-We call this model the \emph{global snapshot metamodel}.
-
-To calculate the global snapshot metamodel, one must merge all snapshot metamodels with the system relationship model.
-The first step is to add all model elements to one global model, i.e., calculating their disjoint\footnote{Possible conflicts due to the naming of model elements can be resolved by user input or a fixed strategy, for example, prefixing model elements with the model name.} union.
-
-The second step is adding inheritance relations to connect behavioral models in the system relationship model with their corresponding snapshot metamodels.
-Each behavioral model is typed in a behavioral metamodel, which has a snapshot metamodel (\autoref{fig:systemRelationshipMetamodel}) structurally describing its state.
-Thus, we know how the states of each behavioral model are structured by referring to its metamodel.
-We make this knowledge explicit by adding an inheritance relation for each behavioral model to the root of the corresponding snapshot metamodel.
-The resulting artifact, the \emph{global snapshot metamodel}, describes all possible states of the global system, since each behavioral model inherits a description of its state.
-
-\autoref{fig:global_execution_model} depicts the global snapshot metamodel $M_s^+$ for the use case, describing the states of the traffic management system.
-We added three inheritance relations to construct $M_s^+$ for the use case and omitted unchanged parts from the system relationship model and the individual snapshot metamodels.
-
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.475\textwidth]{figures/global_s_model.pdf}
-    \caption{Global snapshot metamodel $M_s^+$ for the use case}
-    \label{fig:global_execution_model}
-\end{figure}
 
 With the global snapshot metamodel, we can represent the global states of the system, but we still need execution semantics to generate a state space to check the properties.
 The execution semantics used in our approach must fulfill the following three requirements:
@@ -527,32 +567,10 @@ However, execution semantics based on graph transformations executable in the Gr
 We use the previously constructed execution semantics for consistency checking to generate a state space based on a system configuration.
 However, we also need atomic propositions interpreted on the global states to define and check global properties.
 
-Atomic propositions must be formulated uniformly for all used behavioral models.
-We propose to use the global snapshot metamodel $M_s^+$ to formulate atomic propositions by providing an instance of it for each atomic proposition.
-\autoref{fig:atomic_propositions} shows how to formulate the atomic propositions $A_{green}$ and $B1_{passing}$, used in the global properties, stated earlier.
-Varying propositions with more or less complexity can be formulated using this approach.
-
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.475\textwidth]{figures/atomic_props.pdf}
-    \caption{Atomic propositions $A_{green}$ and $B1_{passing}$}
-    \label{fig:atomic_propositions}
-\end{figure}
-
 Since each state is an instance of $M_s^+$, we can interpret the constructed atomic propositions on the states.
 An atomic proposition is true for a state if the corresponding instance of $M_s^+$ contains the atomic proposition.
 Then, we can check consistency requirements on the generated state space.
 This step should be fully automated, such that it can be executed as many times as needed (indicated by the loop in \autoref{fig:approach}) for different system configurations and consistency requirements (including atomic propositions).
-
-Alternatively, to make formulating atomic propositions less cumbersome, one can use the concrete syntax of the individual snapshot metamodels to formulate atomic propositions.
-For example, \autoref{fig:atomic_propositions_concrete} shows the same atomic propositions as \autoref{fig:atomic_propositions} but uses the introduced concrete syntax.
-
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.4\textwidth]{figures/atomic_props_concrete.pdf}
-    \caption{Concrete syntax for $A_{green}$ and $B1_{passing}$}
-    \label{fig:atomic_propositions_concrete}
-\end{figure}
 
 Finally, if a consistency requirement is violated, a counterexample based on the state space should be presented to the user.
 An unsuccessful consistency check leads to a consistency restoration process, which is crucial but out of scope for this contribution.
