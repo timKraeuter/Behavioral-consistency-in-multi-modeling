@@ -609,20 +609,20 @@ As one can see in \autoref{table:maudeRuntime} and \autoref{table:grooveRuntime}
 The tables show the states, rewrites/transitions and exploration time of a full state space in the Maude and Groove based implementations.
 Four scenarios were executed starting with the use case multi-model without approaching buses and then increasing the number of buses up to three.
 
-% Would be nice to have the experiment fully automized(running each instance 5x or more times and calculating the averge time)
+% TODO: Describe benchmark and methodology (cite hyperfine).
 \begin{table}
 \centering
 \begin{tabular}{|c || c | c | c |}
  \hline
  Use case & States & Rewrites & Exploration time \\
  \hline\hline
- No buses & 168 & 663 & \textasciitilde 10 ms \\
+ No buses & 168 & 663 & \textasciitilde 60 ms \\
  \hline
- 1 bus & 3.304 & 20.117 & \textasciitilde 190 ms \\
+ 1 bus & 3.304 & 20.117 & \textasciitilde 243 ms \\
  \hline
- 2 buses & 67.624 & 549.509 & \textasciitilde 5.500 ms \\
+ 2 buses & 35.280 & 28.2975 & \textasciitilde 2.582 ms \\
  \hline
- 3 buses & 716.912 & 7.183.505 & \textasciitilde 69.600 ms \\
+ 3 buses & 260.176 & 2.555.701 & \textasciitilde 22.719 ms \\
  \hline
 \end{tabular}
 \caption[State space exploration in Maude]{State space exploration in Maude\footnotemark}
@@ -633,6 +633,9 @@ Four scenarios were executed starting with the use case multi-model without appr
 \footnotetext{The results were obtained using a machine with X processor and Y GB of RAM running Maude version 3.2.1 and Groove version 5.8.1.
 A description how to run the state space exploration can be found at \cite{timkrauterBehavioralConsistencyMultimodeling2022}.}
 
+% TODO: Add hyperfine to the repo. Benchmark should run out of the box.
+% TODO: Run and fill in state data.
+% TODO: Run and fill in benchmark data.
 \begin{table}
 \centering
 \begin{tabular}{|c || c | c | c |}
