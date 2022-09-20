@@ -259,14 +259,24 @@ mod COMBINED is
         A : < "trafficLight" : FSM | state : "green" > ,
         B : < "trafficLight" : FSM | state : "red" >,
         C : < "trafficLight" : FSM | state : "green" > > .
-    op systemConfigThreeBuses : -> Configuration .
-    eq systemConfigThreeBuses =
+    op systemConfigTwoBuses : -> Configuration .
+    eq systemConfigTwoBuses =
     < "1" : T-Junction |
         process : < "use-case-execution" : BPMNSystem | messages : (none), processes : (
                       < "Bus controller (B)" : ProcessSnapshot | tokens : ("Approaching_junction (Event_16ki5g9)"), signals : (none), subprocesses : (none), state : Running >
                       < "Bus controller (B)" : ProcessSnapshot | tokens : ("Approaching_junction (Event_16ki5g9)"), signals : (none), subprocesses : (none), state : Running >
+                      < "T-Junction controller" : ProcessSnapshot | tokens : ("Controller_started (Event_0e1tcn5)"), signals : (none), subprocesses : (none), state : Running >) >,
+        A : < "trafficLight" : FSM | state : "green" > ,
+        B : < "trafficLight" : FSM | state : "red" >,
+        C : < "trafficLight" : FSM | state : "green" > > .
+    op systemConfigThreeBuses : -> Configuration .
+    eq systemConfigThreeBuses =
+    < "1" : T-Junction |
+        process : < "use-case-execution" : BPMNSystem | messages : (none), processes : (
                       < "T-Junction controller" : ProcessSnapshot | tokens : ("Controller_started (Event_0e1tcn5)"), signals : (none), subprocesses : (none), state : Running >
-                      < "Bus controller (A)" : ProcessSnapshot | tokens : ("Approaching_junction (Event_0xodosv)"), signals : (none), subprocesses : (none), state : Running >) >,
+                      < "Bus controller (B)" : ProcessSnapshot | tokens : ("Approaching_junction (Event_16ki5g9)"), signals : (none), subprocesses : (none), state : Running >
+                      < "Bus controller (B)" : ProcessSnapshot | tokens : ("Approaching_junction (Event_16ki5g9)"), signals : (none), subprocesses : (none), state : Running >
+                      < "Bus controller (B)" : ProcessSnapshot | tokens : ("Approaching_junction (Event_16ki5g9)"), signals : (none), subprocesses : (none), state : Running >) >,
         A : < "trafficLight" : FSM | state : "green" > ,
         B : < "trafficLight" : FSM | state : "red" >,
         C : < "trafficLight" : FSM | state : "green" > > .
