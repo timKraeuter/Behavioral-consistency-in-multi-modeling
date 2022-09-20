@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <gxl xmlns="http://www.gupro.de/GXL/gxl-1.0.dtd">
-    <graph role="graph" edgeids="false" edgemode="directed" id="junction_with_B2">
+    <graph role="graph" edgeids="false" edgemode="directed" id="B2">
         <attr name="$version">
             <string>curly</string>
         </attr>
@@ -114,14 +114,19 @@
                 <string>793 753 44 18</string>
             </attr>
         </node>
-        <edge from="n0" to="n1">
+        <edge from="n0" to="n5">
             <attr name="label">
-                <string>name</string>
+                <string>approaching</string>
             </attr>
         </edge>
         <edge from="n0" to="n13">
             <attr name="label">
                 <string>B</string>
+            </attr>
+        </edge>
+        <edge from="n0" to="n1">
+            <attr name="label">
+                <string>name</string>
             </attr>
         </edge>
         <edge from="n0" to="n0">
@@ -134,14 +139,9 @@
                 <string>state</string>
             </attr>
         </edge>
-        <edge from="n0" to="n16">
+        <edge from="n0" to="n21">
             <attr name="label">
-                <string>A</string>
-            </attr>
-        </edge>
-        <edge from="n0" to="n5">
-            <attr name="label">
-                <string>approaching</string>
+                <string>C</string>
             </attr>
         </edge>
         <edge from="n0" to="n3">
@@ -149,9 +149,9 @@
                 <string>tokens</string>
             </attr>
         </edge>
-        <edge from="n0" to="n21">
+        <edge from="n0" to="n16">
             <attr name="label">
-                <string>C</string>
+                <string>A</string>
             </attr>
         </edge>
         <edge from="n1" to="n1">
@@ -179,11 +179,6 @@
                 <string>string:"T-Junction Controller_controller_started"</string>
             </attr>
         </edge>
-        <edge from="n5" to="n7">
-            <attr name="label">
-                <string>state</string>
-            </attr>
-        </edge>
         <edge from="n5" to="n8">
             <attr name="label">
                 <string>tokens</string>
@@ -197,6 +192,11 @@
         <edge from="n5" to="n6">
             <attr name="label">
                 <string>name</string>
+            </attr>
+        </edge>
+        <edge from="n5" to="n7">
+            <attr name="label">
+                <string>state</string>
             </attr>
         </edge>
         <edge from="n6" to="n6">
@@ -239,14 +239,14 @@
                 <string>currentState</string>
             </attr>
         </edge>
-        <edge from="n12" to="n12">
-            <attr name="label">
-                <string>type:State</string>
-            </attr>
-        </edge>
         <edge from="n12" to="n10">
             <attr name="label">
                 <string>name</string>
+            </attr>
+        </edge>
+        <edge from="n12" to="n12">
+            <attr name="label">
+                <string>type:State</string>
             </attr>
         </edge>
         <edge from="n11" to="n11">
@@ -294,14 +294,14 @@
                 <string>string:"green"</string>
             </attr>
         </edge>
-        <edge from="n21" to="n21">
-            <attr name="label">
-                <string>type:TrafficLight</string>
-            </attr>
-        </edge>
         <edge from="n21" to="n18">
             <attr name="label">
                 <string>name</string>
+            </attr>
+        </edge>
+        <edge from="n21" to="n21">
+            <attr name="label">
+                <string>type:TrafficLight</string>
             </attr>
         </edge>
         <edge from="n21" to="n20">
@@ -309,14 +309,14 @@
                 <string>currentState</string>
             </attr>
         </edge>
-        <edge from="n20" to="n19">
-            <attr name="label">
-                <string>name</string>
-            </attr>
-        </edge>
         <edge from="n20" to="n20">
             <attr name="label">
                 <string>type:State</string>
+            </attr>
+        </edge>
+        <edge from="n20" to="n19">
+            <attr name="label">
+                <string>name</string>
             </attr>
         </edge>
         <edge from="n18" to="n18">

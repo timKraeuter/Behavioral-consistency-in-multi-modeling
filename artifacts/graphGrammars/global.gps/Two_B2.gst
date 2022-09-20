@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <gxl xmlns="http://www.gupro.de/GXL/gxl-1.0.dtd">
-    <graph role="graph" edgeids="false" edgemode="directed" id="junction_with_three_buses_without_tls">
+    <graph role="graph" edgeids="false" edgemode="directed" id="Two_B2">
         <attr name="$version">
             <string>curly</string>
         </attr>
         <node id="n0">
             <attr name="layout">
-                <string>240 410 61 18</string>
+                <string>239 410 61 18</string>
             </attr>
         </node>
         <node id="n1">
             <attr name="layout">
-                <string>300 301 131 18</string>
+                <string>41 311 131 18</string>
             </attr>
         </node>
         <node id="n2">
@@ -26,32 +26,67 @@
         </node>
         <node id="n4">
             <attr name="layout">
-                <string>764 523 238 18</string>
+                <string>763 522 238 18</string>
             </attr>
         </node>
-        <node id="n5">
+        <node id="n13">
             <attr name="layout">
-                <string>182 109 22 18</string>
+                <string>509 604 72 18</string>
             </attr>
         </node>
-        <node id="n6">
+        <node id="n12">
             <attr name="layout">
-                <string>123 42 110 18</string>
+                <string>529 684 31 18</string>
             </attr>
         </node>
-        <node id="n7">
+        <node id="n11">
             <attr name="layout">
-                <string>361 112 52 18</string>
+                <string>385 599 71 18</string>
             </attr>
         </node>
-        <node id="n8">
+        <node id="n10">
             <attr name="layout">
-                <string>448 200 38 18</string>
+                <string>523 754 30 18</string>
             </attr>
         </node>
-        <node id="n9">
+        <node id="n16">
             <attr name="layout">
-                <string>561 195 255 18</string>
+                <string>243 606 72 18</string>
+            </attr>
+        </node>
+        <node id="n17">
+            <attr name="layout">
+                <string>259 684 31 18</string>
+            </attr>
+        </node>
+        <node id="n14">
+            <attr name="layout">
+                <string>88 604 71 18</string>
+            </attr>
+        </node>
+        <node id="n15">
+            <attr name="layout">
+                <string>240 757 44 18</string>
+            </attr>
+        </node>
+        <node id="n21">
+            <attr name="layout">
+                <string>795 601 72 18</string>
+            </attr>
+        </node>
+        <node id="n20">
+            <attr name="layout">
+                <string>811 679 31 18</string>
+            </attr>
+        </node>
+        <node id="n18">
+            <attr name="layout">
+                <string>640 599 71 18</string>
+            </attr>
+        </node>
+        <node id="n19">
+            <attr name="layout">
+                <string>792 752 44 18</string>
             </attr>
         </node>
         <node id="n23">
@@ -61,7 +96,7 @@
         </node>
         <node id="n26">
             <attr name="layout">
-                <string>784 291 109 18</string>
+                <string>784 290 109 18</string>
             </attr>
         </node>
         <node id="n24">
@@ -71,37 +106,37 @@
         </node>
         <node id="n25">
             <attr name="layout">
-                <string>911 432 38 18</string>
+                <string>910 432 38 18</string>
             </attr>
         </node>
         <node id="n22">
             <attr name="layout">
-                <string>1089 437 253 18</string>
+                <string>1089 436 253 18</string>
             </attr>
         </node>
         <node id="n29">
             <attr name="layout">
-                <string>856 229 22 18</string>
+                <string>533 145 22 18</string>
             </attr>
         </node>
         <node id="n31">
             <attr name="layout">
-                <string>1039 210 109 18</string>
+                <string>564 41 109 18</string>
             </attr>
         </node>
         <node id="n28">
             <attr name="layout">
-                <string>1207 276 52 18</string>
+                <string>736 112 52 18</string>
             </attr>
         </node>
         <node id="n30">
             <attr name="layout">
-                <string>1165 361 38 18</string>
+                <string>723 229 38 18</string>
             </attr>
         </node>
         <node id="n27">
             <attr name="layout">
-                <string>1343 366 253 18</string>
+                <string>852 192 253 18</string>
             </attr>
         </node>
         <edge from="n0" to="n0">
@@ -109,17 +144,27 @@
                 <string>type:TJunction</string>
             </attr>
         </edge>
+        <edge from="n0" to="n16">
+            <attr name="label">
+                <string>A</string>
+            </attr>
+        </edge>
         <edge from="n0" to="n2">
             <attr name="label">
                 <string>state</string>
             </attr>
         </edge>
-        <edge from="n0" to="n23">
+        <edge from="n0" to="n21">
             <attr name="label">
-                <string>approaching</string>
+                <string>C</string>
             </attr>
         </edge>
-        <edge from="n0" to="n5">
+        <edge from="n0" to="n13">
+            <attr name="label">
+                <string>B</string>
+            </attr>
+        </edge>
+        <edge from="n0" to="n23">
             <attr name="label">
                 <string>approaching</string>
             </attr>
@@ -129,14 +174,14 @@
                 <string>tokens</string>
             </attr>
         </edge>
-        <edge from="n0" to="n1">
-            <attr name="label">
-                <string>name</string>
-            </attr>
-        </edge>
         <edge from="n0" to="n29">
             <attr name="label">
                 <string>approaching</string>
+            </attr>
+        </edge>
+        <edge from="n0" to="n1">
+            <attr name="label">
+                <string>name</string>
             </attr>
         </edge>
         <edge from="n1" to="n1">
@@ -164,49 +209,114 @@
                 <string>string:"T-Junction Controller_controller_started"</string>
             </attr>
         </edge>
-        <edge from="n5" to="n5">
-            <attr name="label">
-                <string>type:Bus</string>
-            </attr>
-        </edge>
-        <edge from="n5" to="n6">
+        <edge from="n13" to="n11">
             <attr name="label">
                 <string>name</string>
             </attr>
         </edge>
-        <edge from="n5" to="n8">
+        <edge from="n13" to="n12">
             <attr name="label">
-                <string>tokens</string>
+                <string>currentState</string>
             </attr>
         </edge>
-        <edge from="n5" to="n7">
+        <edge from="n13" to="n13">
             <attr name="label">
-                <string>state</string>
+                <string>type:TrafficLight</string>
             </attr>
         </edge>
-        <edge from="n6" to="n6">
+        <edge from="n12" to="n10">
             <attr name="label">
-                <string>string:"Bus controller (A)"</string>
+                <string>name</string>
             </attr>
         </edge>
-        <edge from="n7" to="n7">
+        <edge from="n12" to="n12">
             <attr name="label">
-                <string>type:Running</string>
+                <string>type:State</string>
             </attr>
         </edge>
-        <edge from="n8" to="n8">
+        <edge from="n11" to="n11">
             <attr name="label">
-                <string>type:Token</string>
+                <string>string:"trafficLight"</string>
             </attr>
         </edge>
-        <edge from="n8" to="n9">
+        <edge from="n10" to="n10">
             <attr name="label">
-                <string>position</string>
+                <string>string:"red"</string>
             </attr>
         </edge>
-        <edge from="n9" to="n9">
+        <edge from="n16" to="n17">
             <attr name="label">
-                <string>string:"Bus controller (A)_Approaching_Junction_A"</string>
+                <string>currentState</string>
+            </attr>
+        </edge>
+        <edge from="n16" to="n14">
+            <attr name="label">
+                <string>name</string>
+            </attr>
+        </edge>
+        <edge from="n16" to="n16">
+            <attr name="label">
+                <string>type:TrafficLight</string>
+            </attr>
+        </edge>
+        <edge from="n17" to="n17">
+            <attr name="label">
+                <string>type:State</string>
+            </attr>
+        </edge>
+        <edge from="n17" to="n15">
+            <attr name="label">
+                <string>name</string>
+            </attr>
+        </edge>
+        <edge from="n14" to="n14">
+            <attr name="label">
+                <string>string:"trafficLight"</string>
+            </attr>
+        </edge>
+        <edge from="n15" to="n15">
+            <attr name="label">
+                <string>string:"green"</string>
+            </attr>
+        </edge>
+        <edge from="n21" to="n21">
+            <attr name="label">
+                <string>type:TrafficLight</string>
+            </attr>
+        </edge>
+        <edge from="n21" to="n20">
+            <attr name="label">
+                <string>currentState</string>
+            </attr>
+        </edge>
+        <edge from="n21" to="n18">
+            <attr name="label">
+                <string>name</string>
+            </attr>
+        </edge>
+        <edge from="n20" to="n20">
+            <attr name="label">
+                <string>type:State</string>
+            </attr>
+        </edge>
+        <edge from="n20" to="n19">
+            <attr name="label">
+                <string>name</string>
+            </attr>
+        </edge>
+        <edge from="n18" to="n18">
+            <attr name="label">
+                <string>string:"trafficLight"</string>
+            </attr>
+        </edge>
+        <edge from="n19" to="n19">
+            <attr name="label">
+                <string>string:"green"</string>
+            </attr>
+        </edge>
+        <edge from="n23" to="n26">
+            <attr name="label">
+                <string>name</string>
             </attr>
         </edge>
         <edge from="n23" to="n23">
@@ -222,11 +332,6 @@
         <edge from="n23" to="n25">
             <attr name="label">
                 <string>tokens</string>
-            </attr>
-        </edge>
-        <edge from="n23" to="n26">
-            <attr name="label">
-                <string>name</string>
             </attr>
         </edge>
         <edge from="n26" to="n26">
@@ -259,14 +364,14 @@
                 <string>type:Bus</string>
             </attr>
         </edge>
-        <edge from="n29" to="n31">
-            <attr name="label">
-                <string>name</string>
-            </attr>
-        </edge>
         <edge from="n29" to="n30">
             <attr name="label">
                 <string>tokens</string>
+            </attr>
+        </edge>
+        <edge from="n29" to="n31">
+            <attr name="label">
+                <string>name</string>
             </attr>
         </edge>
         <edge from="n29" to="n28">
@@ -284,14 +389,14 @@
                 <string>type:Running</string>
             </attr>
         </edge>
-        <edge from="n30" to="n30">
-            <attr name="label">
-                <string>type:Token</string>
-            </attr>
-        </edge>
         <edge from="n30" to="n27">
             <attr name="label">
                 <string>position</string>
+            </attr>
+        </edge>
+        <edge from="n30" to="n30">
+            <attr name="label">
+                <string>type:Token</string>
             </attr>
         </edge>
         <edge from="n27" to="n27">

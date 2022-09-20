@@ -1,0 +1,16 @@
+Grammar:	global
+Start graph:	No_Buses_Property_1_and_2
+Control:	main
+Exploration:	bfs / final / infinite
+Timestamp:	Tue Sep 20 09:44:45 CEST 2022
+
+Progress: (s = 100 states, t = 100 transitions):
+  ttstt
+
+Time (ms):          483
+Space (kB):         1999
+
+States:       168
+Transitions:  438
+
+1 result states found: Result [elements=[s167]]
