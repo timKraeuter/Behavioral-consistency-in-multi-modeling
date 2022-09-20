@@ -1,0 +1,524 @@
+		     \||||||||||||||||||/
+		   --- Welcome to Maude ---
+		     /||||||||||||||||||\
+	    Maude 3.2.1 built: Feb 21 2022 18:21:17
+	     Copyright 1997-2022 SRI International
+		   Tue Sep 20 10:37:14 2022
+==========================================
+search in FINAL-CHECK : systemConfigThreeBuses =>! X .
+
+Solution 1 (state 111790)
+states: 125784  rewrites: 1041127 in 10410ms cpu (10415ms real) (100012
+    rewrites/second)
+X --> < "1" : T-Junction | process : < "use-case-execution" : BPMNSystem |
+    messages : none,processes : (< "Bus controller (A)" : ProcessSnapshot |
+    tokens : "RedOrGreen (Gateway_14h9lg3)",signals : none,subprocesses : none,
+    state : Running > < "Bus controller (B)" : ProcessSnapshot | tokens :
+    "RedOrGreen (Gateway_06b4fdx)",signals : none,subprocesses : none,state :
+    Running > < "Bus controller (B)" : ProcessSnapshot | tokens :
+    "RedOrGreen (Gateway_06b4fdx)",signals : none,subprocesses : none,state :
+    Running > < "T-Junction controller" : ProcessSnapshot | tokens : none,
+    signals : none,subprocesses : none,state : Terminated >) >,A : <
+    "trafficLight" : FSM | state : "amber" >,B : < "trafficLight" : FSM | state
+    : "red-amber" >,C : < "trafficLight" : FSM | state : "amber" > >
+
+Solution 2 (state 221632)
+states: 240870  rewrites: 2002304 in 20650ms cpu (20654ms real) (96963
+    rewrites/second)
+X --> < "1" : T-Junction | process : < "use-case-execution" : BPMNSystem |
+    messages : none,processes : (< "Bus controller (A)" : ProcessSnapshot |
+    tokens : "RedOrGreen (Gateway_14h9lg3)",signals : none,subprocesses : none,
+    state : Running > < "Bus controller (B)" : ProcessSnapshot | tokens :
+    "RedOrGreen (Gateway_06b4fdx)",signals : none,subprocesses : none,state :
+    Running > < "Bus controller (B)" : ProcessSnapshot | tokens :
+    "Request_green_TL_B_is_green (Flow_1t1snu6)",signals : none,subprocesses :
+    none,state : Running > < "T-Junction controller" : ProcessSnapshot | tokens
+    : none,signals : none,subprocesses : none,state : Terminated >) >,A : <
+    "trafficLight" : FSM | state : "amber" >,B : < "trafficLight" : FSM | state
+    : "red-amber" >,C : < "trafficLight" : FSM | state : "amber" > >
+
+Solution 3 (state 221638)
+states: 240871  rewrites: 2002318 in 20650ms cpu (20654ms real) (96964
+    rewrites/second)
+X --> < "1" : T-Junction | process : < "use-case-execution" : BPMNSystem |
+    messages : "Request_green_TL_B_green_requested_P2 (Flow_1bhzv7t)",processes
+    : (< "Bus controller (A)" : ProcessSnapshot | tokens :
+    "RedOrGreen (Gateway_14h9lg3)",signals : none,subprocesses : none,state :
+    Running > < "Bus controller (B)" : ProcessSnapshot | tokens :
+    "RedOrGreen (Gateway_06b4fdx)",signals : none,subprocesses : none,state :
+    Running > < "Bus controller (B)" : ProcessSnapshot | tokens :
+    "Request_green_TL_B_is_green (Flow_1t1snu6)",signals : none,subprocesses :
+    none,state : Running > < "T-Junction controller" : ProcessSnapshot | tokens
+    : none,signals : none,subprocesses : none,state : Terminated >) >,A : <
+    "trafficLight" : FSM | state : "amber" >,B : < "trafficLight" : FSM | state
+    : "red-amber" >,C : < "trafficLight" : FSM | state : "amber" > >
+
+Solution 4 (state 221880)
+states: 241045  rewrites: 2003169 in 20670ms cpu (20669ms real) (96911
+    rewrites/second)
+X --> < "1" : T-Junction | process : < "use-case-execution" : BPMNSystem |
+    messages : "Request_green_TL_A_or_C_green_requested_P2 (Flow_1birm2p)",
+    processes : (< "Bus controller (A)" : ProcessSnapshot | tokens :
+    "Request_green_TL_A_is_green (Flow_06b0un1)",signals : none,subprocesses :
+    none,state : Running > < "Bus controller (B)" : ProcessSnapshot | tokens :
+    "RedOrGreen (Gateway_06b4fdx)",signals : none,subprocesses : none,state :
+    Running > < "Bus controller (B)" : ProcessSnapshot | tokens :
+    "RedOrGreen (Gateway_06b4fdx)",signals : none,subprocesses : none,state :
+    Running > < "T-Junction controller" : ProcessSnapshot | tokens : none,
+    signals : none,subprocesses : none,state : Terminated >) >,A : <
+    "trafficLight" : FSM | state : "amber" >,B : < "trafficLight" : FSM | state
+    : "red-amber" >,C : < "trafficLight" : FSM | state : "amber" > >
+
+Solution 5 (state 221881)
+states: 241045  rewrites: 2003169 in 20670ms cpu (20669ms real) (96911
+    rewrites/second)
+X --> < "1" : T-Junction | process : < "use-case-execution" : BPMNSystem |
+    messages : none,processes : (< "Bus controller (A)" : ProcessSnapshot |
+    tokens : "Request_green_TL_A_is_green (Flow_06b0un1)",signals : none,
+    subprocesses : none,state : Running > < "Bus controller (B)" :
+    ProcessSnapshot | tokens : "RedOrGreen (Gateway_06b4fdx)",signals : none,
+    subprocesses : none,state : Running > < "Bus controller (B)" :
+    ProcessSnapshot | tokens : "RedOrGreen (Gateway_06b4fdx)",signals : none,
+    subprocesses : none,state : Running > < "T-Junction controller" :
+    ProcessSnapshot | tokens : none,signals : none,subprocesses : none,state :
+    Terminated >) >,A : < "trafficLight" : FSM | state : "amber" >,B : <
+    "trafficLight" : FSM | state : "red-amber" >,C : < "trafficLight" : FSM |
+    state : "amber" > >
+
+Solution 6 (state 283747)
+states: 305885  rewrites: 2564392 in 26630ms cpu (26635ms real) (96297
+    rewrites/second)
+X --> < "1" : T-Junction | process : < "use-case-execution" : BPMNSystem |
+    messages : none,processes : (< "Bus controller (A)" : ProcessSnapshot |
+    tokens : none,signals : none,subprocesses : none,state : Terminated > <
+    "Bus controller (B)" : ProcessSnapshot | tokens :
+    "RedOrGreen (Gateway_06b4fdx)",signals : none,subprocesses : none,state :
+    Running > < "Bus controller (B)" : ProcessSnapshot | tokens :
+    "RedOrGreen (Gateway_06b4fdx)",signals : none,subprocesses : none,state :
+    Running > < "T-Junction controller" : ProcessSnapshot | tokens : none,
+    signals : none,subprocesses : none,state : Terminated >) >,A : <
+    "trafficLight" : FSM | state : "amber" >,B : < "trafficLight" : FSM | state
+    : "red-amber" >,C : < "trafficLight" : FSM | state : "amber" > >
+
+Solution 7 (state 283769)
+states: 305895  rewrites: 2564444 in 26630ms cpu (26636ms real) (96299
+    rewrites/second)
+X --> < "1" : T-Junction | process : < "use-case-execution" : BPMNSystem |
+    messages : none,processes : (< "Bus controller (A)" : ProcessSnapshot |
+    tokens : "RedOrGreen (Gateway_14h9lg3)",signals : none,subprocesses : none,
+    state : Running > < "Bus controller (B)" : ProcessSnapshot | tokens :
+    "RedOrGreen (Gateway_06b4fdx)",signals : none,subprocesses : none,state :
+    Running > < "Bus controller (B)" : ProcessSnapshot | tokens : none,signals
+    : none,subprocesses : none,state : Terminated > < "T-Junction controller" :
+    ProcessSnapshot | tokens : none,signals : none,subprocesses : none,state :
+    Terminated >) >,A : < "trafficLight" : FSM | state : "amber" >,B : <
+    "trafficLight" : FSM | state : "red-amber" >,C : < "trafficLight" : FSM |
+    state : "amber" > >
+
+Solution 8 (state 348551)
+states: 367142  rewrites: 3077459 in 32810ms cpu (32814ms real) (93796
+    rewrites/second)
+X --> < "1" : T-Junction | process : < "use-case-execution" : BPMNSystem |
+    messages : none,processes : (< "Bus controller (A)" : ProcessSnapshot |
+    tokens : "RedOrGreen (Gateway_14h9lg3)",signals : none,subprocesses : none,
+    state : Running > < "Bus controller (B)" : ProcessSnapshot | tokens :
+    "Request_green_TL_B_is_green (Flow_1t1snu6)",signals : none,subprocesses :
+    none,state : Running > < "Bus controller (B)" : ProcessSnapshot | tokens :
+    "Request_green_TL_B_is_green (Flow_1t1snu6)",signals : none,subprocesses :
+    none,state : Running > < "T-Junction controller" : ProcessSnapshot | tokens
+    : none,signals : none,subprocesses : none,state : Terminated >) >,A : <
+    "trafficLight" : FSM | state : "amber" >,B : < "trafficLight" : FSM | state
+    : "red-amber" >,C : < "trafficLight" : FSM | state : "amber" > >
+
+Solution 9 (state 348557)
+states: 367143  rewrites: 3077473 in 32810ms cpu (32815ms real) (93796
+    rewrites/second)
+X --> < "1" : T-Junction | process : < "use-case-execution" : BPMNSystem |
+    messages : "Request_green_TL_B_green_requested_P2 (Flow_1bhzv7t)",processes
+    : (< "Bus controller (A)" : ProcessSnapshot | tokens :
+    "RedOrGreen (Gateway_14h9lg3)",signals : none,subprocesses : none,state :
+    Running > < "Bus controller (B)" : ProcessSnapshot | tokens :
+    "Request_green_TL_B_is_green (Flow_1t1snu6)",signals : none,subprocesses :
+    none,state : Running > < "Bus controller (B)" : ProcessSnapshot | tokens :
+    "Request_green_TL_B_is_green (Flow_1t1snu6)",signals : none,subprocesses :
+    none,state : Running > < "T-Junction controller" : ProcessSnapshot | tokens
+    : none,signals : none,subprocesses : none,state : Terminated >) >,A : <
+    "trafficLight" : FSM | state : "amber" >,B : < "trafficLight" : FSM | state
+    : "red-amber" >,C : < "trafficLight" : FSM | state : "amber" > >
+
+Solution 10 (state 367387)
+states: 385196  rewrites: 3250310 in 34650ms cpu (34653ms real) (93804
+    rewrites/second)
+X --> < "1" : T-Junction | process : < "use-case-execution" : BPMNSystem |
+    messages : "Request_green_TL_A_or_C_green_requested_P2 (Flow_1birm2p)",
+    processes : (< "Bus controller (A)" : ProcessSnapshot | tokens :
+    "Request_green_TL_A_is_green (Flow_06b0un1)",signals : none,subprocesses :
+    none,state : Running > < "Bus controller (B)" : ProcessSnapshot | tokens :
+    "RedOrGreen (Gateway_06b4fdx)",signals : none,subprocesses : none,state :
+    Running > < "Bus controller (B)" : ProcessSnapshot | tokens :
+    "Request_green_TL_B_is_green (Flow_1t1snu6)",signals : none,subprocesses :
+    none,state : Running > < "T-Junction controller" : ProcessSnapshot | tokens
+    : none,signals : none,subprocesses : none,state : Terminated >) >,A : <
+    "trafficLight" : FSM | state : "amber" >,B : < "trafficLight" : FSM | state
+    : "red-amber" >,C : < "trafficLight" : FSM | state : "amber" > >
+
+Solution 11 (state 367388)
+states: 385196  rewrites: 3250310 in 34650ms cpu (34653ms real) (93804
+    rewrites/second)
+X --> < "1" : T-Junction | process : < "use-case-execution" : BPMNSystem |
+    messages : none,processes : (< "Bus controller (A)" : ProcessSnapshot |
+    tokens : "Request_green_TL_A_is_green (Flow_06b0un1)",signals : none,
+    subprocesses : none,state : Running > < "Bus controller (B)" :
+    ProcessSnapshot | tokens : "RedOrGreen (Gateway_06b4fdx)",signals : none,
+    subprocesses : none,state : Running > < "Bus controller (B)" :
+    ProcessSnapshot | tokens : "Request_green_TL_B_is_green (Flow_1t1snu6)",
+    signals : none,subprocesses : none,state : Running > <
+    "T-Junction controller" : ProcessSnapshot | tokens : none,signals : none,
+    subprocesses : none,state : Terminated >) >,A : < "trafficLight" : FSM |
+    state : "amber" >,B : < "trafficLight" : FSM | state : "red-amber" >,C : <
+    "trafficLight" : FSM | state : "amber" > >
+
+Solution 12 (state 367656)
+states: 385379  rewrites: 3251604 in 34670ms cpu (34672ms real) (93787
+    rewrites/second)
+X --> < "1" : T-Junction | process : < "use-case-execution" : BPMNSystem |
+    messages : "Request_green_TL_B_green_requested_P2 (Flow_1bhzv7t)",processes
+    : (< "Bus controller (A)" : ProcessSnapshot | tokens :
+    "Request_green_TL_A_is_green (Flow_06b0un1)",signals : none,subprocesses :
+    none,state : Running > < "Bus controller (B)" : ProcessSnapshot | tokens :
+    "RedOrGreen (Gateway_06b4fdx)",signals : none,subprocesses : none,state :
+    Running > < "Bus controller (B)" : ProcessSnapshot | tokens :
+    "Request_green_TL_B_is_green (Flow_1t1snu6)",signals : none,subprocesses :
+    none,state : Running > < "T-Junction controller" : ProcessSnapshot | tokens
+    : none,signals : none,subprocesses : none,state : Terminated >) >,A : <
+    "trafficLight" : FSM | state : "amber" >,B : < "trafficLight" : FSM | state
+    : "red-amber" >,C : < "trafficLight" : FSM | state : "amber" > >
+
+Solution 13 (state 403092)
+states: 421839  rewrites: 3638247 in 38300ms cpu (38305ms real) (94993
+    rewrites/second)
+X --> < "1" : T-Junction | process : < "use-case-execution" : BPMNSystem |
+    messages : none,processes : (< "Bus controller (A)" : ProcessSnapshot |
+    tokens : none,signals : none,subprocesses : none,state : Terminated > <
+    "Bus controller (B)" : ProcessSnapshot | tokens :
+    "RedOrGreen (Gateway_06b4fdx)",signals : none,subprocesses : none,state :
+    Running > < "Bus controller (B)" : ProcessSnapshot | tokens :
+    "Request_green_TL_B_is_green (Flow_1t1snu6)",signals : none,subprocesses :
+    none,state : Running > < "T-Junction controller" : ProcessSnapshot | tokens
+    : none,signals : none,subprocesses : none,state : Terminated >) >,A : <
+    "trafficLight" : FSM | state : "amber" >,B : < "trafficLight" : FSM | state
+    : "red-amber" >,C : < "trafficLight" : FSM | state : "amber" > >
+
+Solution 14 (state 403099)
+states: 421840  rewrites: 3638264 in 38310ms cpu (38308ms real) (94969
+    rewrites/second)
+X --> < "1" : T-Junction | process : < "use-case-execution" : BPMNSystem |
+    messages : "Request_green_TL_B_green_requested_P2 (Flow_1bhzv7t)",processes
+    : (< "Bus controller (A)" : ProcessSnapshot | tokens : none,signals : none,
+    subprocesses : none,state : Terminated > < "Bus controller (B)" :
+    ProcessSnapshot | tokens : "RedOrGreen (Gateway_06b4fdx)",signals : none,
+    subprocesses : none,state : Running > < "Bus controller (B)" :
+    ProcessSnapshot | tokens : "Request_green_TL_B_is_green (Flow_1t1snu6)",
+    signals : none,subprocesses : none,state : Running > <
+    "T-Junction controller" : ProcessSnapshot | tokens : none,signals : none,
+    subprocesses : none,state : Terminated >) >,A : < "trafficLight" : FSM |
+    state : "amber" >,B : < "trafficLight" : FSM | state : "red-amber" >,C : <
+    "trafficLight" : FSM | state : "amber" > >
+
+Solution 15 (state 404476)
+states: 423080  rewrites: 3656554 in 38420ms cpu (38418ms real) (95173
+    rewrites/second)
+X --> < "1" : T-Junction | process : < "use-case-execution" : BPMNSystem |
+    messages : "Request_green_TL_A_or_C_green_requested_P2 (Flow_1birm2p)",
+    processes : (< "Bus controller (A)" : ProcessSnapshot | tokens :
+    "Request_green_TL_A_is_green (Flow_06b0un1)",signals : none,subprocesses :
+    none,state : Running > < "Bus controller (B)" : ProcessSnapshot | tokens :
+    "RedOrGreen (Gateway_06b4fdx)",signals : none,subprocesses : none,state :
+    Running > < "Bus controller (B)" : ProcessSnapshot | tokens : none,signals
+    : none,subprocesses : none,state : Terminated > < "T-Junction controller" :
+    ProcessSnapshot | tokens : none,signals : none,subprocesses : none,state :
+    Terminated >) >,A : < "trafficLight" : FSM | state : "amber" >,B : <
+    "trafficLight" : FSM | state : "red-amber" >,C : < "trafficLight" : FSM |
+    state : "amber" > >
+
+Solution 16 (state 404477)
+states: 423080  rewrites: 3656554 in 38420ms cpu (38418ms real) (95173
+    rewrites/second)
+X --> < "1" : T-Junction | process : < "use-case-execution" : BPMNSystem |
+    messages : none,processes : (< "Bus controller (A)" : ProcessSnapshot |
+    tokens : "Request_green_TL_A_is_green (Flow_06b0un1)",signals : none,
+    subprocesses : none,state : Running > < "Bus controller (B)" :
+    ProcessSnapshot | tokens : "RedOrGreen (Gateway_06b4fdx)",signals : none,
+    subprocesses : none,state : Running > < "Bus controller (B)" :
+    ProcessSnapshot | tokens : none,signals : none,subprocesses : none,state :
+    Terminated > < "T-Junction controller" : ProcessSnapshot | tokens : none,
+    signals : none,subprocesses : none,state : Terminated >) >,A : <
+    "trafficLight" : FSM | state : "amber" >,B : < "trafficLight" : FSM | state
+    : "red-amber" >,C : < "trafficLight" : FSM | state : "amber" > >
+
+Solution 17 (state 421855)
+states: 441306  rewrites: 3845984 in 40230ms cpu (40235ms real) (95599
+    rewrites/second)
+X --> < "1" : T-Junction | process : < "use-case-execution" : BPMNSystem |
+    messages : none,processes : (< "Bus controller (A)" : ProcessSnapshot |
+    tokens : "RedOrGreen (Gateway_14h9lg3)",signals : none,subprocesses : none,
+    state : Running > < "Bus controller (B)" : ProcessSnapshot | tokens :
+    "Request_green_TL_B_is_green (Flow_1t1snu6)",signals : none,subprocesses :
+    none,state : Running > < "Bus controller (B)" : ProcessSnapshot | tokens :
+    none,signals : none,subprocesses : none,state : Terminated > <
+    "T-Junction controller" : ProcessSnapshot | tokens : none,signals : none,
+    subprocesses : none,state : Terminated >) >,A : < "trafficLight" : FSM |
+    state : "amber" >,B : < "trafficLight" : FSM | state : "red-amber" >,C : <
+    "trafficLight" : FSM | state : "amber" > >
+
+Solution 18 (state 421925)
+states: 441373  rewrites: 3847490 in 40240ms cpu (40242ms real) (95613
+    rewrites/second)
+X --> < "1" : T-Junction | process : < "use-case-execution" : BPMNSystem |
+    messages : "Request_green_TL_B_green_requested_P2 (Flow_1bhzv7t)",processes
+    : (< "Bus controller (A)" : ProcessSnapshot | tokens :
+    "RedOrGreen (Gateway_14h9lg3)",signals : none,subprocesses : none,state :
+    Running > < "Bus controller (B)" : ProcessSnapshot | tokens :
+    "Request_green_TL_B_is_green (Flow_1t1snu6)",signals : none,subprocesses :
+    none,state : Running > < "Bus controller (B)" : ProcessSnapshot | tokens :
+    none,signals : none,subprocesses : none,state : Terminated > <
+    "T-Junction controller" : ProcessSnapshot | tokens : none,signals : none,
+    subprocesses : none,state : Terminated >) >,A : < "trafficLight" : FSM |
+    state : "amber" >,B : < "trafficLight" : FSM | state : "red-amber" >,C : <
+    "trafficLight" : FSM | state : "amber" > >
+
+Solution 19 (state 462006)
+states: 480617  rewrites: 4244727 in 44190ms cpu (44193ms real) (96056
+    rewrites/second)
+X --> < "1" : T-Junction | process : < "use-case-execution" : BPMNSystem |
+    messages : none,processes : (< "Bus controller (A)" : ProcessSnapshot |
+    tokens : "RedOrGreen (Gateway_14h9lg3)",signals : none,subprocesses : none,
+    state : Running > < "Bus controller (B)" : ProcessSnapshot | tokens : none,
+    signals : none,subprocesses : none,state : Terminated > <
+    "Bus controller (B)" : ProcessSnapshot | tokens : none,signals : none,
+    subprocesses : none,state : Terminated > < "T-Junction controller" :
+    ProcessSnapshot | tokens : none,signals : none,subprocesses : none,state :
+    Terminated >) >,A : < "trafficLight" : FSM | state : "amber" >,B : <
+    "trafficLight" : FSM | state : "red-amber" >,C : < "trafficLight" : FSM |
+    state : "amber" > >
+
+Solution 20 (state 480476)
+states: 497157  rewrites: 4390854 in 46150ms cpu (46151ms real) (95143
+    rewrites/second)
+X --> < "1" : T-Junction | process : < "use-case-execution" : BPMNSystem |
+    messages : none,processes : (< "Bus controller (A)" : ProcessSnapshot |
+    tokens : none,signals : none,subprocesses : none,state : Terminated > <
+    "Bus controller (B)" : ProcessSnapshot | tokens :
+    "RedOrGreen (Gateway_06b4fdx)",signals : none,subprocesses : none,state :
+    Running > < "Bus controller (B)" : ProcessSnapshot | tokens : none,signals
+    : none,subprocesses : none,state : Terminated > < "T-Junction controller" :
+    ProcessSnapshot | tokens : none,signals : none,subprocesses : none,state :
+    Terminated >) >,A : < "trafficLight" : FSM | state : "amber" >,B : <
+    "trafficLight" : FSM | state : "red-amber" >,C : < "trafficLight" : FSM |
+    state : "amber" > >
+
+Solution 21 (state 486821)
+states: 502589  rewrites: 4439289 in 46910ms cpu (46910ms real) (94634
+    rewrites/second)
+X --> < "1" : T-Junction | process : < "use-case-execution" : BPMNSystem |
+    messages : "Request_green_TL_A_or_C_green_requested_P2 (Flow_1birm2p)",
+    processes : (< "Bus controller (A)" : ProcessSnapshot | tokens :
+    "Request_green_TL_A_is_green (Flow_06b0un1)",signals : none,subprocesses :
+    none,state : Running > < "Bus controller (B)" : ProcessSnapshot | tokens :
+    "Request_green_TL_B_is_green (Flow_1t1snu6)",signals : none,subprocesses :
+    none,state : Running > < "Bus controller (B)" : ProcessSnapshot | tokens :
+    "Request_green_TL_B_is_green (Flow_1t1snu6)",signals : none,subprocesses :
+    none,state : Running > < "T-Junction controller" : ProcessSnapshot | tokens
+    : none,signals : none,subprocesses : none,state : Terminated >) >,A : <
+    "trafficLight" : FSM | state : "amber" >,B : < "trafficLight" : FSM | state
+    : "red-amber" >,C : < "trafficLight" : FSM | state : "amber" > >
+
+Solution 22 (state 486822)
+states: 502589  rewrites: 4439289 in 46910ms cpu (46910ms real) (94634
+    rewrites/second)
+X --> < "1" : T-Junction | process : < "use-case-execution" : BPMNSystem |
+    messages : none,processes : (< "Bus controller (A)" : ProcessSnapshot |
+    tokens : "Request_green_TL_A_is_green (Flow_06b0un1)",signals : none,
+    subprocesses : none,state : Running > < "Bus controller (B)" :
+    ProcessSnapshot | tokens : "Request_green_TL_B_is_green (Flow_1t1snu6)",
+    signals : none,subprocesses : none,state : Running > < "Bus controller (B)"
+    : ProcessSnapshot | tokens : "Request_green_TL_B_is_green (Flow_1t1snu6)",
+    signals : none,subprocesses : none,state : Running > <
+    "T-Junction controller" : ProcessSnapshot | tokens : none,signals : none,
+    subprocesses : none,state : Terminated >) >,A : < "trafficLight" : FSM |
+    state : "amber" >,B : < "trafficLight" : FSM | state : "red-amber" >,C : <
+    "trafficLight" : FSM | state : "amber" > >
+
+Solution 23 (state 486892)
+states: 502621  rewrites: 4439498 in 46920ms cpu (46918ms real) (94618
+    rewrites/second)
+X --> < "1" : T-Junction | process : < "use-case-execution" : BPMNSystem |
+    messages : "Request_green_TL_B_green_requested_P2 (Flow_1bhzv7t)",processes
+    : (< "Bus controller (A)" : ProcessSnapshot | tokens :
+    "Request_green_TL_A_is_green (Flow_06b0un1)",signals : none,subprocesses :
+    none,state : Running > < "Bus controller (B)" : ProcessSnapshot | tokens :
+    "Request_green_TL_B_is_green (Flow_1t1snu6)",signals : none,subprocesses :
+    none,state : Running > < "Bus controller (B)" : ProcessSnapshot | tokens :
+    "Request_green_TL_B_is_green (Flow_1t1snu6)",signals : none,subprocesses :
+    none,state : Running > < "T-Junction controller" : ProcessSnapshot | tokens
+    : none,signals : none,subprocesses : none,state : Terminated >) >,A : <
+    "trafficLight" : FSM | state : "amber" >,B : < "trafficLight" : FSM | state
+    : "red-amber" >,C : < "trafficLight" : FSM | state : "amber" > >
+
+Solution 24 (state 515954)
+states: 527543  rewrites: 4685746 in 49790ms cpu (49787ms real) (94110
+    rewrites/second)
+X --> < "1" : T-Junction | process : < "use-case-execution" : BPMNSystem |
+    messages : none,processes : (< "Bus controller (A)" : ProcessSnapshot |
+    tokens : none,signals : none,subprocesses : none,state : Terminated > <
+    "Bus controller (B)" : ProcessSnapshot | tokens :
+    "Request_green_TL_B_is_green (Flow_1t1snu6)",signals : none,subprocesses :
+    none,state : Running > < "Bus controller (B)" : ProcessSnapshot | tokens :
+    "Request_green_TL_B_is_green (Flow_1t1snu6)",signals : none,subprocesses :
+    none,state : Running > < "T-Junction controller" : ProcessSnapshot | tokens
+    : none,signals : none,subprocesses : none,state : Terminated >) >,A : <
+    "trafficLight" : FSM | state : "amber" >,B : < "trafficLight" : FSM | state
+    : "red-amber" >,C : < "trafficLight" : FSM | state : "amber" > >
+
+Solution 25 (state 515961)
+states: 527544  rewrites: 4685763 in 49790ms cpu (49788ms real) (94110
+    rewrites/second)
+X --> < "1" : T-Junction | process : < "use-case-execution" : BPMNSystem |
+    messages : "Request_green_TL_B_green_requested_P2 (Flow_1bhzv7t)",processes
+    : (< "Bus controller (A)" : ProcessSnapshot | tokens : none,signals : none,
+    subprocesses : none,state : Terminated > < "Bus controller (B)" :
+    ProcessSnapshot | tokens : "Request_green_TL_B_is_green (Flow_1t1snu6)",
+    signals : none,subprocesses : none,state : Running > < "Bus controller (B)"
+    : ProcessSnapshot | tokens : "Request_green_TL_B_is_green (Flow_1t1snu6)",
+    signals : none,subprocesses : none,state : Running > <
+    "T-Junction controller" : ProcessSnapshot | tokens : none,signals : none,
+    subprocesses : none,state : Terminated >) >,A : < "trafficLight" : FSM |
+    state : "amber" >,B : < "trafficLight" : FSM | state : "red-amber" >,C : <
+    "trafficLight" : FSM | state : "amber" > >
+
+Solution 26 (state 528512)
+states: 539263  rewrites: 4828731 in 51080ms cpu (51081ms real) (94532
+    rewrites/second)
+X --> < "1" : T-Junction | process : < "use-case-execution" : BPMNSystem |
+    messages : "Request_green_TL_A_or_C_green_requested_P2 (Flow_1birm2p)",
+    processes : (< "Bus controller (A)" : ProcessSnapshot | tokens :
+    "Request_green_TL_A_is_green (Flow_06b0un1)",signals : none,subprocesses :
+    none,state : Running > < "Bus controller (B)" : ProcessSnapshot | tokens :
+    "Request_green_TL_B_is_green (Flow_1t1snu6)",signals : none,subprocesses :
+    none,state : Running > < "Bus controller (B)" : ProcessSnapshot | tokens :
+    none,signals : none,subprocesses : none,state : Terminated > <
+    "T-Junction controller" : ProcessSnapshot | tokens : none,signals : none,
+    subprocesses : none,state : Terminated >) >,A : < "trafficLight" : FSM |
+    state : "amber" >,B : < "trafficLight" : FSM | state : "red-amber" >,C : <
+    "trafficLight" : FSM | state : "amber" > >
+
+Solution 27 (state 528513)
+states: 539263  rewrites: 4828731 in 51080ms cpu (51083ms real) (94532
+    rewrites/second)
+X --> < "1" : T-Junction | process : < "use-case-execution" : BPMNSystem |
+    messages : none,processes : (< "Bus controller (A)" : ProcessSnapshot |
+    tokens : "Request_green_TL_A_is_green (Flow_06b0un1)",signals : none,
+    subprocesses : none,state : Running > < "Bus controller (B)" :
+    ProcessSnapshot | tokens : "Request_green_TL_B_is_green (Flow_1t1snu6)",
+    signals : none,subprocesses : none,state : Running > < "Bus controller (B)"
+    : ProcessSnapshot | tokens : none,signals : none,subprocesses : none,state
+    : Terminated > < "T-Junction controller" : ProcessSnapshot | tokens : none,
+    signals : none,subprocesses : none,state : Terminated >) >,A : <
+    "trafficLight" : FSM | state : "amber" >,B : < "trafficLight" : FSM | state
+    : "red-amber" >,C : < "trafficLight" : FSM | state : "amber" > >
+
+Solution 28 (state 528742)
+states: 539480  rewrites: 4831984 in 51100ms cpu (51102ms real) (94559
+    rewrites/second)
+X --> < "1" : T-Junction | process : < "use-case-execution" : BPMNSystem |
+    messages : "Request_green_TL_B_green_requested_P2 (Flow_1bhzv7t)",processes
+    : (< "Bus controller (A)" : ProcessSnapshot | tokens :
+    "Request_green_TL_A_is_green (Flow_06b0un1)",signals : none,subprocesses :
+    none,state : Running > < "Bus controller (B)" : ProcessSnapshot | tokens :
+    "Request_green_TL_B_is_green (Flow_1t1snu6)",signals : none,subprocesses :
+    none,state : Running > < "Bus controller (B)" : ProcessSnapshot | tokens :
+    none,signals : none,subprocesses : none,state : Terminated > <
+    "T-Junction controller" : ProcessSnapshot | tokens : none,signals : none,
+    subprocesses : none,state : Terminated >) >,A : < "trafficLight" : FSM |
+    state : "amber" >,B : < "trafficLight" : FSM | state : "red-amber" >,C : <
+    "trafficLight" : FSM | state : "amber" > >
+
+Solution 29 (state 552222)
+states: 563993  rewrites: 5154856 in 53650ms cpu (53653ms real) (96083
+    rewrites/second)
+X --> < "1" : T-Junction | process : < "use-case-execution" : BPMNSystem |
+    messages : "Request_green_TL_A_or_C_green_requested_P2 (Flow_1birm2p)",
+    processes : (< "Bus controller (A)" : ProcessSnapshot | tokens :
+    "Request_green_TL_A_is_green (Flow_06b0un1)",signals : none,subprocesses :
+    none,state : Running > < "Bus controller (B)" : ProcessSnapshot | tokens :
+    none,signals : none,subprocesses : none,state : Terminated > <
+    "Bus controller (B)" : ProcessSnapshot | tokens : none,signals : none,
+    subprocesses : none,state : Terminated > < "T-Junction controller" :
+    ProcessSnapshot | tokens : none,signals : none,subprocesses : none,state :
+    Terminated >) >,A : < "trafficLight" : FSM | state : "amber" >,B : <
+    "trafficLight" : FSM | state : "red-amber" >,C : < "trafficLight" : FSM |
+    state : "amber" > >
+
+Solution 30 (state 552223)
+states: 563993  rewrites: 5154856 in 53650ms cpu (53653ms real) (96083
+    rewrites/second)
+X --> < "1" : T-Junction | process : < "use-case-execution" : BPMNSystem |
+    messages : none,processes : (< "Bus controller (A)" : ProcessSnapshot |
+    tokens : "Request_green_TL_A_is_green (Flow_06b0un1)",signals : none,
+    subprocesses : none,state : Running > < "Bus controller (B)" :
+    ProcessSnapshot | tokens : none,signals : none,subprocesses : none,state :
+    Terminated > < "Bus controller (B)" : ProcessSnapshot | tokens : none,
+    signals : none,subprocesses : none,state : Terminated > <
+    "T-Junction controller" : ProcessSnapshot | tokens : none,signals : none,
+    subprocesses : none,state : Terminated >) >,A : < "trafficLight" : FSM |
+    state : "amber" >,B : < "trafficLight" : FSM | state : "red-amber" >,C : <
+    "trafficLight" : FSM | state : "amber" > >
+
+Solution 31 (state 561961)
+states: 574614  rewrites: 5273044 in 54800ms cpu (54801ms real) (96223
+    rewrites/second)
+X --> < "1" : T-Junction | process : < "use-case-execution" : BPMNSystem |
+    messages : none,processes : (< "Bus controller (A)" : ProcessSnapshot |
+    tokens : none,signals : none,subprocesses : none,state : Terminated > <
+    "Bus controller (B)" : ProcessSnapshot | tokens :
+    "Request_green_TL_B_is_green (Flow_1t1snu6)",signals : none,subprocesses :
+    none,state : Running > < "Bus controller (B)" : ProcessSnapshot | tokens :
+    none,signals : none,subprocesses : none,state : Terminated > <
+    "T-Junction controller" : ProcessSnapshot | tokens : none,signals : none,
+    subprocesses : none,state : Terminated >) >,A : < "trafficLight" : FSM |
+    state : "amber" >,B : < "trafficLight" : FSM | state : "red-amber" >,C : <
+    "trafficLight" : FSM | state : "amber" > >
+
+Solution 32 (state 562018)
+states: 574657  rewrites: 5274011 in 54800ms cpu (54805ms real) (96241
+    rewrites/second)
+X --> < "1" : T-Junction | process : < "use-case-execution" : BPMNSystem |
+    messages : "Request_green_TL_B_green_requested_P2 (Flow_1bhzv7t)",processes
+    : (< "Bus controller (A)" : ProcessSnapshot | tokens : none,signals : none,
+    subprocesses : none,state : Terminated > < "Bus controller (B)" :
+    ProcessSnapshot | tokens : "Request_green_TL_B_is_green (Flow_1t1snu6)",
+    signals : none,subprocesses : none,state : Running > < "Bus controller (B)"
+    : ProcessSnapshot | tokens : none,signals : none,subprocesses : none,state
+    : Terminated > < "T-Junction controller" : ProcessSnapshot | tokens : none,
+    signals : none,subprocesses : none,state : Terminated >) >,A : <
+    "trafficLight" : FSM | state : "amber" >,B : < "trafficLight" : FSM | state
+    : "red-amber" >,C : < "trafficLight" : FSM | state : "amber" > >
+
+Solution 33 (state 600393)
+states: 610747  rewrites: 5640731 in 59070ms cpu (59071ms real) (95492
+    rewrites/second)
+X --> < "1" : T-Junction | process : < "use-case-execution" : BPMNSystem |
+    messages : none,processes : (< "Bus controller (A)" : ProcessSnapshot |
+    tokens : none,signals : none,subprocesses : none,state : Terminated > <
+    "Bus controller (B)" : ProcessSnapshot | tokens : none,signals : none,
+    subprocesses : none,state : Terminated > < "Bus controller (B)" :
+    ProcessSnapshot | tokens : none,signals : none,subprocesses : none,state :
+    Terminated > < "T-Junction controller" : ProcessSnapshot | tokens : none,
+    signals : none,subprocesses : none,state : Terminated >) >,A : <
+    "trafficLight" : FSM | state : "amber" >,B : < "trafficLight" : FSM | state
+    : "red-amber" >,C : < "trafficLight" : FSM | state : "amber" > >
+
+No more solutions.
+states: 716912  rewrites: 7183505 in 72540ms cpu (72544ms real) (99028
+    rewrites/second)
+Bye.

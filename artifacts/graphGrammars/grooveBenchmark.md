@@ -1,3 +1,5 @@
+# Groove use case benchmarks
+
 Benchmark for a given start graph:
 ```bash
 hyperfine "java -jar ./groove-5_8_1/bin/Generator.jar global.gps No_Buses" --output ./output.txt --export-json stats.json
