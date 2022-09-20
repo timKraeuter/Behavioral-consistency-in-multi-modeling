@@ -609,6 +609,7 @@ As one can see in \autoref{table:maudeRuntime} and \autoref{table:grooveRuntime}
 The tables show the states, rewrites/transitions and exploration time of a full state space in the Maude and Groove based implementations.
 Four scenarios were executed starting with the use case multi-model without approaching buses and then increasing the number of buses up to three.
 
+% TODO: Add hyperfine to the repo. Benchmark should run out of the box.
 % TODO: Describe benchmark and methodology (cite hyperfine).
 \begin{table}
 \centering
@@ -633,22 +634,19 @@ Four scenarios were executed starting with the use case multi-model without appr
 \footnotetext{The results were obtained using a machine with X processor and Y GB of RAM running Maude version 3.2.1 and Groove version 5.8.1.
 A description how to run the state space exploration can be found at \cite{timkrauterBehavioralConsistencyMultimodeling2022}.}
 
-% TODO: Add hyperfine to the repo. Benchmark should run out of the box.
-% TODO: Run and fill in state data.
-% TODO: Run and fill in benchmark data.
 \begin{table}
 \centering
 \begin{tabular}{|c || c | c | c |}
  \hline
  Use case & States & Transitions & Exploration time \\
  \hline\hline
- No buses & 168 & 438 & \textasciitilde 500 ms \\
+ No buses & 168 & 438 & \textasciitilde 2.948 ms \\
  \hline
- 1 bus & 2.888 & 10.046 & \textasciitilde 2600 ms \\
+ 1 bus & 2.888 & 10.046 & \textasciitilde 4.510 ms \\
  \hline
- 2 buses & 61.848 & 279.926 & \textasciitilde 22.500 ms \\
+ 2 buses & 27.880 & 121.554 & \textasciitilde 11.629 ms \\
  \hline
- 3 buses & ? & ? & ? ms \\
+ 3 buses & 195.336 & 1.028.340 & \textasciitilde 63.487 ms \\
  \hline
 \end{tabular}
 \caption[State space exploration in Groove]{State space exploration in Groove}
