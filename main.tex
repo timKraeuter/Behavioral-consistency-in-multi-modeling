@@ -504,6 +504,10 @@ Thus, the transitions are the \textsf{StateChangingElement}s of a state machine 
 Similarly, the flow nodes are the \textsf{StateChangingElement}s of a \gls*{bpmn} process (highlighted in purple, see \autoref{fig:bpmn_metamodel}).
 The interaction of behavioral models is only possible through instances of the \textsf{StateChangingElement}s.
 
+Our approach is based on the assumption that state-changing elements can be identified in metamodels for any behavioral formalism.
+So far, we do not see any problems with this assumption since behavioral modeling language must have some construct to describe state-change.
+If we look at other popular examples, such as Petri Nets or \gls*{uml} activity diagrams, it is clear which constructs are the state-changing elements. 
+
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.475\textwidth]{figures/interaction_metamodel.pdf}
@@ -578,8 +582,8 @@ We describe consistency checking for the use case and its result in the next sec
 In addition, the appendix contains \autoref{fig:allConcepts}, which gives an overview of all the introduced concepts of this section and how they are applied to the use case.
 
 \section{Maude execution semantics} \label{sec:maude_execution_semantics}
-
 % TODO: Briefly describe Maude execution semantics.
+TODO: Describe Maude and possibly also the Groove implementation.
 
 \section{Related work} \label{sec:related_work}
 This contribution builds on our previous publication \cite{krauterBehavioralConsistencyHeterogeneous2021}.
