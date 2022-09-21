@@ -385,10 +385,10 @@ Concrete activities, gateways and events are defined in the full \gls*{bpmn} met
 The \textbf{first step} to formulate behavioral consistency is to create a system relationship model for the given multi-model.
 Typically, each behavior model in the multi-model is represented in the system relationship model, depicted as a box (see \autoref{fig:systemRelationshipMetamodel}.
 In addition, one has to add behavioral relationships between the behavioral models.
-To find out which behavioral relationships exist one should look at the desired interactions of the behaviors in the multi-model and the desired global behavioral properties.
+To find out which behavioral relationships exist, one should look at the desired interactions of the behaviors in the multi-model and the desired global behavioral properties.
 
 First, interactions in the second step of the workflow can only be defined if there exists a behavioral relationship between the interacting behaviors.
-Second, if a global property applies to two behavioral models then there should be a behavioral relationship between the models.
+Second, if a global property applies to two behavioral models, then there should be a behavioral relationship between the models.
 Otherwise, the global property could be divided into two local properties, which could be checked independently on the two behavioral models.
 
 For example, the system relationship model for the use case (see \autoref{fig:systemRelationshipModel}) has three behavioral relationships from \textsf{TJunction} to \textsf{TrafficLight} since a T-Junction controller interacts with three different traffic lights A, B and C.
@@ -397,13 +397,16 @@ Furthermore, there is a behavioral relationship from \textsf{TJunction} to \text
 % Properties describe snapshots of systems thus we need additional models. The snapshot metamodels.
 The \textbf{second step} to formulate behavioral consistency is to define the global behavioral properties.
 These properties are defined using temporal logic, for example, \gls*{ltl} in the use case.
-Temporal logic properties are build upon a set of atomic propositions which are either true or false in a given state.
+Temporal logic properties are built upon a set of atomic propositions which are either true or false in a given state.
 However, there is currently no model describing how a state/\emph{snapshot} of a behavioral model is represented during execution.
 Consequently, we introduce a new model type called the \emph{snapshot metamodel}, which defines the structure of a state for a given formalism.
 There must be one snapshot metamodel for each formalism used in the multi-model.
+Generally, we assume that the states of behavioral models can be modeled as a class diagram.
+Thus, snapshot metamodels are defined using class diagrams, and each state is a set of objects conforming to the corresponding snapshot metamodel.
+Furthermore, the transitions between those states depend on the given behavioral models and their semantics.
 
-For example, in the use case we define a snapshot metamodel for state machines and \gls*{bpmn}.
-The snapshot metamodel for a state machine is straightforward, since a state machine can only be in one state at a time, as shown in \autoref{fig:fsm_snapshot_model}.
+For example, in the use case, we define a snapshot metamodel for state machines and \gls*{bpmn}.
+The snapshot metamodel for a state machine is straightforward since a state machine can only be in one state at a time, as shown in \autoref{fig:fsm_snapshot_model}.
 Since we are only interested in the current state and not the history of states, we call this a \emph{state machine snapshot}.
 We are reusing the concrete syntax elements from the metamodel level.
 In addition, each snapshot metamodel has a root element in our approach, highlighted in light blue in \autoref{fig:fsm_snapshot_model}.
