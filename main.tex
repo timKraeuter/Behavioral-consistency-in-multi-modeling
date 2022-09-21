@@ -128,6 +128,7 @@ However, current approaches either only allow for consistency checking of two be
 We propose a novel approach for consistency management of heterogeneous multi-models, which allows us to define and check \emph{global} behavioral properties.
 Our approach allows specifying \emph{interactions} between potentially heterogeneous behavioral models, which are in turn used to generate global execution semantics.
 Although our approach is independent of a particular formalism as an underlying global execution semantics, the current implementations utilize the rewriting logic tool Maude and the graph transformation tool set Groove (see \autoref{sec:maude_execution_semantics}).
+The advantage of Maude is that it supports the verification of Real-Time systems \cite{olveczkySemanticsPragmaticsRealTime2007, duranVerifyingTimedBPMN2017}, which is useful when models with time aspects have to analysed in the future.
 
 % Paper outline
 The remainder of this paper is structured as follows.
@@ -568,6 +569,7 @@ Then, we can check consistency requirements on the generated state space.
 This step should be fully automated, such that it can be executed as many times as needed (indicated by the loop in \autoref{fig:approach}) for different system configurations and consistency requirements (including atomic propositions) but using the same execution semantics.
 
 Finally, if a consistency requirement is not fulfilled, a violation including a counterexample based on the state space should be presented to the user.
+Adopting the same concrete syntax to visualize the counterexample as for the atomic propositions should be ideal to help a user understand the counter example easily. 
 An unsuccessful consistency check leads to a consistency restoration process, which is crucial but out of scope for this contribution.
 We describe consistency checking for the use case and its result in the next section.
 In addition, the appendix contains \autoref{fig:allConcepts}, which gives an overview of all the introduced concepts of this section and how they are applied to the use case.
@@ -612,11 +614,6 @@ However, both approaches focus on simulation rather than consistency or model-ch
 Neither provides concrete means to define atomic propositions and check global behavioral properties.
 
 \section{State space explosion}
-% TODOS:
-% - Generally, we support not only model checking but also simulation.
-% - Real-time systems can also be checked using Maude. This could be mentioned somewhere, and the Oslo papers can be cited.
-
-% Evaluation against other approaches not done yet but part of future work.
 State space explosion is one of the predominant issues when applying model checking to complex systems, as they are often found in real-world applications.
 As one can see in \autoref{table:maudeRuntime} and \autoref{table:grooveRuntime} our approach is not immune to state space explosion.
 The tables show the states, rewrites/transitions, and average runtime of a full state space exploration in the Maude and Groove-based implementations.
@@ -703,9 +700,11 @@ Our approach follows three key steps (see \autoref{fig:approach}).
 First, we align the behavioral models by defining their interactions.
 Then, we generate global execution semantics based on the defined interactions while preserving the original behavior of the models.
 Finally, we can check the global consistency of the system in different configurations with varying consistency requirements using the generated semantics.
-Although our approach is independent of a particular formalism as an underlying global execution semantics, the current implementation utilizes graph transformations.
+In addition, simulation of the multi-model and its interactions based on user choosing the available actions is also possible.
+Although, our approach is independent of a particular formalism as an underlying global execution semantics, the
+current two implementations utilize rewriting logic (Maude) or graph transformations (Groove), respectively.
 
-It is also interesting to extend the execution semantics to include other behavioral formalisms such as activity diagrams, hierarchical state machines, and the $\pi$-calculus.
+As future work, it is interesting to extend the execution semantics to include other behavioral formalisms such as activity diagrams, hierarchical state machines, and the $\pi$-calculus.
 Especially integrating the $\pi$-calculus, which was formalized using graph grammars in \cite{gadducciGraphRewritingPcalculus2007}, will be beneficial since it is profoundly different from the currently supported formalisms.
 
 % Data transfer
