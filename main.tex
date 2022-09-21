@@ -627,8 +627,13 @@ As one can see in \autoref{table:maudeRuntime} and \autoref{table:grooveRuntime}
 The tables show the states, rewrites/transitions, and average runtime of a full state space exploration in the Maude and Groove-based implementations.
 Four scenarios were benchmarked, starting with the use case multi-model without approaching buses and then increasing the number of buses up to three.
 
-To calculate the average runtime, we used the hyperfine benchmarking tool \cite{peterHyperfine2022} and ran state space exploration for each scenario ten times.
+To calculate the average runtime, we used the hyperfine benchmarking tool \cite{peterHyperfine2022} (version 1.15.0) and ran state space exploration for each scenario ten times.
 Timing evaluations were done on a notebook with an AMD Ryzen PRO 3500U processor and 16 GB of RAM running Maude version 3.2.1 (inside the Windows Subsystem for Linux) and Groove version 5.8.1.
+
+The benchmarks include start up times, for example the state space exploration for the \textsf{No Buses} scenario takes \textasciitilde 500ms according to Groove.
+Thus, most of the exploration time in Maude and Groove for the \textsf{No Buses} scenario is attributed to the start up time.
+Generally, the Maude exploration time is lower despite larger state spaces due to technical differences in the implementation of the \gls*{bpmn} semantics.
+However, as expected neither of the tools is immune to state space explosion.
 
 \begin{table}
 \centering
