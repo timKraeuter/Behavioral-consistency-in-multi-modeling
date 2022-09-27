@@ -182,7 +182,7 @@ A pool is depicted as a vertical lane with a name on the left and allows to draw
 
 \autoref{fig:t_junction} shows how a possible controller for a T-Junction behaves in the traffic management system\footnote{All models and their source files can be found at \cite{krauterBehavioralConsistencyMultimodeling2022}.\label{footnote:fullModels}}.
 When a T-Junction controller is started, we assume that the traffic lights are showing the colors according to phase 1 (see \autoref{fig:junction-phases}).
-Thus, the controller enters a subprocess called phase 1 (see \autoref{fig:communication} top right), which we describe later.
+Thus, the controller enters a subprocess called phase 1 (see \autoref{fig:communication} top right), which we describe together with the subprocess called phase 2 later.
 However, when a fixed amount of time has passed, the subprocess is interrupted by the attached timer boundary event.
 Then, the controller executes the next activity and switches to phase 2.
 The controller will pass a throwing signal event before entering a subprocess for phase 2 and repeat the same steps.
@@ -211,7 +211,7 @@ The \gls*{bpmn} model and communication for phase 2 of the controller can be def
 
 The phase 1 model uses an event-based gateway to respond to two different kinds of messages.
 First, the traffic light status can be requested, which is answered by sending a message declaring that the traffic lights A and C are green while B is red.
-Moreover, early green for traffic light B  can be requested.
+Moreover, early green for traffic light B can be requested.
 This request ends the subprocess, and the controller immediately switches to phase 2 (see \autoref{fig:t_junction}), which results in the traffic light B turning green.
 
 The bottom of \autoref{fig:communication} shows the controller for a bus parameterized with direction B.
@@ -219,8 +219,10 @@ It will first request the traffic light status to determine if traffic light B i
 If it is green, the bus can pass the junction.
 However, if it is red, the bus requests to change B to green and waits for a signal that the controller has changed the traffic light.
 After receiving the signal, the bus passes the junction.
-In addition, the bus controller also communicates with the phase 2 subprocess, which we only hint at in \autoref{fig:communication}\cref{footnote:fullModels}.
 A \gls*{bpmn} model for a bus controller parameterized with the direction A or C looks nearly identical.
+In addition, the bus controller also communicates with the phase 2 subprocess, which we only hint at in \autoref{fig:communication}\cref{footnote:fullModels}.
+The phase 2 subprocess has the same structure as the phase 1 subprocess but reports that A and C are red, while B is green.
+Similarly, it terminates if green is requested for A or C.
 
 Having developed behavioral models for the system, we want to check the previously stated \emph{safe traffic} requirement while buses are prioritized.
 We can lower the overall development cost if we find bugs related to these requirements as early as possible during system development.
@@ -503,7 +505,7 @@ In addition, we introduce the concept of \emph{state-changing elements}.
 Each \textsf{BehavioralMetamodel} specifies a set of \textsf{StateChangingElement}s.
 For example, a state machine defines states and transitions, but only the transitions describe how the states in a state machine change.
 Thus, the transitions are the \textsf{StateChangingElement}s of a state machine (highlighted in purple, see \autoref{fig:fsm_metamodel}).
-Similarly, the flow nodes are the \textsf{StateChangingElement}s of a \gls*{bpmn} process (highlighted in purple, see \autoref{fig:bpmn_metamodel}).
+Similarly, the flow nodes are the \textsf{StateChangingElement}s of a \gls*{bpmn} process (highlighted in purple, see \autoref{fig:bpmn_metamodel})\footnote{One exception is the event-based gateway, which is not part of the \textsf{StateChangingElement}s.}.
 The interaction of behavioral models is only possible through instances of the \textsf{StateChangingElement}s.
 
 Our approach is based on the assumption that state-changing elements can be identified in metamodels for any behavioral formalism.
@@ -519,7 +521,7 @@ If we look at other popular examples, such as Petri Nets or \gls*{uml} activity 
 
 An \textsf{Interaction} has an \textsf{interactionHost}, a set of interaction \textsf{parts} and an \textsf{InteractionType}.
 Currently, there is only the \textsf{synchronous} \textsf{InteractionType}.
-However, more interaction types, for example, asynchronous interactions or interactions with data, could be added in the future.
+However, more interaction types, for example, asynchronous interactions or interactions with message passing, could be added in the future.
 Asynchronous interactions can also be modeled using two synchronous interactions with an additional behavioral model, such as a queue.
 Each \textsf{InteractionPart} references one \textsf{BehavioralRelationship} and one \textsf{StateChangingElement}.
 
@@ -532,7 +534,7 @@ Thus, one can only define interactions for behavioral models connected by behavi
 We allow the definition of as many interactions as desired.
 The interactions restrict the local behavior of the models since some parts of their behavior must synchronize.
 Two interactions sharing state changing elements is forbidden.
-If such a situation occurs, it must be resolved by the modeler, for example, by merging the two interactions into one.
+If such a situation occurs, it must be resolved by the modeler by deleting one of the interactions or merging the two interactions into one.
 
 In the use case, the T-Junction controller interacts with the three traffic lights, \textbf{A}, \textbf{B}, and \textbf{C}.
 \autoref{lst:interactions} defines two interactions synchronizing T-Junction controller and the traffic lights, using a textual \gls*{dsl}.
@@ -565,7 +567,7 @@ Generally, our approach is independent of the underlying execution semantics if 
 Thus, one can experiment with different underlying semantics, for example, graph transformations, rewriting logic, state machines, Petri nets, or process algebras, without changing the general framework.
 One can then pick the most suitable semantics for the modeling scenario at hand regarding, for example, consistency checking performance.
 
-To summarize, we obtain execution semantics, which describes the global behavior of the system.
+To summarize, we obtain execution semantics, which describes the system's global behavior.
 Generating these execution semantics from the models and interactions must be fully automated to allow frequent model changes.
 However, execution semantics can be reused for all defined properties using varying atomic propositions. 
 Later in the paper, we introduce execution semantics based on rewriting logic in Maude and apply them to the use case.
@@ -577,14 +579,14 @@ An atomic proposition is true for a state if the corresponding instance of $M_s^
 Then, we can check consistency requirements on the generated state space.
 This step should be fully automated, such that it can be executed as many times as needed (indicated by the loop in \autoref{fig:approach}) for different system configurations and consistency requirements (including atomic propositions) but using the same execution semantics.
 
-Finally, if a consistency requirement is not fulfilled, a violation including a counterexample based on the state space should be presented to the user.
-Adopting the same concrete syntax to visualize the counterexample as for the atomic propositions should be ideal to help a user understand the counter example easily. 
+Finally, if a consistency requirement is not fulfilled, a violation, including a counterexample based on the state space, should be presented to the user.
+Adopting the same concrete syntax to visualize the counterexample as for the atomic propositions should be ideal for helping a user understand the counterexample easily. 
 An unsuccessful consistency check leads to a consistency restoration process, which is crucial but out of scope for this contribution.
 We describe consistency checking for the use case and its result in the next section.
-In addition, the appendix contains \autoref{fig:allConcepts}, which gives an overview of all the introduced concepts of this section and how they are applied to the use case.
+In addition, the appendix contains \autoref{fig:allConcepts}, which gives an overview of all the concepts introduced in this section and how they are applied to the use case.
 
 \section{Maude execution semantics} \label{sec:maude_execution_semantics}
-% TODO: Briefly describe Maude execution semantics.
+% TODO: Briefly describe Maude's execution semantics.
 TODO: Describe Maude and possibly also the Groove implementation.
 
 \section{Related work} \label{sec:related_work}
@@ -631,10 +633,10 @@ Four scenarios were benchmarked, starting with the use case multi-model without 
 To calculate the average runtime, we used the hyperfine benchmarking tool \cite{peterHyperfine2022} (version 1.15.0) and ran state space exploration for each scenario ten times.
 Timing evaluations were done on a notebook with an AMD Ryzen PRO 3500U processor and 16 GB of RAM running Maude version 3.2.1 (inside the Windows Subsystem for Linux) and Groove version 5.8.1.
 
-The benchmarks include start up times, for example the state space exploration for the \textsf{No Buses} scenario takes \textasciitilde 500ms according to Groove.
-Thus, most of the exploration time in Maude and Groove for the \textsf{No Buses} scenario is attributed to the start up time.
-Generally, the Maude exploration time is lower despite larger state spaces due to technical differences in the implementation of the \gls*{bpmn} semantics.
-However, as expected neither of the tools is immune to state space explosion.
+The benchmarks include start-up times, for example, the state space exploration for the \textsf{No Buses} scenario takes \textasciitilde 500ms according to Groove.
+Thus, most of the exploration time in Maude and Groove for the \textsf{No Buses} scenario is attributed to the start-up time.
+Generally, the Maude exploration time is lower despite larger state spaces due to technical differences in implementing the \gls*{bpmn} semantics.
+However, as expected, neither of the tools is immune to state space explosion.
 
 \begin{table}
 \centering
@@ -709,15 +711,15 @@ Our approach follows three key steps (see \autoref{fig:approach}).
 First, we align the behavioral models by defining their interactions.
 Then, we generate global execution semantics based on the defined interactions while preserving the original behavior of the models.
 Finally, we can check the global consistency of the system in different configurations with varying consistency requirements using the generated semantics.
-In addition, simulation of the multi-model and its interactions based on user choosing the available actions is also possible.
-Although, our approach is independent of a particular formalism as an underlying global execution semantics, the
-current two implementations utilize rewriting logic (Maude) or graph transformations (Groove), respectively.
+In addition, simulation of the multi-model and its interactions based on the user choosing the available actions is possible.
+Although our approach is independent of a particular formalism as an underlying global execution semantics, the
+current two implementations utilize rewriting logic (Maude) or graph transformations (Groove).
 
-As future work, it is interesting to extend the execution semantics to include other behavioral formalisms such as activity diagrams, hierarchical state machines, and the $\pi$-calculus.
+In future work, extending the execution semantics to include other behavioral formalisms such as activity diagrams, hierarchical state machines, and the $\pi$-calculus is interesting.
 Especially integrating the $\pi$-calculus, which was formalized using graph grammars in \cite{gadducciGraphRewritingPcalculus2007}, will be beneficial since it is profoundly different from the currently supported formalisms.
 
 % Data transfer
-Furthermore, two systems often exchange data while interacting.
+Furthermore, two systems often exchange data while interacting, for example, using messaging.
 The exchanged data then greatly influences the future behavior of the systems.
 Thus, adding data transfers to interactions between heterogeneous models is an important issue left for future work.
 
