@@ -1,0 +1,8 @@
+--- Generated rules
+rl [turn_red_amber] : < "tl" : FSM | state : "red" > => < "tl" : FSM | state : "red-amber" > .
+rl [turn_green] : < "tl" : FSM | state : "red-amber" > => < "tl" : FSM | state : "green" > .
+rl [turn_amber] : < "tl" : FSM | state : "green" > => < "tl" : FSM | state : "amber" > .
+rl [turn_red] : < "tl" : FSM | state : "amber" > => < "tl" : FSM | state : "red" > .
+--- Generated initial config representing the start state of the FSM.
+op initial : -> Configuration .
+eq initial = < "tl" : FSM | state : "red" > .
