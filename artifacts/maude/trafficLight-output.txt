@@ -1,0 +1,24 @@
+                     \||||||||||||||||||/
+                   --- Welcome to Maude ---
+                     /||||||||||||||||||\
+            Maude 3.2.1 built: Feb 21 2022 18:21:17
+             Copyright 1997-2022 SRI International
+                   Thu Sep 29 10:28:59 2022
+Maude> load trafficLight.maude
+==========================================
+search in FSM-CHECK : initial =>! X .
+
+No solution.
+states: 4  rewrites: 5 in 0ms cpu (0ms real) (~ rewrites/second)
+state 0, Object: < "1" : FSM | state : "red",name : "trafficLight" >
+arc 0 ===> state 1 (rl < X:String : FSM | state : "red",name : "trafficLight" > => < X:String : FSM | state : "red-amber",name : "trafficLight" > [label turn_red_amber] .)
+
+state 1, Object: < "1" : FSM | state : "red-amber",name : "trafficLight" >
+arc 0 ===> state 2 (rl < X:String : FSM | state : "red-amber",name : "trafficLight" > => < X:String : FSM | state : "green",name : "trafficLight" > [label turn_green] .)
+
+state 2, Object: < "1" : FSM | state : "green",name : "trafficLight" >
+arc 0 ===> state 3 (rl < X:String : FSM | state : "green",name : "trafficLight" > => < X:String : FSM | state : "amber",name : "trafficLight" > [label turn_amber] .)
+
+state 3, Object: < "1" : FSM | state : "amber",name : "trafficLight" >
+arc 0 ===> state 0 (rl < X:String : FSM | state : "amber",name : "trafficLight" > => < X:String : FSM | state : "red",name : "trafficLight" > [label turn_red] .)
+Maude>
