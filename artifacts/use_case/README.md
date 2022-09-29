@@ -21,6 +21,3 @@ To understand how the used BPMN constructs work, you can run the BPMN models usi
 - Import the model into the simulator by dragging it into the browser.
 - Spawn a T-Junction controller and buses by clicking on the respective start events of the processes.
 - Enjoy the simulation.
-
-## State space exploration and behavioral consistency checking
-The consistency checking for the use case is described [here](../graphGrammars/global.gps/README.md).
