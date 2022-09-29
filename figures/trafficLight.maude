@@ -1,8 +1,12 @@
 --- Generated rules
-rl [turn_red_amber] : < "tl" : FSM | state : "red" > => < "tl" : FSM | state : "red-amber" > .
-rl [turn_green] : < "tl" : FSM | state : "red-amber" > => < "tl" : FSM | state : "green" > .
-rl [turn_amber] : < "tl" : FSM | state : "green" > => < "tl" : FSM | state : "amber" > .
-rl [turn_red] : < "tl" : FSM | state : "amber" > => < "tl" : FSM | state : "red" > .
+rl [turn_red_amber] : < X : FSM | name : "trafficLight", state : "red" >
+                   => < X : FSM | name : "trafficLight", state : "red-amber" > .
+rl [turn_green] : < X : FSM | name : "trafficLight", state : "red-amber" >
+               => < X : FSM | name : "trafficLight", state : "green" > .
+rl [turn_amber] : < X : FSM | name : "trafficLight", state : "green" >
+               => < X : FSM | name : "trafficLight", state : "amber" > .
+rl [turn_red] : < X : FSM | name : "trafficLight", state : "amber" >
+             => < X : FSM | name : "trafficLight", state : "red" > .
 --- Generated initial config representing the start state of the FSM.
 op initial : -> Configuration .
-eq initial = < "tl" : FSM | state : "red" > .
+eq initial = < "1" : FSM | name : "trafficLight", state : "red" > .
