@@ -11,10 +11,12 @@ The following additional artifacts can be found in this repository.
 
 All use case models can be found [here](./artifacts/use_case/README.md), including instructions on running the BPMN models.
 
-## Graph transformation execution semantics
-A detailed description how the graph transformation execution semantics work can be found [here](./artifacts/Graph_transformation_execution_semantics.pdf).
-Graph grammars are generated automatically for BPMN/FSM models using a model transformation encoded in Java available [here](https://github.com/timKraeuter/Rewrite_Rule_Generation).
+## Groove execution semantics
+- The Groove graph grammars for the **traffic light model** can be found [here](./artifacts/graphGrammars/trafficLight.gps/README.md), along with instructions on using it for state space generation.
+- The Groove graph grammars for the **T-Junction controller** and **bus controller** can be found [here](./artifacts/graphGrammars/T-Junction.gps/README.md), along with instructions on using it for state space generation.
+- The Groove graph grammars describing the **global system** can be found [here](./artifacts/graphGrammars/global.gps/README.md), along with instructions on using for state space generation and global consistency checking.
 
-- The graph grammar for the **traffic light model** can be found [here](./artifacts/graphGrammars/trafficLight.gps/README.md), along with instructions on using it for state space generation.
-- The graph grammar for the **T-Junction controller** and **bus controller** can be found [here](./artifacts/graphGrammars/T-Junction.gps/README.md), along with instructions on using it for state space generation.
-- The graph grammar describing the **global system** can be found [here](./artifacts/graphGrammars/global.gps/README.md), along with instructions on using for state space generation and global consistency checking.
+## Maude execution semantics
+- The Maude module for the **traffic light model** can be found [here](./artifacts/maude/trafficLight.maude), along with an [example execution](./artifacts/maude/trafficLight-output.txt).
+- TODO: T-Junction controller file
+- The Maude module for the **global system** can be found [here](./artifacts/maude/fullUsecase.maude).
