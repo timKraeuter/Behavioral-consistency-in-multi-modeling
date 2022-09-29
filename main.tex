@@ -687,7 +687,7 @@ This resulted in finding bugs in the bpmn-js simulator and our rule generator.
 Our semantics is inspired by \cite{vangorpVisualTokenbasedFormalization2013} but differs in some aspects.
 One key difference is that they define a fixed rule set that describes the semantics of \gls*{bpmn} models, while we generate a specific rule set for each model to enable interaction with specific parts of each model.
 
-Following this procedure, we can generate graph transformation rules that implement the behavioral semantics of the \gls*{bpmn} models used in the use case\cref{footnote:GGinRepo}.
+Following this procedure, we can generate graph transformation rules that implement the behavioral semantics of the \gls*{bpmn} models in the use case\cref{footnote:GGinRepo}.
 
 \subsubsection{Check behavioral consistency}
 The defined interactions change the rules for switching to phases 1 and 2.
@@ -712,12 +712,12 @@ All atomic propositions are specified as instances of $M_s^+$ that can be conver
 Graph conditions in Groove are rules that do not change elements but can be used as atomic propositions in model checking.
 
 \subsection{Maude execution semantics} \label{sec:maude_execution_semantics}
-% TODO: Describe Maude's execution semantics.
-TODO: Describe Maude.
+% TODO: Describe rule merges. Merging both sides and adding behavioral links.
+TODO: Describe rule merge in Maude.
 
 \subsubsection{State machine semantics}
 
-We are using the in Core Maude predefined module for object-based programming to encode our snapshot metamodels in Maude.
+We are using the predefined Maude module for object-based programming to encode the state machine snapshot metamodel in Maude.
 This encoding has to be only done once similar to the type graph definition in Groove.
 
 The generation of rewriting rules is similar to the generation of graph transformation rules.
@@ -735,7 +735,18 @@ caption=Rewriting rules and start configuration for a traffic light]{figures/tra
 Using Maude's search command and search graph visualization we can verify that the generated state space conforms to the traffic light state machine\footnote{The corresponding Maude files and example Maude executions can be found in \cite{timkrauterArtifactsBehavioralConsistency2022}}.
 
 \subsubsection{BPMN semantics}
+Again we encode the \gls*{bpmn} snapshot metamodel in Maude using the predefined module for object-based programming.
+The rewriting rule generation is similar to the graph transformation rule generation and supports the same subset of \gls*{bpmn} semantics.
+Similarly, one or more rules are constructed for each flow node in a \gls*{bpmn} process.
+\autoref{lst:tJunctionControllerMaude} shows rewriting rules for some flow nodes of the T-Junction controller.
 
+\lstinputlisting[
+label=lst:tJunctionControllerMaude,
+language=Interaction,
+float=*,
+caption=Rewriting rules for the T-Junction controller]{figures/tJunctionController.maude}
+
+Thus, we can generate rewriting rules that implement the behavioral semantics of the \gls*{bpmn} models in the use case.
 \subsubsection{Check behavioral consistency}
 
 \subsection{Behavioral consistency in the use case}
