@@ -117,8 +117,10 @@ mod BPMN-EXECUTION-use-case-execution is
     rl [e1_Gateway_0ys722g] :  < "use-case-execution" : BPMNSystem | messages : (M), processes : (< o0 : ProcessSnapshot | name : "T-Junction controller", tokens : ("Controller_started_e1 (Flow_1cnqphe)" T), signals : (SIG), subprocesses : (S), state : Running > P) > => < "use-case-execution" : BPMNSystem | messages : (none), processes : (< o0 : ProcessSnapshot | name : "T-Junction controller", tokens : ("e1_Phase_1 (Flow_1ojaen0)" T), signals : (none), subprocesses : (S), state : Running > P) > .
     rl [Switch_to_P2_Activity_03yx3nw_Flow_048f6r1_start] :  < "use-case-execution" : BPMNSystem | messages : (M), processes : (< o0 : ProcessSnapshot | name : "T-Junction controller", tokens : ("P1_over_Switch_to_P2 (Flow_048f6r1)" T), signals : (SIG), subprocesses : (S), state : Running > P) > => < "use-case-execution" : BPMNSystem | messages : (none), processes : (< o0 : ProcessSnapshot | name : "T-Junction controller", tokens : ("Switch_to_P2 (Activity_03yx3nw)" T), signals : (none), subprocesses : (S), state : Running > P) > .
     rl [Switch_to_P2_Activity_03yx3nw_Flow_1e2slwr_start] :  < "use-case-execution" : BPMNSystem | messages : (M), processes : (< o0 : ProcessSnapshot | name : "T-Junction controller", tokens : ("Phase_1_Switch_to_P2 (Flow_1e2slwr)" T), signals : (SIG), subprocesses : (S), state : Running > P) > => < "use-case-execution" : BPMNSystem | messages : (none), processes : (< o0 : ProcessSnapshot | name : "T-Junction controller", tokens : ("Switch_to_P2 (Activity_03yx3nw)" T), signals : (none), subprocesses : (S), state : Running > P) > .
+    rl [Switch_to_P2_Activity_03yx3nw_end] :  < "use-case-execution" : BPMNSystem | messages : (M), processes : (< o0 : ProcessSnapshot | name : "T-Junction controller", tokens : ("Switch_to_P2 (Activity_03yx3nw)" T), signals : (SIG), subprocesses : (S), state : Running > P) > => < "use-case-execution" : BPMNSystem | messages : (none), processes : (< o0 : ProcessSnapshot | name : "T-Junction controller", tokens : ("Switch_to_P2_B_is_green_Phase_2 (Flow_1uxkn7t)" T), signals : (none), subprocesses : (S), state : Running > P) > .
     rl [Switch_to_P1_Activity_1duk4ug_Flow_0tujs4p_start] :  < "use-case-execution" : BPMNSystem | messages : (M), processes : (< o0 : ProcessSnapshot | name : "T-Junction controller", tokens : ("P2_over_Switch_to_P1 (Flow_0tujs4p)" T), signals : (SIG), subprocesses : (S), state : Running > P) > => < "use-case-execution" : BPMNSystem | messages : (none), processes : (< o0 : ProcessSnapshot | name : "T-Junction controller", tokens : ("Switch_to_P1 (Activity_1duk4ug)" T), signals : (none), subprocesses : (S), state : Running > P) > .
     rl [Switch_to_P1_Activity_1duk4ug_Flow_04ws78i_start] :  < "use-case-execution" : BPMNSystem | messages : (M), processes : (< o0 : ProcessSnapshot | name : "T-Junction controller", tokens : ("Phase_2_Switch_to_P1 (Flow_04ws78i)" T), signals : (SIG), subprocesses : (S), state : Running > P) > => < "use-case-execution" : BPMNSystem | messages : (none), processes : (< o0 : ProcessSnapshot | name : "T-Junction controller", tokens : ("Switch_to_P1 (Activity_1duk4ug)" T), signals : (none), subprocesses : (S), state : Running > P) > .
+    rl [Switch_to_P1_Activity_1duk4ug_end] :  < "use-case-execution" : BPMNSystem | messages : (M), processes : (< o0 : ProcessSnapshot | name : "T-Junction controller", tokens : ("Switch_to_P1 (Activity_1duk4ug)" T), signals : (SIG), subprocesses : (S), state : Running > P) > => < "use-case-execution" : BPMNSystem | messages : (none), processes : (< o0 : ProcessSnapshot | name : "T-Junction controller", tokens : ("Switch_to_P1_A_&_C_are_green_Phase_1 (Flow_1xv5lrj)" T), signals : (none), subprocesses : (S), state : Running > P) > .
     rl [B_is_green_Phase_2_Event_1w3al4m] :  < "use-case-execution" : BPMNSystem | messages : (M), processes : (< o0 : ProcessSnapshot | name : "T-Junction controller", tokens : ("Switch_to_P2_B_is_green_Phase_2 (Flow_1uxkn7t)" T), signals : (SIG), subprocesses : (S), state : Running > PS) > => < "use-case-execution" : BPMNSystem | messages : (none), processes : (signalAll(< o0 : ProcessSnapshot | name : "T-Junction controller", tokens : ("B_is_green_Phase_2_Phase_2 (Flow_11hp3v6)" T), signals : (SIG), subprocesses : (S), state : Running > PS, "Request_green_TL_B_is_green (Flow_1t1snu6)")) > .
     rl [A_&_C_are_green_Phase_1_Event_18ivrke] :  < "use-case-execution" : BPMNSystem | messages : (M), processes : (< o0 : ProcessSnapshot | name : "T-Junction controller", tokens : ("Switch_to_P1_A_&_C_are_green_Phase_1 (Flow_1xv5lrj)" T), signals : (SIG), subprocesses : (S), state : Running > PS) > => < "use-case-execution" : BPMNSystem | messages : (none), processes : (signalAll(< o0 : ProcessSnapshot | name : "T-Junction controller", tokens : ("A_&_C_are_green_Phase_1_e2 (Flow_0o0zql1)" T), signals : (SIG), subprocesses : (S), state : Running > PS, "Request_green_TL_A_is_green (Flow_06b0un1)")) > .
     rl [Controller_started_Event_0e1tcn5] :  < "use-case-execution" : BPMNSystem | messages : (M), processes : (< o0 : ProcessSnapshot | name : "T-Junction controller", tokens : ("Controller_started (Event_0e1tcn5)" T), signals : (SIG), subprocesses : (S), state : Running > P) > => < "use-case-execution" : BPMNSystem | messages : (none), processes : (< o0 : ProcessSnapshot | name : "T-Junction controller", tokens : ("Controller_started_e1 (Flow_1cnqphe)" T), signals : (none), subprocesses : (S), state : Running > P) > .
@@ -162,186 +164,48 @@ mod BPMN-EXECUTION-use-case-execution is
     rl [Pass_junction_Activity_1tchett_start] :  < "use-case-execution" : BPMNSystem | messages : (M), processes : (< o0 : ProcessSnapshot | name : "Bus controller (A)", tokens : ("e1_Pass_junction (Flow_0c3nyvf)" T), signals : (SIG), subprocesses : (S), state : Running > P) > => < "use-case-execution" : BPMNSystem | messages : (none), processes : (< o0 : ProcessSnapshot | name : "Bus controller (A)", tokens : ("Pass_junction (Activity_1tchett)" T), signals : (none), subprocesses : (S), state : Running > P) > .
     rl [Pass_junction_Activity_1tchett_end] :  < "use-case-execution" : BPMNSystem | messages : (M), processes : (< o0 : ProcessSnapshot | name : "Bus controller (A)", tokens : ("Pass_junction (Activity_1tchett)" T), signals : (SIG), subprocesses : (S), state : Running > P) > => < "use-case-execution" : BPMNSystem | messages : (none), processes : (< o0 : ProcessSnapshot | name : "Bus controller (A)", tokens : ("Pass_junction_Passed_junction (Flow_0r8tgda)" T), signals : (none), subprocesses : (S), state : Running > P) > .
 
-    ---    Synched rules are not allowed anymore.
----    rl [Switch_to_P1_Activity_1duk4ug_end] :  < "use-case-execution" : BPMNSystem | messages : (M), processes : (< o0 : ProcessSnapshot | name : "T-Junction controller", tokens : ("Switch_to_P1 (Activity_1duk4ug)" T), signals : (SIG), subprocesses : (S), state : Running > P) > => < "use-case-execution" : BPMNSystem | messages : (none), processes : (< o0 : ProcessSnapshot | name : "T-Junction controller", tokens : ("Switch_to_P1_A_&_C_are_green_Phase_1 (Flow_1xv5lrj)" T), signals : (none), subprocesses : (S), state : Running > P) > .
----    rl [Switch_to_P2_Activity_03yx3nw_end] :  < "use-case-execution" : BPMNSystem | messages : (M), processes : (< o0 : ProcessSnapshot | name : "T-Junction controller", tokens : ("Switch_to_P2 (Activity_03yx3nw)" T), signals : (SIG), subprocesses : (S), state : Running > P) > => < "use-case-execution" : BPMNSystem | messages : (none), processes : (< o0 : ProcessSnapshot | name : "T-Junction controller", tokens : ("Switch_to_P2_B_is_green_Phase_2 (Flow_1uxkn7t)" T), signals : (none), subprocesses : (S), state : Running > P) > .
-
     --- Start configuration which would be generated
-    op initTJ : -> Configuration .
-    eq initTJ = < "use-case-execution" : BPMNSystem | messages : (none), processes : (< "0" : ProcessSnapshot | name : "Bus controller (B)", tokens : ("Approaching_junction (Event_16ki5g9)"), signals : (none), subprocesses : (none), state : Running >
+    op init : -> Configuration .
+    eq init = < "use-case-execution" : BPMNSystem | messages : (none), processes : (< "0" : ProcessSnapshot | name : "Bus controller (B)", tokens : ("Approaching_junction (Event_16ki5g9)"), signals : (none), subprocesses : (none), state : Running >
     < "1" : ProcessSnapshot | name : "T-Junction controller", tokens : ("Controller_started (Event_0e1tcn5)"), signals : (none), subprocesses : (none), state : Running >
     < "2" : ProcessSnapshot | name : "Bus controller (A)", tokens : ("Approaching_junction (Event_0xodosv)"), signals : (none), subprocesses : (none), state : Running >) > .
 endm
 
-mod FSM-BEHAVIOR is
-    pr STRING .
-    pr CONFIGURATION .
-
-    op state :_ : String -> Attribute [ctor].
-    op name :_ : String -> Attribute [ctor].
-    op FSM : -> Cid [ctor] .
-
-    subsort String < Oid .
-endm
-
-mod FSM-BEHAVIOR-trafficLight is
-    pr FSM-BEHAVIOR .
-
-    var X : String .
-
-    --- Generated rules
-    rl [turn_red_amber] :  < X : FSM | name : "trafficLight", state : "red" > => < X : FSM | name : "trafficLight", state : "red-amber" > .
-    rl [turn_amber] :  < X : FSM | name : "trafficLight", state : "green" > => < X : FSM | name : "trafficLight", state : "amber" > .
-
-    --- Synched rules are not allowed anymore.
----    rl [turn_green] :  < X : FSM | name : "trafficLight", state : "red-amber" > => < X : FSM | name : "trafficLight", state : "green" > .
----    rl [turn_red] :  < X : FSM | name : "trafficLight", state : "amber" > => < X : FSM | name : "trafficLight", state : "red" > .
-
-    --- Generated initial config representing the start state of the FSM.
-    op initTL : -> Configuration .
-    eq initTL = < "1" : FSM | name : "trafficLight", state : "red" > .
-endm
-
-mod COMBINED is
+mod BPMN-PREDS is
     pr BPMN-EXECUTION-use-case-execution .
-    pr FSM-BEHAVIOR-trafficLight .
-
-    op BehavioralRelationship : -> Cid [ctor] .
-    op name :_ : String -> Attribute [ctor]. --- Not sure if we need a name yet.
-    op from :_ : Oid -> Attribute [ctor].
-    op to :_ : Oid -> Attribute [ctor].
-
-    --- System rules
-
-    vars X Tl1 Tl2 Tl3 : String .
-    vars P S : Configuration .
-    vars SIG M T : MSet .
-    rl [Switch_to_P1] :  < "use-case-execution" : BPMNSystem | messages : (M), processes : (< X : ProcessSnapshot | name : "T-Junction controller", tokens : ("Switch_to_P1 (Activity_1duk4ug)" T), signals : (SIG), subprocesses : (S), state : Running > P) >
-                         < "A" : BehavioralRelationship | from : X, to : Tl1 >
-                         < "B" : BehavioralRelationship | from : X, to : Tl2 >
-                         < "C" : BehavioralRelationship | from : X, to : Tl3 >
-                         < Tl1 : FSM | name : "trafficLight", state : "red-amber" >
-                         < Tl2 : FSM | name : "trafficLight", state : "amber" >
-                         < Tl3 : FSM | name : "trafficLight", state : "red-amber" >
-                          =>
-                         < "use-case-execution" : BPMNSystem | messages : (none), processes : (< X : ProcessSnapshot | name : "T-Junction controller", tokens : ("Switch_to_P1_A_&_C_are_green_Phase_1 (Flow_1xv5lrj)" T), signals : (none), subprocesses : (S), state : Running > P) >
-                         < "A" : BehavioralRelationship | from : X, to : Tl1 >
-                         < "B" : BehavioralRelationship | from : X, to : Tl2 >
-                         < "C" : BehavioralRelationship | from : X, to : Tl3 >
-                         < Tl1 : FSM | name : "trafficLight", state : "green" >
-                         < Tl2 : FSM | name : "trafficLight", state : "red" >
-                         < Tl3 : FSM | name : "trafficLight", state : "green" > .
-
-    rl [Switch_to_P2] :  < "use-case-execution" : BPMNSystem | messages : (M), processes : (< X : ProcessSnapshot | name : "T-Junction controller", tokens : ("Switch_to_P2 (Activity_03yx3nw)" T), signals : (SIG), subprocesses : (S), state : Running > P) >
-                         < "A" : BehavioralRelationship | from : X, to : Tl1 >
-                         < "B" : BehavioralRelationship | from : X, to : Tl2 >
-                         < "C" : BehavioralRelationship | from : X, to : Tl3 >
-                         < Tl1 : FSM | name : "trafficLight", state : "amber" >
-                         < Tl2 : FSM | name : "trafficLight", state : "red-amber" >
-                         < Tl3 : FSM | name : "trafficLight", state : "amber" >
-                          =>
-                         < "use-case-execution" : BPMNSystem | messages : (none), processes : (< X : ProcessSnapshot | name : "T-Junction controller", tokens : ("Switch_to_P2_B_is_green_Phase_2 (Flow_1uxkn7t)" T), signals : (none), subprocesses : (S), state : Running > P) >
-                         < "A" : BehavioralRelationship | from : X, to : Tl1 >
-                         < "B" : BehavioralRelationship | from : X, to : Tl2 >
-                         < "C" : BehavioralRelationship | from : X, to : Tl3 >
-                         < Tl1 : FSM | name : "trafficLight", state : "red" >
-                         < Tl2 : FSM | name : "trafficLight", state : "green" >
-                         < Tl3 : FSM | name : "trafficLight", state : "red" > .
-
-    --- System start config
-    op trafficLightsAndRelationships : -> Configuration .
-    eq trafficLightsAndRelationships = < "A" : BehavioralRelationship | from : "1", to : "A" >
-                                            < "B" : BehavioralRelationship | from : "1", to : "B" >
-                                            < "C" : BehavioralRelationship | from : "1", to : "C" >
-                                            < "A" : FSM | name : "trafficLight", state : "green" >
-                                            < "B" : FSM | name : "trafficLight", state : "red" >
-                                            < "C" : FSM | name : "trafficLight", state : "green" > .
-    op systemConfig : -> Configuration .
-    eq systemConfig =
-     initTJ
-     trafficLightsAndRelationships .
-
-    op systemConfigNoBuses : -> Configuration .
-    eq systemConfigNoBuses =
-        < "use-case-execution" : BPMNSystem | messages : (none), processes : (
-            < "1" : ProcessSnapshot | name : "T-Junction controller", tokens : ("Controller_started (Event_0e1tcn5)"), signals : (none), subprocesses : (none), state : Running >) >
-        trafficLightsAndRelationships .
-
-    op systemConfigOneBus : -> Configuration .
-    eq systemConfigOneBus =
-        < "use-case-execution" : BPMNSystem | messages : (none), processes : (
-            < "1" : ProcessSnapshot | name : "T-Junction controller", tokens : ("Controller_started (Event_0e1tcn5)"), signals : (none), subprocesses : (none), state : Running >
-            < "2" : ProcessSnapshot | name : "Bus controller (B)", tokens : ("Approaching_junction (Event_16ki5g9)"), signals : (none), subprocesses : (none), state : Running >) >
-        trafficLightsAndRelationships .
-
-    op systemConfigTwoBuses : -> Configuration .
-    eq systemConfigTwoBuses =
-        < "use-case-execution" : BPMNSystem | messages : (none), processes : (
-                    < "1" : ProcessSnapshot | name : "T-Junction controller", tokens : ("Controller_started (Event_0e1tcn5)"), signals : (none), subprocesses : (none), state : Running >
-                    < "2" : ProcessSnapshot | name : "Bus controller (B)", tokens : ("Approaching_junction (Event_16ki5g9)"), signals : (none), subprocesses : (none), state : Running >
-                    < "3" : ProcessSnapshot | name : "Bus controller (B)", tokens : ("Approaching_junction (Event_16ki5g9)"), signals : (none), subprocesses : (none), state : Running >) >
-        trafficLightsAndRelationships .
-
-    op systemConfigThreeBuses : -> Configuration .
-    eq systemConfigThreeBuses =
-        < "use-case-execution" : BPMNSystem | messages : (none), processes : (
-                    < "1" : ProcessSnapshot | name : "T-Junction controller", tokens : ("Controller_started (Event_0e1tcn5)"), signals : (none), subprocesses : (none), state : Running >
-                    < "2" : ProcessSnapshot | name : "Bus controller (B)", tokens : ("Approaching_junction (Event_16ki5g9)"), signals : (none), subprocesses : (none), state : Running >
-                    < "3" : ProcessSnapshot | name : "Bus controller (B)", tokens : ("Approaching_junction (Event_16ki5g9)"), signals : (none), subprocesses : (none), state : Running >
-                    < "4" : ProcessSnapshot | name : "Bus controller (B)", tokens : ("Approaching_junction (Event_16ki5g9)"), signals : (none), subprocesses : (none), state : Running >) >
-        trafficLightsAndRelationships .
-endm
-
-
-mod COMBINED-PREDS is
-    pr COMBINED .
     pr SATISFACTION .
     subsort Configuration < State .
 
-    vars C C1 : Configuration .
+    var C : Configuration .
     var P : Prop .
-    var X : String .
+    var X Y : Oid .
+    var N : String . --- name
+    var T : MSet . --- tokens
+    var SIG : MSet . --- signals
+    var M : MSet . --- messages
+    var T1 : NeMSet .
+    var S : Configuration .
+    var State : ProcessState .
 
 
-    --- Atomic propositions
-    op A-is : String -> Prop .
-    eq < "A" : FSM | name : "trafficLight", state : X > C |= A-is(X) = true .
-    op B-is : String -> Prop .
-    eq < "B" : FSM | name : "trafficLight", state : X > C |= B-is(X) = true .
-    op C-is : String -> Prop .
-    eq < "C" : FSM | name : "trafficLight", state : X > C |= C-is(X) = true .
-    op B1-passing : -> Prop .
-    eq < "use-case-execution" : BPMNSystem | messages : (none), processes : (
-                                        C1 < X : ProcessSnapshot | name : "Bus controller (A)", tokens : ("Pass_junction (Activity_1tchett)"), signals : (none), subprocesses : (none), state : Running >) >
-                              C |= B1-passing = true .
-    op B2-passing : -> Prop .
-    eq < "use-case-execution" : BPMNSystem | messages : (none), processes : (
-                                        C1 < X : ProcessSnapshot | name : "Bus controller (B)", tokens : ("Pass_junction (Activity_0cdd7ru)"), signals : (none), subprocesses : (none), state : Running >) >
-                              C |= B2-passing = true .
-    eq C |= P = false [owise] .
+    op allTerminated : -> Prop .
+    eq < X : BPMNSystem | messages : M, processes : (< Y : ProcessSnapshot | name : N, tokens : T, signals : SIG, subprocesses : S, state : Running > C) > |= allTerminated = false .
+    eq < X : BPMNSystem | messages : M, processes : (C) > |= allTerminated = true [owise] .
+
+    op unsafe : -> Prop .
+    eq < X : BPMNSystem | messages : M, processes : (< Y : ProcessSnapshot | name : N, tokens : (T1 T1 T), signals : SIG, subprocesses : S, state : State > C) > |= unsafe = true .
+    eq < X : BPMNSystem | messages : M, processes : (C) > |= unsafe = false [owise] .
+
+    --- Generated atomic propositions
+    --- no propositions
 endm
 
-mod FINAL-CHECK is
-    pr COMBINED-PREDS .
+mod BPMN-CHECK is
+    pr BPMN-PREDS .
     pr MODEL-CHECKER .
     pr LTL-SIMPLIFIER .
 
     var X : Configuration .
 endm
---- Prop1:
----red modelCheck(systemConfig, [] ~( (A-is("green") \/ A-is("amber")) /\ (B-is("green") \/ B-is("amber")) )) .
 
---- Prop1 as a search command. Maybe not optimized yet. More but faster rewrites roughly the same time.
----search systemConfig =>* X such that ((X |= A-is("green") or X |= A-is("green")) and (X |= B-is("green") or X |= B-is("amber"))) = true .
-
---- Prop2:
----red modelCheck(systemConfig, [] ~( (C-is("green") \/ C-is("amber")) /\ (B-is("green") \/ B-is("amber")) )) .
-
---- Prop3:
----red modelCheck(systemConfig, [] ~( B1-passing /\ (A-is("red") \/ A-is("red-amber")) )) .
-
---- Prop4:
----red modelCheck(systemConfig, [] ~( B2-passing /\ (B-is("red") \/ B-is("red-amber")) )) .
-
---- Full state space (searches for all final states).
----search systemConfig =>! X .
+search init =>! X such that X |= allTerminated = true .

@@ -37,8 +37,8 @@ mod FSM-BEHAVIOR-trafficLight-PREDS is
     var P : Prop .
 
     --- Generated atomic propositions
-    op redish : Oid -> Prop .
-    eq < X : FSM | name : "trafficLight", state : "red" > C |= redish(X) = true .
+    op red : Oid -> Prop .
+    eq < X : FSM | name : "trafficLight", state : "red" > C |= red(X) = true .
     op green : Oid -> Prop .
     eq < X : FSM | name : "trafficLight", state : "green" > C |= green(X) = true .
 
@@ -53,6 +53,7 @@ mod FSM-CHECK is
     var X : Configuration .
 endm
 
+---red modelCheck(initial, <> red("1")) .
 search initial =>! X .
 
 show search graph .
