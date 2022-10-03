@@ -279,7 +279,7 @@ mod COMBINED is
         < "use-case-execution" : BPMNSystem | messages : (none), processes : (
                     < "1" : ProcessSnapshot | name : "T-Junction controller", tokens : ("Controller_started (Event_0e1tcn5)"), signals : (none), subprocesses : (none), state : Running >
                     < "2" : ProcessSnapshot | name : "Bus controller (B)", tokens : ("Approaching_junction (Event_16ki5g9)"), signals : (none), subprocesses : (none), state : Running >
-                    < "3" : ProcessSnapshot | name : "Bus controller (B)", tokens : ("Approaching_junction (Event_16ki5g9)"), signals : (none), subprocesses : (none), state : Running >) >
+                    < "2" : ProcessSnapshot | name : "Bus controller (B)", tokens : ("Approaching_junction (Event_16ki5g9)"), signals : (none), subprocesses : (none), state : Running >) >
         trafficLightsAndRelationships .
 
     op systemConfigThreeBuses : -> Configuration .
@@ -287,8 +287,8 @@ mod COMBINED is
         < "use-case-execution" : BPMNSystem | messages : (none), processes : (
                     < "1" : ProcessSnapshot | name : "T-Junction controller", tokens : ("Controller_started (Event_0e1tcn5)"), signals : (none), subprocesses : (none), state : Running >
                     < "2" : ProcessSnapshot | name : "Bus controller (B)", tokens : ("Approaching_junction (Event_16ki5g9)"), signals : (none), subprocesses : (none), state : Running >
-                    < "3" : ProcessSnapshot | name : "Bus controller (B)", tokens : ("Approaching_junction (Event_16ki5g9)"), signals : (none), subprocesses : (none), state : Running >
-                    < "4" : ProcessSnapshot | name : "Bus controller (B)", tokens : ("Approaching_junction (Event_16ki5g9)"), signals : (none), subprocesses : (none), state : Running >) >
+                    < "2" : ProcessSnapshot | name : "Bus controller (B)", tokens : ("Approaching_junction (Event_16ki5g9)"), signals : (none), subprocesses : (none), state : Running >
+                    < "2" : ProcessSnapshot | name : "Bus controller (B)", tokens : ("Approaching_junction (Event_16ki5g9)"), signals : (none), subprocesses : (none), state : Running >) >
         trafficLightsAndRelationships .
 endm
 
