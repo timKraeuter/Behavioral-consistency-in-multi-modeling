@@ -234,7 +234,7 @@ Consequently, we need a model of the system to allow us to define interactions b
 
 The resulting model called the \emph{system relationship model} is shown in \autoref{fig:systemRelationshipModel} using a class diagram-like syntax.
 It contains one class for each behavioral model and associations to depict behavioral relationships, leading to possible interactions.
-In addition, it contains enumerations to parameterize the behavioral models.
+In addition, it contains enumerations to parameterize the behavioral models. 
 
 \begin{figure}[h]
     \centering
@@ -713,17 +713,17 @@ Graph conditions in Groove are rules that do not change elements but can be used
 
 \subsection{Maude execution semantics} \label{sec:maude_execution_semantics}
 % TODO: Describe rule merges. Merging both sides and adding behavioral links.
-TODO: Describe rule merge in Maude.
+TODO: Describe the rule merge in Maude.
 
 \subsubsection{State machine semantics}
 
 We are using the predefined Maude module for object-based programming to encode the state machine snapshot metamodel in Maude.
-This encoding has to be only done once similar to the type graph definition in Groove.
+This encoding has to be only done once, similar to the type graph definition in Groove.
 
 The generation of rewriting rules is similar to the generation of graph transformation rules.
 Each state machine transition leads to one rewriting rule.
 \autoref{lst:trafficLightMaude} shows the rewriting rules for the traffic light model.
-In addition, based on the defined start state a start configuration is generated (see lines 7 and 8).
+In addition, based on the defined start state, a start configuration is generated (see lines 7 and 8).
 The start configuration is the Maude counterpart of the start graph in graph grammars.
 
 \lstinputlisting[
@@ -732,13 +732,13 @@ language=Interaction,
 float=*,
 caption=Rewriting rules and start configuration for a traffic light]{figures/trafficLight.maude}
 
-Using Maude's search command and search graph visualization we can verify that the generated state space conforms to the traffic light state machine\footnote{The corresponding Maude files and example Maude executions can be found in \cite{timkrauterArtifactsBehavioralConsistency2022}}.
+Using Maude's search command and search graph visualization, we can verify that the generated state space conforms to the traffic light state machine\footnote{The corresponding Maude files and example Maude executions can be found in \cite{timkrauterArtifactsBehavioralConsistency2022}}.
 
 \subsubsection{BPMN semantics}
 Again we encode the \gls*{bpmn} snapshot metamodel in Maude using the predefined module for object-based programming.
 The rewriting rule generation is similar to the graph transformation rule generation and supports the same subset of \gls*{bpmn} semantics.
 Similarly, one or more rules are constructed for each flow node in a \gls*{bpmn} process.
-\autoref{lst:tJunctionControllerMaude} shows rewriting rules for some flow nodes of the T-Junction controller.
+\autoref{lst:tJunctionControllerMaude} shows rewriting rules for the same flow nodes of the T-Junction controller as depicted in \autoref{fig:bpmn_example_rules}.
 
 \lstinputlisting[
 label=lst:tJunctionControllerMaude,
@@ -746,6 +746,7 @@ language=Interaction,
 float=*,
 caption=Rewriting rules for the T-Junction controller]{figures/tJunctionController.maude}
 
+Like the graph transformation rules, the rewriting rules move tokens by changing their position according to the given \gls*{bpmn} model.
 Thus, we can generate rewriting rules that implement the behavioral semantics of the \gls*{bpmn} models in the use case.
 \subsubsection{Check behavioral consistency}
 
@@ -805,7 +806,7 @@ As one can see in \autoref{table:maudeRuntime} and \autoref{table:grooveRuntime}
 The tables show the states, rewrites/transitions, and average runtime of a full state space exploration in the Maude and Groove-based implementations.
 Four scenarios were benchmarked, starting with the use case multi-model without approaching buses and then increasing the number of buses up to three.
 
-To calculate the average runtime, we used the hyperfine benchmarking tool \cite{peterHyperfine2022} (version 1.15.0) and ran state space exploration for each scenario ten times.
+To calculate the average runtime, we used the hyperfine benchmarking tool \cite{peterHyperfine2022} (version 1.15.0), which ran state space exploration for each scenario ten times.
 Timing evaluations were done on a notebook with an AMD Ryzen PRO 3500U processor and 16 GB of RAM running Maude version 3.2.1 (inside the Windows Subsystem for Linux) and Groove version 5.8.1.
 
 The benchmarks include start-up times, for example, the state space exploration for the \textsf{No Buses} scenario takes \textasciitilde 500ms according to Groove.
