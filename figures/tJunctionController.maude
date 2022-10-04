@@ -1,2 +1,17 @@
---- Examples of generated rules
-TODO
+vars o0 : Oid . --- Object ids
+vars SIG M T : MSet . --- Signals, messages and tokens
+vars P S : Configuration . --- Processes and subprocesses
+--- Controller started rule
+rl [Controller_started_Event_0e1tcn5] :
+< "use-case-execution" : BPMNSystem | messages : (M), processes : (
+    < o0 : ProcessSnapshot | name : "T-Junction controller", tokens : ("Controller_started (Event_0e1tcn5)" T), signals : (SIG), subprocesses : (S), state : Running > P) >
+    =>
+< "use-case-execution" : BPMNSystem | messages : none, processes : (
+    < o0 : ProcessSnapshot | name : "T-Junction controller", tokens : ("Controller_started_e1 (Flow_1cnqphe)" T), signals : none, subprocesses : (S), state : Running > P) > .
+--- Switch to P2 started rule
+rl [Switch_to_P2_Activity_03yx3nw_Flow_1e2slwr_start] :
+< "use-case-execution" : BPMNSystem | messages : (M), processes : (
+    < o0 : ProcessSnapshot | name : "T-Junction controller", tokens : ("Phase_1_Switch_to_P2 (Flow_1e2slwr)" T), signals : (SIG), subprocesses : (S), state : Running > P) >
+    =>
+< "use-case-execution" : BPMNSystem | messages : (none), processes : (
+    < o0 : ProcessSnapshot | name : "T-Junction controller", tokens : ("Switch_to_P2 (Activity_03yx3nw)" T), signals : (none), subprocesses : (S), state : Running > P) > .

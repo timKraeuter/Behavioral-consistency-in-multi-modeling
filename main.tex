@@ -181,7 +181,7 @@ We model two processes, one for the T-Junction and the Bus.
 Each process is modeled in its own \gls*{bpmn} \emph{pool}.
 A pool is depicted as a vertical lane with a name on the left and allows to draw message flows (arrows with dashed lines) between two different pools.
 
-\autoref{fig:t_junction} shows how a possible controller for a T-Junction behaves in the traffic management system\footnote{All models and their source files can be found in \cite{timkrauterArtifactsBehavioralConsistency2022}.\label{footnote:fullModels}}.
+\autoref{fig:t_junction} shows how a possible controller for a T-Junction behaves in the traffic management system\footnote{All models and their source files can be found in \cite{krauterArtifactsBehavioralConsistency2022}.\label{footnote:fullModels}}.
 When a T-Junction controller is started, we assume that the traffic lights are showing the colors according to phase 1 (see \autoref{fig:junction-phases}).
 Thus, the controller enters a subprocess called phase 1 (see \autoref{fig:communication} top right), which we describe together with the subprocess called phase 2 later.
 However, when a fixed amount of time has passed, the subprocess is interrupted by the attached timer boundary event.
@@ -661,7 +661,7 @@ We depict a graph transformation rule by showing its graph $L$ on the left, poin
     \label{fig:sm_rules}
 \end{figure}
 
-Using a traffic light snapshot with the state red as a start graph results in a graph grammar\footnote{\label{footnote:GGinRepo}All generated graph grammars, including further instructions regarding execution and consistency checking, can be found in \cite{timkrauterArtifactsBehavioralConsistency2022}.}, which will generate the same state space as the traffic light state machine.
+Using a traffic light snapshot with the state red as a start graph results in a graph grammar\footnote{\label{footnote:GGinRepo}All generated graph grammars, including further instructions regarding execution and consistency checking, can be found in \cite{krauterArtifactsBehavioralConsistency2022}.}, which will generate the same state space as the traffic light state machine.
 We evaluated our approach by executing the graph grammar with the graph transformation tool Groove \cite{ghamarianModellingAnalysisUsing2012, rensinkGROOVESimulatorTool2004}.
 However, in the future, we can also experiment with other graph transformation tools since rule generation can be adapted without much effort.
 % Programming against a clearly defined interface makes this possible. But that's not important for this paper.
@@ -675,7 +675,7 @@ It uses the concrete syntax introduced earlier to represent process snapshots co
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.475\textwidth]{figures/bpmn_rules.pdf}
-    \caption{Graph transformation rules for the T-Junction controller}
+    \caption{Example graph transformation rules for the T-Junction controller}
     \label{fig:bpmn_example_rules}
 \end{figure}
 
@@ -686,6 +686,7 @@ This resulted in finding bugs in the bpmn-js simulator and our rule generator.
 
 Our semantics is inspired by \cite{vangorpVisualTokenbasedFormalization2013} but differs in some aspects.
 One key difference is that they define a fixed rule set that describes the semantics of \gls*{bpmn} models, while we generate a specific rule set for each model to enable interaction with specific parts of each model.
+The rule generation is implemented in Java and can be found in \cite{krauterRewriteRuleGeneration2022}.
 
 Following this procedure, we can generate graph transformation rules that implement the behavioral semantics of the \gls*{bpmn} models in the use case\cref{footnote:GGinRepo}.
 
@@ -697,7 +698,7 @@ We decided that the interactions between the traffic lights and the T-Junction c
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.475\textwidth]{figures/parallel_rule.pdf}
-    \caption{Parallel graph transformation rule to switch to phase 1}
+    \caption{Global graph transformation rule to switch to phase 1}
     \label{fig:parallel_rule}
 \end{figure}
 
@@ -712,8 +713,12 @@ All atomic propositions are specified as instances of $M_s^+$ that can be conver
 Graph conditions in Groove are rules that do not change elements but can be used as atomic propositions in model checking.
 
 \subsection{Maude execution semantics} \label{sec:maude_execution_semantics}
-% TODO: Describe rule merges. Merging both sides and adding behavioral links.
-TODO: Describe the rule merge in Maude.
+We are using the predefined Maude module for object-based programming to encode the snapshot metamodels in Maude.
+In addition, we add behavioral relationships from the interaction metamodel as objects, such that we can instantiate them to create the system configuration described in the use case.
+
+Interactions lead to rule merges in Maude where the left and right side of each individual rule is added to a global rules.
+Similarly to the process for graph transformation rules, individual rules are deleted.
+In addition, behavioral relationships as defined in the interaction are added to the rule.
 
 \subsubsection{State machine semantics}
 
@@ -732,27 +737,43 @@ language=Interaction,
 float=*,
 caption=Rewriting rules and start configuration for a traffic light]{figures/trafficLight.maude}
 
-Using Maude's search command and search graph visualization, we can verify that the generated state space conforms to the traffic light state machine\footnote{The corresponding Maude files and example Maude executions can be found in \cite{timkrauterArtifactsBehavioralConsistency2022}}.
+Using Maude's search command and search graph visualization, we can verify that the generated state space conforms to the traffic light state machine\footnote{\label{footnote:maudeArtifacts}The corresponding Maude files and example Maude executions can be found in \cite{krauterArtifactsBehavioralConsistency2022}}.
 
 \subsubsection{BPMN semantics}
 Again we encode the \gls*{bpmn} snapshot metamodel in Maude using the predefined module for object-based programming.
 The rewriting rule generation is similar to the graph transformation rule generation and supports the same subset of \gls*{bpmn} semantics.
 Similarly, one or more rules are constructed for each flow node in a \gls*{bpmn} process.
-\autoref{lst:tJunctionControllerMaude} shows rewriting rules for the same flow nodes of the T-Junction controller as depicted in \autoref{fig:bpmn_example_rules}.
+\autoref{lst:tJunctionControllerMaude} shows two Maude rewriting rules for the first two flow nodes of the T-Junction controller as depicted in \autoref{fig:bpmn_example_rules}.
 
 \lstinputlisting[
 label=lst:tJunctionControllerMaude,
 language=Interaction,
 float=*,
-caption=Rewriting rules for the T-Junction controller]{figures/tJunctionController.maude}
+caption=Example rewriting rules for the T-Junction controller]{figures/tJunctionController.maude}
 
 Like the graph transformation rules, the rewriting rules move tokens by changing their position according to the given \gls*{bpmn} model.
 Thus, we can generate rewriting rules that implement the behavioral semantics of the \gls*{bpmn} models in the use case.
+The rule generation is implemented in Java and can be found in \cite{krauterRewriteRuleGeneration2022}.
+
 \subsubsection{Check behavioral consistency}
+The defined interactions change the rules for switching to phases 1 and 2. \autoref{lst:synchRuleMaude} shows the resulting rule for switching to phase 1, where a synchronization with the end of the task was chosen.
+\autoref{fig:parallel_rule} shows the equivalent graph transformation rule.
+
+\lstinputlisting[
+label=lst:synchRuleMaude,
+language=Interaction,
+float=*,
+caption=Global Maude rule to switch to phase 1]{figures/synch.maude}
+
+The rule changes all traffic lights simultaneously and finishes the task.
+Similarly, a global rule for switching to phase 2 is created and all individual rules are deleted.
+
+Finally, we can use the Maude model checker module to check the requirements formalized by the \gls*{ltl} properties 1-4\cref{footnote:maudeArtifacts}.
+Atomic propositions can be represented in Maude using the encoded snapshot metamodels and behavioral relationships.
 
 \subsection{Behavioral consistency in the use case}
 
-Both implementations show that properties 1 and 2 hold, while properties 3 and 4 do not hold\cref{footnote:GGinRepo}.
+Both implementations show that properties 1 and 2 hold, while properties 3 and 4 do not hold\cref{footnote:GGinRepo}\cref{footnote:maudeArtifacts}.
 The counterexamples for properties 3 and 4 show an unexpected race condition that must be handled.
 After the T-Junction controller signals that the traffic light A/B is green, bus B1/B2 can advance to the \textsf{Pass Junction} activity.
 However, at the same time, the T-Junction controller can enter the subprocess for the next phase, which can be interrupted by the associated timer event.
@@ -820,13 +841,13 @@ However, as expected, neither of the tools is immune to state space explosion.
  \hline
  Use case & States & Rewrites & Exploration time \\
  \hline\hline
- No buses & 168 & 663 & \textasciitilde 67.6 ms \\
+ No buses & 168 & 664 & \textasciitilde 67.6 ms \\
  \hline
- 1 bus & 3.304 & 20.117 & \textasciitilde 277.5 ms \\
+ 1 bus & 3.304 & 19.958 & \textasciitilde 277.5 ms \\
  \hline
- 2 buses & 35.280 & 28.2975 & \textasciitilde 3.008 ms \\
+ 2 buses & 35.280 & 27.9776 & \textasciitilde 3.008 ms \\
  \hline
- 3 buses & 260.176 & 2.555.701 & \textasciitilde 27.453 ms \\
+ 3 buses & 260.176 & 2.522.582 & \textasciitilde 27.453 ms \\
  \hline
 \end{tabular}
 \caption[State space exploration in Maude]{State space exploration in Maude\footnotemark}
@@ -852,7 +873,7 @@ However, as expected, neither of the tools is immune to state space explosion.
 
 \end{table}
 
-\footnotetext{\label{footnote:benchmark}A description how to run the benchmarks can be found in \cite{timkrauterArtifactsBehavioralConsistency2022}.}
+\footnotetext{\label{footnote:benchmark}A description how to run the benchmarks can be found in \cite{krauterArtifactsBehavioralConsistency2022}.}
 
 % Discussion
 % Full state space is not what you do. You check properties.
