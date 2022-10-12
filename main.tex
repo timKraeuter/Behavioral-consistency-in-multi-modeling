@@ -91,7 +91,7 @@ The approach introduces a workflow in which we
 (i) align the individual models and specify their \emph{interactions}, 
 (ii) generate a \emph{global execution semantics} for the multi-model, and finally,
 (iii) define and check \emph{global properties} which should be satisfied by the multi-model.
-Our approach is independent of a particular formalism as an underlying global execution semantics, and the current two implementations utilize rewriting logic (Maude) or graph transformations (Groove), respectively.
+Our approach is independent of a particular formalism as an underlying global execution semantics, and the current two implementations utilize rewriting logic (Maude) and graph transformations (Groove), respectively.
 \end{abstract}
 
 % TODO: Comment in after acceptance and helpful feedback.
@@ -127,7 +127,7 @@ However, current approaches either only allow for consistency checking of two be
 
 % Our approach summarized.
 We propose a novel approach for consistency management of heterogeneous multi-models, which allows us to define and check \emph{global} behavioral properties.
-Our approach allows specifying \emph{interactions} between potentially heterogeneous behavioral models, which are in turn used to generate global execution semantics.
+Our approach facilitates specifying \emph{interactions} between potentially heterogeneous behavioral models, which are in turn used to generate global execution semantics.
 Although our approach is independent of a particular formalism as an underlying global execution semantics, the current implementations utilize the rewriting logic tool Maude and the graph transformation tool set Groove (see \autoref{sec:maude_execution_semantics}).
 The generation of global execution semantics is \textit{fully automatic} and results in term rewriting rules/graph transformation rules usable by Maude/Groove for the global system.
 Afterward, we can use the built-in verification mechanisms in Maude/Groove to check the previously defined global behavioral properties.
@@ -176,11 +176,12 @@ The start state of the traffic light in \autoref{fig:trafficLight} is \textsf{re
 \end{figure}
 
 However, the T-Junction's behavior is more complex since it should coordinate the three traffic lights and communicate with approaching buses to implement bus priority.
-Consequently, we are using \gls*{bpmn} to model this aspect of the system's behavior since we can utilize \gls*{bpmn} message and signal events to implement the communication with approaching buses.
+Consequently, we are using \gls*{bpmn} to model this aspect of the system's behavior and utilize \gls*{bpmn} message and signal events to implement the communication with approaching buses.
 
-We model two processes, one for the T-Junction and the Bus.
+We model two processes, one for the T-Junction and one for the Bus.
 Each process is modeled in its own \gls*{bpmn} \emph{pool}.
-A pool is depicted as a vertical lane with a name on the left and allows to draw message flows (arrows with dashed lines) between two different pools.
+A pool is depicted as a horizontal lane with a name on the left.
+Message flows (arrows with dashed lines) are only allowed between two different pools.
 
 \autoref{fig:t_junction} shows how a possible controller for a T-Junction behaves in the traffic management system\footnote{All models and their source files can be found in \cite{krauterArtifactsBehavioralConsistency2022}.\label{footnote:fullModels}}.
 When a T-Junction controller is started, we assume that the traffic lights are showing the colors according to phase 1 (see \autoref{fig:junction-phases}).
