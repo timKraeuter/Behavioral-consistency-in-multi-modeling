@@ -136,8 +136,9 @@ A potential future advantage of Maude is that it additionally supports the verif
 % Paper outline
 The remainder of this paper is structured as follows.
 We introduce a simplified use case (\autoref{sec:usecase}) before explaining our behavioral consistency management approach in detail (\autoref{sec:behavioral_consistency_checking}).
-Afterward, we show how we can use the Maude system based on equational and rewriting logic as execution semantics (\autoref{sec:maude_execution_semantics}).
-Finally, we discuss related work in \autoref{sec:related_work} and conclude in \autoref{sec:conclusion_and_future_work}.
+Afterward, we show how we can use the Groove tool set and the Maude system to check behavioral consistency (\autoref{sec:global_execution_semantics}).
+Furthermore, we examine related work in \autoref{sec:related_work}.
+Finally, we discuss the state space explosion problem in \autoref{sec:state_space_explosion} and conclude in \autoref{sec:conclusion_and_future_work}.
 
 \section{Use Case} \label{sec:usecase}
 This section motivates our approach by a simplified use case in which a traffic management system is developed to guide the traffic at a T-Junction with three traffic lights.
@@ -712,13 +713,13 @@ To check the requirements formalized by properties 1-4, we must ensure the gener
 All atomic propositions are specified as instances of $M_s^+$ that can be converted to graph conditions in Groove.
 Graph conditions in Groove are rules that do not change elements but can be used as atomic propositions in model checking.
 
-\subsection{Maude execution semantics} \label{sec:maude_execution_semantics}
+\subsection{Maude execution semantics}
 We are using the predefined Maude module for object-based programming to encode the snapshot metamodels in Maude.
-In addition, we add behavioral relationships from the interaction metamodel as objects, such that we can instantiate them to create the system configuration described in the use case.
+In addition, we add behavioral relationships from the interaction metamodel, such that we can instantiate them to create the system configuration described in the use case.
 
 Interactions lead to rule merges in Maude where the left and right side of each individual rule is added to a global rules.
+Furthermore, behavioral relationships as defined in the interaction are added to the rule.
 Similarly to the process for graph transformation rules, individual rules are deleted.
-In addition, behavioral relationships as defined in the interaction are added to the rule.
 
 \subsubsection{State machine semantics}
 
@@ -744,6 +745,7 @@ Again we encode the \gls*{bpmn} snapshot metamodel in Maude using the predefined
 The rewriting rule generation is similar to the graph transformation rule generation and supports the same subset of \gls*{bpmn} semantics.
 Similarly, one or more rules are constructed for each flow node in a \gls*{bpmn} process.
 \autoref{lst:tJunctionControllerMaude} shows two Maude rewriting rules for the first two flow nodes of the T-Junction controller as depicted in \autoref{fig:bpmn_example_rules}.
+The remaining rules can be found in \cite{krauterArtifactsBehavioralConsistency2022}.
 
 \lstinputlisting[
 label=lst:tJunctionControllerMaude,
@@ -821,7 +823,7 @@ Their approach results in the tool Ptolemy \cite{ptolemaeusSystemDesignModeling2
 However, both approaches focus on simulation rather than consistency or model-checking.
 Neither provides concrete means to define atomic propositions and check global behavioral properties.
 
-\section{State space explosion}
+\section{State space explosion} \label{sec:state_space_explosion}
 State space explosion is one of the predominant issues when applying model checking to complex systems, as they are often found in real-world applications.
 As one can see in \autoref{table:maudeRuntime} and \autoref{table:grooveRuntime} our approach is not immune to state space explosion.
 The tables show the states, rewrites/transitions, and average runtime of a full state space exploration in the Maude and Groove-based implementations.
