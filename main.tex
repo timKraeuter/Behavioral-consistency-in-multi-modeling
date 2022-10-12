@@ -128,10 +128,10 @@ However, current approaches either only allow for consistency checking of two be
 % Our approach summarized.
 We propose a novel approach for consistency management of heterogeneous multi-models, which allows us to define and check \emph{global} behavioral properties.
 Our approach facilitates specifying \emph{interactions} between potentially heterogeneous behavioral models, which are in turn used to generate global execution semantics.
-Although our approach is independent of a particular formalism as an underlying global execution semantics, the current implementations utilize the rewriting logic tool Maude and the graph transformation tool set Groove (see \autoref{sec:maude_execution_semantics}).
-The generation of global execution semantics is \textit{fully automatic} and results in term rewriting rules/graph transformation rules usable by Maude/Groove for the global system.
+Although our approach is independent of a particular formalism as an underlying global execution semantics, the current implementations utilize the rewriting logic tool Maude and the graph transformation tool set Groove (see \autoref{sec:global_execution_semantics}).
+The generation of global execution semantics is \textit{fully automatic} and results in term rewriting rules/graph transformation rules executable in Maude/Groove for the global system.
 Afterward, we can use the built-in verification mechanisms in Maude/Groove to check the previously defined global behavioral properties.
-A potential future advantage of Maude is that it additionally supports the verification of Real-Time systems \cite{olveczkySemanticsPragmaticsRealTime2007, duranVerifyingTimedBPMN2017}, which is useful when models with time aspects have to be analyzed in the future.
+A potential future advantage of Maude is that it additionally supports the verification of Real-Time systems \cite{olveczkySemanticsPragmaticsRealTime2007, duranVerifyingTimedBPMN2017}, which is useful when models with time aspects have to be analyzed.
 
 % Paper outline
 The remainder of this paper is structured as follows.
@@ -592,14 +592,46 @@ In addition, the appendix contains \autoref{fig:allConcepts}, which gives an ove
 In this section, we will describe our implementations based on Groove\footnote{\url{https://groove.ewi.utwente.nl/about}} and Maude\footnote{\url{https://maude.cs.illinois.edu/w/index.php/The_Maude_System}}.
 Then, we apply them to check behavioral consistency for the use case and discuss the results.
 
-\subsection{Groove execution semantics} 
-% TODO: Finalize this section.
-% Missing:
-% What is the type graph?
+Both approaches are based on a \textit{global model transformation} from the behavioral models and their interactions to graph transformation rules (Groove) or rewriting rules (Maude).
+We will now describe this transformation generally using \textit{rules} to mean either graph transformation rules.
+The details specific to each implementation are given in the following sections.
 
+The model transformation can be decomposed into two steps.
+The first step to generate global execution semantics is to generate rules for each behavioral model contained in the multi-model.
+Each set of rules must describe the behavior of the given behavioral model by manipulating instances of the snapshot metamodels.
+For example, a rule for a transition in a state machine changes the current state of a corresponding state machine snapshot from the source to the target state of the transition. 
+
+Thus, we need a \emph{local model transformation} for each behavioral modeling language producing sets of rules.
+Each local model transformation only has to be implemented once by an \gls*{mde} tool developer and made available, for example, as a plugin, such that it can then be reused in any future setting the language is needed.
+In addition, each local model transformation must keep traces of the generated set of rules.
+Concretely, it has to save which rules originated from which state-changing elements in the behavioral model.
+Coming back to the state machine example, we must know which transition results in which rule.
+In general, multiple rules may be associated with one state-changing element of a behavioral model.
+For example, a receive task in a \gls*{bpmn} process cannot be represented by only one rule, since it starts and then waits for an incoming message before finishing.
+
+The second step is to modify the generated rules to reflect the defined interactions.
+Interactions define synchronization of systems which we encode by merging the individual rules into rules describing the global execution semantics.
+The merging process to obtain the final global rules is done in two steps:
+
+\begin{enumerate}
+    \item Rules generated from state-changing elements that are not part of interactions remain unchanged and are added to the global rule set.
+    \item For each interaction, we do the following:
+     \begin{enumerate}
+         \item Find the corresponding rule\footnote{If one state-changing element results in more than one rule, one can define a strategy to pick the appropriate rule.
+         For example, if one wants to synchronize with the start of a \gls*{bpmn} task, one can use a strategy to pick that rule.} $P_0$ for the interaction host of the interaction and find the rules $P_1, P_2, \ldots P_n$ for the state-changing elements taking part in the interaction using the saved traces.
+         \item Create a \textit{global rule} for the rules $P_0 + P_1 + \ldots + P_n$, which applies them simultaneously, i.e., synchronizes the state changes of the behavioral models.
+         \item For each part of the interaction, add a behavioral relationship from the behavioral model in $P_0$ to the behavioral model in $P_i$, for 0 < i $\leq$ n.
+         The behavioral relationship is essentially a copy of the behavioral relationship referenced by that interaction part.
+     \end{enumerate}
+\end{enumerate}
+
+How global rules are created in Groove/Maude is described in the next sections.
+% TODO: parallel rules maude
+
+\subsection{Groove execution semantics} 
 % Graph transformation rules and their generation from the behavioral models
-This section describes one possible semantics to use in our approach to behavioral consistency management.
-We will use graph transformation semantics based on graph grammars, see \autoref{def:graphGrammar}.
+This section describes how Groove can be used as one possible semantics for behavioral consistency management.
+Groove uses graph transformation semantics based on graph grammars, see \autoref{def:graphGrammar}.
 
 \begin{definition}[Graph grammar] \label{def:graphGrammar}
 A graph grammar $GG=(S, P)$ consists of a start graph $S$ and a set of graph transformation rules $P$ \cite{ehrigFundamentalsAlgebraicGraph2006}. 
@@ -615,42 +647,17 @@ Informally speaking, elements in $R$ but not in $L$ are added by a rule, while e
 A graph transformation rule $P= L \overset{l}{\leftarrow} K \overset{r}{\to} R$ consists of graphs L, K, R, and graph morphisms $l: K \to L$ and $r: K \to R$ \cite{ehrigFundamentalsAlgebraicGraph2006}. 
 \end{definition}
 
-The first step to generate global execution semantics is to generate a graph transformation rules for each behavioral model contained in the multi-model. % Relation from elements to rules needed!
-Each set of rules must describe the behavior of the given behavioral model by manipulating instances of the snapshot metamodels.
-For example, a graph transformation rule for a transition in a state machine changes the current state of a corresponding state machine snapshot from the source to the target state of the transition. 
-
-Thus, we need a \emph{model transformation} to a set of graph transformation rules for each behavioral language.
-Each model transformation only has to be implemented once by an \gls*{mde} tool developer and made available, for example, as a plugin, such that it can then be reused in any future setting the language is needed.
-In addition, each model transformation must keep traces of the generated set of rules.
-Concretely, it has to save which rules originated from which state-changing elements in the behavioral model.
-Coming back to the state machine example, we must know which transition results in which graph transformation rule.
-In general, multiple rules may be associated with one state-changing element of a behavioral model.
-For example, a receive task in a \gls*{bpmn} process cannot be represented by only one rule, since it starts and then waits for an incoming message before finishing.
-
-We apply the following steps to merge the obtained rules into rules describing the global execution semantics.
-\begin{enumerate}
-    \item All rules generated from state-changing elements not part of interactions remain unchanged and are added to the global rule set.
-    \item For each interaction, we do the following:
-     \begin{enumerate}
-         \item Find the corresponding graph transformation rule\footnote{If one state-changing element results in more than one rule, one can define a strategy to pick the appropriate rule.
-         For example, if one wants to synchronize with the start of a \gls*{bpmn} task, one can use a strategy to pick that rule.} $P_0$ for the interaction host of the interaction and find the rules $P_1, P_2, \ldots P_n$ for the state-changing elements taking part in the interaction using the saved traces.
-         \item Calculate the parallel production \cite[Definition 3.2.7]{baldanConcurrentSemanticsAlgebraic1999} $P_0 + P_1 + \ldots + P_n$ for the found rules.
-         Intuitively, applying a parallel production can be seen as applying multiple rules simultaneously, i.e., synchronizing the state changes of the behavioral models.
-         \item For each part of the interaction, add a behavioral relationship from the behavioral model in $P_0$ to the behavioral model in $P_i$, for 0 < i $\leq$ n.
-         The behavioral relationship is essentially a copy of the behavioral relationship referenced by that interaction part.
-     \end{enumerate}
-\end{enumerate}
-
 As a type graph for the graph grammar, we utilize the global snapshot metamodel $M_s^+$ which fits rules coming from individual models and rules created by interactions.
+Global rules are given by parallel production rules \cite[Definition 3.2.7]{baldanConcurrentSemanticsAlgebraic1999} which essentially are pairwise sums of individual rules.
 Together with a system configuration, the set of typed global rules results in a graph grammar generating a state space.
 Each state in this state space is an instance of the global snapshot metamodel.
 Consequently, this can be used to check the behavioral consistency of the multi-model.
 
 We will now explain how the graph transformation execution semantics are generated for the use case.
-To apply our approach to the use case, we need to define model transformations from state machines and \gls*{bpmn} processes to graph transformation rules.
+To apply our approach to the use case, we need to define local model transformations from state machines and \gls*{bpmn} processes to graph transformation rules.
 
 \subsubsection{State machine semantics}
-The generation of graph transformation rules to implement finite state machine execution semantics is straightforward.
+The local model transformation to generate graph transformation rules for finite state machines is straightforward.
 Each transition leads to a graph transformation rule.
 For example, \autoref{fig:sm_rules} shows the graph transformation rules for the transitions \textsf{turn red-amber} and \textsf{turn green} of the traffic light model.
 It uses the concrete syntax introduced in the paper to depict state machine snapshots and their current state.
@@ -669,7 +676,7 @@ However, in the future, we can also experiment with other graph transformation t
 % Programming against a clearly defined interface makes this possible. But that's not important for this paper.
 
 \subsubsection{BPMN semantics}
-The generation of graph transformation rules for \gls*{bpmn} processes is challenging, and we are currently only supporting a subset of the \gls*{bpmn} semantics, similar to the extent supported by \cite{vangorpVisualTokenbasedFormalization2013}.
+The local model transformation to generate graph transformation rules for \gls*{bpmn} processes is challenging, and we are currently only supporting a subset of the \gls*{bpmn} semantics, similar to the extent supported by \cite{vangorpVisualTokenbasedFormalization2013}.
 Generally, we construct one or more rules for each flow node contained in a \gls*{bpmn} process.
 \autoref{fig:bpmn_example_rules} shows graph transformation rules for some flow nodes of the T-Junction controller.
 It uses the concrete syntax introduced earlier to represent process snapshots containing tokens.
