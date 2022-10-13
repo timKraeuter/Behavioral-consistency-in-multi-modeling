@@ -653,7 +653,7 @@ Together with a system configuration, the set of typed global rules results in a
 Each state in this state space is an instance of the global snapshot metamodel.
 Consequently, this can be used to check the behavioral consistency of the multi-model.
 
-We will now explain how the graph transformation execution semantics are generated for the use case.
+We will now explain how the graph transformation rules are generated for the use case.
 To apply our approach to the use case, we need to define local model transformations from state machines and \gls*{bpmn} processes to graph transformation rules.
 
 \subsubsection{State machine semantics}
@@ -689,8 +689,9 @@ It uses the concrete syntax introduced earlier to represent process snapshots co
 \end{figure}
 
 However, we cannot show all possible rules resulting from our \gls*{bpmn} semantics implementation.
-Especially the implementation of signal events, message events, event-based gateways, and subprocesses needs further explanation but does not matter for the overall approach presented in this paper, as long as it conforms to the \gls*{bpmn} semantics.
-We compared the state space resulting from our implementation with the possible token flows realizable using the \emph{bpmn-js token simulation}\cref{footnote:GGinRepo}, which claims to conform to the \gls*{bpmn} semantics.
+Especially the implementation of signal events, message events, event-based gateways, and subprocesses is more involved than just moving tokens.
+A detailed explanation of the graph transformation rule generation can be found in \cite{krauterFormalizationAnalysisBPMN2022}.
+To check our implementation regarding \gls*{bpmn} semantics, we compared the generated state space with the possible token flows realizable using the \emph{bpmn-js token simulation}\cref{footnote:GGinRepo}, which claims to conform to the \gls*{bpmn} semantics.
 This resulted in finding bugs in the bpmn-js simulator and our rule generator.
 
 Our semantics is inspired by \cite{vangorpVisualTokenbasedFormalization2013} but differs in some aspects.
@@ -723,21 +724,25 @@ Graph conditions in Groove are rules that do not change elements but can be used
 
 \subsection{Maude execution semantics}
 We are using the predefined Maude module for object-based programming to encode the snapshot metamodels in Maude.
-In addition, we add behavioral relationships from the interaction metamodel, such that we can instantiate them to create the system configuration described in the use case.
+Thus, we can represent state machine snapshots and BPMN process snapshots as objects in Maude.
+In addition, we add behavioral relationships from the interaction metamodel such that we can instantiate them to create the system configuration described in the use case.
 
-Interactions lead to rule merges in Maude where the left and right side of each individual rule is added to a global rules.
-Furthermore, behavioral relationships as defined in the interaction are added to the rule.
+Our Maude rules always rewrite multisets of objects, where individual objects are denoted in angle brackets ($<\cdots>$).
+Interactions lead to rule merges in Maude, where the left and right side of each rule is added to a global rule.
+The global rule is a valid Maude rule since the union of two multisets always results in a multiset. 
+Furthermore, behavioral relationships as defined in the interaction, are added to the rule as additional objects on both sides.
 Similarly to the process for graph transformation rules, individual rules are deleted.
 
+We will now explain how rewriting rules are generated for the use case.
+To apply our approach to the use case, we need to define local model transformations from state machines and \gls*{bpmn} processes to rewriting rules.
+
 \subsubsection{State machine semantics}
-
-We are using the predefined Maude module for object-based programming to encode the state machine snapshot metamodel in Maude.
-This encoding has to be only done once, similar to the type graph definition in Groove.
-
 The generation of rewriting rules is similar to the generation of graph transformation rules.
-Each state machine transition leads to one rewriting rule.
+Each state machine transition leads to one rewriting rule, which rewrites state machines conforming to the state machine snapshot metamodel.
 \autoref{lst:trafficLightMaude} shows the rewriting rules for the traffic light model.
-In addition, based on the defined start state, a start configuration is generated (see lines 7 and 8).
+For example, line 3-4 defines a rewriting rule \textsf{turn\_red\_amber}, which changes the state of a traffic light object from red to red-amber.
+
+In addition to the rewriting rules, a start configuration is generated based on the defined start state (see lines 7 and 8).
 The start configuration is the Maude counterpart of the start graph in graph grammars.
 
 \lstinputlisting[
@@ -749,11 +754,12 @@ caption=Rewriting rules and start configuration for a traffic light]{figures/tra
 Using Maude's search command and search graph visualization, we can verify that the generated state space conforms to the traffic light state machine\footnote{\label{footnote:maudeArtifacts}The corresponding Maude files and example Maude executions can be found in \cite{krauterArtifactsBehavioralConsistency2022}}.
 
 \subsubsection{BPMN semantics}
-Again we encode the \gls*{bpmn} snapshot metamodel in Maude using the predefined module for object-based programming.
 The rewriting rule generation is similar to the graph transformation rule generation and supports the same subset of \gls*{bpmn} semantics.
-Similarly, one or more rules are constructed for each flow node in a \gls*{bpmn} process.
+Similarly, one or more rules are constructed for each flow node in a \gls*{bpmn} process, where objects conform to the BPMN snapshot metamodel.
 \autoref{lst:tJunctionControllerMaude} shows two Maude rewriting rules for the first two flow nodes of the T-Junction controller as depicted in \autoref{fig:bpmn_example_rules}.
 The remaining rules can be found in \cite{krauterArtifactsBehavioralConsistency2022}.
+For example, the rule \textsf{Controller\_started\_Event\_0e1tcn5} from line 5 to line 10 moves a token from the controller started start event to the outgoing sequence flow by changing the token position.
+All other attributes of the \textsf{ProcessSnapshot} remain unchanged by the rule.
 
 \lstinputlisting[
 label=lst:tJunctionControllerMaude,
@@ -762,7 +768,7 @@ float=*,
 caption=Example rewriting rules for the T-Junction controller]{figures/tJunctionController.maude}
 
 Like the graph transformation rules, the rewriting rules move tokens by changing their position according to the given \gls*{bpmn} model.
-Thus, we can generate rewriting rules that implement the behavioral semantics of the \gls*{bpmn} models in the use case.
+Thus, we can generate Maude rewriting rules that implement the behavioral semantics of the \gls*{bpmn} models in the use case.
 The rule generation is implemented in Java and can be found in \cite{krauterRewriteRuleGeneration2022}.
 
 \subsubsection{Check behavioral consistency}
@@ -783,7 +789,7 @@ Atomic propositions can be represented in Maude using the encoded snapshot metam
 
 \subsection{Behavioral consistency in the use case}
 
-Both implementations show that properties 1 and 2 hold, while properties 3 and 4 do not hold\cref{footnote:GGinRepo}\cref{footnote:maudeArtifacts}.
+Both implementations show that properties 1 and 2 hold, while properties 3 and 4 do not hold\cref{footnote:GGinRepo}\textsuperscript{,}\cref{footnote:maudeArtifacts}.
 The counterexamples for properties 3 and 4 show an unexpected race condition that must be handled.
 After the T-Junction controller signals that the traffic light A/B is green, bus B1/B2 can advance to the \textsf{Pass Junction} activity.
 However, at the same time, the T-Junction controller can enter the subprocess for the next phase, which can be interrupted by the associated timer event.
@@ -915,12 +921,12 @@ Previous work either only dealt with the behavioral consistency between specific
 
 Our approach follows three key steps (see \autoref{fig:approach}).
 % Describe the three steps
-First, we align the behavioral models by defining their interactions.
-Then, we generate global execution semantics based on the defined interactions while preserving the original behavior of the models.
-Finally, we can check the global consistency of the system in different configurations with varying consistency requirements using the generated semantics.
-In addition, simulation of the multi-model and its interactions based on the user choosing the available actions is possible.
-Although our approach is independent of a particular formalism as an underlying global execution semantics, the
-current two implementations utilize rewriting logic (Maude) or graph transformations (Groove).
+First, we formulate global behavioral consistency requirements based on the given behavioral models and their relationships. 
+Then, we align the behavioral models by defining their interactions.
+Finally, we can check the global consistency of the system in different configurations with the given consistency requirements by generating global execution semantics.
+The global execution semantics are based on the defined interactions but preserve the original behavior of each model besides interactions.
+In addition, not only fully automatized model-checking but also user-driven simulation of the multi-model and its interactions is possible.
+Although our approach is independent of a particular formalism as an underlying global execution semantics, the current two implementations utilize rewriting logic (Maude) or graph transformations (Groove).
 
 In future work, extending the execution semantics to include other behavioral formalisms such as activity diagrams, hierarchical state machines, and the $\pi$-calculus is interesting.
 Especially integrating the $\pi$-calculus, which was formalized using graph grammars in \cite{gadducciGraphRewritingPcalculus2007}, will be beneficial since it is profoundly different from the currently supported formalisms.
@@ -930,10 +936,9 @@ Furthermore, two systems often exchange data while interacting, for example, usi
 The exchanged data then greatly influences the future behavior of the systems.
 Thus, adding data transfers to interactions between heterogeneous models is an important issue left for future work.
 
-% Runtime verification
+% Multi-model runtime verification
 Finally, it is important to check that running systems are behaving as specified in their behavioral models, including the defined interactions between them.
 Thus, extending runtime verification techniques to include systems specified by a multi-model with interactions constitutes a challenging problem.
-% Could write about continuous time models to be included in the future.
 
 \bibliography{bib}
 \section*{About the authors}
