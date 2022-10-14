@@ -88,7 +88,7 @@ To address this challenge, model-driven software engineering utilizes abstract r
 In such a multi-modeling setting, global consistency rules must be satisfied by a set of heterogeneously typed models to guarantee a desired \emph{global behavior}.
 In this paper, we propose a novel approach for behavioral consistency management of heterogeneous multi-models.
 The approach introduces a workflow in which we
-(i) formulate \emph{global behavioral properties}
+(i) formulate \emph{global behavioral properties},
 (ii) align the individual models by specifying their \emph{interactions}, and finally,
 (iii) check the \emph{global behavioral properties} which should be satisfied by the multi-model by generating a \emph{global execution semantics}.
 Our approach is independent of a particular formalism as an underlying global execution semantics, and the current two implementations utilize rewriting logic (Maude) and graph transformations (Groove), respectively.
@@ -127,7 +127,7 @@ However, current approaches either only allow for consistency checking of two be
 
 % Our approach summarized.
 We propose a novel approach for consistency management of heterogeneous multi-models, which allows us to define and check \emph{global} behavioral properties.
-Our approach facilitates specifying \emph{interactions} between potentially heterogeneous behavioral models, which are in turn used to generate global execution semantics.
+Our approach facilitates specifying \emph{interactions} between multiple potentially heterogeneous behavioral models, which are in turn used to generate global execution semantics.
 Although our approach is independent of a particular formalism as an underlying global execution semantics, the current implementations utilize the rewriting logic tool Maude and the graph transformation tool set Groove (see \autoref{sec:global_execution_semantics}).
 The generation of global execution semantics is \textit{fully automatic} and results in term rewriting rules/graph transformation rules executable in Maude/Groove for the global system.
 Afterward, we can use the built-in verification mechanisms in Maude/Groove to check the previously defined global behavioral properties.
@@ -328,11 +328,11 @@ Consistency checking potentially leads to violations, describing counter-example
 We will now describe our approach in detail by first explaining the \textit{system relationship model} concept and then the three steps in the workflow.
 
 \subsection{System relationship model}
-We assume a set of behavioral models describing the system, where each model must conform to a metamodel.
+We assume a set of behavioral models describing the system, where each model must conform to its metamodel.
 A metamodel can be defined by a class diagram/grammar for graphical/textual modeling languages.
 The metamodel ensures that the corresponding models are machine-readable, which is crucial when automating parts of the consistency checking.
-In addition, some of the behavioral models \emph{interact} to realize the global system behavior.
-A system relationship model describes which behavioral models exist in the system and how they are related.
+In addition, some behavioral models \emph{interact} to realize the global system behavior.
+A system relationship model describes which behavioral models exist in the system and if they are behaviorally related, i.e., can interact during execution.
 The system relationship \emph{metamodel} is depicted in \autoref{fig:systemRelationshipMetamodel}.
 
 \begin{figure}[h]
@@ -341,12 +341,13 @@ The system relationship \emph{metamodel} is depicted in \autoref{fig:systemRelat
     \caption{System relationship metamodel \\ (without attributes and enumerations)}
     \label{fig:systemRelationshipMetamodel}
 \end{figure}
-% Also: Behavioral relationships have multiplicities to restrict possible system configurations. But already known for structural models and thus not really relevant here.
+% Also: Behavioral relationships have multiplicities to restrict possible system configurations. But already known for structural models and thus not relevant here.
+% Behavioral relationships can be n-ary in the future, not only binary.
 
-Behavioral models typed in \textsf{BehavioralMetamodel}s can be connected by \textsf{BehavioralRelationship}s to allow for interactions.
+Behavioral models typed in \textsf{BehavioralMetamodel}s can be connected by \textsf{BehavioralRelationship}s to allow the definition of interactions in the second step of the workflow.
 We are using a \gls*{uml} class diagram-like syntax to define system relationship models, where each class corresponds to a behavioral model (typed in a \textsf{BehavioralMetamodel}), while each association corresponds to a \textsf{BehavioralRelationship} (see concrete syntax depicted in clouds).
 Thus, a system relationship model does \emph{not} describe the structure of a system, but rather behavioral relationships between the behavioral models of a system.
-The behavioral relationships will be crucial to define interactions between the models in the first step of our approach.
+To summarize, behavioral relationships define that behavioral models \textit{can} interact, while the interactions in step two of the workflow describe \textit{how} they interact.
 
 In addition, we allow enumerations and their use as attributes for behavioral models in the system relationship model.
 This prevents duplication of behavioral models because we can use the attributes as parameters, for example, to define the start state in a state machine (see \autoref{fig:systemRelationshipModel}).
