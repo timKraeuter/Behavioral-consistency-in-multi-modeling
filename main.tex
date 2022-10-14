@@ -768,6 +768,12 @@ language=Interaction,
 float=*,
 caption=Example rewriting rules for the T-Junction controller]{figures/tJunctionController.maude}
 
+\lstinputlisting[
+label=lst:synchRuleMaude,
+language=Interaction,
+float=*,
+caption=Global Maude rule to switch to phase 1]{figures/synch.maude}
+
 Like the graph transformation rules, the rewriting rules move tokens by changing their position according to the given \gls*{bpmn} model.
 Thus, we can generate Maude rewriting rules that implement the behavioral semantics of the \gls*{bpmn} models in the use case.
 The rule generation is implemented in Java and can be found in \cite{krauterRewriteRuleGeneration2022}.
@@ -776,11 +782,7 @@ The rule generation is implemented in Java and can be found in \cite{krauterRewr
 The defined interactions change the rules for switching to phases 1 and 2. \autoref{lst:synchRuleMaude} shows the resulting rule for switching to phase 1, where a synchronization with the end of the task was chosen.
 \autoref{fig:parallel_rule} shows the equivalent graph transformation rule.
 
-\lstinputlisting[
-label=lst:synchRuleMaude,
-language=Interaction,
-float=*,
-caption=Global Maude rule to switch to phase 1]{figures/synch.maude}
+% lst:synchRuleMaude should be here but moved highter due to formatting
 
 The rule changes all traffic lights simultaneously and finishes the task.
 Similarly, a global rule for switching to phase 2 is created and all individual rules are deleted.
@@ -926,8 +928,10 @@ First, we formulate global behavioral consistency requirements based on the give
 Then, we align the behavioral models by defining their interactions.
 Finally, we can check the global consistency of the system in different configurations with the given consistency requirements by generating global execution semantics.
 The global execution semantics are based on the defined interactions but preserve the original behavior of each model besides interactions.
-In addition, not only fully automatized model-checking but also user-driven simulation of the multi-model and its interactions is possible.
+In addition, not only fully automatized model-checking but also a user-driven simulation of the multi-model and its interactions is possible.
 Although our approach is independent of a particular formalism as an underlying global execution semantics, the current two implementations utilize rewriting logic (Maude) or graph transformations (Groove).
+The two successful implementations show that our approach can work with different underlying formalisms and serve as a first \textit{proof of concept}.
+Furthermore, we discussed the state space explosion problem and how it can be mitigated.
 
 In future work, extending the execution semantics to include other behavioral formalisms such as activity diagrams, hierarchical state machines, and the $\pi$-calculus is interesting.
 Especially integrating the $\pi$-calculus, which was formalized using graph grammars in \cite{gadducciGraphRewritingPcalculus2007}, will be beneficial since it is profoundly different from the currently supported formalisms.
