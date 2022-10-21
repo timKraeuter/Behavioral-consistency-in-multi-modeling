@@ -429,7 +429,7 @@ In addition, each snapshot metamodel has a root element in our approach, highlig
     \label{fig:fsm_snapshot_model}
 \end{figure}
 
-The snapshot metamodel for \gls*{bpmn} is based on a \textsf{Token} distribution as described in the BPMN specifications \cite{objectmanagementgroupBusinessProcessModel2013} (see \autoref{fig:bpmn_snapshot_model}). 
+The snapshot metamodel for \gls*{bpmn} is based on a \textsf{Token} distribution as described in the BPMN specifications \cite{objectmanagementgroupBusinessProcessModel2013} (see \autoref{fig:bpmn_snapshot_metamodel}). 
 % That is, a \emph{snapshot} representing a state of a BPMN model is a distribution of tokens across flow elements. of a process is a set of \textsf{Token}s.
 %If the \textsf{Token} distribution is empty, the state \textsf{Terminated} is derived. Otherwise, the process is still \textsf{Running}.
 The root element \textsf{ProcessSnapshot} has \textsf{subprocesses} with associated \textsf{Token}s.
@@ -453,7 +453,7 @@ In addition, \textsf{Token}s are highlighted with green bubbles in the middle of
 Using the snapshot metamodels, one can only formulate local behavioral properties.
 To formulate global behavioral properties, we enrich the system relationship model with the snapshot metamodels. 
 %by resolving the proxy links in the using must merge all snapshot metamodels and the system relationship model into one model, describing a state/snapshot of the multi-model.
-We call this model the \emph{global snapshot metamodel} (see \autoref{fig:global_execution_model}), which describes all possible states of the global system.
+We call this model the \emph{global snapshot metamodel} (see \autoref{fig:global_snapshot_model}), which describes all possible states of the global system.
 
 % % Merge description
 % To calculate the global snapshot metamodel, one must merge all snapshot metamodels with the system relationship model.
@@ -465,19 +465,19 @@ We call this model the \emph{global snapshot metamodel} (see \autoref{fig:global
 % We make this knowledge explicit by adding an inheritance relation for each behavioral model to the root of the corresponding snapshot metamodel.
 
 % Merge example
-% \autoref{fig:global_execution_model} depicts the global snapshot metamodel $M_s^+$ for the use case, describing the states of the traffic management system.
+% \autoref{fig:global_snapshot_model} depicts the global snapshot metamodel $M_s^+$ for the use case, describing the states of the traffic management system.
 % We added three inheritance relations to construct $M_s^+$ for the use case and omitted unchanged parts from the system relationship model and the individual snapshot metamodels.
 
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.475\textwidth]{figures/global_s_model.pdf}
     \caption{Global snapshot metamodel $M_s^+$ for the use case}
-    \label{fig:global_execution_model}
+    \label{fig:global_snapshot_model}
 \end{figure}
 
 % Use case example propositions
 Atomic propositions are formulated by instantiating the global snapshot metamodel. 
-For example, \autoref{fig:atomic_propositions} shows how to formulate the atomic propositions $A_{green}$ and $B1_{passing}$, used in the global properties in section \autoref{sec:bla}.
+For example, \autoref{fig:atomic_propositions} shows how to formulate the atomic propositions $A_{green}$ and $B1_{passing}$, used in the global properties in \autoref{sec:usecase}.
 
 \begin{figure}[h]
     \centering
@@ -712,14 +712,14 @@ Following this procedure, we can generate graph transformation rules that implem
 
 \subsubsection{Check behavioral consistency}
 The defined interactions change the rules for switching to phases 1 and 2.
-\autoref{fig:parallel_rule} shows the resulting rule for switching to phase 1.
+\autoref{fig:global_rule} shows the resulting rule for switching to phase 1.
 We decided that the interactions between the traffic lights and the T-Junction controller should synchronize with the end of the task, not the start.
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.475\textwidth]{figures/parallel_rule.pdf}
+    \includegraphics[width=0.475\textwidth]{figures/global_rule.pdf}
     \caption{Global graph transformation rule to switch to phase 1}
-    \label{fig:parallel_rule}
+    \label{fig:global_rule}
 \end{figure}
 
 The rule changes all traffic lights simultaneously and finishes the task.
@@ -789,7 +789,7 @@ The rule generation is implemented in Java and can be found in \cite{krauterRewr
 
 \subsubsection{Check behavioral consistency}
 The defined interactions change the rules for switching to phases 1 and 2. \autoref{lst:synchRuleMaude} shows the resulting rule for switching to phase 1, where a synchronization with the end of the task was chosen.
-\autoref{fig:parallel_rule} shows the equivalent graph transformation rule.
+\autoref{fig:global_rule} shows the equivalent graph transformation rule.
 
 % lst:synchRuleMaude should be here but moved highter due to formatting
 

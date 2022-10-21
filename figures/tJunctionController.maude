@@ -8,10 +8,11 @@ rl [Controller_started_Event_0e1tcn5] :
     =>
 < "use-case-execution" : BPMNSystem | messages : none, processes : (
     < o0 : ProcessSnapshot | name : "T-Junction controller", tokens : ("Controller_started_e1 (Flow_1cnqphe)" T), signals : none, subprocesses : (S), state : Running > P) > .
---- Switch to P2 started rule
-rl [Switch_to_P2_Activity_03yx3nw_Flow_1e2slwr_start] :
+--- Switch to P1 end rule
+rl [Switch_to_P1_Activity_1duk4ug_end] :
 < "use-case-execution" : BPMNSystem | messages : (M), processes : (
-    < o0 : ProcessSnapshot | name : "T-Junction controller", tokens : ("Phase_1_Switch_to_P2 (Flow_1e2slwr)" T), signals : (SIG), subprocesses : (S), state : Running > P) >
+    < o0 : ProcessSnapshot | name : "T-Junction controller", tokens : ("Switch_to_P1 (Activity_1duk4ug)" T), signals : (SIG), subprocesses : (S), state : Running > P) >
     =>
 < "use-case-execution" : BPMNSystem | messages : (none), processes : (
-    < o0 : ProcessSnapshot | name : "T-Junction controller", tokens : ("Switch_to_P2 (Activity_03yx3nw)" T), signals : (none), subprocesses : (S), state : Running > P) > .
+    < o0 : ProcessSnapshot | name : "T-Junction controller", tokens : ("Switch_to_P1_A_&_C_are_green_Phase_1 (Flow_1xv5lrj)" T), signals : (none), subprocesses : (S), state : Running > P) > .
+    
