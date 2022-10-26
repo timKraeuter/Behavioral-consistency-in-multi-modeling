@@ -424,7 +424,7 @@ We are reusing the concrete syntax elements from the state machine metamodel $M^
 In addition, each snapshot metamodel has a root element in our approach, highlighted in light blue.
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.22\textwidth]{figures/state_machine_s_model.pdf}
+    \includegraphics[width=0.25\textwidth]{figures/state_machine_s_model.pdf}
     \caption{Finite state machine snapshot metamodel $M_s^1$}
     \label{fig:fsm_snapshot_model}
 \end{figure}
@@ -441,13 +441,10 @@ In addition, \textsf{Token}s are highlighted with green bubbles in the middle of
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.475\textwidth]{figures/bpmn_s_model.pdf}
+    \includegraphics[width=0.25\textwidth]{figures/bpmn_s_model.pdf}
     \caption{BPMN snapshot metamodel $M_s^2$}
     \label{fig:bpmn_snapshot_metamodel}
 \end{figure}
-
-
-%NOW we come to the point!
 
 % Propositions need the global snapshot metamodel
 Using the snapshot metamodels, one can only formulate local behavioral properties.
@@ -523,6 +520,7 @@ Our approach is based on the assumption that state-changing elements can be iden
 So far, we do not see any problems with this assumption since behavioral modeling languages must have some construct to describe state-change.
 If we look at other popular examples, such as Petri Nets or \gls*{uml} activity diagrams, it is clear which constructs are the state-changing elements. 
 
+% Having state changing elements inside the BMM class could also be represented is composition and could be represented as that see: https://www.jot.fm/issues/issue_2004_11/column5/
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.475\textwidth]{figures/interaction_metamodel.pdf}
