@@ -499,7 +499,7 @@ For example, \autoref{fig:atomic_propositions_concrete} shows the same atomic pr
 With the defined atomic propositions as ingredients, one can use temporal logic to define global behavioral properties such as the properties \ref{eq:property1}-\ref{eq:property4} in \autoref{sec:usecase}.
 It is worth noting that the defined atomic propositions are \textit{model-specific}, meaning they exactly fit the given multi-model.
 
-
+%TODO Tim and Adrian came so far at FG today. There are some unresolved issues below, and there are some changes in the previous sections which may affect the following ones.
 
 \subsection{Define model interactions}
 Structural models in a multi-model might contain related information.
@@ -557,13 +557,13 @@ language=Interaction,
 caption=Interactions for the use case]{figures/interactions.txt}
 
 We can explain the interactions as follows.
-The first line defines that the interactions are specified from the viewpoint of the T-Junction in the system relationship model, i.e., \autoref{fig:systemRelationshipModel}.
+The first line defines that the interactions are specified from the viewpoint of the T-Junction in the system relationship model in \autoref{fig:systemRelationshipModel}.
 The first interaction defines that the task \textsf{Switch to P1} and three other state changing elements synchronize.
 Furthermore, line 3 specifies that one of the synchronization partners is the element \textit{turn green} connected by the relationship \textit{A}.
 Similarly, two other transitions of the traffic lights \textit{B} and \textit{
 C} are specified in the following two lines.
 Thus, the interaction defines a synchronization of a task execution and three traffic light transitions. 
-The second interaction defines a synchronization for the task \textsf{Switch to P2} and three other traffic light transitions.
+The second interaction defines a synchronization for the task \textsf{Switch to P2} and three traffic light transitions.
 
 \subsection{Check behavioral consistency}
 
@@ -572,7 +572,7 @@ The execution semantics used in our approach must fulfill the following three re
 \begin{enumerate}
     \item The execution semantics must incorporate each behavioral model.
     \item The execution semantics must reflect the defined interactions between the behavioral models.
-    \item The execution semantics must generate a state space, where each state can be interpreted as an instance of $M_s^+$, given a system configuration (instance of the system relationship model).
+    \item The execution semantics must generate a state space, where given a system configuration---i.e. an instance of the system relationship model---each state can be interpreted as an instance of the global snapshot metamodel $M_s^+$.
 \end{enumerate}
 Generally, our approach is independent of the underlying execution semantics if it fulfills the three requirements.
 Thus, one can experiment with different underlying semantics, for example, graph transformations, rewriting logic, state machines, Petri nets, or process algebras, without changing the general framework.
@@ -590,13 +590,19 @@ An atomic proposition is true for a state if the corresponding instance of $M_s^
 Then, we can check consistency requirements on the generated state space.
 This step should be fully automated, such that it can be executed as many times as needed (indicated by the loop in \autoref{fig:approach}) for different system configurations and consistency requirements (including atomic propositions) but using the same execution semantics.
 
-Finally, if a consistency requirement is not fulfilled, a violation, including a counterexample based on the state space, should be presented to the user.
-Adopting the same concrete syntax to visualize the counterexample as for the atomic propositions should be ideal for helping a user understand the counterexample easily. 
+Finally, if a consistency requirement is not fulfilled, a violation, including a counterexample based on the state space, will be presented to the user.
+Adopting the same concrete syntax to visualize the counterexample as for the atomic propositions should be ideal for helping a user understand the counterexample. 
 An unsuccessful consistency check leads to a consistency restoration process, which is crucial but out of scope for this contribution.
 We describe consistency checking for the use case and its result in the end of the next section.
 In addition, the appendix contains \autoref{fig:allConcepts}, which gives an overview of all the concepts introduced in this section and how they are applied to the use case.
 
+
+
+
+
+
 \section{Global execution semantics} \label{sec:global_execution_semantics}
+
 In this section, we will describe our implementations based on Groove\footnote{\url{https://groove.ewi.utwente.nl/about}} and Maude\footnote{\url{https://maude.cs.illinois.edu/w/index.php/The_Maude_System}}.
 Then, we apply them to check behavioral consistency for the use case and discuss the results.
 
@@ -664,13 +670,12 @@ Consequently, this can be used to check the behavioral consistency of the multi-
 We will now explain how the graph transformation rules are generated for the use case.
 To apply our approach to the use case, we need to define local model transformations from state machines and \gls*{bpmn} processes to graph transformation rules.
 
-%ARU HERE SO FAR!
 
 \subsubsection{State machine semantics}
 The local model transformation to generate graph transformation rules for finite state machines is straightforward.
 Each transition leads to a graph transformation rule.
 For example, \autoref{fig:sm_rules} shows the graph transformation rules for the transitions \textsf{turn red-amber} and \textsf{turn green} of the traffic light model.
-It uses the concrete syntax introduced in the paper to depict state machine snapshots and their current state.
+It uses the concrete syntax introduced in the paper to depict state machine snapshots and their current states.
 We depict a graph transformation rule by showing its graph $L$ on the left, pointing with a named white arrow to its graph $R$ on the right.
 
 \begin{figure}[h]
