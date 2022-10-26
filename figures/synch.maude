@@ -2,7 +2,7 @@ vars X Tl1 Tl2 Tl3 : String . --- Object ids
 vars P S : Configuration . --- Processes and subprocesses
 vars SIG M T : MSet . --- Signals, messages and tokens
 
-rl [Switch_to_P1] :  < "use-case-execution" : BPMNSystem | messages : (M), processes : (< X : ProcessSnapshot | name : "T-Junction controller", tokens : ("Switch_to_P1 (Activity_1duk4ug)" T), signals : (SIG), subprocesses : (S), state : Running > P) >
+rl [Switch_to_P1] :  < "use-case-execution" : BPMNSystem | messages : (M), processes : (< X : ProcessSnapshot | name : "T-Junction controller", tokens : ("Switch_to_P1" T), signals : (SIG), subprocesses : (S), state : Running > P) >
                          < "A" : BehavioralRelationship | from : X, to : Tl1 >
                          < "B" : BehavioralRelationship | from : X, to : Tl2 >
                          < "C" : BehavioralRelationship | from : X, to : Tl3 >
@@ -10,7 +10,7 @@ rl [Switch_to_P1] :  < "use-case-execution" : BPMNSystem | messages : (M), proce
                          < Tl2 : FSM | name : "trafficLight", state : "amber" >
                          < Tl3 : FSM | name : "trafficLight", state : "red-amber" >
                           =>
-                         < "use-case-execution" : BPMNSystem | messages : (none), processes : (< X : ProcessSnapshot | name : "T-Junction controller", tokens : ("Switch_to_P1_A_&_C_are_green_Phase_1 (Flow_1xv5lrj)" T), signals : (none), subprocesses : (S), state : Running > P) >
+                         < "use-case-execution" : BPMNSystem | messages : (none), processes : (< X : ProcessSnapshot | name : "T-Junction controller", tokens : ("Switch_to_P1_A_&_C_are_green_Phase_1" T), signals : (none), subprocesses : (S), state : Running > P) >
                          < "A" : BehavioralRelationship | from : X, to : Tl1 >
                          < "B" : BehavioralRelationship | from : X, to : Tl2 >
                          < "C" : BehavioralRelationship | from : X, to : Tl3 >

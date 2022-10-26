@@ -2,17 +2,17 @@ vars o0 : Oid . --- Object ids
 vars SIG M T : MSet . --- Signals, messages and tokens
 vars P S : Configuration . --- Processes and subprocesses
 --- Controller started rule
-rl [Controller_started_Event_0e1tcn5] :
+rl [Controller_started] :
 < "use-case-execution" : BPMNSystem | messages : (M), processes : (
-    < o0 : ProcessSnapshot | name : "T-Junction controller", tokens : ("Controller_started (Event_0e1tcn5)" T), signals : (SIG), subprocesses : (S), state : Running > P) >
+    < o0 : ProcessSnapshot | name : "T-Junction controller", tokens : ("Controller_started" T), signals : (SIG), subprocesses : (S), state : Running > P) >
     =>
 < "use-case-execution" : BPMNSystem | messages : none, processes : (
-    < o0 : ProcessSnapshot | name : "T-Junction controller", tokens : ("Controller_started_e1 (Flow_1cnqphe)" T), signals : none, subprocesses : (S), state : Running > P) > .
+    < o0 : ProcessSnapshot | name : "T-Junction controller", tokens : ("Controller_started_e1" T), signals : none, subprocesses : (S), state : Running > P) > .
 --- Switch to P1 end rule
-rl [Switch_to_P1_Activity_1duk4ug_end] :
+rl [Switch_to_P1_end] :
 < "use-case-execution" : BPMNSystem | messages : (M), processes : (
-    < o0 : ProcessSnapshot | name : "T-Junction controller", tokens : ("Switch_to_P1 (Activity_1duk4ug)" T), signals : (SIG), subprocesses : (S), state : Running > P) >
+    < o0 : ProcessSnapshot | name : "T-Junction controller", tokens : ("Switch_to_P1" T), signals : (SIG), subprocesses : (S), state : Running > P) >
     =>
 < "use-case-execution" : BPMNSystem | messages : (none), processes : (
-    < o0 : ProcessSnapshot | name : "T-Junction controller", tokens : ("Switch_to_P1_A_&_C_are_green_Phase_1 (Flow_1xv5lrj)" T), signals : (none), subprocesses : (S), state : Running > P) > .
+    < o0 : ProcessSnapshot | name : "T-Junction controller", tokens : ("Switch_to_P1_A_&_C_are_green_Phase_1" T), signals : (none), subprocesses : (S), state : Running > P) > .
     
