@@ -88,7 +88,7 @@ To address this challenge, model-driven software engineering utilizes abstract r
 In such a multi-modeling setting, global consistency rules must be satisfied by a set of heterogeneously typed models to guarantee a desired \emph{global behavior}.
 In this paper, we propose a novel approach for behavioral consistency management of heterogeneous multi-models.
 The approach introduces a workflow in which we
-(i) formulate \emph{global behavioral properties},
+(i) specify \emph{global behavioral properties},
 (ii) align the individual models by specifying their \emph{interactions}, and finally,
 (iii) check the \emph{global behavioral properties} which should be satisfied by the multi-model by generating a \emph{global execution semantics}.
 Our approach is independent of a particular formalism as an underlying global execution semantics, and the current two implementations utilize rewriting logic (Maude) and graph transformations (Groove), respectively.
@@ -306,24 +306,18 @@ Furthermore, global properties are dependent on the system configuration, i.e., 
 In the remainder of this paper, we will describe our approach to address behavioral consistency in multi-modeling and apply it to this use case.
 
 
-
-
-
-
 \section{Behavioral consistency management} \label{sec:behavioral_consistency_checking}
 % Introduce the overall approach using the workflow somehow here and follow it.
 \autoref{fig:approach} depicts our approach to behavioral consistency management using a \gls*{bpmn} diagram.
-%We leave potential consistency restoration as a problem for future work.
 
-\begin{figure}[h]
+\begin{figure*}[h]
     \centering
-    % https://cawemo.com/share/a531b027-0475-4050-8b7c-9de631abbe13
-    \includegraphics[width=0.475\textwidth]{figures/workflow.pdf}
+    \includegraphics[width=0.7\textwidth]{figures/workflow.pdf}
     \caption{Behavioral consistency management workflow}
     \label{fig:approach}
-\end{figure}
+\end{figure*}
 
-Our approach can be summarized in five steps.
+Our approach consists of five steps.
 \begin{enumerate}
     \item we define a system relationship model describing which behavioral models may interact.
     \item we specify behavioral consistency requirements as global behavioral properties for the system relationship model.
@@ -341,7 +335,7 @@ We will now describe our approach in detail by first explaining the \textit{syst
 
 
 
-\subsection{System relationship model}\label{sec:system-rel-model}
+\subsection{Define the system relationship model}\label{sec:system-rel-model}
 
 As mentioned, a set of behavioral models might be used to describe the behavior of a software system.
 Each of these models conforms to its own metamodel which in turn corresponds to the behavioral language used to specify the model.
@@ -407,10 +401,10 @@ These may be used as parameters, e.g., to define the start state in a state mach
 Different instances of the system relationship model can be used to analyze the global behavior of \emph{different} system configurations by changing the parameters.
 
 
-\subsection{Formulate behavioral consistency}
+\subsection{Specify behavioral consistency}
 % Create a system relationship model (driven by the atomic properties and potential interactions).
 As mentioned, the \textbf{first step} in the workflow is to create a system relationship model for the given behavioral models.
-The \textbf{second step} is to formulate behavioral consistency requirements as global behavioral properties.
+The \textbf{second step} is to specify behavioral consistency requirements as global behavioral properties.
 These properties are defined using a temporal logic, for example \gls*{ltl} as in the use case.
 Temporal logic properties are built upon a set of atomic propositions which are either true or false in a given state.
 %To define these global properties, we need a way to represent the states and transitions of the system relationship model
@@ -431,8 +425,7 @@ In addition, each snapshot metamodel has a root element in our approach, highlig
 
 The snapshot metamodel for \gls*{bpmn} is based on a \textsf{Token} distribution as described in the BPMN specifications \cite{objectmanagementgroupBusinessProcessModel2013} (see \autoref{fig:bpmn_snapshot_metamodel}). 
 % That is, a \emph{snapshot} representing a state of a BPMN model is a distribution of tokens across flow elements. of a process is a set of \textsf{Token}s.
-%If the \textsf{Token} distribution is empty, the state \textsf{Terminated} is derived. Otherwise, the process is still \textsf{Running}.
-The root element \textsf{ProcessSnapshot} has \textsf{subprocesses} with associated \textsf{Token}s.
+The root element \textsf{ProcessSnapshot} has \textsf{tokens} and \textsf{subprocesses}.
 A \textsf{Token} indicates where it is located in the \gls*{bpmn} model using its \textsf{position} attribute.
 A valid \textsf{position} is the \textsf{id} of a \textsf{FlowElement} (see the type of the \textsf{position} attribute in \autoref{fig:bpmn_snapshot_metamodel}).
 Also for the snapshot metamodel of BPMN we reuse the concrete syntax of the corresponding BPMN metamodel. 
@@ -447,8 +440,8 @@ In addition, \textsf{Token}s are highlighted with green bubbles in the middle of
 \end{figure}
 
 % Propositions need the global snapshot metamodel
-Using the snapshot metamodels, one can only formulate local behavioral properties.
-To formulate global behavioral properties, we enrich the system relationship model with the snapshot metamodels. 
+Using the snapshot metamodels, one can only specify local behavioral properties.
+To specify global behavioral properties, we enrich the system relationship model with the snapshot metamodels. 
 %by resolving the proxy links in the using must merge all snapshot metamodels and the system relationship model into one model, describing a state/snapshot of the multi-model.
 We call this model the \emph{global snapshot metamodel} (see \autoref{fig:global_snapshot_model}), which describes all possible states of the global system.
 
@@ -474,7 +467,7 @@ We call this model the \emph{global snapshot metamodel} (see \autoref{fig:global
 
 % Use case example propositions
 Atomic propositions are formulated by instantiating the global snapshot metamodel. 
-For example, \autoref{fig:atomic_propositions} shows how to formulate the atomic propositions $A_{green}$ and $B1_{passing}$, used in the global properties in \autoref{sec:usecase}.
+For example, \autoref{fig:atomic_propositions} shows how to specify the atomic propositions $A_{green}$ and $B1_{passing}$, used in the global properties in \autoref{sec:usecase}.
 
 \begin{figure}[h]
     \centering
@@ -936,7 +929,7 @@ Previous work either only dealt with the behavioral consistency between specific
 
 Our approach follows three key steps (see \autoref{fig:approach}).
 % Describe the three steps
-First, we formulate global behavioral consistency requirements based on the given behavioral models and their relationships. 
+First, we specify global behavioral consistency requirements based on the given behavioral models and their relationships. 
 Then, we align the behavioral models by defining their interactions.
 Finally, we can check the global consistency of the system in different configurations with the given consistency requirements by generating global execution semantics.
 The global execution semantics are based on the defined interactions but preserve the original behavior of each model besides interactions.
@@ -954,8 +947,13 @@ The exchanged data then greatly influences the future behavior of the systems.
 Thus, adding data transfers to interactions between heterogeneous models is an important issue left for future work.
 
 % Multi-model runtime verification
-Finally, it is important to check that running systems are behaving as specified in their behavioral models, including the defined interactions between them.
+In addition, it is important to check that running systems are behaving as specified in their behavioral models, including the defined interactions between them.
 Thus, extending runtime verification techniques to include systems specified by a multi-model with interactions constitutes a challenging problem.
+
+% Consistency restoration
+%We leave potential consistency restoration as a problem for future work.
+Finally, once  uncovers consistency violations, consistency restoration must be achieved.
+Results from the consistency checking step play a fundamental role for semi-automatic consistency restoration. % Cite something
 
 \bibliography{bib}
 \section*{About the authors}
