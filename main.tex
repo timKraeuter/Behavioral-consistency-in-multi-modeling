@@ -241,8 +241,6 @@ Consequently, we need a model of the system to allow us to define interactions b
     \label{fig:systemRelationshipModel}
 \end{figure}
 
-
-
 The resulting model called the \emph{system relationship model} is shown in \autoref{fig:systemRelationshipModel} using a graph based syntax.
 It contains one node for each behavioral model and arrows to depict behavioral relationships, leading to possible interactions.
 In addition, it contains enumerations to parameterize the behavioral models. 
@@ -319,13 +317,13 @@ In the remainder of this paper, we will describe our approach to address behavio
 
 Our approach consists of five steps.
 \begin{enumerate}
-    \item we define a system relationship model describing which behavioral models may interact.
-    \item we specify behavioral consistency requirements as global behavioral properties for the system relationship model.
-    \item we define interactions between the behavioral models using the system relationship model.
-    \item we automatically generate an implementation for the global execution semantics of the global system
+    \item We define a system relationship model describing which behavioral models may interact.
+    \item We specify behavioral consistency requirements as global behavioral properties for the system relationship model.
+    \item We define interactions between the behavioral models using the system relationship model.
+    \item We automatically generate an implementation for the global execution semantics of the global system
     %---runnable in a target execution engine---
     using the interactions and the system relationship model.
-    \item given a system configuration we check the global behavioral properties using the generated implementation.
+    \item Given a system configuration we check the global behavioral properties using the generated implementation.
 \end{enumerate}
 Consistency checking potentially uncovers violations, describing counter-examples in which the global behavioral properties are not valid.
 
@@ -363,10 +361,11 @@ The states of a state machine are not explicitly modeled but can be derived from
 
 The metamodel for \gls*{bpmn} (see \autoref{fig:bpmn_metamodel}) is defined analogous to the one of state machines. 
 A \gls*{bpmn} \textsf{Process} contains a set of \textsf{FlowNode}s connected by \textsf{SequenceFlow}s.
+\textsf{FlowNode}s and \textsf{SequenceFlow}s are \textsf{FlowElement}s, inheriting an \textsf{id} and a \textsf{name}.
 A \textsf{FlowNode} can be an \textsf{Activity}, \textsf{Gateway}, or \textsf{Event}.
 Concrete activities, gateways and events are defined in the full \gls*{bpmn} metamodel \cite{objectmanagementgroupBusinessProcessModel2013}. % See BPMN class diagrams in figures 10.104/10.6/10.69.
 
-% bpmn (subset of the needed constructs)
+% BPMN (subset of the needed constructs)
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.475\textwidth]{figures/bpmn_metamodel.pdf}
@@ -374,8 +373,7 @@ Concrete activities, gateways and events are defined in the full \gls*{bpmn} met
     \label{fig:bpmn_metamodel}
 \end{figure}
 
-
-%System Rel M
+% System relationship metamodel
 Behavioral models \emph{interact} to realize the global system behavior.
 A system relationship model describes which behavioral models exist in the system and whether they are behaviorally related; i.e., may interact during execution.
 In our approach, we define a system relationship metamodel to formally specify these relationships (see \autoref{fig:systemRelationshipMetamodel}).
@@ -407,7 +405,7 @@ As mentioned, the \textbf{first step} in the workflow is to create a system rela
 The \textbf{second step} is to specify behavioral consistency requirements as global behavioral properties.
 These properties are defined using a temporal logic, for example \gls*{ltl} as in the use case.
 Temporal logic properties are built upon a set of atomic propositions which are either true or false in a given state.
-%To define these global properties, we need a way to represent the states and transitions of the system relationship model
+% To define these global properties, we need a way to represent the states and transitions of the system relationship model
 Each behavioral language (e.g. the BPMN) specification defines how these states are represented.
 Furthermore, the transitions between these states depend on the given behavioral models and their semantics.
 In our approach, we call the state representation a \emph{snapshot metamodel} which is specified using class diagrams, while the transitions are achieved by generating rules for a specific execution engine.
@@ -427,9 +425,8 @@ The snapshot metamodel for \gls*{bpmn} is based on a \textsf{Token} distribution
 % That is, a \emph{snapshot} representing a state of a BPMN model is a distribution of tokens across flow elements. of a process is a set of \textsf{Token}s.
 The root element \textsf{ProcessSnapshot} has \textsf{tokens} and \textsf{subprocesses}.
 A \textsf{Token} indicates where it is located in the \gls*{bpmn} model using its \textsf{position} attribute.
-A valid \textsf{position} is the \textsf{id} of a \textsf{FlowElement} (see the type of the \textsf{position} attribute in \autoref{fig:bpmn_snapshot_metamodel}).
-Also for the snapshot metamodel of \gls*{bpmn} we reuse the concrete syntax of the corresponding \gls*{bpmn} metamodel. 
-%\textsf{ProcessSnapshot}s are visualized using the concrete syntax of the underlying process.
+A valid \textsf{position} is the \textsf{id} of a \textsf{FlowElement} (see \autoref{fig:bpmn_metamodel}).
+Also for the snapshot metamodel of \gls*{bpmn} we reuse the concrete syntax of the \gls*{bpmn} metamodel.
 In addition, \textsf{Token}s are highlighted with green bubbles in the middle of sequence flows and the top right of an activity.
 
 \begin{figure}[h]
