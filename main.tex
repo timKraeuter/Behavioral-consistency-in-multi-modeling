@@ -416,7 +416,7 @@ We are reusing the concrete syntax elements from the state machine metamodel $M^
 In addition, each snapshot metamodel has a root element in our approach, highlighted in light blue.
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.25\textwidth]{figures/state_machine_s_model.pdf}
+    \includegraphics[width=0.25\textwidth]{figures/state_machine_snapshot_metamodel.pdf}
     \caption{Finite state machine snapshot metamodel $M_s^1$}
     \label{fig:fsm_snapshot_metamodel}
 \end{figure}
@@ -431,40 +431,19 @@ In addition, \textsf{Token}s are highlighted with green bubbles in the middle of
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.25\textwidth]{figures/bpmn_s_model.pdf}
+    \includegraphics[width=0.25\textwidth]{figures/bpmn_snapshot_metamodel.pdf}
     \caption{BPMN snapshot metamodel $M_s^2$}
     \label{fig:bpmn_snapshot_metamodel}
 \end{figure}
 
-% Propositions need the global snapshot metamodel
+% Propositions need the system relationship model and all snapshot metamodels
 Using the snapshot metamodels, one can only specify local behavioral properties.
-To specify global behavioral properties, we enrich the system relationship model with the snapshot metamodels. 
-%by resolving the proxy links in the using must merge all snapshot metamodels and the system relationship model into one model, describing a state/snapshot of the multi-model.
-We call this model the \emph{global snapshot metamodel} (see \autoref{fig:global_snapshot_model}), which describes all possible states of the global system.
-
-% % Merge description
-% To calculate the global snapshot metamodel, one must merge all snapshot metamodels with the system relationship model.
-% The first step is to add all model elements to one global model, i.e., calculating their disjoint\footnote{Possible conflicts due to the naming of model elements can be resolved by user input or a fixed strategy, for example, prefixing model elements with the model name.} union.
-
-% The second step is adding inheritance relations to connect behavioral models in the system relationship model with their corresponding snapshot metamodels.
-% Each behavioral model is typed by a behavioral metamodel, which has a snapshot metamodel structurally describing its state.
-% Thus, we know how the states of each behavioral model are structured by referring to its metamodel.
-% We make this knowledge explicit by adding an inheritance relation for each behavioral model to the root of the corresponding snapshot metamodel.
-
-% Merge example
-% \autoref{fig:global_snapshot_model} depicts the global snapshot metamodel $M_s^+$ for the use case, describing the states of the traffic management system.
-% We added three inheritance relations to construct $M_s^+$ for the use case and omitted unchanged parts from the system relationship model and the individual snapshot metamodels.
-
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.475\textwidth]{figures/global_s_model.pdf}
-    \caption{Global snapshot metamodel $M_s^+$ for the use case}
-    \label{fig:global_snapshot_model}
-\end{figure}
-
+To specify global behavioral properties, we combine the information of the system relationship model with the snapshot metamodels.
+Each behavioral model is typed by a behavioral metamodel, which has a snapshot metamodel describing its state structure.
+Thus, we know how states of behavioral model are represented, when they are instantiated.
 % Use case example propositions
-Atomic propositions are formulated by instantiating the global snapshot metamodel. 
 For example, \autoref{fig:atomic_propositions} shows how to specify the atomic propositions $A_{green}$ and $B1_{passing}$, used in the global properties in \autoref{sec:usecase}.
+Snapshot links connect instances of behavioral models with root element instances of the corresponding snapshot metamodel. 
 
 \begin{figure}[h]
     \centering
@@ -555,12 +534,12 @@ The second interaction defines a synchronization for the task \textsf{Switch to 
 
 \subsection{Check behavioral consistency}
 
-By computing the global snapshot metamodel, we can represent the global states of the system, but we still need execution semantics to generate a state space to check the properties.
+Using the system relationship model and snapshot metamodels, we can represent the global states of the system, but we still need execution semantics to generate a state space to check the properties.
 The execution semantics used in our approach must fulfill the following three requirements:
 \begin{enumerate}
     \item The execution semantics must incorporate each behavioral model.
     \item The execution semantics must reflect the defined interactions between the behavioral models.
-    \item The execution semantics must generate a state space, where given a system configuration---i.e. an instance of the system relationship model---each state can be interpreted as an instance of the global snapshot metamodel $M_s^+$.
+    \item The execution semantics must generate a state space, where given a system configuration---i.e. an instance of the system relationship model---each state can be interpreted as an instance of the system relationship model and the corresponding snapshot metamodels.
 \end{enumerate}
 Generally, our approach is independent of the underlying execution semantics if it fulfills the three requirements.
 Thus, one can experiment with different underlying semantics, for example, graph transformations, rewriting logic, state machines, Petri nets, or process algebras, without changing the general framework.
@@ -648,10 +627,10 @@ Informally speaking, elements in $R$ but not in $L$ are added by a rule, while e
 A graph transformation rule $P= L \overset{l}{\leftarrow} K \overset{r}{\to} R$ consists of graphs L, K, R, and graph morphisms $l: K \to L$ and $r: K \to R$ \cite{ehrigFundamentalsAlgebraicGraph2006}. 
 \end{definition}
 
-As a type graph for the graph grammar, we utilize the global snapshot metamodel $M_s^+$ which fits rules coming from individual models and rules created by interactions.
+As a type graph for the graph grammar, we utilize the system relationship model including the snapshot metamodels which fits rules coming from individual models and rules created by interactions.
 Global rules are given by parallel production rules \cite[Definition 3.2.7]{baldanConcurrentSemanticsAlgebraic1999} which essentially are pairwise sums of individual rules.
 Together with a system configuration, the set of typed global rules results in a graph grammar generating a state space.
-Each state in this state space is an instance of the global snapshot metamodel.
+Each state in this state space is an instance of the system relationship model including the snapshot metamodels.
 Consequently, this can be used to check the behavioral consistency of the multi-model.
 
 We will now explain how the graph transformation rules are generated for the use case.
