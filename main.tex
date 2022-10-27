@@ -342,7 +342,7 @@ Each of these models conforms to its own metamodel which in turn corresponds to 
 The metamodel ensures that models specified in the corresponding languages are well-defined and machine-readable.
 This is crucial when automating parts of the consistency checking.
 
-The use case utilizes state machine and \gls*{bpmn} models which conform, respectively, to the metamodels of state machines ($M^1$ in \autoref{fig:fsm_metamodel}) and BPMN ($M^2$ in \autoref{fig:bpmn_metamodel}).
+The use case utilizes state machine and \gls*{bpmn} models which conform, respectively, to the metamodels of state machines ($M^1$ in \autoref{fig:fsm_metamodel}) and \gls*{bpmn} ($M^2$ in \autoref{fig:bpmn_metamodel}).
 % Thus, according to \autoref{fig:systemRelationshipMetamodel} there must be a metamodel for state machines and \gls*{bpmn} process models.
 % \autoref{fig:fsm_metamodel} shows the metamodel for finite state machines (ignore the purple coloring for now).
 The metamodel of state machines is defined by a \gls*{uml} class diagram with additional information depicted in clouds.
@@ -413,22 +413,22 @@ Furthermore, the transitions between these states depend on the given behavioral
 In our approach, we call the state representation a \emph{snapshot metamodel} which is specified using class diagrams, while the transitions are achieved by generating rules for a specific execution engine.
 
 For example, in the use case, we define snapshot metamodels for state machines and \gls*{bpmn}.
-A stat machine is in one state at a time, as shown in the snapshot metamodel $M_s^1$ in \autoref{fig:fsm_snapshot_model}.
+A stat machine is in one state at a time, as shown in the snapshot metamodel $M_s^1$ in \autoref{fig:fsm_snapshot_metamodel}.
 We are reusing the concrete syntax elements from the state machine metamodel $M^1$ in \autoref{fig:fsm_metamodel}.
 In addition, each snapshot metamodel has a root element in our approach, highlighted in light blue.
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.25\textwidth]{figures/state_machine_s_model.pdf}
     \caption{Finite state machine snapshot metamodel $M_s^1$}
-    \label{fig:fsm_snapshot_model}
+    \label{fig:fsm_snapshot_metamodel}
 \end{figure}
 
-The snapshot metamodel for \gls*{bpmn} is based on a \textsf{Token} distribution as described in the BPMN specifications \cite{objectmanagementgroupBusinessProcessModel2013} (see \autoref{fig:bpmn_snapshot_metamodel}). 
+The snapshot metamodel for \gls*{bpmn} is based on a \textsf{Token} distribution as described in the \gls*{bpmn} specifications \cite{objectmanagementgroupBusinessProcessModel2013} (see \autoref{fig:bpmn_snapshot_metamodel}). 
 % That is, a \emph{snapshot} representing a state of a BPMN model is a distribution of tokens across flow elements. of a process is a set of \textsf{Token}s.
 The root element \textsf{ProcessSnapshot} has \textsf{tokens} and \textsf{subprocesses}.
 A \textsf{Token} indicates where it is located in the \gls*{bpmn} model using its \textsf{position} attribute.
 A valid \textsf{position} is the \textsf{id} of a \textsf{FlowElement} (see the type of the \textsf{position} attribute in \autoref{fig:bpmn_snapshot_metamodel}).
-Also for the snapshot metamodel of BPMN we reuse the concrete syntax of the corresponding BPMN metamodel. 
+Also for the snapshot metamodel of \gls*{bpmn} we reuse the concrete syntax of the corresponding \gls*{bpmn} metamodel. 
 %\textsf{ProcessSnapshot}s are visualized using the concrete syntax of the underlying process.
 In addition, \textsf{Token}s are highlighted with green bubbles in the middle of sequence flows and the top right of an activity.
 
@@ -594,7 +594,7 @@ In addition, the appendix contains \autoref{fig:allConcepts}, which gives an ove
 
 \section{Global execution semantics} \label{sec:global_execution_semantics}
 
-In this section, we will describe our implementations based on Groove\footnote{\url{https://groove.ewi.utwente.nl/about}} and Maude\footnote{\url{https://maude.cs.illinois.edu/w/index.php/The_Maude_System}}.
+In this section, we will describe our implementations using Groove \cite{ghamarianModellingAnalysisUsing2012, rensinkGROOVESimulatorTool2004} and Maude \cite{manuelclavelAllMaudeHighPerformance2007}.
 Then, we apply them to check behavioral consistency for the use case and discuss the results.
 
 Both approaches are based on a \textit{global model transformation} from the behavioral models and their interactions to graph transformation rules (Groove) or rewriting rules (Maude).
@@ -622,11 +622,10 @@ The merging process to obtain the final global rules is done in two steps:
     \item Rules generated from state-changing elements that are not part of interactions remain unchanged and are added to the global rule set.
     \item For each interaction, we do the following:
      \begin{enumerate}
-         \item Find the corresponding rule\footnote{If one state-changing element results in more than one rule, one can define a strategy to pick the appropriate rule.
-         For example, if one wants to synchronize with the start of a \gls*{bpmn} task, one can use a strategy to pick that rule.} $P_0$ for the interaction host of the interaction and find the rules $P_1, P_2, \ldots P_n$ for the state-changing elements taking part in the interaction using the saved traces.
+         \item Find the corresponding rule\footnote{If one state-changing element results in more than one rule, one can define a strategy to pick the appropriate rule.} $P_0$ for the interaction host of the interaction and find the rules $P_1, P_2, \ldots P_n$ for the state-changing elements taking part in the interaction using the saved traces.
          \item Create a \textit{global rule} for the rules $P_0, P_1, \ldots, P_n$, which applies them simultaneously, i.e., synchronizes the state changes of the behavioral models.
-         \item For each part of the interaction, add a behavioral relationship from the behavioral model in $P_0$ to the behavioral model in $P_i$, for 0 < i $\leq$ n.
-         The behavioral relationship is essentially a copy of the behavioral relationship referenced by that interaction part.
+         \item For each part of the interaction, instantiate the corresponding behavioral relationship from the behavioral model in $P_0$ to the behavioral model in $P_i$, for 0 < i $\leq$ n.
+         Thus, only behaviorally related models may interact, i.e., change their state simultaneously.
      \end{enumerate}
 \end{enumerate}
 
@@ -666,7 +665,7 @@ To apply our approach to the use case, we need to define local model transformat
 The local model transformation to generate graph transformation rules for finite state machines is straightforward.
 Each transition leads to a graph transformation rule.
 For example, \autoref{fig:sm_rules} shows the graph transformation rules for the transitions \textsf{turn red-amber} and \textsf{turn green} of the traffic light model.
-It uses the concrete syntax introduced in the paper to depict state machine snapshots and their current states.
+It uses the concrete syntax introduced in \autoref{fig:fsm_snapshot_metamodel} to depict state machine snapshots and their current states.
 We depict a graph transformation rule by showing its graph $L$ on the left, pointing with a named white arrow to its graph $R$ on the right.
 
 \begin{figure}[h]
@@ -682,8 +681,8 @@ However, in the future, we can also experiment with other graph transformation t
 % Programming against a clearly defined interface makes this possible. But that's not important for this paper.
 
 \subsubsection{BPMN semantics}
-The local model transformation to generate graph transformation rules for \gls*{bpmn} processes is challenging, and we are currently only supporting a subset of the \gls*{bpmn} semantics, similar to the extent supported by \cite{vangorpVisualTokenbasedFormalization2013}.
-Generally, we construct one or more rules for each flow node contained in a \gls*{bpmn} process.
+The local model transformation to generate graph transformation rules for \gls*{bpmn} processes is challenging, and we are currently only supporting a subset of the \gls*{bpmn} semantics \cite{krauterFormalizationAnalysisBPMN2022}, similar to the extent supported by \cite{vangorpVisualTokenbasedFormalization2013}.
+Generally, we construct one or more rules for each flow node contained in a \gls*{bpmn} model.
 \autoref{fig:bpmn_example_rules} shows graph transformation rules for some flow nodes of the T-Junction controller.
 It uses the concrete syntax introduced earlier to represent process snapshots containing tokens.
 
@@ -730,7 +729,7 @@ Graph conditions in Groove are rules that do not change elements but can be used
 
 \subsection{Maude execution semantics}
 We are using the predefined Maude module for object-based programming to encode the snapshot metamodels in Maude.
-Thus, we can represent state machine snapshots and BPMN process snapshots as objects in Maude.
+Thus, we can represent state machine snapshots and \gls*{bpmn} process snapshots as objects in Maude.
 In addition, we add behavioral relationships from the interaction metamodel such that we can instantiate them to create the system configuration described in the use case.
 
 Our Maude rules always rewrite multisets of objects, where individual objects are denoted in angle brackets ($<\cdots>$).
@@ -761,7 +760,7 @@ Using Maude's search command and search graph visualization, we can verify that 
 
 \subsubsection{BPMN semantics}
 The rewriting rule generation is similar to the graph transformation rule generation and supports the same subset of \gls*{bpmn} semantics.
-Similarly, one or more rules are constructed for each flow node in a \gls*{bpmn} process, where objects conform to the BPMN snapshot metamodel.
+Similarly, one or more rules are constructed for each flow node in a \gls*{bpmn} process, where objects conform to the \gls*{bpmn} snapshot metamodel.
 \autoref{lst:tJunctionControllerMaude} shows two Maude rewriting rules for the first two flow nodes of the T-Junction controller as depicted in \autoref{fig:bpmn_example_rules}.
 The remaining rules can be found in \cite{krauterArtifactsBehavioralConsistency2022}.
 For example, the rule \textsf{Controller\_started\_Event\_0e1tcn5} from line 5 to line 10 moves a token from the controller started start event to the outgoing sequence flow by changing the token position.
