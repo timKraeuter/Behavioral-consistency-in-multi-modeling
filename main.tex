@@ -246,13 +246,13 @@ Consequently, we need a model of the system to allow us to define interactions b
 The resulting model called the \emph{system relationship model} is shown in \autoref{fig:systemRelationshipModel} using a graph based syntax.
 It contains one node for each behavioral model and arrows to depict behavioral relationships, leading to possible interactions.
 In addition, it contains enumerations to parameterize the behavioral models. 
-A \textsf{TJunction} has three associated \textsf{TrafficLight}s, A, B, and C, and a set of currently approaching \textsf{Bus}es.
+A \textsf{TJunction} has three associated \textsf{TrafficLight}s, \textsf{A}, \textsf{B}, and \textsf{C}, and a set of currently approaching \textsf{Bus}es.
 A \textsf{TrafficLight} has four possible \textsf{TrafficLightState}s and an attribute to define its \textsf{startState}.
 A \textsf{Bus} has a \textsf{direction} that indicates which \textsf{TrafficLight} of the T-Junction it is approaching.
 
 Finally, using the system relationship model, we can define a test configuration of our traffic management system to check its requirements.
 \autoref{fig:test_config} depicts the test system configuration as an instance of the system relationship model.
-First, it contains three instances of the traffic light behavioral model, representing the three traffic lights, \textbf{A}, \textbf{B}, and \textbf{B}.
+First, it contains three instances of the traffic light behavioral model, representing the three traffic lights, \textsf{A}, \textsf{B}, and \textsf{C}.
 Second, it contains an instance of the T-Junction behavioral model, which is connected to the three traffic lights, and two instances of the bus behavioral model.
 Thus, the test system configuration describes a system that controls one T-Junction with three traffic lights and two buses approaching from directions A and C.
 
