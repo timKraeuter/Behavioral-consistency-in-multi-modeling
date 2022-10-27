@@ -330,9 +330,6 @@ Consistency checking potentially uncovers violations, describing counter-example
 We will now describe our approach in detail by first explaining the \textit{system relationship model} concept and then the three steps in the workflow.
 
 
-
-
-
 \subsection{Define the system relationship model}\label{sec:system-rel-model}
 
 As mentioned, a set of behavioral models might be used to describe the behavior of a software system.
@@ -509,9 +506,23 @@ Consequently, an interaction can define a synchronization between behavioral mod
 In addition, each \textsf{InteractionPart} must be based on a \textsf{BehavioralRelationship} in the system relationship model, which must have the behavioral model containing the \textit{interactionHost} as a source and the behavioral model containing the \textsf{StateChangingElement} of the \textsf{InteractionPart} as a target.
 Thus, one can only define interactions for behavioral models connected by behavioral relationships.
 
+\begin{equation}
+    \begin{aligned}
+    &\forall i \in Interaction: \forall p \in i.parts : \\
+       & \quad p.element \in p.relationship.target.elements
+    \end{aligned}
+\end{equation}
+
+\begin{equation}
+    \begin{aligned}
+    &\forall i \in Interaction: \forall p \in i.parts : \\
+       & \quad i.interactionHost \in p.relationship.source.elements
+    \end{aligned}
+\end{equation}
+
 We allow the definition of as many interactions as desired.
 The interactions restrict the local behavior of the models since some parts of their behavior must synchronize.
-Two interactions sharing state changing elements is forbidden.
+Two interactions are now allowed to have overlapping state changing elements.
 If such a situation occurs, it must be resolved by the modeler by deleting one of the interactions or merging the two interactions into one.
 
 In the use case, the T-Junction controller interacts with the three traffic lights, \textbf{A}, \textbf{B}, and \textbf{C}.
