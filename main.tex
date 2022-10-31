@@ -522,8 +522,18 @@ Thus, one can only define interactions for behavioral models connected by behavi
 
 We allow the definition of as many interactions as desired.
 The interactions restrict the local behavior of the models since some parts of their behavior must synchronize.
-Two interactions are not allowed to have overlapping state changing elements.
+Two interactions are not allowed to have overlapping state changing elements (see \cref{eq:noOverlap}).
 If such a situation occurs, it must be resolved by the modeler by deleting one of the interactions or merging the two interactions into one.
+
+\begin{equation} \label{eq:noOverlap}
+    \begin{aligned}
+    & \forall i_1,i_2 \in Interaction : \\
+    & \quad (i_1.parts.elements \cup i_1.interactionHost) \\
+    & \quad \qquad \cap \\
+    & \quad (i_2.parts.elements \cup i_2.interactionHost) \\
+    & \quad \qquad = \emptyset
+    \end{aligned}
+\end{equation}
 
 In the use case, the T-Junction controller interacts with the three traffic lights, \textbf{A}, \textbf{B}, and \textbf{C}.
 \autoref{lst:interactions} defines two interactions synchronizing T-Junction controller and the traffic lights, using a textual \gls*{dsl}.
