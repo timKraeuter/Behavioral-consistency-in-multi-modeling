@@ -271,7 +271,7 @@ For the T-Junction, unsafe traffic occurs if traffic light A is green or amber a
 In addition, the same state combinations are forbidden for traffic lights B and C.
 Unsafe traffic occurs only in these situations since green and amber means that cars are allowed to pass, while red (red-amber) means cars are not (not yet, respectively) allowed to pass.
 We can formalize the consistency requirements as safety properties in \gls*{ltl}, i.e., states that should never be reached.
-The resulting global properties \ref{eq:property1} and \ref{eq:property2} are the following, assuming the existence of atomic propositions for each traffic light state. 
+The resulting global properties \eqref{eq:property1} and \eqref{eq:property2} are the following, assuming the existence of atomic propositions for each traffic light state. 
 
 \begin{align}
     \square\neg((A_{green} \lor A_{amber}) \land (B_{green} \lor B_{amber})) \label{eq:property1} \\
@@ -280,7 +280,7 @@ The resulting global properties \ref{eq:property1} and \ref{eq:property2} are th
 
 If we include buses \textsf{B1} and \textsf{B2} in the system, we would like to check that they cannot pass when their traffic light is red or red-amber.
 Concretely, this means the \textsf{Pass Junction} activity should not execute while the corresponding traffic light is \textsf{red} or \textsf{red-amber}.
-We formalize these requirements again by using \gls*{ltl} safety properties \ref{eq:property3} and \ref{eq:property4}, where the atomic proposition $B1_{passing}$ and $B2_{passing}$ represent that \textsf{Pass Junction} (see \autoref{fig:communication}) has started but not finished yet. 
+We formalize these requirements again by using \gls*{ltl} safety properties \eqref{eq:property3} and \eqref{eq:property4}, where the atomic proposition $B1_{passing}$ and $B2_{passing}$ represent that \textsf{Pass Junction} (see \autoref{fig:communication}) has started but not finished yet. 
 %, i.e., there is a token in the activity when using \gls*{bpmn} token semantics \cite{objectmanagementgroupBusinessProcessModel2013}.}.
 
 \begin{align}
@@ -388,7 +388,7 @@ In our approach, we define a system relationship metamodel to formally specify t
 We are using a graph based syntax to define system relationship models (see \autoref{fig:systemRelationshipModel}), where each node corresponds to a behavioral model (typed by a \textsf{BehavioralMetamodel}), while each arrow corresponds to a \textsf{BehavioralRelationship} (see concrete syntax depicted in clouds).
 %A system relationship model does \emph{not} describe the structure of a system, but rather behavioral relationships between the behavioral models of a system.
 For example, the system relationship model for the use case (see \autoref{fig:systemRelationshipModel}) has three behavioral relationships from \textsf{TJunction} to \textsf{TrafficLight} since a T-Junction controller interacts with three different traffic lights A, B, and C.
-Furthermore, there is a behavioral relationship from \textsf{TJunction} to \textsf{Bus} because we want to check the safety properties \ref{eq:property3} and \ref{eq:property4}. 
+Furthermore, there is a behavioral relationship from \textsf{TJunction} to \textsf{Bus} because we want to check the safety properties \eqref{eq:property3} and \eqref{eq:property4}. 
 To summarize, behavioral relationships define \textit{which} behavioral models \textit{may} interact, while the interactions in the next step of the workflow describe \textit{how} they interact.
 
 In addition, we allow enumerations and attributes in system relationship models.
@@ -459,7 +459,7 @@ For example, \autoref{fig:atomic_propositions_concrete} shows the same atomic pr
     \label{fig:atomic_propositions_concrete}
 \end{figure}
 
-With the defined atomic propositions as ingredients, one can use temporal logic to define global behavioral properties such as the properties \ref{eq:property1}-\ref{eq:property4} in \autoref{sec:usecase}.
+With the defined atomic propositions as ingredients, one can use temporal logic to define global behavioral properties such as the properties \eqref{eq:property1}-\eqref{eq:property4} in \autoref{sec:usecase}.
 It is worth noting that the defined atomic propositions are \textit{model-specific}, meaning they exactly fit the given multi-model.
 
 %TODO Tim and Adrian came so far at FG today. There are some unresolved issues below, and there are some changes in the previous sections which may affect the following ones.
@@ -522,7 +522,7 @@ Thus, one can only define interactions for behavioral models connected by behavi
 
 We allow the definition of as many interactions as desired.
 The interactions restrict the local behavior of the models since some parts of their behavior must synchronize.
-Two interactions are not allowed to have overlapping state changing elements (see \cref{eq:noOverlap}).
+Two interactions are not allowed to have overlapping state changing elements (see constraint \eqref{eq:noOverlap}).
 If such a situation occurs, it must be resolved by the modeler by deleting one of the interactions or merging the two interactions into one.
 
 \begin{equation} \label{eq:noOverlap}
