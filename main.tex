@@ -482,9 +482,9 @@ Thus, the transitions are the \textsf{StateChangingElement}s of a state machine 
 Similarly, the flow nodes are the \textsf{StateChangingElement}s of a \gls*{bpmn} process (highlighted in purple, see \autoref{fig:bpmn_metamodel})\footnote{One exception is the event-based gateway, which is not part of the \textsf{StateChangingElement}s.}.
 The interaction of behavioral models is only possible through instances of the \textsf{StateChangingElement}s.
 
-Our approach is based on the assumption that state-changing elements can be identified in metamodels for any behavioral formalism.
-So far, we do not see any problems with this assumption since behavioral modeling languages must have some construct to describe state-change.
-If we look at other popular examples, such as Petri Nets or \gls*{uml} activity diagrams, it is clear which constructs are the state-changing elements. 
+Our approach is based on the requirement that state-changing elements can be identified in metamodels for any behavioral formalism.
+This requirement is not difficult to meet since behavioral modeling languages must have some construct to describe state-change.
+Inspecting other behavioral languages, such as Petri Nets or \gls*{uml} activity diagrams, shows that identifying state-changing elements (transitions, activity nodes) is unproblematic. 
 
 % Having state changing elements inside the BMM class could also be represented is composition and could be represented as that see: https://www.jot.fm/issues/issue_2004_11/column5/
 \begin{figure}[h]
@@ -522,7 +522,7 @@ Thus, one can only define interactions for behavioral models connected by behavi
 
 We allow the definition of as many interactions as desired.
 The interactions restrict the local behavior of the models since some parts of their behavior must synchronize.
-Two interactions are now allowed to have overlapping state changing elements.
+Two interactions are not allowed to have overlapping state changing elements.
 If such a situation occurs, it must be resolved by the modeler by deleting one of the interactions or merging the two interactions into one.
 
 In the use case, the T-Junction controller interacts with the three traffic lights, \textbf{A}, \textbf{B}, and \textbf{C}.
@@ -599,7 +599,7 @@ In addition, each local model transformation must keep traces of the generated s
 Concretely, it has to save which rules originated from which state-changing elements in the behavioral model.
 Coming back to the state machine example, we must know which transition results in which rule.
 In general, multiple rules may be associated with one state-changing element of a behavioral model.
-For example, a receive task in a \gls*{bpmn} process cannot be represented by only one rule, since it starts and then waits for an incoming message before finishing.
+For example, a receive task in a \gls*{bpmn} process cannot be represented by only one rule since it starts and then waits for an incoming message before finishing.
 
 The second step is to modify the generated rules to reflect the defined interactions.
 Interactions define synchronization of systems which we encode by merging the individual rules into rules describing the global execution semantics.
@@ -611,12 +611,12 @@ The merging process to obtain the final global rules is done in two steps:
      \begin{enumerate}
          \item Find the corresponding rule\footnote{If one state-changing element results in more than one rule, one can define a strategy to pick the appropriate rule.} $P_0$ for the interaction host of the interaction and find the rules $P_1, P_2, \ldots P_n$ for the state-changing elements taking part in the interaction using the saved traces.
          \item Create a \textit{global rule} for the rules $P_0, P_1, \ldots, P_n$, which applies them simultaneously, i.e., synchronizes the state changes of the behavioral models.
-         \item For each part of the interaction, instantiate the corresponding behavioral relationship from the behavioral model in $P_0$ to the behavioral model in $P_i$, for 0 < i $\leq$ n.
+         \item For each part of the interaction, instantiate the corresponding behavioral relationship from the behavioral model in $P_0$ to the behavioral model in $P_i$, for 1 < i $\leq$ n.
          Thus, only behaviorally related models may interact, i.e., change their state simultaneously.
      \end{enumerate}
 \end{enumerate}
 
-How global rules are created in Groove/Maude is described in the next sections.
+In the following sections we show how global rules are created in Groove/Maude.
 % TODO: parallel rules maude
 
 \subsection{Groove execution semantics} 
@@ -653,7 +653,7 @@ The local model transformation to generate graph transformation rules for finite
 Each transition leads to a graph transformation rule.
 For example, \autoref{fig:sm_rules} shows the graph transformation rules for the transitions \textsf{turn red-amber} and \textsf{turn green} of the traffic light model.
 It uses the concrete syntax introduced in \autoref{fig:fsm_snapshot_metamodel} to depict state machine snapshots and their current states.
-We depict a graph transformation rule by showing its graph $L$ on the left, pointing with a named white arrow to its graph $R$ on the right.
+We depict a graph transformation rule by showing the graph $L$ on the left, $R$ on the right, and a named white arrow from $L$ to $R$.
 
 \begin{figure}[h]
     \centering
@@ -680,11 +680,11 @@ It uses the concrete syntax introduced earlier to represent process snapshots co
     \label{fig:bpmn_example_rules}
 \end{figure}
 
-However, we cannot show all possible rules resulting from our \gls*{bpmn} semantics implementation.
+To save space, we only show a subset of the rules resulting from our \gls*{bpmn} semantics implementation.
 Especially the implementation of signal events, message events, event-based gateways, and subprocesses is more involved than just moving tokens.
 A detailed explanation of the graph transformation rule generation can be found in \cite{krauterFormalizationAnalysisBPMN2022}.
-To check our implementation regarding \gls*{bpmn} semantics, we compared the generated state space with the possible token flows realizable using the \emph{bpmn-js token simulation}\cref{footnote:GGinRepo}, which claims to conform to the \gls*{bpmn} semantics.
-This resulted in finding bugs in the bpmn-js simulator and our rule generator.
+To check our implementation regarding \gls*{bpmn} semantics, we compared the generated state space with the possible token flows realizable using the \emph{bpmn-js token simulation}\cref{footnote:GGinRepo}, which conforms to the \gls*{bpmn} semantics.
+This resulted in finding bugs in the bpmn-js simulator.
 
 Our semantics is inspired by \cite{vangorpVisualTokenbasedFormalization2013} but differs in some aspects.
 One key difference is that they define a fixed rule set that describes the semantics of \gls*{bpmn} models, while we generate a specific rule set for each model to enable interaction with specific parts of each model.
@@ -692,6 +692,7 @@ The rule generation is implemented in Java and can be found in \cite{krauterRewr
 
 Following this procedure, we can generate graph transformation rules that implement the behavioral semantics of the \gls*{bpmn} models in the use case\cref{footnote:GGinRepo}.
 
+%HERE HERE 
 \subsubsection{Check behavioral consistency}
 The defined interactions change the rules for switching to phases 1 and 2.
 \autoref{fig:global_rule} shows the resulting rule for switching to phase 1.
