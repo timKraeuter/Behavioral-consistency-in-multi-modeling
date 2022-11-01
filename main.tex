@@ -104,6 +104,7 @@ Our approach is independent of a particular formalism as an underlying global ex
 \maketitle
 \urlstyle{rm}
 
+
 \section{Introduction} \label{sec:introduction}
 % Introduce multi-model
 \gls*{mde} addresses the increasing complexity of software systems by employing models to describe the different aspects of the system.
@@ -142,6 +143,7 @@ We introduce a simplified use case (\autoref{sec:usecase}) before explaining our
 Afterward, we show how we can use the Groove tool set and the Maude system to check behavioral consistency (\autoref{sec:global_execution_semantics}).
 Furthermore, we examine related work in \autoref{sec:related_work}.
 Finally, we discuss the state space explosion problem in \autoref{sec:state_space_explosion} and conclude in \autoref{sec:conclusion_and_future_work}.
+
 
 \section{Use Case} \label{sec:usecase}
 This section motivates our approach by a simplified use case in which a traffic management system is developed to guide the traffic at a T-Junction with three traffic lights.
@@ -331,8 +333,8 @@ The behavioral consistency management workflow potentially uncovers violations, 
 In the following sections, we will describe each step in detail.
 In addition, the appendix contains \cref{fig:allConcepts}, which gives an overview of all the new concepts and how they are applied to the use case.
 
-\subsection{Define the system relationship model}\label{sec:system-rel-model}
 
+\subsection{Define the system relationship model}
 As mentioned, a set of behavioral models might be used to describe the behavior of a software system.
 Each of these models conforms to its own metamodel which in turn corresponds to the behavioral language used to specify the model.
 The metamodel ensures that models specified in the corresponding languages are well-defined and machine-readable.
@@ -341,8 +343,7 @@ This is crucial when automating parts of the consistency checking.
 The use case utilizes state machine and \gls*{bpmn} models which conform, respectively, to the metamodels of state machines ($M^1$ in \cref{fig:fsm_metamodel}) and \gls*{bpmn} ($M^2$ in \cref{fig:bpmn_metamodel}).
 The metamodel of state machines is defined by a \gls*{uml} class diagram with additional information depicted in clouds.
 The clouds define a concrete syntax for state machines inspired by \gls*{uml} statecharts.
-The traffic light model in \cref{fig:trafficLight} uses this concrete syntax. 
-%; this model can automatically be translated to the abstract syntax and typed by the metamodel.
+The traffic light model in \cref{fig:trafficLight} uses this concrete syntax.
 
 % state machine
 \begin{figure}[h]
@@ -393,10 +394,8 @@ These may be used as parameters, e.g., to define the start state in a state mach
 Different instances of the \gls*{srm} can be used to analyze the global behavior of \emph{different} system configurations by changing the parameters.
 
 
-\subsection{Specify consistency requirements}
-% Create a \gls*{srm} (driven by the atomic properties and potential interactions).
-As mentioned, the \textbf{first step} in the workflow is to create a \gls*{srm} for the given behavioral models.
-The \textbf{second step} is to specify behavioral consistency requirements as global behavioral properties.
+\subsection{Specify consistency requirements} \label{subsec:specify_consistency_requirements}
+In this step, we specify behavioral consistency requirements as global behavioral properties.
 These properties are defined using a temporal logic, for example \gls*{ltl} as in the use case.
 Temporal logic properties are built upon a set of atomic propositions which are either true or false in a given state.
 % To define these global properties, we need a way to represent the states and transitions of the \gls*{srm}
@@ -459,6 +458,7 @@ For example, \cref{fig:atomic_propositions_concrete} shows the same atomic propo
 With the defined atomic propositions as ingredients, one can use temporal logic to define global behavioral properties such as the properties \eqref{eq:property1}-\eqref{eq:property4} in \autoref{sec:usecase}.
 It is worth noting that the defined atomic propositions are \textit{model-specific}, meaning they exactly fit the given multi-model.
 
+
 \subsection{Define model interactions}
 Structural models in a multi-model might contain related information.
 Thus, current approaches define so-called \emph{commonalities} to explicate these relationships and keep the information consistent \cite{stunkelComprehensiveSystemsFormal2021,klareCommonalitiesPreservingConsistency2019}.
@@ -481,7 +481,7 @@ Our approach is based on the requirement that state-changing elements can be ide
 This requirement is not difficult to meet since behavioral modeling languages must have some construct to describe state-change.
 Inspecting other behavioral languages, such as Petri Nets or \gls*{uml} activity diagrams, shows that identifying state-changing elements (transitions, activity nodes) is unproblematic. 
 
-% Having state changing elements inside the BMM class could also be represented is composition and could be represented as that see: https://www.jot.fm/issues/issue_2004_11/column5/
+% Having state-changing elements inside the BMM class could also be represented is composition and could be represented as that see: https://www.jot.fm/issues/issue_2004_11/column5/
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.475\textwidth]{figures/interaction_metamodel.pdf}
@@ -498,7 +498,7 @@ Each \textsf{InteractionPart} references one \textsf{BehavioralRelationship} and
 The \textsf{interactionHost} and the elements of the \textsf{InteractionPart}s describe a state change for their concrete behavioral model.
 By connecting them with a synchronous interaction, we define simultaneous state changes in one atomic step. 
 Consequently, an interaction can define a synchronization between behavioral models.
-In addition, one can only define interactions for state changing elements if their behavioral models are connected by a behavioral relationship (see constraint \eqref{eq:interactionConstraint}).
+In addition, one can only define interactions for state-changing elements if their behavioral models are connected by a behavioral relationship (see constraint \eqref{eq:interactionConstraint}).
 We use "." in constraints to navigate along associations.
 For example, \textsf{i.parts} means following all \textsf{parts} links for an \textsf{Interaction} object, resulting in a set of \textsf{InteractionPart} objects.
 
@@ -512,7 +512,7 @@ For example, \textsf{i.parts} means following all \textsf{parts} links for an \t
 
 We allow the definition of as many interactions as desired.
 The interactions restrict the local behavior of the models since some parts of their behavior must synchronize.
-Two interactions are not allowed to share state changing elements (see constraint \eqref{eq:noOverlap}).
+Two interactions are not allowed to share state-changing elements (see constraint \eqref{eq:noOverlap}).
 If such a situation occurs, it must be resolved by the modeler by deleting one of the interactions or merging the two interactions into one.
 
 \begin{equation} \label{eq:noOverlap}
@@ -534,24 +534,22 @@ caption=Interactions for the use case]{figures/interactions.txt}
 
 We can explain the interactions as follows.
 The first line defines that the interactions are specified from the viewpoint of the T-Junction in the \gls*{srm} in \cref{fig:systemRelationshipModel}.
-The first interaction defines that the task \textsf{Switch to P1} and three other state changing elements synchronize.
+The first interaction defines that the task \textsf{Switch to P1} and three other state-changing elements synchronize.
 Furthermore, line 3 specifies that one of the synchronization partners is the element \textit{turn green} connected by the relationship \textit{A}.
 Similarly, two other transitions of the traffic lights \textit{B} and \textit{C} are specified in the following two lines.
 Thus, the interaction defines a synchronization of a task and three traffic light transitions. 
 The second interaction defines a synchronization for the task \textsf{Switch to P2} and three traffic light transitions.
 
+
 \subsection{Generate a global execution engine}
 % TODO finalize title and align with the workflow
-% TODO add content
 
-\subsection{Check behavioral consistency}
-
-Using the \gls*{srm} and snapshot metamodels, we can represent the global states of the system, but we still need execution semantics to generate a state space to check the properties.
+Using the \gls*{srm} and snapshot metamodels, we can represent the global states of the system, but we still need execution semantics to check the global behavioral properties.
 The execution semantics used in our approach must fulfill the following three requirements:
 \begin{enumerate}
-    \item The execution semantics must incorporate each behavioral model.
+    \item The execution semantics must respect the semantics of each individual behavioral model, except for interactions.
     \item The execution semantics must reflect the defined interactions between the behavioral models.
-    \item The execution semantics must generate a state space, where given a system configuration---i.e. an instance of the \gls*{srm}---each state can be interpreted as an instance of the \gls*{srm} and the corresponding snapshot metamodels. % Allow model checking of properties defined using the snapshot metamodels and SRM
+    \item The execution semantics must allow the checking of behavioral properties for a given system configuration.
 \end{enumerate}
 Thus, any execution engine fulfilling these three requirements can be used in our approach.
 Consequently, one can experiment with different underlying execution engines, for example, graph transformations, rewriting logic, state machines, Petri nets, or process algebras, without changing the general framework.
@@ -564,6 +562,10 @@ Later in the paper, we introduce execution semantics based on rewriting logic in
 However, execution semantics based on graph transformations executable in the Groove tool set also exist.
 % Should also include Groove. Check for repetition.
 
+
+\subsection{Check behavioral consistency}
+% TODO: M_s+ does not exist anymore!
+% Model checking
 We can then use the constructed execution semantics for consistency checking by generating a state space based on a system configuration.
 Since each state is an instance of $M_s^+$, we can interpret the constructed atomic propositions on the states.
 An atomic proposition is true for a state if the corresponding instance of $M_s^+$ contains the atomic proposition.
@@ -577,7 +579,6 @@ We describe consistency checking for the use case and its result in the end of t
 
 
 \section{Global execution semantics} \label{sec:global_execution_semantics}
-
 In this section, we will describe our implementations using Groove \cite{ghamarianModellingAnalysisUsing2012, rensinkGROOVESimulatorTool2004} and Maude \cite{manuelclavelAllMaudeHighPerformance2007}.
 Then, we apply them to check behavioral consistency for the use case and discuss the results.
 
@@ -614,6 +615,7 @@ The merging process to obtain the final global rules is done in two steps:
 \end{enumerate}
 
 In the following sections we show how global rules are created in Groove/Maude.
+
 
 \subsection{Groove execution semantics} 
 % Graph transformation rules and their generation from the behavioral models
@@ -663,6 +665,7 @@ We evaluated our approach by executing the graph grammar with the graph transfor
 However, in the future, we can also experiment with other graph transformation tools since rule generation can be adapted without much effort.
 % Programming against a clearly defined interface makes this possible. But that's not important for this paper.
 
+
 \subsubsection{BPMN semantics}
 The local model transformation to generate graph transformation rules for \gls*{bpmn} processes is challenging, and we are currently only supporting a subset of the \gls*{bpmn} semantics \cite{krauterFormalizationAnalysisBPMN2022}, similar to the extent supported by \cite{vangorpVisualTokenbasedFormalization2013}.
 Generally, we construct one or more rules for each flow node in a \gls*{bpmn} model.
@@ -680,6 +683,7 @@ Due to limited space, we only show a subset of the rules resulting from our \gls
 A detailed explanation of the graph transformation rule generation is given in \cite{krauterFormalizationAnalysisBPMN2022}, and the corresponding implementation is available in \cite{krauterRewriteRuleGeneration2022}.
 
 To summarize, we can generate graph transformation rules that implement the behavioral semantics of the \gls*{bpmn}, especially for the \gls*{bpmn} models in the use case\cref{footnote:GGinRepo}.
+
 
 % HERE HERE (Adrian stopped reading here)
 \subsubsection{Check behavioral consistency}
@@ -704,6 +708,7 @@ To check the requirements formalized by properties 1-4, we must ensure the gener
 All atomic propositions are specified as instances of $M_s^+$ that can be converted to graph conditions in Groove.
 Graph conditions in Groove are rules that do not change elements but can be used as atomic propositions in model checking.
 
+
 \subsection{Maude execution semantics}
 We are using the predefined Maude module for object-based programming to encode the snapshot metamodels in Maude.
 Thus, we can represent state machine snapshots and \gls*{bpmn} process snapshots as objects in Maude.
@@ -717,6 +722,7 @@ Similarly to the process for graph transformation rules, individual rules are de
 
 We will now explain how rewriting rules are generated for the use case.
 To apply our approach to the use case, we need to define local model transformations from state machines and \gls*{bpmn} processes to rewriting rules.
+
 
 \subsubsection{State machine semantics}
 The generation of rewriting rules is similar to the generation of graph transformation rules.
@@ -771,8 +777,8 @@ Similarly, a global rule for switching to phase 2 is created and all individual 
 Finally, we can use the Maude model checker module to check the requirements formalized by the \gls*{ltl} properties 1-4\cref{footnote:maudeArtifacts}.
 Atomic propositions can be represented in Maude using the encoded snapshot metamodels and behavioral relationships.
 
-\subsection{Behavioral consistency in the use case}
 
+\subsection{Behavioral consistency in the use case}
 Both implementations show that properties 1 and 2 hold, while properties 3 and 4 do not hold\cref{footnote:GGinRepo}\textsuperscript{,}\cref{footnote:maudeArtifacts}.
 The counterexamples for properties 3 and 4 show an unexpected race condition that must be handled.
 After the T-Junction controller signals that the traffic light A/B is green, bus B1/B2 can advance to the \textsf{Pass Junction} activity.
@@ -785,6 +791,7 @@ This can be an acceptable solution since the \textsf{Pass Junction} activity is 
 Furthermore, tolerating inconsistencies can be a viable option in \gls*{mde} \cite{weidmannToleranceModelDrivenEngineering2021}.
 Another option is to change the models to resolve the inconsistency.
 For example, the T-Junction controller could wait for the bus to pass before changing the traffic lights again.
+
 
 \section{Related work} \label{sec:related_work}
 This contribution builds on our previous publication \cite{krauterBehavioralConsistencyHeterogeneous2021}.
@@ -820,6 +827,7 @@ Their approach results in the tool Ptolemy \cite{ptolemaeusSystemDesignModeling2
 % very nice, but only simulation for Ptolemy and no real verification support (LTL model checking and atomic prop definition) in BCool/Gemoc.
 However, both approaches focus on simulation rather than consistency or model-checking.
 Neither provides concrete means to define atomic propositions and check global behavioral properties.
+
 
 \section{State space explosion} \label{sec:state_space_explosion}
 State space explosion is one of the predominant issues when applying model checking to complex systems, as they are often found in real-world applications.
@@ -898,6 +906,7 @@ The potential to reduce the state space using this technique is huge, especially
 Our approach analyzes concurrent systems with some interaction, and thus model-checking would greatly benefit from partial-order reduction.
 Partial-order reduction is most likely a must to analyze models from real-world applications.
 
+
 \section{Conclusion and future work} \label{sec:conclusion_and_future_work}
 % Conclusion
 Our work represents the first general fully-formalized approach to behavioral consistency management in a heterogeneous modeling scenario, enabling formulating and checking \emph{global} properties.
@@ -932,6 +941,8 @@ Finally, once  uncovers consistency violations, consistency restoration must be 
 Results from the consistency checking step play a fundamental role for semi-automatic consistency restoration. % Cite something
 
 \bibliography{bib}
+
+
 \section*{About the authors}
 
 \shortbio{Tim Kräuter}{is a Ph.D. research fellow at the Western Norway University of Applied Sciences, Bergen, Norway.
