@@ -377,15 +377,13 @@ In our approach, we define a system relationship metamodel to formally specify t
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.45\textwidth]{figures/systemRelationshipMetamodel.pdf}
-    \caption{Simplified system relationship metamodel}
+    \caption{System relationship metamodel excerpt}
     \label{fig:systemRelationshipMetamodel}
 \end{figure}
 % Also: Behavioral relationships have multiplicities to restrict possible system configurations. But already known for structural models and thus not relevant here.
 % Behavioral relationships can be n-ary in the future, not only binary.
 
-%Behavioral models typed in \textsf{BehavioralMetamodel}s can be connected by \textsf{BehavioralRelationship}s to allow the definition of interactions in the second step of the workflow.
 We are using a graph based syntax to define system relationship models (see \cref{fig:systemRelationshipModel}), where each node corresponds to a behavioral model (typed by a \textsf{BehavioralMetamodel}), while each arrow corresponds to a \textsf{BehavioralRelationship} (see concrete syntax depicted in clouds).
-%A system relationship model does \emph{not} describe the structure of a system, but rather behavioral relationships between the behavioral models of a system.
 For example, the system relationship model for the use case (see \cref{fig:systemRelationshipModel}) has three behavioral relationships from \textsf{TJunction} to \textsf{TrafficLight} since a T-Junction controller interacts with three different traffic lights A, B, and C.
 Furthermore, there is a behavioral relationship from \textsf{TJunction} to \textsf{Bus} because we want to check the safety properties \eqref{eq:property3} and \eqref{eq:property4}. 
 To summarize, behavioral relationships define \textit{which} behavioral models \textit{may} interact, while the interactions in the next step of the workflow describe \textit{how} they interact.
@@ -500,20 +498,15 @@ Each \textsf{InteractionPart} references one \textsf{BehavioralRelationship} and
 The \textsf{interactionHost} and the elements of the \textsf{InteractionPart}s describe a state change for their concrete behavioral model.
 By connecting them with a synchronous interaction, we define simultaneous state changes in one atomic step. 
 Consequently, an interaction can define a synchronization between behavioral models.
-In addition, each \textsf{InteractionPart} must be based on a \textsf{BehavioralRelationship} in the system relationship model, which must have the behavioral model containing the \textit{interactionHost} as a source and the behavioral model containing the \textsf{StateChangingElement} of the \textsf{InteractionPart} as a target.
-Thus, one can only define interactions for behavioral models connected by behavioral relationships.
+In addition, one can only define interactions for state changing elements if their behavioral models are connected by a behavioral relationship (see constraint \eqref{eq:interactionConstraint}).
+We use "." in constraints to navigate along associations.
+For example, \textsf{i.parts} means following all \textsf{parts} links for an \textsf{Interaction} object, resulting in a set of \textsf{InteractionPart} objects.
 
-\begin{equation}
+\begin{equation} \label{eq:interactionConstraint}
     \begin{aligned}
-    &\forall i \in Interaction: \forall p \in i.parts : \\
-       & \quad p.element \in p.relationship.target.elements
-    \end{aligned}
-\end{equation}
-
-\begin{equation}
-    \begin{aligned}
-    &\forall i \in Interaction: \forall p \in i.parts : \\
-       & \quad i.interactionHost \in p.relationship.source.elements
+    & \forall i \in Interaction: \forall p \in i.parts : \\
+    & \quad p.element \in p.relationship.target.elements \; \wedge \\
+    & \quad i.interactionHost \in p.relationship.source.elements
     \end{aligned}
 \end{equation}
 
