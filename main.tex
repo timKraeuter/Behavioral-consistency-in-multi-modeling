@@ -54,7 +54,9 @@ Graph transformation
 % Table
 
 \usepackage{glossaries}
-\usepackage{cleveref} % Reference footnotes.
+\usepackage[nameinlink]{cleveref} % Reference footnotes.
+\crefname{figure}{{figure}}{figures}
+\Crefname{figure}{{Figure}}{Figures}
 \crefformat{footnote}{#2\footnotemark[#1]#3}
 
 \newacronym{ltl}{LTL}{Linear temporal logic}
@@ -142,7 +144,7 @@ Finally, we discuss the state space explosion problem in \autoref{sec:state_spac
 
 \section{Use Case} \label{sec:usecase}
 This section motivates our approach by a simplified use case in which a traffic management system is developed to guide the traffic at a T-Junction with three traffic lights.
-The traffic management system should control the traffic by switching between the two traffic phases highlighted in \autoref{fig:junction-phases}.
+The traffic management system should control the traffic by switching between the two traffic phases highlighted in \cref{fig:junction-phases}.
 In addition, it must fulfill the following two requirements.
 First, it must guarantee safe traffic by changing the three traffic lights, A, B, and C, correctly.
 Second, it should prioritize arriving buses, i.e., switch the traffic lights quicker than usual to let an approaching bus pass (early green).
@@ -166,7 +168,7 @@ In this use case, the behavior of a traffic light and a T-Junction differs signi
 
 The behavior of a traffic light is straightforward since it uses only three colors to guide the traffic.
 \autoref{fig:trafficLight} shows the typical European\footnote{Traffic lights in other parts of the world might not show red and amber simultaneously before switching to green.} traffic light that switches from \textsf{red} to \textsf{red-amber}, \textsf{green}, \textsf{amber}, and back to \textsf{red}.
-The start state of the traffic light in \autoref{fig:trafficLight} is \textsf{red} but can be any of the four possible states.
+The start state of the traffic light in \cref{fig:trafficLight} is \textsf{red} but can be any of the four possible states.
 
 \begin{figure}[h]
     \centering
@@ -184,8 +186,8 @@ A pool is depicted as a horizontal lane with a name on the left.
 Message flows (arrows with dashed lines) are only allowed between two different pools.
 
 \autoref{fig:t_junction} shows how a possible controller for a T-Junction behaves in the traffic management system\footnote{All models and their source files can be found in \cite{krauterArtifactsBehavioralConsistency2022}.\label{footnote:fullModels}}.
-When a T-Junction controller is started, we assume that the traffic lights are showing the colors according to phase 1 (see \autoref{fig:junction-phases}).
-Thus, the controller enters a subprocess called phase 1 (see \autoref{fig:communication} top right), which we describe together with the subprocess called phase 2 later.
+When a T-Junction controller is started, we assume that the traffic lights are showing the colors according to phase 1 (see \cref{fig:junction-phases}).
+Thus, the controller enters a subprocess called phase 1 (see top right in \cref{fig:communication}), which we describe together with the subprocess called phase 2 later.
 However, when a fixed amount of time has passed, the subprocess is interrupted by the attached timer boundary event.
 Then, the controller executes the next activity and switches to phase 2.
 The controller will pass a throwing signal event before entering a subprocess for phase 2 and repeat the same steps.
@@ -215,7 +217,7 @@ The \gls*{bpmn} model and communication for phase 2 of the controller can be def
 The phase 1 model uses an event-based gateway to respond to two different kinds of messages.
 First, the traffic light status can be requested, which is answered by sending a message declaring that the traffic lights A and C are green while B is red.
 Moreover, early green for traffic light B can be requested.
-This request ends the subprocess, and the controller immediately switches to phase 2 (see \autoref{fig:t_junction}), which results in the traffic light B turning green.
+This request ends the subprocess, and the controller immediately switches to phase 2 (see \cref{fig:t_junction}), which results in the traffic light B turning green.
 
 The bottom of \autoref{fig:communication} shows the controller for a bus parameterized with direction B.
 It will first request the traffic light status to determine if traffic light B is green.
@@ -223,7 +225,7 @@ If it is green, the bus can pass the junction.
 However, if it is red, the bus requests to change B to green and waits for a signal that the controller has changed the traffic light.
 After receiving the signal, the bus passes the junction.
 A \gls*{bpmn} model for a bus controller parameterized with the direction A or C looks nearly identical.
-In addition, the bus controller also communicates with the phase 2 subprocess, which we only hint at in \autoref{fig:communication}\cref{footnote:fullModels}.
+In addition, the bus controller also communicates with the phase 2 subprocess, which we only hint at in \cref{fig:communication}\cref{footnote:fullModels}.
 The phase 2 subprocess has the same structure as the phase 1 subprocess but reports that A and C are red, while B is green.
 Similarly, it terminates if green is requested for A or C.
 
@@ -241,7 +243,7 @@ Consequently, we need a model of the system to allow us to define interactions b
     \label{fig:systemRelationshipModel}
 \end{figure}
 
-The resulting model called the \emph{system relationship model} is shown in \autoref{fig:systemRelationshipModel} using a graph based syntax.
+The resulting model called the \emph{system relationship model} is shown in \cref{fig:systemRelationshipModel} using a graph based syntax.
 It contains one node for each behavioral model and arrows to depict behavioral relationships, leading to possible interactions.
 In addition, it contains enumerations to parameterize the behavioral models. 
 A \textsf{TJunction} has three associated \textsf{TrafficLight}s, \textsf{A}, \textsf{B}, and \textsf{C}, and a set of currently approaching \textsf{Bus}es.
@@ -262,9 +264,9 @@ Thus, the test system configuration describes a system that controls one T-Junct
 \end{figure}
 
 First, we would like to check the safe traffic requirement.
-Since we only want to check system conformance concerning the two traffic phases, we do not need to include the two buses depicted in the red dotted square in \autoref{fig:test_config} in the analysis.
+Since we only want to check system conformance concerning the two traffic phases, we do not need to include the two buses depicted in the red dotted square in \cref{fig:test_config} in the analysis.
 We cannot simply assert that the system is either in phase 1 or phase 2 since there are intermediate states during the transition between the two phases, which are allowed.
-By consulting \autoref{fig:trafficLight}, we can, for example, expect a state in which traffic lights A and C are amber, and traffic light B is red-amber before reaching phase 2.
+By consulting \cref{fig:trafficLight}, we can, for example, expect a state in which traffic lights A and C are amber, and traffic light B is red-amber before reaching phase 2.
 However, we can define \emph{safe traffic} as the absence of \emph{unsafe traffic}, which is easier to define.
 
 For the T-Junction, unsafe traffic occurs if traffic light A is green or amber and traffic light B is green or amber simultaneously.
@@ -280,8 +282,7 @@ The resulting global properties \eqref{eq:property1} and \eqref{eq:property2} ar
 
 If we include buses \textsf{B1} and \textsf{B2} in the system, we would like to check that they cannot pass when their traffic light is red or red-amber.
 Concretely, this means the \textsf{Pass Junction} activity should not execute while the corresponding traffic light is \textsf{red} or \textsf{red-amber}.
-We formalize these requirements again by using \gls*{ltl} safety properties \eqref{eq:property3} and \eqref{eq:property4}, where the atomic proposition $B1_{passing}$ and $B2_{passing}$ represent that \textsf{Pass Junction} (see \autoref{fig:communication}) has started but not finished yet. 
-%, i.e., there is a token in the activity when using \gls*{bpmn} token semantics \cite{objectmanagementgroupBusinessProcessModel2013}.}.
+We formalize these requirements again by using \gls*{ltl} safety properties \eqref{eq:property3} and \eqref{eq:property4}, where the atomic proposition $B1_{passing}$ and $B2_{passing}$ represent that \textsf{Pass Junction} (see \cref{fig:communication}) has started but not finished yet.
 
 \begin{align}
     \square\neg(B1_{passing} & \land (A_{red} \lor A_{red-amber})) \label{eq:property3} \\
@@ -337,12 +338,10 @@ Each of these models conforms to its own metamodel which in turn corresponds to 
 The metamodel ensures that models specified in the corresponding languages are well-defined and machine-readable.
 This is crucial when automating parts of the consistency checking.
 
-The use case utilizes state machine and \gls*{bpmn} models which conform, respectively, to the metamodels of state machines ($M^1$ in \autoref{fig:fsm_metamodel}) and \gls*{bpmn} ($M^2$ in \autoref{fig:bpmn_metamodel}).
-% Thus, according to \autoref{fig:systemRelationshipMetamodel} there must be a metamodel for state machines and \gls*{bpmn} process models.
-% \autoref{fig:fsm_metamodel} shows the metamodel for finite state machines (ignore the purple coloring for now).
+The use case utilizes state machine and \gls*{bpmn} models which conform, respectively, to the metamodels of state machines ($M^1$ in \cref{fig:fsm_metamodel}) and \gls*{bpmn} ($M^2$ in \cref{fig:bpmn_metamodel}).
 The metamodel of state machines is defined by a \gls*{uml} class diagram with additional information depicted in clouds.
 The clouds define a concrete syntax for state machines inspired by \gls*{uml} statecharts.
-The traffic light model in \autoref{fig:trafficLight} uses this concrete syntax. 
+The traffic light model in \cref{fig:trafficLight} uses this concrete syntax. 
 %; this model can automatically be translated to the abstract syntax and typed by the metamodel.
 
 % state machine
@@ -356,7 +355,7 @@ The traffic light model in \autoref{fig:trafficLight} uses this concrete syntax.
 A \textsf{StateMachine} has a \textsf{startState} and \textsf{transitions}, whereas each \textsf{Transition} connects two \textsf{State}s.
 The states of a state machine are not explicitly modeled but can be derived from the states connected by the transitions of a state machine, assuming no isolated states.
 
-The metamodel for \gls*{bpmn} (see \autoref{fig:bpmn_metamodel}) is defined analogous to the one of state machines. 
+The metamodel for \gls*{bpmn} (see \cref{fig:bpmn_metamodel}) is defined analogous to the one of state machines. 
 A \gls*{bpmn} \textsf{Process} contains a set of \textsf{FlowNode}s connected by \textsf{SequenceFlow}s.
 \textsf{FlowNode}s and \textsf{SequenceFlow}s are \textsf{FlowElement}s, inheriting an \textsf{id} and a \textsf{name}.
 A \textsf{FlowNode} can be an \textsf{Activity}, \textsf{Gateway}, or \textsf{Event}.
@@ -373,7 +372,7 @@ Concrete activities, gateways and events are defined in the full \gls*{bpmn} met
 % System relationship metamodel
 Behavioral models \emph{interact} to realize the global system behavior.
 A system relationship model describes which behavioral models exist in the system and whether they are behaviorally related; i.e., may interact during execution.
-In our approach, we define a system relationship metamodel to formally specify these relationships (see \autoref{fig:systemRelationshipMetamodel}).
+In our approach, we define a system relationship metamodel to formally specify these relationships (see \cref{fig:systemRelationshipMetamodel}).
 
 \begin{figure}[h]
     \centering
@@ -385,14 +384,14 @@ In our approach, we define a system relationship metamodel to formally specify t
 % Behavioral relationships can be n-ary in the future, not only binary.
 
 %Behavioral models typed in \textsf{BehavioralMetamodel}s can be connected by \textsf{BehavioralRelationship}s to allow the definition of interactions in the second step of the workflow.
-We are using a graph based syntax to define system relationship models (see \autoref{fig:systemRelationshipModel}), where each node corresponds to a behavioral model (typed by a \textsf{BehavioralMetamodel}), while each arrow corresponds to a \textsf{BehavioralRelationship} (see concrete syntax depicted in clouds).
+We are using a graph based syntax to define system relationship models (see \cref{fig:systemRelationshipModel}), where each node corresponds to a behavioral model (typed by a \textsf{BehavioralMetamodel}), while each arrow corresponds to a \textsf{BehavioralRelationship} (see concrete syntax depicted in clouds).
 %A system relationship model does \emph{not} describe the structure of a system, but rather behavioral relationships between the behavioral models of a system.
-For example, the system relationship model for the use case (see \autoref{fig:systemRelationshipModel}) has three behavioral relationships from \textsf{TJunction} to \textsf{TrafficLight} since a T-Junction controller interacts with three different traffic lights A, B, and C.
+For example, the system relationship model for the use case (see \cref{fig:systemRelationshipModel}) has three behavioral relationships from \textsf{TJunction} to \textsf{TrafficLight} since a T-Junction controller interacts with three different traffic lights A, B, and C.
 Furthermore, there is a behavioral relationship from \textsf{TJunction} to \textsf{Bus} because we want to check the safety properties \eqref{eq:property3} and \eqref{eq:property4}. 
 To summarize, behavioral relationships define \textit{which} behavioral models \textit{may} interact, while the interactions in the next step of the workflow describe \textit{how} they interact.
 
 In addition, we allow enumerations and attributes in system relationship models.
-These may be used as parameters, e.g., to define the start state in a state machine (see \autoref{fig:systemRelationshipModel}).
+These may be used as parameters, e.g., to define the start state in a state machine (see \cref{fig:systemRelationshipModel}).
 Different instances of the system relationship model can be used to analyze the global behavior of \emph{different} system configurations by changing the parameters.
 
 
@@ -408,8 +407,8 @@ Furthermore, the transitions between these states depend on the given behavioral
 In our approach, we call the state representation a \emph{snapshot metamodel} which is specified using class diagrams, while the transitions are achieved by generating rules for a specific execution engine.
 
 For example, in the use case, we define snapshot metamodels for state machines and \gls*{bpmn}.
-A stat machine is in one state at a time, as shown in the snapshot metamodel $M_s^1$ in \autoref{fig:fsm_snapshot_metamodel}.
-We are reusing the concrete syntax elements from the state machine metamodel $M^1$ in \autoref{fig:fsm_metamodel}.
+A stat machine is in one state at a time, as shown in the snapshot metamodel $M_s^1$ in \cref{fig:fsm_snapshot_metamodel}.
+We are reusing the concrete syntax elements from the state machine metamodel $M^1$ in \cref{fig:fsm_metamodel}.
 In addition, each snapshot metamodel has a root element in our approach, highlighted in light blue.
 \begin{figure}[h]
     \centering
@@ -418,11 +417,11 @@ In addition, each snapshot metamodel has a root element in our approach, highlig
     \label{fig:fsm_snapshot_metamodel}
 \end{figure}
 
-The snapshot metamodel for \gls*{bpmn} is based on a \textsf{Token} distribution as described in the \gls*{bpmn} specifications \cite{objectmanagementgroupBusinessProcessModel2013} (see \autoref{fig:bpmn_snapshot_metamodel}). 
+The snapshot metamodel for \gls*{bpmn} is based on a \textsf{Token} distribution as described in the \gls*{bpmn} specifications \cite{objectmanagementgroupBusinessProcessModel2013} (see \cref{fig:bpmn_snapshot_metamodel}). 
 % That is, a \emph{snapshot} representing a state of a BPMN model is a distribution of tokens across flow elements. of a process is a set of \textsf{Token}s.
 The root element \textsf{ProcessSnapshot} has \textsf{tokens} and \textsf{subprocesses}.
 A \textsf{Token} indicates where it is located in the \gls*{bpmn} model using its \textsf{position} attribute.
-A valid \textsf{position} is the \textsf{id} of a \textsf{FlowElement} (see \autoref{fig:bpmn_metamodel}).
+A valid \textsf{position} is the \textsf{id} of a \textsf{FlowElement} (see \cref{fig:bpmn_metamodel}).
 Also for the snapshot metamodel of \gls*{bpmn} we reuse the concrete syntax of the \gls*{bpmn} metamodel.
 In addition, \textsf{Token}s are highlighted with green bubbles in the middle of sequence flows and the top right of an activity.
 
@@ -439,7 +438,7 @@ To specify global behavioral properties, we combine the information of the syste
 Each behavioral model is typed by a behavioral metamodel, which has a snapshot metamodel describing its state structure.
 Thus, we know how states of behavioral model are represented, when they are instantiated.
 % Use case example propositions
-For example, \autoref{fig:atomic_propositions} shows how to specify the atomic propositions $A_{green}$ and $B1_{passing}$, used in the global properties in \autoref{sec:usecase}.
+For example, \cref{fig:atomic_propositions} shows how to specify the atomic propositions $A_{green}$ and $B1_{passing}$, used in the global properties in \autoref{sec:usecase}.
 Snapshot links connect instances of behavioral models with root element instances of the corresponding snapshot metamodel. 
 
 \begin{figure}[h]
@@ -450,7 +449,7 @@ Snapshot links connect instances of behavioral models with root element instance
 \end{figure}
 
 To make formulating atomic propositions less cumbersome, one can use the concrete syntax of the individual snapshot metamodels.
-For example, \autoref{fig:atomic_propositions_concrete} shows the same atomic propositions as \autoref{fig:atomic_propositions} but uses the introduced concrete syntax.
+For example, \cref{fig:atomic_propositions_concrete} shows the same atomic propositions as \cref{fig:atomic_propositions} but uses the introduced concrete syntax.
 
 \begin{figure}[h]
     \centering
@@ -472,14 +471,14 @@ To check the behavioral consistency of a system, we are primarily interested in 
 However, global behavior depends not only on the local behavior of the models, but also on their interactions.
 Consequently, we call these inter-model relationships \emph{interactions} since they carry behavioral meaning while commonalities carry structural meaning \cite{krauterBehavioralConsistencyHeterogeneous2021}.
 
-To specify interactions between different behavioral models, we defined an interaction language given by the interaction metamodel in \autoref{fig:interaction_metamodel}.
-The interaction metamodel uses concepts from the system relationship metamodel (see \autoref{fig:systemRelationshipMetamodel}) since interactions can only be specified between behavioral models connected by \textsf{BehavioralRelationship}s.
+To specify interactions between different behavioral models, we defined an interaction language given by the interaction metamodel in \cref{fig:interaction_metamodel}.
+The interaction metamodel uses concepts from the system relationship metamodel (see \cref{fig:systemRelationshipMetamodel}) since interactions can only be specified between behavioral models connected by \textsf{BehavioralRelationship}s.
 
 In addition, we introduce the concept of \emph{state-changing elements}.
 Each \textsf{BehavioralMetamodel} specifies a set of \textsf{StateChangingElement}s.
 For example, a state machine defines states and transitions, but only the transitions describe how the states in a state machine change.
-Thus, the transitions are the \textsf{StateChangingElement}s of a state machine (highlighted in purple, see \autoref{fig:fsm_metamodel}).
-Similarly, the flow nodes are the \textsf{StateChangingElement}s of a \gls*{bpmn} process (highlighted in purple, see \autoref{fig:bpmn_metamodel})\footnote{One exception is the event-based gateway, which is not part of the \textsf{StateChangingElement}s.}.
+Thus, the transitions are the \textsf{StateChangingElement}s of a state machine (highlighted in purple, see \cref{fig:fsm_metamodel}).
+Similarly, the flow nodes are the \textsf{StateChangingElement}s of a \gls*{bpmn} process (highlighted in purple, see \cref{fig:bpmn_metamodel})\footnote{One exception is the event-based gateway, which is not part of the \textsf{StateChangingElement}s.}.
 The interaction of behavioral models is only possible through instances of the \textsf{StateChangingElement}s.
 
 Our approach is based on the requirement that state-changing elements can be identified in metamodels for any behavioral formalism.
@@ -543,7 +542,7 @@ language=Interaction,
 caption=Interactions for the use case]{figures/interactions.txt}
 
 We can explain the interactions as follows.
-The first line defines that the interactions are specified from the viewpoint of the T-Junction in the system relationship model in \autoref{fig:systemRelationshipModel}.
+The first line defines that the interactions are specified from the viewpoint of the T-Junction in the system relationship model in \cref{fig:systemRelationshipModel}.
 The first interaction defines that the task \textsf{Switch to P1} and three other state changing elements synchronize.
 Furthermore, line 3 specifies that one of the synchronization partners is the element \textit{turn green} connected by the relationship \textit{A}.
 Similarly, two other transitions of the traffic lights \textit{B} and \textit{
@@ -578,13 +577,13 @@ We can then use the constructed execution semantics for consistency checking by 
 Since each state is an instance of $M_s^+$, we can interpret the constructed atomic propositions on the states.
 An atomic proposition is true for a state if the corresponding instance of $M_s^+$ contains the atomic proposition.
 Then, we can check consistency requirements on the generated state space.
-This step should be fully automated, such that it can be executed as many times as needed (indicated by the loop in \autoref{fig:approach}) for different system configurations and consistency requirements (including atomic propositions) but using the same execution semantics.
+This step should be fully automated, such that it can be executed as many times as needed (indicated by the loop in \cref{fig:approach}) for different system configurations and consistency requirements (including atomic propositions) but using the same execution semantics.
 
 Finally, if a consistency requirement is not fulfilled, a violation, including a counterexample based on the state space, will be presented to the user.
 Adopting the same concrete syntax to visualize the counterexample as for the atomic propositions should be ideal for helping a user understand the counterexample. 
 An unsuccessful consistency check leads to a consistency restoration process, which is crucial but out of scope for this contribution.
 We describe consistency checking for the use case and its result in the end of the next section.
-In addition, the appendix contains \autoref{fig:allConcepts}, which gives an overview of all the concepts introduced in this section and how they are applied to the use case.
+In addition, the appendix contains \cref{fig:allConcepts}, which gives an overview of all the concepts introduced in this section and how they are applied to the use case.
 
 
 
@@ -663,8 +662,8 @@ To apply our approach to the use case, we need to define local model transformat
 \subsubsection{State machine semantics}
 The local model transformation to generate graph transformation rules for finite state machines is straightforward.
 Each transition leads to a graph transformation rule.
-For example, \autoref{fig:sm_rules} shows the graph transformation rules for the transitions \textsf{turn red-amber} and \textsf{turn green} of the traffic light model.
-It uses the concrete syntax introduced in \autoref{fig:fsm_snapshot_metamodel} to depict state machine snapshots and their current states.
+For example, \cref{fig:sm_rules} shows the graph transformation rules for the transitions \textsf{turn red-amber} and \textsf{turn green} of the traffic light model.
+It uses the concrete syntax introduced in \cref{fig:fsm_snapshot_metamodel} to depict state machine snapshots and their current states.
 We depict a graph transformation rule by showing the graph $L$ on the left, $R$ on the right, and a named white arrow from $L$ to $R$.
 
 \begin{figure}[h]
@@ -754,7 +753,7 @@ Using Maude's search command and search graph visualization, we can verify that 
 \subsubsection{BPMN semantics}
 The rewriting rule generation is similar to the graph transformation rule generation and supports the same subset of \gls*{bpmn} semantics.
 Similarly, one or more rules are constructed for each flow node in a \gls*{bpmn} process, where objects conform to the \gls*{bpmn} snapshot metamodel.
-\autoref{lst:tJunctionControllerMaude} shows two Maude rewriting rules for the first two flow nodes of the T-Junction controller as depicted in \autoref{fig:bpmn_example_rules}.
+\autoref{lst:tJunctionControllerMaude} shows two Maude rewriting rules for the first two flow nodes of the T-Junction controller as depicted in \cref{fig:bpmn_example_rules}.
 The remaining rules can be found in \cite{krauterArtifactsBehavioralConsistency2022}.
 For example, the rule \textsf{Controller\_started\_Event\_0e1tcn5} from line 5 to line 10 moves a token from the controller started start event to the outgoing sequence flow by changing the token position.
 All other attributes of the \textsf{ProcessSnapshot} remain unchanged by the rule.
@@ -893,7 +892,7 @@ However, as expected, neither of the tools is immune to state space explosion.
 
 % Discussion
 % Full state space is not what you do. You check properties.
-As in our use case, one is generally not interested in a full state space exploration as in \autoref{table:maudeRuntime} and \autoref{table:grooveRuntime} but rather in the validity of a set of behavioral properties.
+As in our use case, one is generally not interested in a full state space exploration as in \cref{table:maudeRuntime} and \cref{table:grooveRuntime} but rather in the validity of a set of behavioral properties.
 Checking, for example, a property specified in \gls*{ltl}, does not necessarily lead to a full state space exploration.
 Furthermore, not every property is concerned with all behavioral models.
 For example, properties (1) and (2) of the use case do not involve buses and can be checked on the much smaller state spaces, not including approaching buses.
@@ -919,7 +918,7 @@ Partial-order reduction is most likely a must to analyze models from real-world 
 Our work represents the first general fully-formalized approach to behavioral consistency management in a heterogeneous modeling scenario, enabling formulating and checking \emph{global} properties.
 Previous work either only dealt with the behavioral consistency between specific pairs of models \cite{yaoConsistencyCheckingUML2006, kusterExplicitBehavioralConsistency2003} or focused on the simulation in a heterogeneous scenario \cite{deantoniModelingBehavioralSemantics2016, varalarsenBCoolBehavioralCoordination2016, ekerTamingHeterogeneityPtolemy2003, leeDisciplinedHeterogeneousModeling2010}.
 
-Our approach follows three key steps (see \autoref{fig:approach}).
+Our approach follows three key steps (see \cref{fig:approach}).
 % Describe the three steps
 First, we specify global behavioral consistency requirements based on the given behavioral models and their relationships. 
 Then, we align the behavioral models by defining their interactions.
