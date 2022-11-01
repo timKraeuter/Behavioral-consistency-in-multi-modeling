@@ -1,0 +1,18 @@
+                     \||||||||||||||||||/
+                   --- Welcome to Maude ---
+                     /||||||||||||||||||\
+            Maude 3.2.1 built: Feb 21 2022 18:21:17
+             Copyright 1997-2022 SRI International
+                   Tue Nov  1 09:55:43 2022
+Maude> load tJunctionController.maude
+==========================================
+search in BPMN-CHECK : init =>! X such that X |= allTerminated = true .
+
+Solution 1 (state 7217)
+states: 7349  rewrites: 45765 in 540ms cpu (535ms real) (84750 rewrites/second)
+X --> < "use-case-execution" : BPMNSystem | messages : none,processes : (< "0" : ProcessSnapshot | name : "Bus controller (B)",tokens : none,signals : none,subprocesses : none,state : Terminated > < "1" : ProcessSnapshot | name :
+    "T-Junction controller",tokens : none,signals : none,subprocesses : none,state : Terminated > < "2" : ProcessSnapshot | name : "Bus controller (A)",tokens : none,signals : none,subprocesses : none,state : Terminated >) >
+
+No more solutions.
+states: 8453  rewrites: 56318 in 640ms cpu (635ms real) (87996 rewrites/second)
+Maude>
