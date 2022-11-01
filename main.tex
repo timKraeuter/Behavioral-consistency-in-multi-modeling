@@ -319,7 +319,7 @@ In the remainder of this paper, we will describe our approach to address behavio
 Our approach consists of five steps.
 \begin{enumerate}
     \item We define a system relationship model describing which behavioral models may interact.
-    \item We specify behavioral consistency requirements as global behavioral properties for the system relationship model.
+    \item We specify consistency requirements as global behavioral properties for the system relationship model.
     \item We define interactions between the behavioral models using the system relationship model.
     \item We automatically generate an implementation for the global execution semantics of the global system
     %---runnable in a target execution engine---
@@ -395,7 +395,7 @@ These may be used as parameters, e.g., to define the start state in a state mach
 Different instances of the system relationship model can be used to analyze the global behavior of \emph{different} system configurations by changing the parameters.
 
 
-\subsection{Specify behavioral consistency}
+\subsection{Specify consistency requirements}
 % Create a system relationship model (driven by the atomic properties and potential interactions).
 As mentioned, the \textbf{first step} in the workflow is to create a system relationship model for the given behavioral models.
 The \textbf{second step} is to specify behavioral consistency requirements as global behavioral properties.
@@ -403,8 +403,8 @@ These properties are defined using a temporal logic, for example \gls*{ltl} as i
 Temporal logic properties are built upon a set of atomic propositions which are either true or false in a given state.
 % To define these global properties, we need a way to represent the states and transitions of the system relationship model
 Each behavioral language (e.g. the BPMN) specification defines how these states are represented.
-Furthermore, the transitions between these states depend on the given behavioral models and their semantics.
-In our approach, we call the state representation a \emph{snapshot metamodel} which is specified using class diagrams, while the transitions are achieved by generating rules for a specific execution engine.
+Furthermore, the transitions between these states depend on the semantics of the behavioral models.
+In our approach, we call the state representation a \emph{snapshot metamodel} which is specified using class diagrams.
 
 For example, in the use case, we define snapshot metamodels for state machines and \gls*{bpmn}.
 A stat machine is in one state at a time, as shown in the snapshot metamodel $M_s^1$ in \cref{fig:fsm_snapshot_metamodel}.
@@ -460,8 +460,6 @@ For example, \cref{fig:atomic_propositions_concrete} shows the same atomic propo
 
 With the defined atomic propositions as ingredients, one can use temporal logic to define global behavioral properties such as the properties \eqref{eq:property1}-\eqref{eq:property4} in \autoref{sec:usecase}.
 It is worth noting that the defined atomic propositions are \textit{model-specific}, meaning they exactly fit the given multi-model.
-
-%TODO Tim and Adrian came so far at FG today. There are some unresolved issues below, and there are some changes in the previous sections which may affect the following ones.
 
 \subsection{Define model interactions}
 Structural models in a multi-model might contain related information.
