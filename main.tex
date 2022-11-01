@@ -570,7 +570,7 @@ This step should be fully automated, such that it can be executed as many times 
 
 Finally, if a consistency requirement is not fulfilled, a violation, including a counterexample based on the state space, will be presented to the user.
 Adopting the same concrete syntax to visualize the counterexample as for the atomic propositions should be ideal for helping a user understand the counterexample. 
-An unsuccessful consistency check leads to a consistency restoration process, which is crucial but out of scope for this contribution.
+An unsuccessful consistency check leads to a consistency restoration process, which is crucial but out of scope for this paper.
 We describe consistency checking for the use case and its result in the end of the next section.
 In addition, the appendix contains \cref{fig:allConcepts}, which gives an overview of all the concepts introduced in this section and how they are applied to the use case.
 
@@ -584,8 +584,8 @@ In addition, the appendix contains \cref{fig:allConcepts}, which gives an overvi
 In this section, we will describe our implementations using Groove \cite{ghamarianModellingAnalysisUsing2012, rensinkGROOVESimulatorTool2004} and Maude \cite{manuelclavelAllMaudeHighPerformance2007}.
 Then, we apply them to check behavioral consistency for the use case and discuss the results.
 
-Both approaches are based on a \textit{global model transformation} from the behavioral models and their interactions to graph transformation rules (Groove) or rewriting rules (Maude).
-We will now describe this transformation generally using \textit{rules} to mean either graph transformation rules.
+Both implementations utilize a \textit{global model transformation} from the behavioral models and their interactions to graph transformation rules (Groove) or rewriting rules (Maude).
+We will now describe this transformation generally using \textit{rules} to mean either graph transformation rules or rewriting rules.
 The details specific to each implementation are given in the following sections.
 
 The model transformation can be decomposed into two steps.
@@ -599,7 +599,7 @@ In addition, each local model transformation must keep traces of the generated s
 Concretely, it has to save which rules originated from which state-changing elements in the behavioral model.
 Coming back to the state machine example, we must know which transition results in which rule.
 In general, multiple rules may be associated with one state-changing element of a behavioral model.
-For example, a receive task in a \gls*{bpmn} process cannot be represented by only one rule since it starts and then waits for an incoming message before finishing.
+For example, a receive task in a \gls*{bpmn} process is represented by two rules since it starts and then waits for an incoming message before finishing.
 
 The second step is to modify the generated rules to reflect the defined interactions.
 Interactions define synchronization of systems which we encode by merging the individual rules into rules describing the global execution semantics.
