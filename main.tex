@@ -522,7 +522,7 @@ Thus, one can only define interactions for behavioral models connected by behavi
 
 We allow the definition of as many interactions as desired.
 The interactions restrict the local behavior of the models since some parts of their behavior must synchronize.
-Two interactions are not allowed to have overlapping state changing elements (see constraint \eqref{eq:noOverlap}).
+Two interactions are not allowed to share state changing elements (see constraint \eqref{eq:noOverlap}).
 If such a situation occurs, it must be resolved by the modeler by deleting one of the interactions or merging the two interactions into one.
 
 \begin{equation} \label{eq:noOverlap}
@@ -550,6 +550,10 @@ Similarly, two other transitions of the traffic lights \textit{B} and \textit{
 C} are specified in the following two lines.
 Thus, the interaction defines a synchronization of a task execution and three traffic light transitions. 
 The second interaction defines a synchronization for the task \textsf{Switch to P2} and three traffic light transitions.
+
+\subsection{Generate a global execution engine}
+% TODO finalize title and align with the workflow
+% TODO add content
 
 \subsection{Check behavioral consistency}
 
@@ -677,9 +681,9 @@ However, in the future, we can also experiment with other graph transformation t
 
 \subsubsection{BPMN semantics}
 The local model transformation to generate graph transformation rules for \gls*{bpmn} processes is challenging, and we are currently only supporting a subset of the \gls*{bpmn} semantics \cite{krauterFormalizationAnalysisBPMN2022}, similar to the extent supported by \cite{vangorpVisualTokenbasedFormalization2013}.
-Generally, we construct one or more rules for each flow node contained in a \gls*{bpmn} model.
+Generally, we construct one or more rules for each flow node in a \gls*{bpmn} model.
 \autoref{fig:bpmn_example_rules} shows graph transformation rules for some flow nodes of the T-Junction controller.
-It uses the concrete syntax introduced earlier to represent process snapshots containing tokens.
+It uses the concrete syntax introduced in \cref{fig:bpmn_snapshot_metamodel} to represent process snapshots containing tokens.
 
 \begin{figure}[h]
     \centering
@@ -688,19 +692,12 @@ It uses the concrete syntax introduced earlier to represent process snapshots co
     \label{fig:bpmn_example_rules}
 \end{figure}
 
-To save space, we only show a subset of the rules resulting from our \gls*{bpmn} semantics implementation.
-Especially the implementation of signal events, message events, event-based gateways, and subprocesses is more involved than just moving tokens.
-A detailed explanation of the graph transformation rule generation can be found in \cite{krauterFormalizationAnalysisBPMN2022}.
-To check our implementation regarding \gls*{bpmn} semantics, we compared the generated state space with the possible token flows realizable using the \emph{bpmn-js token simulation}\cref{footnote:GGinRepo}, which conforms to the \gls*{bpmn} semantics.
-This resulted in finding bugs in the bpmn-js simulator.
+Due to limited space, we only show a subset of the rules resulting from our \gls*{bpmn} semantics implementation.
+A detailed explanation of the graph transformation rule generation is given in \cite{krauterFormalizationAnalysisBPMN2022}, and the corresponding implementation is available in \cite{krauterRewriteRuleGeneration2022}.
 
-Our semantics is inspired by \cite{vangorpVisualTokenbasedFormalization2013} but differs in some aspects.
-One key difference is that they define a fixed rule set that describes the semantics of \gls*{bpmn} models, while we generate a specific rule set for each model to enable interaction with specific parts of each model.
-The rule generation is implemented in Java and can be found in \cite{krauterRewriteRuleGeneration2022}.
+To summarize, we can generate graph transformation rules that implement the behavioral semantics of the \gls*{bpmn}, especially for the \gls*{bpmn} models in the use case\cref{footnote:GGinRepo}.
 
-Following this procedure, we can generate graph transformation rules that implement the behavioral semantics of the \gls*{bpmn} models in the use case\cref{footnote:GGinRepo}.
-
-%HERE HERE 
+% HERE HERE (Adrian stopped reading here)
 \subsubsection{Check behavioral consistency}
 The defined interactions change the rules for switching to phases 1 and 2.
 \autoref{fig:global_rule} shows the resulting rule for switching to phase 1.
