@@ -18,5 +18,5 @@ All use case models can be found [here](./artifacts/use_case/README.md), includi
 
 ## Maude execution semantics
 - The Maude module for the **traffic light model** can be found [here](./artifacts/maude/trafficLight.maude), along with an [example execution](./artifacts/maude/trafficLight-output.txt).
-- The Maude module for the **T-Junction controller** can be found [here](./artifacts/maude/tJunctionController.maude).
+- The Maude module for the **T-Junction controller** can be found [here](./artifacts/maude/tJunctionController.maude), along with an [example execution](./artifacts/maude/tJunctionController-output.txt).
 - The Maude module for the **global system** can be found [here](./artifacts/maude/fullUsecase.maude).
