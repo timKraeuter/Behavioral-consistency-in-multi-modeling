@@ -66,6 +66,7 @@ Graph transformation
 \newacronym{csp}{CSP}{Communication Sequential Processes}
 \newacronym{ccsl}{CCSL}{Clock Constraint Specification Language}
 \newacronym{dsl}{DSL}{Domain-specific language}
+\newacronym{srm}{SRM}{system relationship model}
 
 % correct bad hyphenation here
 \hyphenation{be-ha-vi-o-ral}
@@ -243,15 +244,15 @@ Consequently, we need a model of the system to allow us to define interactions b
     \label{fig:systemRelationshipModel}
 \end{figure}
 
-The resulting model called the \emph{system relationship model} is shown in \cref{fig:systemRelationshipModel} using a graph based syntax.
+The resulting model called the \textit{\gls*{srm}} is shown in \cref{fig:systemRelationshipModel} using a graph based syntax.
 It contains one node for each behavioral model and arrows to depict behavioral relationships, leading to possible interactions.
 In addition, it contains enumerations to parameterize the behavioral models. 
 A \textsf{TJunction} has three associated \textsf{TrafficLight}s, \textsf{A}, \textsf{B}, and \textsf{C}, and a set of currently approaching \textsf{Bus}es.
 A \textsf{TrafficLight} has four possible \textsf{TrafficLightState}s and an attribute to define its \textsf{startState}.
 A \textsf{Bus} has a \textsf{direction} that indicates which \textsf{TrafficLight} of the T-Junction it is approaching.
 
-Finally, using the system relationship model, we can define a test configuration of our traffic management system to check its requirements.
-\autoref{fig:test_config} depicts the test system configuration as an instance of the system relationship model.
+Finally, using the \gls*{srm}, we can define a test configuration of our traffic management system to check its requirements.
+\autoref{fig:test_config} depicts the test system configuration as an instance of the \gls*{srm}.
 First, it contains three instances of the traffic light behavioral model, representing the three traffic lights, \textsf{A}, \textsf{B}, and \textsf{C}.
 Second, it contains an instance of the T-Junction behavioral model, which is connected to the three traffic lights, and two instances of the bus behavioral model.
 Thus, the test system configuration describes a system that controls one T-Junction with three traffic lights and two buses approaching from directions A and C.
@@ -290,7 +291,7 @@ We formalize these requirements again by using \gls*{ltl} safety properties \eqr
 \end{align}
 
 However, to check the global properties, we must execute the system with the behavior specified in the behavioral models according to the test configuration.
-This is not straightforward since the multi-model of the use case consists of a system relationship model relating two heterogeneous behavioral models.
+This is not straightforward since the multi-model of the use case consists of a \gls*{srm} relating two heterogeneous behavioral models.
 In addition, the system configuration instantiates two of the behavioral models multiple times with different parameters.
 Furthermore, we face the problem that the models are not independent of each other.
 For example, the T-Junction controller must control when the traffic lights A, B, and C switch their states.
@@ -301,7 +302,7 @@ Thus, if we were to run the models independently in parallel, the properties wou
 % Thus, they are not capable of checking multi-model behavioral consistency.
 A multi-model is behaviorally consistent if it satisfies all of its behavioral properties.
 A behavioral property is given in temporal logic, for example, \gls*{ltl} in the use case, and is characterized as \emph{local} if it constrains only one model and as \emph{global} if it spans two or more models in a multi-model.
-Furthermore, global properties are dependent on the system configuration, i.e., the instance of the system relationship model used.
+Furthermore, global properties are dependent on the system configuration, i.e., the instance of the \gls*{srm} used.
 In the remainder of this paper, we will describe our approach to address behavioral consistency in multi-modeling and apply it to this use case.
 
 
@@ -318,18 +319,16 @@ In the remainder of this paper, we will describe our approach to address behavio
 
 Our approach consists of five steps.
 \begin{enumerate}
-    \item We define a system relationship model describing which behavioral models may interact.
-    \item We specify consistency requirements as global behavioral properties for the system relationship model.
-    \item We define interactions between the behavioral models using the system relationship model.
+    \item We define a \glsfirst*{srm} describing which behavioral models may interact.
+    \item We specify consistency requirements as global behavioral properties for the \gls*{srm}.
+    \item We define interactions between the behavioral models using the \gls*{srm}.
     \item We automatically generate an implementation for the global execution semantics of the global system
     %---runnable in a target execution engine---
-    using the interactions and the system relationship model.
+    using the interactions and the \gls*{srm}.
     \item Given a system configuration we check the global behavioral properties using the generated implementation.
 \end{enumerate}
-Consistency checking potentially uncovers violations, describing counter-examples in which the global behavioral properties are not valid.
-
-We will now describe our approach in detail by first explaining the \textit{system relationship model} concept and then the three steps in the workflow.
-
+The behavioral consistency management workflow potentially uncovers violations, describing counter-examples in which the global behavioral properties are not valid.
+In the following sections, we will describe each step in detail.
 
 \subsection{Define the system relationship model}\label{sec:system-rel-model}
 
@@ -371,7 +370,7 @@ Concrete activities, gateways and events are defined in the full \gls*{bpmn} met
 
 % System relationship metamodel
 Behavioral models \emph{interact} to realize the global system behavior.
-A system relationship model describes which behavioral models exist in the system and whether they are behaviorally related; i.e., may interact during execution.
+A \gls*{srm} describes which behavioral models exist in the system and whether they are behaviorally related; i.e., may interact during execution.
 In our approach, we define a system relationship metamodel to formally specify these relationships (see \cref{fig:systemRelationshipMetamodel}).
 
 \begin{figure}[h]
@@ -383,23 +382,23 @@ In our approach, we define a system relationship metamodel to formally specify t
 % Also: Behavioral relationships have multiplicities to restrict possible system configurations. But already known for structural models and thus not relevant here.
 % Behavioral relationships can be n-ary in the future, not only binary.
 
-We are using a graph based syntax to define system relationship models (see \cref{fig:systemRelationshipModel}), where each node corresponds to a behavioral model (typed by a \textsf{BehavioralMetamodel}), while each arrow corresponds to a \textsf{BehavioralRelationship} (see concrete syntax depicted in clouds).
-For example, the system relationship model for the use case (see \cref{fig:systemRelationshipModel}) has three behavioral relationships from \textsf{TJunction} to \textsf{TrafficLight} since a T-Junction controller interacts with three different traffic lights A, B, and C.
+We are using a graph based syntax to define \gls*{srm}s (see \cref{fig:systemRelationshipModel}), where each node corresponds to a behavioral model (typed by a \textsf{BehavioralMetamodel}), while each arrow corresponds to a \textsf{BehavioralRelationship} (see concrete syntax depicted in clouds).
+For example, the \gls*{srm} for the use case (see \cref{fig:systemRelationshipModel}) has three behavioral relationships from \textsf{TJunction} to \textsf{TrafficLight} since a T-Junction controller interacts with three different traffic lights A, B, and C.
 Furthermore, there is a behavioral relationship from \textsf{TJunction} to \textsf{Bus} because we want to check the safety properties \eqref{eq:property3} and \eqref{eq:property4}. 
 To summarize, behavioral relationships define \textit{which} behavioral models \textit{may} interact, while the interactions in the next step of the workflow describe \textit{how} they interact.
 
-In addition, we allow enumerations and attributes in system relationship models.
+In addition, we allow enumerations and attributes in \gls*{srm}s.
 These may be used as parameters, e.g., to define the start state in a state machine (see \cref{fig:systemRelationshipModel}).
-Different instances of the system relationship model can be used to analyze the global behavior of \emph{different} system configurations by changing the parameters.
+Different instances of the \gls*{srm} can be used to analyze the global behavior of \emph{different} system configurations by changing the parameters.
 
 
 \subsection{Specify consistency requirements}
-% Create a system relationship model (driven by the atomic properties and potential interactions).
-As mentioned, the \textbf{first step} in the workflow is to create a system relationship model for the given behavioral models.
+% Create a \gls*{srm} (driven by the atomic properties and potential interactions).
+As mentioned, the \textbf{first step} in the workflow is to create a \gls*{srm} for the given behavioral models.
 The \textbf{second step} is to specify behavioral consistency requirements as global behavioral properties.
 These properties are defined using a temporal logic, for example \gls*{ltl} as in the use case.
 Temporal logic properties are built upon a set of atomic propositions which are either true or false in a given state.
-% To define these global properties, we need a way to represent the states and transitions of the system relationship model
+% To define these global properties, we need a way to represent the states and transitions of the \gls*{srm}
 Each behavioral language (e.g. the BPMN) specification defines how these states are represented.
 Furthermore, the transitions between these states depend on the semantics of the behavioral models.
 In our approach, we call the state representation a \emph{snapshot metamodel} which is specified using class diagrams.
@@ -430,9 +429,9 @@ In addition, \textsf{Token}s are highlighted with green bubbles in the middle of
     \label{fig:bpmn_snapshot_metamodel}
 \end{figure}
 
-% Propositions need the system relationship model and all snapshot metamodels
+% Propositions need the \gls*{srm} and all snapshot metamodels
 Using the snapshot metamodels, one can only specify local behavioral properties.
-To specify global behavioral properties, we combine the information of the system relationship model with the snapshot metamodels.
+To specify global behavioral properties, we combine the information of the \gls*{srm} with the snapshot metamodels.
 Each behavioral model is typed by a behavioral metamodel, which has a snapshot metamodel describing its state structure.
 Thus, we know how states of behavioral model are represented, when they are instantiated.
 % Use case example propositions
@@ -533,7 +532,7 @@ language=Interaction,
 caption=Interactions for the use case]{figures/interactions.txt}
 
 We can explain the interactions as follows.
-The first line defines that the interactions are specified from the viewpoint of the T-Junction in the system relationship model in \cref{fig:systemRelationshipModel}.
+The first line defines that the interactions are specified from the viewpoint of the T-Junction in the \gls*{srm} in \cref{fig:systemRelationshipModel}.
 The first interaction defines that the task \textsf{Switch to P1} and three other state changing elements synchronize.
 Furthermore, line 3 specifies that one of the synchronization partners is the element \textit{turn green} connected by the relationship \textit{A}.
 Similarly, two other transitions of the traffic lights \textit{B} and \textit{C} are specified in the following two lines.
@@ -546,12 +545,12 @@ The second interaction defines a synchronization for the task \textsf{Switch to 
 
 \subsection{Check behavioral consistency}
 
-Using the system relationship model and snapshot metamodels, we can represent the global states of the system, but we still need execution semantics to generate a state space to check the properties.
+Using the \gls*{srm} and snapshot metamodels, we can represent the global states of the system, but we still need execution semantics to generate a state space to check the properties.
 The execution semantics used in our approach must fulfill the following three requirements:
 \begin{enumerate}
     \item The execution semantics must incorporate each behavioral model.
     \item The execution semantics must reflect the defined interactions between the behavioral models.
-    \item The execution semantics must generate a state space, where given a system configuration---i.e. an instance of the system relationship model---each state can be interpreted as an instance of the system relationship model and the corresponding snapshot metamodels.
+    \item The execution semantics must generate a state space, where given a system configuration---i.e. an instance of the \gls*{srm}---each state can be interpreted as an instance of the \gls*{srm} and the corresponding snapshot metamodels.
 \end{enumerate}
 Generally, our approach is independent of the underlying execution semantics if it fulfills the three requirements.
 Thus, one can experiment with different underlying semantics, for example, graph transformations, rewriting logic, state machines, Petri nets, or process algebras, without changing the general framework.
@@ -638,10 +637,10 @@ Informally speaking, elements in $R$ but not in $L$ are added by a rule, while e
 A graph transformation rule $P= L \overset{l}{\leftarrow} K \overset{r}{\to} R$ consists of graphs L, K, R, and graph morphisms $l: K \to L$ and $r: K \to R$ \cite{ehrigFundamentalsAlgebraicGraph2006}. 
 \end{definition}
 
-As a type graph for the graph grammar, we utilize the system relationship model including the snapshot metamodels which fits rules coming from individual models and rules created by interactions.
+As a type graph for the graph grammar, we utilize the \gls*{srm} including the snapshot metamodels which fits rules coming from individual models and rules created by interactions.
 Global rules are given by parallel production rules \cite[Definition 3.2.7]{baldanConcurrentSemanticsAlgebraic1999} which essentially are pairwise sums of individual rules.
 Together with a system configuration, the set of typed global rules results in a graph grammar generating a state space.
-Each state in this state space is an instance of the system relationship model including the snapshot metamodels.
+Each state in this state space is an instance of the \gls*{srm} including the snapshot metamodels.
 Consequently, this can be used to check the behavioral consistency of the multi-model.
 
 We will now explain how the graph transformation rules are generated for the use case.
@@ -792,7 +791,7 @@ For example, the T-Junction controller could wait for the bus to pass before cha
 
 \section{Related work} \label{sec:related_work}
 This contribution builds on our previous publication \cite{krauterBehavioralConsistencyHeterogeneous2021}.
-However, we refined the behavioral consistency management workflow by introducing new concepts such as the system relationship model and snapshot metamodel.
+However, we refined the behavioral consistency management workflow by introducing new concepts such as the \gls*{srm} and snapshot metamodel.
 Moreover, we created an interaction language and outlined a general approach to define atomic propositions, leading to global behavioral properties.
 In addition, our previous work did not support \gls*{bpmn} models.
 
