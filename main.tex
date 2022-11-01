@@ -329,6 +329,7 @@ Our approach consists of five steps.
 \end{enumerate}
 The behavioral consistency management workflow potentially uncovers violations, describing counter-examples in which the global behavioral properties are not valid.
 In the following sections, we will describe each step in detail.
+In addition, the appendix contains \cref{fig:allConcepts}, which gives an overview of all the new concepts and how they are applied to the use case.
 
 \subsection{Define the system relationship model}\label{sec:system-rel-model}
 
@@ -550,33 +551,29 @@ The execution semantics used in our approach must fulfill the following three re
 \begin{enumerate}
     \item The execution semantics must incorporate each behavioral model.
     \item The execution semantics must reflect the defined interactions between the behavioral models.
-    \item The execution semantics must generate a state space, where given a system configuration---i.e. an instance of the \gls*{srm}---each state can be interpreted as an instance of the \gls*{srm} and the corresponding snapshot metamodels.
+    \item The execution semantics must generate a state space, where given a system configuration---i.e. an instance of the \gls*{srm}---each state can be interpreted as an instance of the \gls*{srm} and the corresponding snapshot metamodels. % Allow model checking of properties defined using the snapshot metamodels and SRM
 \end{enumerate}
-Generally, our approach is independent of the underlying execution semantics if it fulfills the three requirements.
-Thus, one can experiment with different underlying semantics, for example, graph transformations, rewriting logic, state machines, Petri nets, or process algebras, without changing the general framework.
+Thus, any execution engine fulfilling these three requirements can be used in our approach.
+Consequently, one can experiment with different underlying execution engines, for example, graph transformations, rewriting logic, state machines, Petri nets, or process algebras, without changing the general framework.
 One can then pick the most suitable semantics for the modeling scenario at hand regarding, for example, consistency checking performance.
 
 To summarize, we obtain execution semantics, which describes the system's global behavior.
 Generating these execution semantics from the models and interactions must be fully automated to allow frequent model changes.
 However, execution semantics can be reused for all defined properties using varying atomic propositions. 
 Later in the paper, we introduce execution semantics based on rewriting logic in Maude and apply them to the use case.
-However, execution semantics based on graph transformations executable in the Groove tool set also exist. 
+However, execution semantics based on graph transformations executable in the Groove tool set also exist.
+% Should also include Groove. Check for repetition.
 
 We can then use the constructed execution semantics for consistency checking by generating a state space based on a system configuration.
 Since each state is an instance of $M_s^+$, we can interpret the constructed atomic propositions on the states.
 An atomic proposition is true for a state if the corresponding instance of $M_s^+$ contains the atomic proposition.
 Then, we can check consistency requirements on the generated state space.
-This step should be fully automated, such that it can be executed as many times as needed (indicated by the loop in \cref{fig:approach}) for different system configurations and consistency requirements (including atomic propositions) but using the same execution semantics.
+This step is fully automated, such that it can be executed as many times as needed (indicated by the loop in \cref{fig:approach}) for different system configurations and consistency requirements (including atomic propositions) but using the same execution semantics.
 
 Finally, if a consistency requirement is not fulfilled, a violation, including a counterexample based on the state space, will be presented to the user.
 Adopting the same concrete syntax to visualize the counterexample as for the atomic propositions should be ideal for helping a user understand the counterexample. 
 An unsuccessful consistency check leads to a consistency restoration process, which is crucial but out of scope for this paper.
 We describe consistency checking for the use case and its result in the end of the next section.
-In addition, the appendix contains \cref{fig:allConcepts}, which gives an overview of all the concepts introduced in this section and how they are applied to the use case.
-
-
-
-
 
 
 \section{Global execution semantics} \label{sec:global_execution_semantics}
