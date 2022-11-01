@@ -554,13 +554,11 @@ The execution semantics used in our approach must fulfill the following three re
 Thus, any execution engine fulfilling these three requirements can be used in our approach.
 Consequently, one can experiment with different underlying execution engines, for example, graph transformations, rewriting logic, state machines, Petri nets, or process algebras, without changing the general framework.
 One can then pick the most suitable semantics for the modeling scenario at hand regarding, for example, consistency checking performance.
+In \cref{sec:global_execution_semantics}, we describe implementations for two possible execution engines, namely the graph transformation toolset Groove and the Maude system.
 
 To summarize, we obtain execution semantics, which describes the system's global behavior.
 Generating these execution semantics from the models and interactions must be fully automated to allow frequent model changes.
-However, execution semantics can be reused for all defined properties using varying atomic propositions. 
-Later in the paper, we introduce execution semantics based on rewriting logic in Maude and apply them to the use case.
-However, execution semantics based on graph transformations executable in the Groove tool set also exist.
-% Should also include Groove. Check for repetition.
+However, execution semantics can be reused for all defined properties using various atomic propositions.
 
 
 \subsection{Check behavioral consistency}
