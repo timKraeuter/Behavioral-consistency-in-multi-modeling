@@ -536,9 +536,8 @@ We can explain the interactions as follows.
 The first line defines that the interactions are specified from the viewpoint of the T-Junction in the system relationship model in \cref{fig:systemRelationshipModel}.
 The first interaction defines that the task \textsf{Switch to P1} and three other state changing elements synchronize.
 Furthermore, line 3 specifies that one of the synchronization partners is the element \textit{turn green} connected by the relationship \textit{A}.
-Similarly, two other transitions of the traffic lights \textit{B} and \textit{
-C} are specified in the following two lines.
-Thus, the interaction defines a synchronization of a task execution and three traffic light transitions. 
+Similarly, two other transitions of the traffic lights \textit{B} and \textit{C} are specified in the following two lines.
+Thus, the interaction defines a synchronization of a task and three traffic light transitions. 
 The second interaction defines a synchronization for the task \textsf{Switch to P2} and three traffic light transitions.
 
 \subsection{Generate a global execution engine}
@@ -619,7 +618,6 @@ The merging process to obtain the final global rules is done in two steps:
 \end{enumerate}
 
 In the following sections we show how global rules are created in Groove/Maude.
-% TODO: parallel rules maude
 
 \subsection{Groove execution semantics} 
 % Graph transformation rules and their generation from the behavioral models
