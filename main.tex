@@ -482,7 +482,7 @@ Inspecting other behavioral languages, such as Petri Nets or \gls*{uml} activity
 % Having state-changing elements inside the BMM class could also be represented is composition and could be represented as that see: https://www.jot.fm/issues/issue_2004_11/column5/
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.475\textwidth]{figures/srm_metamodel.pdf}
+    \includegraphics[width=0.475\textwidth]{figures/srm_metamodel_composition.pdf}
     \caption{System relationship metamodel}
     \label{fig:srm_metamodel}
 \end{figure}
@@ -516,8 +516,8 @@ If such a situation occurs, it must be resolved by the modeler by deleting one o
 \begin{equation} \label{eq:noOverlap}
     \begin{aligned}
     & \forall i_1,i_2 \in Interaction : \\
-    & \quad (i_1.parts.elements \cup i_1.interactionHost) \; \cap \\
-    & \quad (i_2.parts.elements \cup i_2.interactionHost) = \emptyset
+    & \quad (i_1.parts.element \cup i_1.interactionHost) \; \cap \\
+    & \quad (i_2.parts.element \cup i_2.interactionHost) = \emptyset
     \end{aligned}
 \end{equation}
 
@@ -964,7 +964,7 @@ Before that, Patrick did his Ph.D. at Western Norway University of Applied Scien
 
 \begin{figure*}[ht]
     \centering
-    \includegraphics[width=1\textwidth]{figures/allConcepts.pdf}
+    \includegraphics[width=1\textwidth]{figures/allConcepts_composition.pdf}
     \caption{Overview of all concepts and their usage in the use case}
     \label{fig:allConcepts}
 \end{figure*}
