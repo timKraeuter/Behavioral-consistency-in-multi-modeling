@@ -373,13 +373,13 @@ Concrete activities, gateways and events are defined in the full \gls*{bpmn} met
 % System relationship metamodel
 Behavioral models \emph{interact} to realize the global system behavior.
 A \gls*{srm} describes which behavioral models exist in the system and whether they are behaviorally related; i.e., may interact during execution.
-In our approach, we define a system relationship metamodel to formally specify these relationships (see \cref{fig:systemRelationshipMetamodel}).
+In our approach, we define a system relationship metamodel to formally specify these relationships (see \cref{fig:srm_metamodel_excerpt}).
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.45\textwidth]{figures/systemRelationshipMetamodel.pdf}
+    \includegraphics[width=0.45\textwidth]{figures/srm_metamodel_excerpt.pdf}
     \caption{System relationship metamodel excerpt}
-    \label{fig:systemRelationshipMetamodel}
+    \label{fig:srm_metamodel_excerpt}
 \end{figure}
 % Also: Behavioral relationships have multiplicities to restrict possible system configurations. But already known for structural models and thus not relevant here.
 % Behavioral relationships can be n-ary in the future, not only binary.
@@ -467,9 +467,7 @@ To check the behavioral consistency of a system, we are primarily interested in 
 However, global behavior depends not only on the local behavior of the models, but also on their interactions.
 Consequently, we call these inter-model relationships \emph{interactions} since they carry behavioral meaning while commonalities carry structural meaning \cite{krauterBehavioralConsistencyHeterogeneous2021}.
 
-To specify interactions between different behavioral models, we defined an interaction language given by the interaction metamodel in \cref{fig:interaction_metamodel}.
-The interaction metamodel uses concepts from the system relationship metamodel (see \cref{fig:systemRelationshipMetamodel}) since interactions can only be specified between behavioral models connected by \textsf{BehavioralRelationship}s.
-
+To specify interactions between different behavioral models, we defined an interaction language given by the full system relationship metamodel in \cref{fig:srm_metamodel}.
 In addition, we introduce the concept of \emph{state-changing elements}.
 Each \textsf{BehavioralMetamodel} specifies a set of \textsf{StateChangingElement}s.
 For example, a state machine defines states and transitions, but only the transitions describe how the states in a state machine change.
@@ -484,9 +482,9 @@ Inspecting other behavioral languages, such as Petri Nets or \gls*{uml} activity
 % Having state-changing elements inside the BMM class could also be represented is composition and could be represented as that see: https://www.jot.fm/issues/issue_2004_11/column5/
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.475\textwidth]{figures/interaction_metamodel.pdf}
-    \caption{Interaction metamodel}
-    \label{fig:interaction_metamodel}
+    \includegraphics[width=0.475\textwidth]{figures/srm_metamodel.pdf}
+    \caption{System relationship metamodel}
+    \label{fig:srm_metamodel}
 \end{figure}
 
 An \textsf{Interaction} has an \textsf{interactionHost}, a set of interaction \textsf{parts} and an \textsf{InteractionType}.
@@ -710,7 +708,7 @@ Graph conditions in Groove are rules that do not change elements but can be used
 \subsection{Maude execution semantics}
 We are using the predefined Maude module for object-based programming to encode the snapshot metamodels in Maude.
 Thus, we can represent state machine snapshots and \gls*{bpmn} process snapshots as objects in Maude.
-In addition, we add behavioral relationships from the interaction metamodel such that we can instantiate them to create the system configuration described in the use case.
+In addition, we add behavioral relationships from the SRM such that we can instantiate them to create the system configuration described in the use case.
 
 Our Maude rules always rewrite multisets of objects, where individual objects are denoted in angle brackets ($<\cdots>$).
 Interactions lead to rule merges in Maude, where the left and right side of each rule is added to a global rule.
