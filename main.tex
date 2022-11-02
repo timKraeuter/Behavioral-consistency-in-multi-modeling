@@ -538,6 +538,9 @@ Similarly, two other transitions of the traffic lights \textit{B} and \textit{C}
 Thus, the interaction defines a synchronization of a task and three traffic light transitions. 
 The second interaction defines a synchronization for the task \textsf{Switch to P2} and three traffic light transitions.
 
+To summarize the system relationship metamodel is used to define the relations between the behavioral models in a multi-model.
+Thus, the inter-relations between behavioral models in a multi-model are given by interactions and their behavioral relationships.
+
 
 \subsection{Generate a global execution engine}
 % TODO finalize title and align with the workflow
@@ -708,7 +711,7 @@ Graph conditions in Groove are rules that do not change elements but can be used
 \subsection{Maude execution semantics}
 We are using the predefined Maude module for object-based programming to encode the snapshot metamodels in Maude.
 Thus, we can represent state machine snapshots and \gls*{bpmn} process snapshots as objects in Maude.
-In addition, we add behavioral relationships from the SRM such that we can instantiate them to create the system configuration described in the use case.
+In addition, we add behavioral relationships from the \gls*{srm} such that we can instantiate them to create the system configuration described in the use case.
 
 Our Maude rules always rewrite multisets of objects, where individual objects are denoted in angle brackets ($<\cdots>$).
 Interactions lead to rule merges in Maude, where the left and right side of each rule is added to a global rule.
