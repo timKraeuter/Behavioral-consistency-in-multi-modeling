@@ -92,9 +92,11 @@ To address this challenge, model-driven software engineering utilizes abstract r
 In such a multi-modeling setting, global consistency rules must be satisfied by a set of heterogeneously typed models to guarantee a desired \emph{global behavior}.
 In this paper, we propose a novel approach for behavioral consistency management of heterogeneous multi-models.
 The approach introduces a workflow in which we
-(i) specify \emph{global behavioral properties},
-(ii) align the individual models by specifying their \emph{interactions}, and finally,
-(iii) check the \emph{global behavioral properties} which should be satisfied by the multi-model by generating a formal specification of the \emph{global behavior}.
+(i) define which behavioral models in the multi-model \emph{can interact},
+(ii) specify consistency requirements as \emph{global behavioral properties},
+(iii) align the individual models by specifying their \emph{interactions},
+(iv) generate a formal specification of the \emph{global behavior}, and finally,
+(v) check the \emph{global behavioral properties} which should be satisfied by the multi-model.
 Our approach is independent of the particular formalism used in the generated specification, and we currently support generating graph transformations (Groove) and rewriting logic (Maude).
 \end{abstract}
 
@@ -136,8 +138,7 @@ We propose a novel approach for consistency management of heterogeneous multi-mo
 Our approach facilitates specifying \emph{interactions} between multiple potentially heterogeneous behavioral models, which are in turn used to generate a specification of the global behavior.
 Our approach is independent of the particular formalism used in the specification, and we can generate specifications in two different formalisms.
 The generation of the global behavior specification is \textit{fully automatic} and results in graph transformation rules (term rewriting rules) executable in Groove (Maude).
-Afterward, we can use the built-in verification mechanisms in Maude (Groove) to check the previously defined global behavioral properties.
-A potential future advantage of Maude is that it additionally supports the verification of Real-Time systems \cite{olveczkySemanticsPragmaticsRealTime2007, duranVerifyingTimedBPMN2017}, which is useful when models with time aspects have to be analyzed.
+Afterward, we can use the built-in verification mechanisms in Groove (Maude) to check the previously defined global behavioral properties.
 
 % Paper outline
 The remainder of this paper is structured as follows.
@@ -584,7 +585,7 @@ The details specific to each implementation are given in the following sections.
 The global model transformation can be decomposed into two steps.
 The first step to generate a specification of the global behavior is to generate rules for each behavioral model contained in the multi-model.
 Each set of rules must describe the behavior of the given behavioral model by manipulating instances of the snapshot metamodels.
-For example, a rule for a transition in a state machine changes the current state of a corresponding state machine snapshot from the source to the target state of the transition. 
+For example, a rule for a transition in a state machine changes the current state of a state machine snapshot from the source to the target of the transition. 
 
 Thus, we need a \emph{local model transformation} for each behavioral modeling language producing sets of rules.
 Each local model transformation only has to be implemented once by an \gls*{mde} tool developer and made available, for example, as a plugin, such that it can then be reused in any future setting the language is needed.
@@ -883,7 +884,7 @@ Our work represents the first general fully-formalized approach to behavioral co
 Previous work either only dealt with the behavioral consistency between specific pairs of models \cite{yaoConsistencyCheckingUML2006, kusterExplicitBehavioralConsistency2003} or focused on the simulation in a heterogeneous scenario \cite{deantoniModelingBehavioralSemantics2016, varalarsenBehavioralCoordinationOperator2015, ekerTamingHeterogeneityPtolemy2003, leeDisciplinedHeterogeneousModeling2010}.
 
 Our approach follows three key steps (see \cref{fig:approach}).
-% Describe the three steps
+% Describe the five steps
 First, we specify global behavioral consistency requirements based on the given behavioral models and their relationships. 
 Then, we align the behavioral models by defining their interactions.
 Finally, we can check the global consistency of the system in different configurations with the given consistency requirements by generating a formal specification of the global behavior.
