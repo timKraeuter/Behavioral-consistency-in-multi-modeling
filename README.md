@@ -1,7 +1,7 @@
 This repository contains our paper's sources and **additional artifacts**. The paper has been **submitted for review** to ECMFA2023.
 
 # State space explosion
-A description how to run the **Maude state space exploration** can be found [here](./artifacts/maude/benchmark/maudeBenchmark.md), while the description for the **Groove state space exploration** can be found [here](./artifacts/graphGrammars/grooveBenchmark.md).
+A description how to run the **Maude benchmark** can be found [here](./artifacts/maude/benchmark/maudeBenchmark.md), while the description for the **Groove benchmark** can be found [here](./artifacts/graphGrammars/grooveBenchmark.md).
 
 # Artifacts
 The implementation which generated the Groove and Maude specifications can be found [here](https://github.com/timKraeuter/Rewrite_Rule_Generation).
