@@ -615,14 +615,14 @@ In the following sections we describe how global rules are created in Groove and
 This section describes how graph transformations can be used as one possible formalism for behavioral consistency management.
 Concretely, we utilize the Groove tool set to run the generated specifications, i.e., graph transformation systems \cite{ghamarianModellingAnalysisUsing2012, rensinkGROOVESimulatorTool2004}.
 
-% TODO: Shortly introduce graph transformation systems (also attributed/typed)
-The idea of a graph transformation system is to begin with a start graph and then apply all possible graph transformation rules.
-Thus, one obtains a state space where each state is a graph, and each transition is a rule application.
-Informally speaking, elements in $R$ but not in $L$ are added by a rule, while elements in $L$ and $R$ are preserved, and a rule deletes elements that are in $L$ but not in $R$.
+A graph transformation system consists of a set of graph transformation rules of the form $L \to R$, where the graph $L$ is called left-hand side and the graph $R$ is called right-hand side of the rule.
+Nodes/edges in $R$ but not in $L$ are added by a rule, while nodes/edges in $L$ and $R$ are preserved, and a rule deletes nodes/edges that are in $L$ but not in $R$.
+Applying a graph transformation system to a given graph one obtains a state space where each state is a graph, and each transition is a rule application.
+A detailed formal description of graph transformation systems can be found in \cite{}. 
 
-As a type graph for the graph transformation system, we utilize the \gls*{srm} including the snapshot metamodels which fits rules coming from individual models and rules created by interactions.
-Global rules are given by parallel production rules \cite[Definition 3.2.7]{baldanConcurrentSemanticsAlgebraic1999} which essentially are pairwise sums of individual rules.
-Together with a system configuration, the set of typed global rules results in a graph transformation system generating a state space.
+We generate typed graph transformation systems, where the \gls*{srm} including the snapshot metamodels is the type graph since it fits rules changing the global state.
+A global rule is given by a parallel production rule \cite[Definition 3.2.7]{baldanConcurrentSemanticsAlgebraic1999} of all individuals rules which essentially results in a pairwise sum of individual rules.
+Together with a system configuration, i.e., start graph, the set of typed rules results in a graph transformation system generating a state space.
 Each state in this state space is an instance of the \gls*{srm} including the snapshot metamodels.
 Consequently, this can be used to check the behavioral consistency of the multi-model.
 
