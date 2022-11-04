@@ -44,7 +44,7 @@ Graph transformation
 
 \runningtitle{Towards behavioral consistency in multi-modeling} % For use in the internal pages 
 
-\runningauthor{Kräuter \textit{et al.}}
+\runningauthor{Kräuter \emph{et al.}}
 
 \usepackage{amsthm} % for proofs
 \usepackage{amsmath} % theorems, definitions, etc.
@@ -137,7 +137,7 @@ However, current approaches either only allow for consistency checking of two be
 We propose a novel approach for consistency management of heterogeneous multi-models, which allows us to define and check \emph{global} behavioral properties.
 Our approach facilitates specifying \emph{interactions} between multiple potentially heterogeneous behavioral models, which are in turn used to generate a specification of the global behavior.
 Our approach is independent of the particular formalism used in the specification, and we can generate specifications in two different formalisms.
-The generation of the global behavior specification is \textit{fully automatic} and results in graph transformation rules (term rewriting rules) executable in Groove (Maude).
+The generation of the global behavior specification is \emph{fully automatic} and results in graph transformation rules (term rewriting rules) executable in Groove (Maude).
 Afterward, we can use the built-in verification mechanisms in Groove (Maude) to check the previously defined global behavioral properties.
 
 % Paper outline
@@ -250,7 +250,7 @@ Consequently, we need a model of the system to allow us to define interactions b
     \label{fig:systemRelationshipModel}
 \end{figure}
 
-The resulting model called the \textit{\gls*{srm}} is shown in \cref{fig:systemRelationshipModel} using a graph based syntax.
+The resulting model called the \emph{\gls*{srm}} is shown in \cref{fig:systemRelationshipModel} using a graph based syntax.
 It contains one node for each behavioral model and arrows to depict behavioral relationships, leading to possible interactions.
 In addition, it contains enumerations to parameterize the behavioral models. 
 A \textsf{TJunction} has three associated \textsf{TrafficLight}s, \textsf{A}, \textsf{B}, and \textsf{C}, and a set of currently approaching \textsf{Bus}es.
@@ -389,7 +389,7 @@ In our approach, we define a system relationship metamodel to formally specify t
 We are using a graph based syntax to define \gls*{srm}s (see \cref{fig:systemRelationshipModel}), where each node corresponds to a behavioral model (typed by a \textsf{BehavioralMetamodel}), while each arrow corresponds to a \textsf{BehavioralRelationship} (see concrete syntax depicted in clouds).
 For example, the \gls*{srm} for the use case (see \cref{fig:systemRelationshipModel}) has three behavioral relationships from \textsf{TJunction} to \textsf{TrafficLight} since a T-Junction controller interacts with three different traffic lights A, B, and C.
 Furthermore, there is a behavioral relationship from \textsf{TJunction} to \textsf{Bus} because we want to check the safety properties \eqref{eq:property3} and \eqref{eq:property4}. 
-To summarize, behavioral relationships define \textit{which} behavioral models \textit{may} interact, while the interactions in the next step of the workflow describe \textit{how} they interact.
+To summarize, behavioral relationships define \emph{which} behavioral models \emph{may} interact, while the interactions in the next step of the workflow describe \emph{how} they interact.
 
 In addition, we allow enumerations and attributes in \gls*{srm}s.
 These may be used as parameters, e.g., to define the start state in a state machine (see \cref{fig:systemRelationshipModel}).
@@ -458,7 +458,7 @@ For example, \cref{fig:atomic_propositions_concrete} shows the same atomic propo
 \end{figure}
 
 With the defined atomic propositions as ingredients, one can use temporal logic to define global behavioral properties such as the properties \eqref{eq:property1}-\eqref{eq:property4} in \autoref{sec:usecase}.
-It is worth noting that the defined atomic propositions are \textit{model-specific}, meaning they exactly fit the given multi-model.
+It is worth noting that the defined atomic propositions are \emph{model-specific}, meaning they exactly fit the given multi-model.
 
 
 \subsection{Define model interactions}
@@ -534,8 +534,8 @@ caption=Interactions for the use case]{figures/interactions.txt}
 We can explain the interactions as follows.
 The first line defines that the interactions are specified from the viewpoint of the T-Junction in the \gls*{srm} in \cref{fig:systemRelationshipModel}.
 The first interaction defines that the task \textsf{Switch to P1} and three other state-changing elements synchronize.
-Furthermore, line 3 specifies that one of the synchronization partners is the element \textit{turn green} connected by the relationship \textit{A}.
-Similarly, two other transitions of the traffic lights \textit{B} and \textit{C} are specified in the following two lines.
+Furthermore, line 3 specifies that one of the synchronization partners is the element \emph{turn green} connected by the relationship \emph{A}.
+Similarly, two other transitions of the traffic lights \emph{B} and \emph{C} are specified in the following two lines.
 Thus, the interaction defines a synchronization of a task and three traffic light transitions. 
 The second interaction defines a synchronization for the task \textsf{Switch to P2} and three traffic light transitions.
 
@@ -578,8 +578,8 @@ We describe consistency checking for the use case and its result in the end of t
 In this section, we will describe our implementation to generate formal specifications in Groove \cite{ghamarianModellingAnalysisUsing2012, rensinkGROOVESimulatorTool2004} and Maude \cite{manuelclavelAllMaudeHighPerformance2007}.
 Then, we use the generated specifications to check behavioral consistency for the use case and discuss the results.
 
-Both implementations utilize a \textit{global model transformation} from the behavioral models and their interactions to \gls*{gt} rules (Groove) or rewriting rules (Maude).
-We will now describe this transformation generally using the general term \textit{rules} to mean either \gls*{gt} rules or rewriting rules.
+Both implementations utilize a \emph{global model transformation} from the behavioral models and their interactions to \gls*{gt} rules (Groove) or rewriting rules (Maude).
+We will now describe this transformation generally using the general term \emph{rules} to mean either \gls*{gt} rules or rewriting rules.
 The details specific to each implementation are given in the following sections.
 
 The global model transformation can be decomposed into two steps.
@@ -604,7 +604,7 @@ The merging process to obtain the global rules is done in two steps:
     \item For each interaction, we do the following:
      \begin{enumerate}
          \item Find the corresponding rule\footnote{If one state-changing element results in more than one rule, one can define a strategy to pick the appropriate rule.} $P_0$ for the interaction host of the interaction and find the rules $P_1, P_2, \ldots P_n$ for the state-changing elements taking part in the interaction using the saved traces.
-         \item Create a \textit{global rule} for the rules $P_0, P_1, \ldots, P_n$, which applies them simultaneously, i.e., synchronizes the state changes of the behavioral models.
+         \item Create a \emph{global rule} for the rules $P_0, P_1, \ldots, P_n$, which applies them simultaneously, i.e., synchronizes the state changes of the behavioral models.
          \item For each part of the interaction, instantiate the corresponding behavioral relationship from the behavioral model in $P_0$ to the behavioral model in $P_i$, for 1 < i $\leq$ n.
          Thus, only behaviorally related models may interact, i.e., change their state simultaneously.
      \end{enumerate}
@@ -691,7 +691,7 @@ All other rules are left untouched during the construction of the global \gls*{g
 
 Finally, we can generate the global state space of the system using the global \gls*{gt} system, which can be found in \cite{krauterArtifactsBehavioralConsistency2022}.
 To check the requirements formalized by properties 1-4, we must also encode the used atomic propositions.
-These are specified as \textit{graph conditions} in Groove.
+These are specified as \emph{graph conditions} in Groove.
 A graph condition in Groove is a rule that does not change elements but can be used as an atomic proposition in model checking.
 
 
@@ -751,7 +751,7 @@ Atomic propositions can be represented in Maude using the encoded \gls*{srm} and
 
 
 \subsection{Behavioral consistency in the use case}
-Both specifications show that properties 1 and 2 hold, while properties 3 and 4 do \textit{not} hold (see artifacts in \cite{krauterArtifactsBehavioralConsistency2022}).
+Both specifications show that properties 1 and 2 hold, while properties 3 and 4 do \emph{not} hold (see artifacts in \cite{krauterArtifactsBehavioralConsistency2022}).
 The counterexamples for properties 3 and 4 show an unexpected race condition that must be handled.
 After the T-Junction controller signals that the traffic light A/B is green, bus B1/B2 can advance to the \textsf{Pass Junction} activity.
 However, at the same time, the T-Junction controller can enter the subprocess for the next phase, which can be interrupted by the associated timer event.
@@ -891,7 +891,7 @@ Finally, we can check the global consistency of the system in different configur
 The global behavior specification is based on the defined interactions but preserve the original behavior of each model besides interactions.
 In addition, not only fully automatized model-checking but also a user-driven simulation of the multi-model and its interactions is possible.
 Our approach is independent of the particular formalism used in the generated specification, and we currently support generating \gls*{gt} systems (Groove) and rewriting logic (Maude).
-The successful implementation shows that our approach can work with different underlying formalisms and serves as a \textit{proof of concept}.
+The successful implementation shows that our approach can work with different underlying formalisms and serves as a \emph{proof of concept}.
 Furthermore, we discussed the state space explosion problem and how it can be mitigated.
 
 In future work, extending our implementation to include other behavioral formalisms such as activity diagrams, hierarchical state machines, and the $\pi$-calculus is interesting.
