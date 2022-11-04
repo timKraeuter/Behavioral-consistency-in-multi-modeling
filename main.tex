@@ -883,18 +883,21 @@ In our opinion, partial-order reduction must be implemented to analyze models fr
 Our work represents the first general fully-formalized approach to behavioral consistency management in a heterogeneous modeling scenario, enabling formulating and checking \emph{global} properties.
 Previous work either only dealt with the behavioral consistency between specific pairs of models \cite{yaoConsistencyCheckingUML2006, kusterExplicitBehavioralConsistency2003} or focused on the simulation in a heterogeneous scenario \cite{deantoniModelingBehavioralSemantics2016, varalarsenBehavioralCoordinationOperator2015, ekerTamingHeterogeneityPtolemy2003, leeDisciplinedHeterogeneousModeling2010}.
 
-Our approach follows three key steps (see \cref{fig:approach}).
+Our approach follows five key steps (see \cref{fig:approach}).
 % Describe the five steps
-First, we specify global behavioral consistency requirements based on the given behavioral models and their relationships. 
-Then, we align the behavioral models by defining their interactions.
-Finally, we can check the global consistency of the system in different configurations with the given consistency requirements by generating a formal specification of the global behavior.
-The global behavior specification is based on the defined interactions but preserve the original behavior of each model besides interactions.
+First, we define which behavioral models in the multi-model \emph{may interact} by creating a \gls*{srm}.
+Second, we specify consistency requirements as \emph{global behavioral properties}.
+Third, we specify how behavioral models interact.
+Then, we generate a formal specification of the \emph{global behavior} using the \gls*{srm} and defined interactions.
+The global behavior specification is based on the defined interactions but preserves the original behavior of each model except for interactions.
+Finally, we check the \emph{global behavioral properties} using this specification.
 In addition, not only fully automatized model-checking but also a user-driven simulation of the multi-model and its interactions is possible.
+
 Our approach is independent of the particular formalism used in the generated specification, and we currently support generating \gls*{gt} systems (Groove) and rewriting logic (Maude).
 The successful implementation shows that our approach can work with different underlying formalisms and serves as a \emph{proof of concept}.
 Furthermore, we discussed the state space explosion problem and how it can be mitigated.
 
-In future work, extending our implementation to include other behavioral formalisms such as activity diagrams, hierarchical state machines, and the $\pi$-calculus is interesting.
+In future work, we plan to extend our implementation to support more behavioral formalisms such as activity diagrams, hierarchical state machines, and the $\pi$-calculus.
 Especially integrating the $\pi$-calculus, which was formalized using \gls*{gt} systems in \cite{gadducciGraphRewritingPcalculus2007}, will be beneficial since it is profoundly different from the currently supported formalisms.
 
 % Data transfer
@@ -907,9 +910,8 @@ In addition, it is important to check that running systems are behaving as speci
 Thus, extending runtime verification techniques to include systems specified by a multi-model with interactions constitutes a challenging problem.
 
 % Consistency restoration
-%We leave potential consistency restoration as a problem for future work.
-Finally, once  uncovers consistency violations, consistency restoration must be achieved.
-Results from the consistency checking step play a fundamental role for semi-automatic consistency restoration. % Cite something
+Finally, if consistency violations are found, consistency restoration must be achieved.
+We leave consistency restoration of behavioral models as a problem for future work.
 
 \bibliography{bib}
 
