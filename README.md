@@ -11,12 +11,12 @@ The following additional artifacts can be found in this repository.
 
 All use case models can be found [here](./artifacts/use_case/README.md), including instructions on running the BPMN models.
 
-## Groove execution semantics
+## Groove specification
 - The Groove graph grammars for the **traffic light model** can be found [here](./artifacts/graphGrammars/trafficLight.gps/README.md), along with instructions on using it for state space generation.
 - The Groove graph grammars for the **T-Junction controller** and **bus controller** can be found [here](./artifacts/graphGrammars/T-Junction.gps/README.md), along with instructions on using it for state space generation.
 - The Groove graph grammars describing the **global system** can be found [here](./artifacts/graphGrammars/global.gps/README.md), along with instructions on using for state space generation and global consistency checking.
 
-## Maude execution semantics
+## Maude specification
 - The Maude module for the **traffic light model** can be found [here](./artifacts/maude/trafficLight.maude), along with an [example execution](./artifacts/maude/trafficLight-output.txt).
 - The Maude module for the **T-Junction controller** can be found [here](./artifacts/maude/tJunctionController.maude), along with an [example execution](./artifacts/maude/tJunctionController-output.txt).
 - The Maude module for the **global system** can be found [here](./artifacts/maude/fullUsecase.maude).

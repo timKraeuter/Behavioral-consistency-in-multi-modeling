@@ -94,7 +94,7 @@ The approach introduces a workflow in which we
 (i) specify \emph{global behavioral properties},
 (ii) align the individual models by specifying their \emph{interactions}, and finally,
 (iii) check the \emph{global behavioral properties} which should be satisfied by the multi-model by generating a formal specification of the \emph{global behavior}.
-Our approach is independent of the particular formalism used in the generated specification, and we currently support generating rewriting logic (Maude) and graph transformations (Groove).
+Our approach is independent of the particular formalism used in the generated specification, and we currently support generating graph transformations (Groove) and rewriting logic (Maude).
 \end{abstract}
 
 % TODO: Comment in after acceptance and helpful feedback.
@@ -134,7 +134,7 @@ However, current approaches either only allow for consistency checking of two be
 We propose a novel approach for consistency management of heterogeneous multi-models, which allows us to define and check \emph{global} behavioral properties.
 Our approach facilitates specifying \emph{interactions} between multiple potentially heterogeneous behavioral models, which are in turn used to generate a specification of the global behavior.
 Our approach is independent of the particular formalism used in the specification, and we can generate specifications in two different formalisms.
-The generation of the global behavior specification is \textit{fully automatic} and results in term rewriting rules (graph transformation rules) executable in Maude (Groove).
+The generation of the global behavior specification is \textit{fully automatic} and results in graph transformation rules (term rewriting rules) executable in Groove (Maude).
 Afterward, we can use the built-in verification mechanisms in Maude (Groove) to check the previously defined global behavioral properties.
 A potential future advantage of Maude is that it additionally supports the verification of Real-Time systems \cite{olveczkySemanticsPragmaticsRealTime2007, duranVerifyingTimedBPMN2017}, which is useful when models with time aspects have to be analyzed.
 
@@ -611,7 +611,7 @@ The merging process to obtain the final global rules is done in two steps:
      \end{enumerate}
 \end{enumerate}
 
-In the following sections we show how global rules are created in Groove/Maude.
+In the following sections we show how global rules are created in Groove and Maude.
 
 
 \subsection{Groove specification} 
@@ -828,37 +828,20 @@ Neither provides concrete means to define atomic propositions and check global b
 
 \section{State space explosion} \label{sec:state_space_explosion}
 State space explosion is one of the predominant issues when applying model checking to complex systems, as they are often found in real-world applications.
-As one can see in \autoref{table:maudeRuntime} and \autoref{table:grooveRuntime} our approach is not immune to state space explosion.
-The tables show the states, rewrites/transitions, and average runtime of a full state space exploration in the Maude and Groove-based specifications.
+As one can see in \cref{table:grooveRuntime} and \cref{table:maudeRuntime} our approach is not immune to state space explosion.
+The tables show the states, transitions (rewrites), and average runtime of a full state space exploration in the Groove (Maude) specification.
 Four scenarios were benchmarked, starting with the use case multi-model without approaching buses and then increasing the number of buses up to three.
 
 To calculate the average runtime, we used the hyperfine benchmarking tool \cite{peterHyperfine2022} (version 1.15.0), which ran state space exploration for each scenario ten times.
 Timing evaluations were done on a notebook with an AMD Ryzen PRO 3500U processor and 16 GB of RAM running Maude version 3.2.1 (inside the Windows Subsystem for Linux) and Groove version 5.8.1.
 
 The benchmarks include start-up times, for example, the state space exploration for the \textsf{No Buses} scenario takes \textasciitilde 500ms according to Groove.
-Thus, most of the exploration time in Maude and Groove for the \textsf{No Buses} scenario is attributed to the start-up time.
+Thus, most of the exploration time in Groove and Maude for the \textsf{No Buses} scenario is attributed to the start-up time.
 Generally, the Maude exploration time is lower despite larger state spaces due to technical differences in implementing the \gls*{bpmn} semantics.
 However, as expected, neither of the tools is immune to state space explosion.
 
 \begin{table}
 \centering
-\begin{tabular}{|c || c | c | c |}
- \hline
- Use case & States & Rewrites & Exploration time \\
- \hline\hline
- No buses & 168 & 664 & \textasciitilde 63.3 ms \\
- \hline
- 1 bus & 3.304 & 19.958 & \textasciitilde 277.8 ms \\
- \hline
- 2 buses & 35.280 & 27.9776 & \textasciitilde 2.994 ms \\
- \hline
- 3 buses & 260.176 & 2.522.582 & \textasciitilde 28.091 ms \\
- \hline
-\end{tabular}
-\caption[State space exploration in Maude]{State space exploration in Maude\footnotemark}
-\label{table:maudeRuntime}
-
-\bigskip
 
 \begin{tabular}{|c || c | c | c |}
  \hline
@@ -876,13 +859,31 @@ However, as expected, neither of the tools is immune to state space explosion.
 \caption[State space exploration in Groove]{State space exploration in Groove\cref{footnote:benchmark}}
 \label{table:grooveRuntime}
 
+\bigskip
+
+\begin{tabular}{|c || c | c | c |}
+ \hline
+ Use case & States & Rewrites & Exploration time \\
+ \hline\hline
+ No buses & 168 & 664 & \textasciitilde 63.3 ms \\
+ \hline
+ 1 bus & 3.304 & 19.958 & \textasciitilde 277.8 ms \\
+ \hline
+ 2 buses & 35.280 & 27.9776 & \textasciitilde 2.994 ms \\
+ \hline
+ 3 buses & 260.176 & 2.522.582 & \textasciitilde 28.091 ms \\
+ \hline
+\end{tabular}
+\caption[State space exploration in Maude]{State space exploration in Maude\footnotemark}
+\label{table:maudeRuntime}
+
 \end{table}
 
 \footnotetext{\label{footnote:benchmark}A description how to run the benchmarks can be found in \cite{krauterArtifactsBehavioralConsistency2022}.}
 
 % Discussion
 % Full state space is not what you do. You check properties.
-As in our use case, one is generally not interested in a full state space exploration as in \cref{table:maudeRuntime} and \cref{table:grooveRuntime} but rather in the validity of a set of behavioral properties.
+As in our use case, one is generally not interested in a full state space exploration as in \cref{table:grooveRuntime} and \cref{table:maudeRuntime} but rather in the validity of a set of behavioral properties.
 Checking, for example, a property specified in \gls*{ltl}, does not necessarily lead to a full state space exploration.
 Furthermore, not every property is concerned with all behavioral models.
 For example, properties (1) and (2) of the use case do not involve buses and can be checked on the much smaller state spaces, not including approaching buses.
@@ -901,7 +902,7 @@ Partial-order reduction is a well-known and successful technique to mitigate the
 It is currently not implemented in the Maude LTL model-checker, but there is promising work to integrate partial-order reduction into the model-checker \cite{farzanPartialOrderReduction2007}, showing substantial state space reductions.
 The potential to reduce the state space using this technique is huge, especially for model-checking concurrent systems \cite{clarkeHandbookModelChecking2018}.
 Our approach analyzes concurrent systems with some interaction, and thus model-checking would greatly benefit from partial-order reduction.
-Partial-order reduction is most likely a must to analyze models from real-world applications.
+In our opinion, partial-order reduction must be implemented to analyze models from real-world applications.
 
 
 \section{Conclusion and future work} \label{sec:conclusion_and_future_work}
@@ -916,7 +917,7 @@ Then, we align the behavioral models by defining their interactions.
 Finally, we can check the global consistency of the system in different configurations with the given consistency requirements by generating a formal specification of the global behavior.
 The global behavior specification is based on the defined interactions but preserve the original behavior of each model besides interactions.
 In addition, not only fully automatized model-checking but also a user-driven simulation of the multi-model and its interactions is possible.
-Our approach is independent of the particular formalism used in the generated specification, and we currently support generating rewriting logic (Maude) or graph transformations (Groove).
+Our approach is independent of the particular formalism used in the generated specification, and we currently support generating graph transformations (Groove) and rewriting logic (Maude).
 The successful implementation shows that our approach can work with different underlying formalisms and serves as a \textit{proof of concept}.
 Furthermore, we discussed the state space explosion problem and how it can be mitigated.
 
