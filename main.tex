@@ -93,8 +93,8 @@ In this paper, we propose a novel approach for behavioral consistency management
 The approach introduces a workflow in which we
 (i) specify \emph{global behavioral properties},
 (ii) align the individual models by specifying their \emph{interactions}, and finally,
-(iii) check the \emph{global behavioral properties} which should be satisfied by the multi-model by generating an implementation of the specified \emph{global behavior}.
-Our approach is independent of the particular formalism used in the generated implementation, and we currently support generating rewriting logic (Maude) and graph transformations (Groove).
+(iii) check the \emph{global behavioral properties} which should be satisfied by the multi-model by generating a formal specification of the \emph{global behavior}.
+Our approach is independent of the particular formalism used in the generated specification, and we currently support generating rewriting logic (Maude) and graph transformations (Groove).
 \end{abstract}
 
 % TODO: Comment in after acceptance and helpful feedback.
@@ -132,16 +132,16 @@ However, current approaches either only allow for consistency checking of two be
 
 % Our approach summarized.
 We propose a novel approach for consistency management of heterogeneous multi-models, which allows us to define and check \emph{global} behavioral properties.
-Our approach facilitates specifying \emph{interactions} between multiple potentially heterogeneous behavioral models, which are in turn used to generate an implementation of the global behavior.
-Our approach is independent of the particular formalism used in the generated implementation, and we currently two formalisms.
-The generation of the global behavior implementation is \textit{fully automatic} and results in term rewriting rules (graph transformation rules) executable in Maude (Groove).
+Our approach facilitates specifying \emph{interactions} between multiple potentially heterogeneous behavioral models, which are in turn used to generate a specification of the global behavior.
+Our approach is independent of the particular formalism used in the specification, and we can generate specifications in two different formalisms.
+The generation of the global behavior specification is \textit{fully automatic} and results in term rewriting rules (graph transformation rules) executable in Maude (Groove).
 Afterward, we can use the built-in verification mechanisms in Maude (Groove) to check the previously defined global behavioral properties.
 A potential future advantage of Maude is that it additionally supports the verification of Real-Time systems \cite{olveczkySemanticsPragmaticsRealTime2007, duranVerifyingTimedBPMN2017}, which is useful when models with time aspects have to be analyzed.
 
 % Paper outline
 The remainder of this paper is structured as follows.
 We introduce a simplified use case (\autoref{sec:usecase}) before explaining our behavioral consistency management approach in detail (\autoref{sec:behavioral_consistency_checking}).
-Afterward, we show how we can use the Groove tool set and the Maude system to check behavioral consistency (\autoref{sec:implementation_of_the_global_behavior}).
+Afterward, we show how we can use the Groove tool set and the Maude system to check behavioral consistency (\autoref{sec:specification_of_the_global_behavior}).
 Furthermore, we examine related work in \autoref{sec:related_work}.
 Finally, we discuss the state space explosion problem in \autoref{sec:state_space_explosion} and conclude in \autoref{sec:conclusion_and_future_work}.
 
@@ -325,8 +325,8 @@ Our approach consists of five steps.
     \item We define a \glsfirst*{srm} describing which behavioral models may interact.
     \item We specify consistency requirements as global behavioral properties for the \gls*{srm}.
     \item We define interactions between the behavioral models using the \gls*{srm}.
-    \item We automatically generate an implementation of the specified global behavior using the interactions and the \gls*{srm}.
-    \item Given a system configuration we check the global behavioral properties using the generated implementation.
+    \item We automatically generate a specification of the specified global behavior using the interactions and the \gls*{srm}.
+    \item Given a system configuration we check the global behavioral properties using the generated specification.
 \end{enumerate}
 The behavioral consistency management workflow potentially uncovers violations, describing counter-examples in which the global behavioral properties are not valid.
 In the following sections, we will describe each step in detail.
@@ -543,31 +543,31 @@ Thus, the inter-relations between behavioral models in a multi-model are given b
 \subsection{Generate a global behavior specification}
 % TODO finalize title and align with the workflow
 
-Using the \gls*{srm} and snapshot metamodels, we can represent the global states of the system, but we still need an executable implementation of the global behavior to check the defined properties.
-The implementation of the global behavior used in our approach must fulfill the following three requirements:
+Using the \gls*{srm} and snapshot metamodels, we can represent the global states of the system, but we still need a formal specification of the global behavior to check the defined properties.
+The specification of the global behavior used in our approach must fulfill the following three requirements:
 \begin{enumerate}
-    \item The implementation must respect the semantics of each individual behavioral model, except for interactions.
-    \item The implementation semantics must reflect the defined interactions between the behavioral models.
-    \item The implementation semantics must allow the checking of behavioral properties for a given system configuration.
+    \item The specification must respect the semantics of each individual behavioral model, except for interactions.
+    \item The specification semantics must reflect the defined interactions between the behavioral models.
+    \item The specification semantics must allow the checking of behavioral properties for a given system configuration.
 \end{enumerate}
-Thus, any implementation in a given formalism fulfilling these three requirements can be used in our approach.
+Thus, a specification in any formalism fulfilling these three requirements can be used in our approach.
 Consequently, one can experiment with different formalisms, for example, graph transformations, rewriting logic, state machines, Petri nets, or process algebras, without changing the general framework.
 One can then pick the most suitable formalism for the modeling scenario at hand regarding, for example, consistency checking performance.
-In \cref{sec:implementation_of_the_global_behavior}, we describe how we generate implementations for the graph transformation toolset Groove and the Maude system.
+In \cref{sec:specification_of_the_global_behavior}, we describe how we generate specifications for the graph transformation toolset Groove and the Maude system.
 
-To summarize, we generate an implementation of the global system behavior.
+To summarize, we generate a specification of the global system behavior.
 This generation takes the the models and interactions as input and is fully automated to allow frequent model changes.
-However, generated implementations can be reused for all defined properties.
+Regeneration is not needed if only the defined properties change.
 
 
 \subsection{Check behavioral consistency}
 % TODO: M_s+ does not exist anymore!
 % Model checking
-We can then use the constructed implementation for consistency checking by generating a state space based on a system configuration.
+We can then use the constructed specification for consistency checking by generating a state space based on a system configuration.
 Since each state is an instance of $M_s^+$, we can interpret the constructed atomic propositions on the states.
 An atomic proposition is true for a state if the corresponding instance of $M_s^+$ contains the atomic proposition.
 Then, we can check consistency requirements on the generated state space.
-This step is fully automated, such that it can be executed as many times as needed (indicated by the loop in \cref{fig:approach}) for different system configurations and consistency requirements (including atomic propositions) but using the same implementations.
+This step is fully automated, such that it can be executed as many times as needed (indicated by the loop in \cref{fig:approach}) for different system configurations and consistency requirements (including atomic propositions) but using the same specification.
 
 Finally, if a consistency requirement is not fulfilled, a violation, including a counterexample based on the state space, will be presented to the user.
 Adopting the same concrete syntax to visualize the counterexample as for the atomic propositions should be ideal for helping a user understand the counterexample. 
@@ -575,16 +575,16 @@ An unsuccessful consistency check leads to a consistency restoration process, wh
 We describe consistency checking for the use case and its result in the end of the next section.
 
 
-\section{Specification of the global behavior} \label{sec:implementation_of_the_global_behavior}
-In this section, we will describe our implementations using Groove \cite{ghamarianModellingAnalysisUsing2012, rensinkGROOVESimulatorTool2004} and Maude \cite{manuelclavelAllMaudeHighPerformance2007}.
-Then, we apply them to check behavioral consistency for the use case and discuss the results.
+\section{Specification of the global behavior} \label{sec:specification_of_the_global_behavior}
+In this section, we will describe our implementation to generate formal specifications in Groove \cite{ghamarianModellingAnalysisUsing2012, rensinkGROOVESimulatorTool2004} and Maude \cite{manuelclavelAllMaudeHighPerformance2007}.
+Then, we apply the generated specifications to check behavioral consistency for the use case and discuss the results.
 
 Both implementations utilize a \textit{global model transformation} from the behavioral models and their interactions to graph transformation rules (Groove) or rewriting rules (Maude).
 We will now describe this transformation generally using \textit{rules} to mean either graph transformation rules or rewriting rules.
 The details specific to each implementation are given in the following sections.
 
 The model transformation can be decomposed into two steps.
-The first step to generate an implementation of the global behavior is to generate rules for each behavioral model contained in the multi-model.
+The first step to generate a specification of the global behavior is to generate rules for each behavioral model contained in the multi-model.
 Each set of rules must describe the behavior of the given behavioral model by manipulating instances of the snapshot metamodels.
 For example, a rule for a transition in a state machine changes the current state of a corresponding state machine snapshot from the source to the target state of the transition. 
 
@@ -676,7 +676,7 @@ It uses the concrete syntax introduced in \cref{fig:bpmn_snapshot_metamodel} to 
     \label{fig:bpmn_example_rules}
 \end{figure}
 
-Due to limited space, we only show a subset of the rules resulting from our \gls*{bpmn} semantics implementation.
+Due to limited space, we only show a subset of the rules resulting from our \gls*{bpmn} semantics specification.
 A detailed explanation of the graph transformation rule generation is given in \cite{krauterFormalizationAnalysisBPMN2022}, and the corresponding implementation is available in \cite{krauterRewriteRuleGeneration2022}.
 
 To summarize, we can generate graph transformation rules that implement the behavioral semantics of the \gls*{bpmn}, especially for the \gls*{bpmn} models in the use case\cref{footnote:GGinRepo}.
@@ -776,7 +776,7 @@ Atomic propositions can be represented in Maude using the encoded snapshot metam
 
 
 \subsection{Behavioral consistency in the use case}
-Both implementations show that properties 1 and 2 hold, while properties 3 and 4 do not hold\cref{footnote:GGinRepo}\textsuperscript{,}\cref{footnote:maudeArtifacts}.
+Both specifications show that properties 1 and 2 hold, while properties 3 and 4 do not hold\cref{footnote:GGinRepo}\textsuperscript{,}\cref{footnote:maudeArtifacts}.
 The counterexamples for properties 3 and 4 show an unexpected race condition that must be handled.
 After the T-Junction controller signals that the traffic light A/B is green, bus B1/B2 can advance to the \textsf{Pass Junction} activity.
 However, at the same time, the T-Junction controller can enter the subprocess for the next phase, which can be interrupted by the associated timer event.
@@ -829,7 +829,7 @@ Neither provides concrete means to define atomic propositions and check global b
 \section{State space explosion} \label{sec:state_space_explosion}
 State space explosion is one of the predominant issues when applying model checking to complex systems, as they are often found in real-world applications.
 As one can see in \autoref{table:maudeRuntime} and \autoref{table:grooveRuntime} our approach is not immune to state space explosion.
-The tables show the states, rewrites/transitions, and average runtime of a full state space exploration in the Maude and Groove-based implementations.
+The tables show the states, rewrites/transitions, and average runtime of a full state space exploration in the Maude and Groove-based specifications.
 Four scenarios were benchmarked, starting with the use case multi-model without approaching buses and then increasing the number of buses up to three.
 
 To calculate the average runtime, we used the hyperfine benchmarking tool \cite{peterHyperfine2022} (version 1.15.0), which ran state space exploration for each scenario ten times.
@@ -913,11 +913,11 @@ Our approach follows three key steps (see \cref{fig:approach}).
 % Describe the three steps
 First, we specify global behavioral consistency requirements based on the given behavioral models and their relationships. 
 Then, we align the behavioral models by defining their interactions.
-Finally, we can check the global consistency of the system in different configurations with the given consistency requirements by generating an implementation of the global behavior.
-The global behavior implementation is based on the defined interactions but preserve the original behavior of each model besides interactions.
+Finally, we can check the global consistency of the system in different configurations with the given consistency requirements by generating a formal specification of the global behavior.
+The global behavior specification is based on the defined interactions but preserve the original behavior of each model besides interactions.
 In addition, not only fully automatized model-checking but also a user-driven simulation of the multi-model and its interactions is possible.
-Although our approach is independent of the particular formalism used in the generated implementation, the current two implementations utilize rewriting logic (Maude) or graph transformations (Groove).
-The two successful implementations show that our approach can work with different underlying formalisms and serve as a first \textit{proof of concept}.
+Our approach is independent of the particular formalism used in the generated specification, and we currently support generating rewriting logic (Maude) or graph transformations (Groove).
+The successful implementation shows that our approach can work with different underlying formalisms and serves as a \textit{proof of concept}.
 Furthermore, we discussed the state space explosion problem and how it can be mitigated.
 
 In future work, extending our implementation to include other behavioral formalisms such as activity diagrams, hierarchical state machines, and the $\pi$-calculus is interesting.
