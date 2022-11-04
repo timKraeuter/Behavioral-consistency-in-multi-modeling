@@ -127,7 +127,7 @@ For example, embedded and cyber-physical systems are composed of heterogeneous i
 % Existing solutions. But they are not sufficient!
 Several approaches exist for checking the consistency of pairs of behavioral models.
 For example, consistency checking for sequence diagrams and statecharts was implemented using Petri nets \cite{yaoConsistencyCheckingUML2006} and \gls*{csp} \cite{kusterExplicitBehavioralConsistency2003}.
-Moreover, some approaches for model simulation in heterogeneous scenarios have been developed, such as Ptolemy \cite{ekerTamingHeterogeneityPtolemy2003, leeDisciplinedHeterogeneousModeling2010} and GEMOC studio \cite{deantoniModelingBehavioralSemantics2016, varalarsenBCoolBehavioralCoordination2016}.
+Moreover, some approaches for model simulation in heterogeneous scenarios have been developed, such as Ptolemy \cite{ekerTamingHeterogeneityPtolemy2003, leeDisciplinedHeterogeneousModeling2010} and GEMOC studio \cite{deantoniModelingBehavioralSemantics2016, varalarsenBehavioralCoordinationOperator2015}.
 However, current approaches either only allow for consistency checking of two behavioral models or do not allow for definition and checking of global behavioral properties.
 
 % Our approach summarized.
@@ -662,7 +662,7 @@ It uses the concrete syntax introduced in \cref{fig:bpmn_snapshot_metamodel} to 
 \end{figure}
 
 Due to limited space, we only show a subset of the rules resulting from our \gls*{bpmn} semantics specification.
-A detailed explanation of the graph transformation rule generation is given in \cite{krauterFormalizationAnalysisBPMN2022}, and the corresponding implementation is available in \cite{krauterRewriteRuleGeneration2022}.
+A detailed explanation of the graph transformation rule generation is given in \cite{krauterFormalizationAnalysisBPMN2022}.
 
 To summarize, we can generate graph transformation systems that implement the behavioral semantics of the \gls*{bpmn}.
 Furthermore the artifacts of this paper \cite{krauterArtifactsBehavioralConsistency2022} contain graph transformation systems for the \gls*{bpmn} models of the use case.
@@ -746,8 +746,7 @@ float=*,
 caption=Global Maude rule to switch to phase 1]{figures/synch.maude}
 
 Like the graph transformation rules, the rewriting rules move tokens by changing their position according to the given \gls*{bpmn} model.
-Thus, we can generate Maude rewriting rules that implement the behavioral semantics of the \gls*{bpmn} models in the use case.
-The rule generation is implemented in Java and can be found in \cite{krauterRewriteRuleGeneration2022}.
+Thus, we can generate Maude rewriting rules that implement the behavioral semantics of the \gls*{bpmn} models in the use case (see \cite{krauterArtifactsBehavioralConsistency2022}).
 
 \subsubsection{Check behavioral consistency}
 The defined interactions change the rules for switching to phases 1 and 2. \autoref{lst:synchRuleMaude} shows the resulting rule for switching to phase 1, where a synchronization with the end of the task was chosen.
@@ -800,7 +799,7 @@ In addition, it was shown that many formalisms, for example, the $\pi$-calculus 
 
 % Gemoc Studio/BCOOL?
 \cite{deantoniModelingBehavioralSemantics2016} tackles the problem of dealing with relationships between heterogeneous behavioral models.
-They coordinate the different models using their coordination language B-COoL \cite{varalarsenBCoolBehavioralCoordination2016}, similar to the interactions we define between behavioral models.
+They coordinate the different models using their coordination language B-COoL \cite{varalarsenBehavioralCoordinationOperator2015}, similar to the interactions we define between behavioral models.
 To execute the models and their coordination, they transform them into \gls*{ccsl} models.  
 Their work also results in plugins for GEMOC studio, which support running and debugging the models.
 % Ptolemy
@@ -894,7 +893,7 @@ In our opinion, partial-order reduction must be implemented to analyze models fr
 \section{Conclusion and future work} \label{sec:conclusion_and_future_work}
 % Conclusion
 Our work represents the first general fully-formalized approach to behavioral consistency management in a heterogeneous modeling scenario, enabling formulating and checking \emph{global} properties.
-Previous work either only dealt with the behavioral consistency between specific pairs of models \cite{yaoConsistencyCheckingUML2006, kusterExplicitBehavioralConsistency2003} or focused on the simulation in a heterogeneous scenario \cite{deantoniModelingBehavioralSemantics2016, varalarsenBCoolBehavioralCoordination2016, ekerTamingHeterogeneityPtolemy2003, leeDisciplinedHeterogeneousModeling2010}.
+Previous work either only dealt with the behavioral consistency between specific pairs of models \cite{yaoConsistencyCheckingUML2006, kusterExplicitBehavioralConsistency2003} or focused on the simulation in a heterogeneous scenario \cite{deantoniModelingBehavioralSemantics2016, varalarsenBehavioralCoordinationOperator2015, ekerTamingHeterogeneityPtolemy2003, leeDisciplinedHeterogeneousModeling2010}.
 
 Our approach follows three key steps (see \cref{fig:approach}).
 % Describe the three steps
@@ -929,7 +928,7 @@ Results from the consistency checking step play a fundamental role for semi-auto
 
 \section*{About the authors}
 
-\shortbio{Tim Kräuter}{is a Ph.D. research fellow at the Western Norway University of Applied Sciences, Bergen, Norway.
+\shortbio{Tim Kräuter}{is a Ph.D. student at the Western Norway University of Applied Sciences, Bergen, Norway.
 His primary research is on integrating heterogeneous behavioral models in multi-model-driven software engineering.
 Previously he worked as a software developer at SET GmbH in Germany and acquired a master of science in Information Engineering at the University of Applied Sciences, FHDW Hannover, Germany.
 \authorcontact[https://timkraeuter.com/]{tkra@hvl.no}}

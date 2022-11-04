@@ -6,10 +6,9 @@ A description how to run the **Maude state space exploration** can be found [her
 
 
 # Artifacts
-The following additional artifacts can be found in this repository.
+The implementation which generated the Groove and Maude specifications can be found [here](https://github.com/timKraeuter/Rewrite_Rule_Generation).
 ## Use case models
-
-All use case models can be found [here](./artifacts/use_case/README.md), including instructions on running the BPMN models.
+All models from the use case can be found [here](./artifacts/use_case/README.md), including instructions on running the BPMN models online to understand their exeuction.
 
 ## Groove specification
 - The Groove graph grammars for the **traffic light model** can be found [here](./artifacts/graphGrammars/trafficLight.gps/README.md), along with instructions on using it for state space generation.
