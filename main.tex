@@ -618,13 +618,13 @@ Concretely, we utilize the Groove tool set to run the generated specifications, 
 A graph transformation system consists of a set of graph transformation rules of the form $L \to R$, where the graph $L$ is called left-hand side and the graph $R$ is called right-hand side of the rule.
 Nodes/edges in $R$ but not in $L$ are added by a rule, while nodes/edges in $L$ and $R$ are preserved, and a rule deletes nodes/edges that are in $L$ but not in $R$.
 Applying a graph transformation system to a given graph one obtains a state space where each state is a graph, and each transition is a rule application.
-A detailed formal description of graph transformation systems can be found in \cite{}. 
+A formal description of graph transformation systems can, for example, be found in \cite{ehrigFundamentalsAlgebraicGraph2006}. % Section 3.1, especially Definition 3.4.
 
-We generate typed graph transformation systems, where the \gls*{srm} including the snapshot metamodels is the type graph since it fits rules changing the global state.
+We generate typed graph transformation systems, where the \gls*{srm} including the snapshot metamodels is the type graph since it fits our rules changing the global state.
+Interactions result in global rules which change multiple parts in the global state.
 A global rule is given by a parallel production rule \cite[Definition 3.2.7]{baldanConcurrentSemanticsAlgebraic1999} of all individuals rules which essentially results in a pairwise sum of individual rules.
-Together with a system configuration, i.e., start graph, the set of typed rules results in a graph transformation system generating a state space.
-Each state in this state space is an instance of the \gls*{srm} including the snapshot metamodels.
-Consequently, this can be used to check the behavioral consistency of the multi-model.
+Together with a system configuration, i.e., a start graph, we can obtain an executable formal specification of the global behavior.
+Consequently, this can be used to check behavioral consistency.
 
 We will now explain how the graph transformation rules are generated for the use case.
 To apply our approach to the use case, we need to define local model transformations from state machines and \gls*{bpmn} processes to graph transformation rules.
