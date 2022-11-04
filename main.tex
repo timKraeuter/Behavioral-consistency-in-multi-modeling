@@ -576,10 +576,10 @@ In this section, we will describe our implementation to generate formal specific
 Then, we use the generated specifications to check behavioral consistency for the use case and discuss the results.
 
 Both implementations utilize a \textit{global model transformation} from the behavioral models and their interactions to graph transformation rules (Groove) or rewriting rules (Maude).
-We will now describe this transformation generally using \textit{rules} to mean either graph transformation rules or rewriting rules.
+We will now describe this transformation generally using the general term \textit{rules} to mean either graph transformation rules or rewriting rules.
 The details specific to each implementation are given in the following sections.
 
-The model transformation can be decomposed into two steps.
+The global model transformation can be decomposed into two steps.
 The first step to generate a specification of the global behavior is to generate rules for each behavioral model contained in the multi-model.
 Each set of rules must describe the behavior of the given behavioral model by manipulating instances of the snapshot metamodels.
 For example, a rule for a transition in a state machine changes the current state of a corresponding state machine snapshot from the source to the target state of the transition. 
@@ -594,7 +594,7 @@ For example, a receive task in a \gls*{bpmn} process is represented by two rules
 
 The second step is to modify the generated rules to reflect the defined interactions.
 Interactions define synchronization of systems which we encode by merging the individual rules into rules describing the global behavior.
-The merging process to obtain the final global rules is done in two steps:
+The merging process to obtain the global rules is done in two steps:
 
 \begin{enumerate}
     \item Rules generated from state-changing elements that are not part of interactions remain unchanged and are added to the global rule set.
@@ -607,31 +607,22 @@ The merging process to obtain the final global rules is done in two steps:
      \end{enumerate}
 \end{enumerate}
 
-In the following sections we show how global rules are created in Groove and Maude.
+In the following sections we describe how global rules are created in Groove and Maude.
 
 
 \subsection{Groove specification} 
 % Graph transformation rules and their generation from the behavioral models
-This section describes how Groove can be used as one possible semantics for behavioral consistency management.
-Groove uses graph transformation semantics based on graph grammars, see \autoref{def:graphGrammar}.
+This section describes how graph transformations can be used as one possible formalism for behavioral consistency management.
+Concretely, we utilize the Groove tool set to run the generated specifications, i.e., graph transformation systems \cite{ghamarianModellingAnalysisUsing2012, rensinkGROOVESimulatorTool2004}.
 
-\begin{definition}[Graph grammar] \label{def:graphGrammar}
-A graph grammar $GG=(S, P)$ consists of a start graph $S$ and a set of graph transformation rules $P$ \cite{ehrigFundamentalsAlgebraicGraph2006}. 
-\end{definition}
-
-The idea of a graph grammar is to begin with a start graph and then continuously apply all possible graph transformation rules.
+% TODO: Shortly introduce graph transformation systems (also attributed/typed)
+The idea of a graph transformation system is to begin with a start graph and then apply all possible graph transformation rules.
 Thus, one obtains a state space where each state is a graph, and each transition is a rule application.
-Rules can be applied using different approaches, such as double-pushout (DPO) \cite{ehrigFundamentalsAlgebraicGraph2006} or single-pushout (SPO) \cite{loweAlgebraicApproachSinglepushout1993}.
-Graph transformation rules for DPO are defined in \autoref{def:gtRule}.
 Informally speaking, elements in $R$ but not in $L$ are added by a rule, while elements in $L$ and $R$ are preserved, and a rule deletes elements that are in $L$ but not in $R$.
 
-\begin{definition}[Graph transformation rule] \label{def:gtRule}
-A graph transformation rule $P= L \overset{l}{\leftarrow} K \overset{r}{\to} R$ consists of graphs L, K, R, and graph morphisms $l: K \to L$ and $r: K \to R$ \cite{ehrigFundamentalsAlgebraicGraph2006}. 
-\end{definition}
-
-As a type graph for the graph grammar, we utilize the \gls*{srm} including the snapshot metamodels which fits rules coming from individual models and rules created by interactions.
+As a type graph for the graph transformation system, we utilize the \gls*{srm} including the snapshot metamodels which fits rules coming from individual models and rules created by interactions.
 Global rules are given by parallel production rules \cite[Definition 3.2.7]{baldanConcurrentSemanticsAlgebraic1999} which essentially are pairwise sums of individual rules.
-Together with a system configuration, the set of typed global rules results in a graph grammar generating a state space.
+Together with a system configuration, the set of typed global rules results in a graph transformation system generating a state space.
 Each state in this state space is an instance of the \gls*{srm} including the snapshot metamodels.
 Consequently, this can be used to check the behavioral consistency of the multi-model.
 
@@ -653,8 +644,8 @@ We depict a graph transformation rule by showing the graph $L$ on the left, $R$ 
     \label{fig:sm_rules}
 \end{figure}
 
-Using a traffic light snapshot with the state red as a start graph results in a graph grammar\footnote{\label{footnote:GGinRepo}All generated graph grammars, including further instructions regarding execution and consistency checking, can be found in \cite{krauterArtifactsBehavioralConsistency2022}.}, which will generate the same state space as the traffic light state machine.
-We evaluated our approach by executing the graph grammar with the graph transformation tool Groove \cite{ghamarianModellingAnalysisUsing2012, rensinkGROOVESimulatorTool2004}.
+Using a traffic light snapshot with the state red as a start graph results in a graph transformation system\footnote{\label{footnote:GGinRepo}All generated graph transformation systems, including further instructions regarding execution and consistency checking, can be found in \cite{krauterArtifactsBehavioralConsistency2022}.}, which will generate the same state space as the traffic light state machine.
+We evaluated our approach by executing the graph transformation system with the graph transformation tool Groove \cite{ghamarianModellingAnalysisUsing2012, rensinkGROOVESimulatorTool2004}.
 However, in the future, we can also experiment with other graph transformation tools since rule generation can be adapted without much effort.
 % Programming against a clearly defined interface makes this possible. But that's not important for this paper.
 
@@ -694,9 +685,9 @@ We decided that the interactions between the traffic lights and the T-Junction c
 The rule changes all traffic lights simultaneously and finishes the task.
 The corresponding individual rules no longer exist, so synchronization of the behavior is guaranteed.
 A similar rule exists for switching to phase 2, resulting from the other interaction.
-All other rules are left untouched during the construction of the global graph grammar.
+All other rules are left untouched during the construction of the global graph transformation system.
 
-Finally, we can generate the global state space of the system using the global graph grammar\cref{footnote:GGinRepo}.
+Finally, we can generate the global state space of the system using the global graph transformation system\cref{footnote:GGinRepo}.
 To check the requirements formalized by properties 1-4, we must ensure the generated state space contains the needed atomic propositions.
 All atomic propositions are specified as instances of $M_s^+$ that can be converted to graph conditions in Groove.
 Graph conditions in Groove are rules that do not change elements but can be used as atomic propositions in model checking.
@@ -724,7 +715,7 @@ Each state machine transition leads to one rewriting rule, which rewrites state 
 For example, line 3-4 defines a rewriting rule \textsf{turn\_red\_amber}, which changes the state of a traffic light object from red to red-amber.
 
 In addition to the rewriting rules, a start configuration is generated based on the defined start state (see lines 7 and 8).
-The start configuration is the Maude counterpart of the start graph in graph grammars.
+The start configuration is the Maude counterpart of the start graph in graph transformation systems.
 
 \lstinputlisting[
 label=lst:trafficLightMaude,
@@ -917,7 +908,7 @@ The successful implementation shows that our approach can work with different un
 Furthermore, we discussed the state space explosion problem and how it can be mitigated.
 
 In future work, extending our implementation to include other behavioral formalisms such as activity diagrams, hierarchical state machines, and the $\pi$-calculus is interesting.
-Especially integrating the $\pi$-calculus, which was formalized using graph grammars in \cite{gadducciGraphRewritingPcalculus2007}, will be beneficial since it is profoundly different from the currently supported formalisms.
+Especially integrating the $\pi$-calculus, which was formalized using graph transformation systems in \cite{gadducciGraphRewritingPcalculus2007}, will be beneficial since it is profoundly different from the currently supported formalisms.
 
 % Data transfer
 Furthermore, two systems often exchange data while interacting, for example, using messaging.
