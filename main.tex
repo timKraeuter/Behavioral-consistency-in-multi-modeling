@@ -189,7 +189,7 @@ Each process is modeled in its own \gls*{bpmn} \emph{pool}.
 A pool is depicted as a horizontal lane with a name on the left.
 Message flows (arrows with dashed lines) are only allowed between two different pools.
 
-\autoref{fig:t_junction} shows how a possible controller for a T-Junction behaves in the traffic management system\footnote{All models and their source files can be found in \cite{krauterArtifactsBehavioralConsistency2022}.\label{footnote:fullModels}}.
+\autoref{fig:t_junction} shows how a possible controller for a T-Junction behaves in the traffic management system.
 When a T-Junction controller is started, we assume that the traffic lights are showing the colors according to phase 1 (see \cref{fig:junction-phases}).
 Thus, the controller enters a subprocess called phase 1 (see top right in \cref{fig:communication}), which we describe together with the subprocess called phase 2 later.
 However, when a fixed amount of time has passed, the subprocess is interrupted by the attached timer boundary event.
@@ -216,7 +216,7 @@ Typically, the controller does not stop, which is indicated by the default seque
 \end{figure*}
 
 \autoref{fig:communication} shows the communication of a bus with the subprocess phase 1.
-The \gls*{bpmn} model and communication for phase 2 of the controller can be defined accordingly \cref{footnote:fullModels}.
+The \gls*{bpmn} model and communication for phase 2 of the controller can be defined accordingly.
 
 The phase 1 model uses an event-based gateway to respond to two different kinds of messages.
 First, the traffic light status can be requested, which is answered by sending a message declaring that the traffic lights A and C are green while B is red.
@@ -229,9 +229,10 @@ If it is green, the bus can pass the junction.
 However, if it is red, the bus requests to change B to green and waits for a signal that the controller has changed the traffic light.
 After receiving the signal, the bus passes the junction.
 A \gls*{bpmn} model for a bus controller parameterized with the direction A or C looks nearly identical.
-In addition, the bus controller also communicates with the phase 2 subprocess, which we only hint at in \cref{fig:communication}\cref{footnote:fullModels}.
+In addition, the bus controller also communicates with the phase 2 subprocess, which we only hint at in \cref{fig:communication}.
 The phase 2 subprocess has the same structure as the phase 1 subprocess but reports that A and C are red, while B is green.
 Similarly, it terminates if green is requested for A or C.
+The full model and all other models are part of the artifacts of this paper \cite{krauterArtifactsBehavioralConsistency2022}.
 
 Having developed behavioral models for the system, we want to check the previously stated \emph{safe traffic} requirement while buses are prioritized.
 We can lower the overall development cost if we find bugs related to these requirements as early as possible during system development.
@@ -819,6 +820,7 @@ Four scenarios were benchmarked, starting with the use case multi-model without 
 
 To calculate the average runtime, we used the hyperfine benchmarking tool \cite{peterHyperfine2022} (version 1.15.0), which ran state space exploration for each scenario ten times.
 Timing evaluations were done on a notebook with an AMD Ryzen PRO 3500U processor and 16 GB of RAM running Maude version 3.2.1 (inside the Windows Subsystem for Linux) and Groove version 5.8.1.
+A description how to run the benchmarks is available in \cite{krauterArtifactsBehavioralConsistency2022}.
 
 The benchmarks include start-up times, for example, the state space exploration for the \textsf{No Buses} scenario takes \textasciitilde 500ms according to Groove.
 Thus, most of the exploration time in Groove and Maude for the \textsf{No Buses} scenario is attributed to the start-up time.
@@ -841,7 +843,7 @@ However, as expected, neither of the tools is immune to state space explosion.
  3 buses & 195.336 & 1.028.340 & \textasciitilde 63.487 ms \\
  \hline
 \end{tabular}
-\caption[State space exploration in Groove]{State space exploration in Groove\cref{footnote:benchmark}}
+\caption[State space exploration in Groove]{State space exploration in Groove}
 \label{table:grooveRuntime}
 
 \bigskip
@@ -859,12 +861,10 @@ However, as expected, neither of the tools is immune to state space explosion.
  3 buses & 260.176 & 2.522.582 & \textasciitilde 28.091 ms \\
  \hline
 \end{tabular}
-\caption[State space exploration in Maude]{State space exploration in Maude\footnotemark}
+\caption[State space exploration in Maude]{State space exploration in Maude}
 \label{table:maudeRuntime}
 
 \end{table}
-
-\footnotetext{\label{footnote:benchmark}A description how to run the benchmarks can be found in \cite{krauterArtifactsBehavioralConsistency2022}.}
 
 % Discussion
 % Full state space is not what you do. You check properties.
