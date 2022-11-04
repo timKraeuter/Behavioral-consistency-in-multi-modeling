@@ -67,6 +67,7 @@ Graph transformation
 \newacronym{ccsl}{CCSL}{Clock Constraint Specification Language}
 \newacronym{dsl}{DSL}{Domain-specific language}
 \newacronym{srm}{SRM}{system relationship model}
+\newacronym{gt}{GT}{graph transformation}
 
 % correct bad hyphenation here
 \hyphenation{be-ha-vi-o-ral}
@@ -576,8 +577,8 @@ We describe consistency checking for the use case and its result in the end of t
 In this section, we will describe our implementation to generate formal specifications in Groove \cite{ghamarianModellingAnalysisUsing2012, rensinkGROOVESimulatorTool2004} and Maude \cite{manuelclavelAllMaudeHighPerformance2007}.
 Then, we use the generated specifications to check behavioral consistency for the use case and discuss the results.
 
-Both implementations utilize a \textit{global model transformation} from the behavioral models and their interactions to graph transformation rules (Groove) or rewriting rules (Maude).
-We will now describe this transformation generally using the general term \textit{rules} to mean either graph transformation rules or rewriting rules.
+Both implementations utilize a \textit{global model transformation} from the behavioral models and their interactions to \gls*{gt} rules (Groove) or rewriting rules (Maude).
+We will now describe this transformation generally using the general term \textit{rules} to mean either \gls*{gt} rules or rewriting rules.
 The details specific to each implementation are given in the following sections.
 
 The global model transformation can be decomposed into two steps.
@@ -614,59 +615,59 @@ In the following sections we describe how global rules are created in Groove and
 \subsection{Groove specification} 
 % Graph transformation rules and their generation from the behavioral models
 This section describes how graph transformations can be used as one possible formalism for behavioral consistency management.
-Concretely, we utilize the Groove tool set to run the generated specifications, i.e., graph transformation systems \cite{ghamarianModellingAnalysisUsing2012, rensinkGROOVESimulatorTool2004}.
+Concretely, we utilize the Groove tool set to run the generated specifications, i.e., \gls*{gt} systems \cite{ghamarianModellingAnalysisUsing2012, rensinkGROOVESimulatorTool2004}.
 
-A graph transformation system consists of a set of graph transformation rules of the form $L \to R$, where the graph $L$ is called left-hand side and the graph $R$ is called right-hand side of the rule.
+A \gls*{gt} system consists of a set of \gls*{gt} rules of the form $L \to R$, where the graph $L$ is called left-hand side and the graph $R$ is called right-hand side of the rule.
 Nodes/edges in $R$ but not in $L$ are added by a rule, while nodes/edges in $L$ and $R$ are preserved, and a rule deletes nodes/edges that are in $L$ but not in $R$.
-Applying a graph transformation system to a given graph one obtains a state space where each state is a graph, and each transition is a rule application.
-A formal description of graph transformation systems can, for example, be found in \cite{ehrigFundamentalsAlgebraicGraph2006}. % Section 3.1, especially Definition 3.4.
+Applying a \gls*{gt} system to a given graph one obtains a state space where each state is a graph, and each transition is a rule application.
+A formal description of \gls*{gt} systems can, for example, be found in \cite{ehrigFundamentalsAlgebraicGraph2006}. % Section 3.1, especially Definition 3.4.
 
-We generate typed graph transformation systems, where the \gls*{srm} including the snapshot metamodels is the type graph since it fits our rules changing the global state.
+We generate typed \gls*{gt} systems, where the \gls*{srm} including the snapshot metamodels is the type graph since it fits our rules changing the global state.
 Interactions result in global rules which change multiple parts in the global state.
 A global rule is given by a parallel production rule \cite[Definition 3.2.7]{baldanConcurrentSemanticsAlgebraic1999} of all individuals rules which essentially results in a pairwise sum of individual rules.
 Together with a system configuration, i.e., a start graph, we can obtain an executable formal specification of the global behavior.
 Consequently, this can be used to check behavioral consistency.
 
-We will now explain how the graph transformation rules are generated for the use case.
-To apply our approach to the use case, we need to define local model transformations from state machines and \gls*{bpmn} processes to graph transformation rules.
+We will now explain how the \gls*{gt} rules are generated for the use case.
+To apply our approach to the use case, we need to define local model transformations from state machines and \gls*{bpmn} processes to \gls*{gt} rules.
 
 
 \subsubsection{State machine semantics}
-The local model transformation to generate graph transformation rules for finite state machines is straightforward.
-Each transition leads to a graph transformation rule.
-For example, \cref{fig:sm_rules} shows the graph transformation rules for the transitions \textsf{turn red-amber} and \textsf{turn green} of the traffic light model.
+The local model transformation to generate \gls*{gt} rules for finite state machines is straightforward.
+Each transition leads to a \gls*{gt} rule.
+For example, \cref{fig:sm_rules} shows the \gls*{gt} rules for the transitions \textsf{turn red-amber} and \textsf{turn green} of the traffic light model.
 It uses the concrete syntax introduced in \cref{fig:fsm_snapshot_metamodel} to depict state machine snapshots and their current states.
-We depict a graph transformation rule by showing the graph $L$ on the left, $R$ on the right, and a named white arrow from $L$ to $R$.
+We depict a \gls*{gt} rule by showing the graph $L$ on the left, $R$ on the right, and a named white arrow from $L$ to $R$.
 
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.3\textwidth]{figures/sm_rules.pdf}
-    \caption{Graph transformation rules for \emph{turn red-amber} and \emph{turn green}}
+    \caption{\gls*{gt} rules for \emph{turn red-amber} and \emph{turn green}}
     \label{fig:sm_rules}
 \end{figure}
 
 Using a traffic light snapshot with the state red as a start graph, we generate the same state space in Groove as the traffic light state machine describes.
-All generated graph transformation systems, including further instructions regarding execution and consistency checking, can be found in \cite{krauterArtifactsBehavioralConsistency2022}.
+All generated \gls*{gt} systems, including further instructions regarding execution and consistency checking, can be found in \cite{krauterArtifactsBehavioralConsistency2022}.
 
 
 \subsubsection{BPMN semantics}
-The local model transformation to generate graph transformation rules for \gls*{bpmn} processes is challenging, and we are currently only supporting a subset of the \gls*{bpmn} semantics \cite{krauterFormalizationAnalysisBPMN2022}, similar to the extent supported by \cite{vangorpVisualTokenbasedFormalization2013}.
+The local model transformation to generate \gls*{gt} rules for \gls*{bpmn} processes is challenging, and we are currently only supporting a subset of the \gls*{bpmn} semantics \cite{krauterFormalizationAnalysisBPMN2022}, similar to the extent supported by \cite{vangorpVisualTokenbasedFormalization2013}.
 Generally, we construct one or more rules for each flow node in a \gls*{bpmn} model.
-\autoref{fig:bpmn_example_rules} shows graph transformation rules for some flow nodes of the T-Junction controller.
+\autoref{fig:bpmn_example_rules} shows \gls*{gt} rules for some flow nodes of the T-Junction controller.
 It uses the concrete syntax introduced in \cref{fig:bpmn_snapshot_metamodel} to represent process snapshots containing tokens.
 
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.475\textwidth]{figures/bpmn_rules.pdf}
-    \caption{Example graph transformation rules for the T-Junction controller}
+    \caption{Example \gls*{gt} rules for the T-Junction controller}
     \label{fig:bpmn_example_rules}
 \end{figure}
 
 Due to limited space, we only show a subset of the rules resulting from our \gls*{bpmn} semantics specification.
-A detailed explanation of the graph transformation rule generation is given in \cite{krauterFormalizationAnalysisBPMN2022}.
+A detailed explanation of the \gls*{gt} rule generation is given in \cite{krauterFormalizationAnalysisBPMN2022}.
 
-To summarize, we can generate graph transformation systems that implement the behavioral semantics of the \gls*{bpmn}.
-Furthermore the artifacts of this paper \cite{krauterArtifactsBehavioralConsistency2022} contain graph transformation systems for the \gls*{bpmn} models of the use case.
+To summarize, we can generate \gls*{gt} systems that implement the behavioral semantics of the \gls*{bpmn}.
+Furthermore the artifacts of this paper \cite{krauterArtifactsBehavioralConsistency2022} contain \gls*{gt} systems for the \gls*{bpmn} models of the use case.
 
 
 % HERE HERE (Adrian stopped reading here)
@@ -678,16 +679,16 @@ We decided that the interactions between the traffic lights and the T-Junction c
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.475\textwidth]{figures/global_rule.pdf}
-    \caption{Global graph transformation rule to switch to phase 1}
+    \caption{Global \gls*{gt} rule to switch to phase 1}
     \label{fig:global_rule}
 \end{figure}
 
 The rule changes all traffic lights simultaneously and finishes the task.
 The corresponding individual rules no longer exist, so synchronization of the behavior is guaranteed.
 A similar rule exists for switching to phase 2, resulting from the other interaction.
-All other rules are left untouched during the construction of the global graph transformation system.
+All other rules are left untouched during the construction of the global \gls*{gt} system.
 
-Finally, we can generate the global state space of the system using the global graph transformation system, which can be found in \cite{krauterArtifactsBehavioralConsistency2022}.
+Finally, we can generate the global state space of the system using the global \gls*{gt} system, which can be found in \cite{krauterArtifactsBehavioralConsistency2022}.
 To check the requirements formalized by properties 1-4, we must also encode the used atomic propositions.
 These are specified as \textit{graph conditions} in Groove.
 A graph condition in Groove is a rule that does not change elements but can be used as an atomic proposition in model checking.
@@ -702,20 +703,20 @@ Our Maude rules always rewrite multisets of objects, where individual objects ar
 Interactions lead to rule merges in Maude, where the left and right side of each rule is added to a global rule.
 The global rule is a valid Maude rule since the union of two multisets always results in a multiset. 
 Furthermore, behavioral relationships as defined in the interaction, are added to the rule as additional objects on both sides.
-Similarly to the process for graph transformation rules, individual rules are deleted.
+Similarly to the process for \gls*{gt} rules, individual rules are deleted.
 
 We will now explain how rewriting rules are generated for the use case.
 To apply our approach to the use case, we need to define local model transformations from state machines and \gls*{bpmn} processes to rewriting rules.
 
 
 \subsubsection{State machine semantics}
-The generation of rewriting rules is similar to the generation of graph transformation rules.
+The generation of rewriting rules is similar to the generation of \gls*{gt} rules.
 Each state machine transition leads to one rewriting rule, which rewrites state machines conforming to the state machine snapshot metamodel.
 \autoref{lst:trafficLightMaude} shows the rewriting rules for the traffic light model.
 For example, line 3-4 defines a rewriting rule \textsf{turn\_red\_amber}, which changes the state of a traffic light object from red to red-amber.
 
 In addition to the rewriting rules, a start configuration is generated based on the defined start state (see lines 7 and 8).
-The start configuration is the Maude counterpart of the start graph in graph transformation systems.
+The start configuration is the Maude counterpart of the start graph in \gls*{gt} systems.
 
 \lstinputlisting[
 label=lst:trafficLightMaude,
@@ -727,7 +728,7 @@ Using Maude's search command and search graph visualization, we can verify that 
 The generated Maude specifications and example Maude executions can be found in \cite{krauterArtifactsBehavioralConsistency2022}.
 
 \subsubsection{BPMN semantics}
-The rewriting rule generation is similar to the graph transformation rule generation and supports the same subset of \gls*{bpmn} semantics.
+The rewriting rule generation is similar to the \gls*{gt} rule generation and supports the same subset of \gls*{bpmn} semantics.
 Similarly, one or more rules are constructed for each flow node in a \gls*{bpmn} process, where objects conform to the \gls*{bpmn} snapshot metamodel.
 \autoref{lst:tJunctionControllerMaude} shows two Maude rewriting rules for the first two flow nodes of the T-Junction controller as depicted in \cref{fig:bpmn_example_rules}.
 The remaining rules can be found in \cite{krauterArtifactsBehavioralConsistency2022}.
@@ -746,12 +747,12 @@ language=Interaction,
 float=*,
 caption=Global Maude rule to switch to phase 1]{figures/synch.maude}
 
-Like the graph transformation rules, the rewriting rules move tokens by changing their position according to the given \gls*{bpmn} model.
+Like the \gls*{gt} rules, the rewriting rules move tokens by changing their position according to the given \gls*{bpmn} model.
 Thus, we can generate Maude rewriting rules that implement the behavioral semantics of the \gls*{bpmn} models in the use case (see \cite{krauterArtifactsBehavioralConsistency2022}).
 
 \subsubsection{Check behavioral consistency}
 The defined interactions change the rules for switching to phases 1 and 2. \autoref{lst:synchRuleMaude} shows the resulting rule for switching to phase 1, where a synchronization with the end of the task was chosen.
-\autoref{fig:global_rule} shows the equivalent graph transformation rule.
+\autoref{fig:global_rule} shows the equivalent \gls*{gt} rule.
 
 % lst:synchRuleMaude should be here but moved highter due to formatting
 
@@ -795,8 +796,8 @@ Consequently, they do not consider the general problem of behavioral consistency
 To combine behavioral models, they use Event structures \cite{winskelEventStructures1987} as an underlying formalism and show how different homogeneous behavioral models can be combined.
 Nonetheless, they do not apply their approach to heterogeneous models.
 Generally, their approach is compatible with ours since we do not mandate a specific formalism in our approach.
-However, we have chosen graph transformation rules as the first formalism to use in our approach since they operate on a higher abstraction level.
-In addition, it was shown that many formalisms, for example, the $\pi$-calculus \cite{gadducciGraphRewritingPcalculus2007}, can be implemented using graph transformation rules.
+However, we have chosen \gls*{gt} rules as the first formalism to use in our approach since they operate on a higher abstraction level.
+In addition, it was shown that many formalisms, for example, the $\pi$-calculus \cite{gadducciGraphRewritingPcalculus2007}, can be implemented using \gls*{gt} rules.
 
 % Gemoc Studio/BCOOL?
 \cite{deantoniModelingBehavioralSemantics2016} tackles the problem of dealing with relationships between heterogeneous behavioral models.
@@ -902,12 +903,12 @@ Then, we align the behavioral models by defining their interactions.
 Finally, we can check the global consistency of the system in different configurations with the given consistency requirements by generating a formal specification of the global behavior.
 The global behavior specification is based on the defined interactions but preserve the original behavior of each model besides interactions.
 In addition, not only fully automatized model-checking but also a user-driven simulation of the multi-model and its interactions is possible.
-Our approach is independent of the particular formalism used in the generated specification, and we currently support generating graph transformations (Groove) and rewriting logic (Maude).
+Our approach is independent of the particular formalism used in the generated specification, and we currently support generating \gls*{gt} systems (Groove) and rewriting logic (Maude).
 The successful implementation shows that our approach can work with different underlying formalisms and serves as a \textit{proof of concept}.
 Furthermore, we discussed the state space explosion problem and how it can be mitigated.
 
 In future work, extending our implementation to include other behavioral formalisms such as activity diagrams, hierarchical state machines, and the $\pi$-calculus is interesting.
-Especially integrating the $\pi$-calculus, which was formalized using graph transformation systems in \cite{gadducciGraphRewritingPcalculus2007}, will be beneficial since it is profoundly different from the currently supported formalisms.
+Especially integrating the $\pi$-calculus, which was formalized using \gls*{gt} systems in \cite{gadducciGraphRewritingPcalculus2007}, will be beneficial since it is profoundly different from the currently supported formalisms.
 
 % Data transfer
 Furthermore, two systems often exchange data while interacting, for example, using messaging.
