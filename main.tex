@@ -730,32 +730,18 @@ The generated Maude specifications and example Maude executions can be found in 
 \subsubsection{BPMN semantics}
 The rewriting rule generation is similar to the \gls*{gt} rule generation and supports the same subset of \gls*{bpmn} semantics.
 Similarly, one or more rules are constructed for each flow node in a \gls*{bpmn} process, where objects conform to the \gls*{bpmn} snapshot metamodel.
-\autoref{lst:tJunctionControllerMaude} shows two Maude rewriting rules for the first two flow nodes of the T-Junction controller as depicted in \cref{fig:bpmn_example_rules}.
+\autoref{lst:tJunctionControllerMaude} in the appendix shows two Maude rewriting rules for the first two flow nodes of the T-Junction controller as depicted in \cref{fig:bpmn_example_rules}.
 The remaining rules can be found in \cite{krauterArtifactsBehavioralConsistency2022}.
 For example, the rule \textsf{Controller\_started} from line 5 to line 11 moves a token from the controller started start event to the outgoing sequence flow by changing the token position.
 All other attributes of the \textsf{ProcessSnapshot} remain unchanged by the rule.
 
-\lstinputlisting[
-label=lst:tJunctionControllerMaude,
-language=Interaction,
-float=*,
-caption=Example rewriting rules for the T-Junction controller]{figures/tJunctionController.maude}
-
-\lstinputlisting[
-label=lst:synchRuleMaude,
-language=Interaction,
-float=*,
-caption=Global Maude rule to switch to phase 1]{figures/synch.maude}
-
 Like the \gls*{gt} rules, the rewriting rules move tokens by changing their position according to the given \gls*{bpmn} model.
 Thus, we can generate Maude rewriting rules that implement the behavioral semantics of the \gls*{bpmn} models in the use case (see \cite{krauterArtifactsBehavioralConsistency2022}).
 
+
 \subsubsection{Check behavioral consistency}
-The defined interactions change the rules for switching to phases 1 and 2. \autoref{lst:synchRuleMaude} shows the resulting rule for switching to phase 1, where a synchronization with the end of the task was chosen.
+The defined interactions change the rules for switching to phases 1 and 2. \autoref{lst:synchRuleMaude} in the appendix shows the resulting rule for switching to phase 1, where a synchronization with the end of the task was chosen.
 \autoref{fig:global_rule} shows the equivalent \gls*{gt} rule.
-
-% lst:synchRuleMaude should be here but moved highter due to formatting
-
 The rule changes all traffic lights simultaneously and finishes the task.
 Similarly, a global rule for switching to phase 2 is created and all individual rules are deleted.
 
@@ -802,7 +788,7 @@ In addition, it was shown that many formalisms, for example, the $\pi$-calculus 
 % Gemoc Studio/BCOOL?
 \cite{deantoniModelingBehavioralSemantics2016} tackles the problem of dealing with relationships between heterogeneous behavioral models.
 They coordinate the different models using their coordination language B-COoL \cite{varalarsenBehavioralCoordinationOperator2015}, similar to the interactions we define between behavioral models.
-To execute the models and their coordination, they transform them into \gls*{ccsl} models.  
+To execute the models with the a specified coordination, they transform them into \gls*{ccsl} models.  
 Their work also results in plugins for GEMOC studio, which support running and debugging the models.
 % Ptolemy
 \cite{ekerTamingHeterogeneityPtolemy2003, leeDisciplinedHeterogeneousModeling2010} propose an actor-oriented solution to the model composition problem in the presence of heterogeneity.
@@ -811,7 +797,7 @@ Their approach results in the tool Ptolemy \cite{ptolemaeusSystemDesignModeling2
 % very nice, but only simulation for Ptolemy and no real verification support (LTL model checking and atomic prop definition) in BCool/Gemoc.
 However, both approaches focus on simulation rather than consistency or model-checking.
 Neither provides concrete means to define atomic propositions and check global behavioral properties.
-
+Furthermore, \cite{varalarsenBehavioralCoordinationOperator2015} assumes a fixed system configuration while we can check different system configurations.
 
 \section{State space explosion} \label{sec:state_space_explosion}
 State space explosion is one of the predominant issues when applying model checking to complex systems, as they are often found in real-world applications.
@@ -950,7 +936,19 @@ He is currently applying MDSE to create Adaptive Software Technologies for menta
 Before that, Patrick did his Ph.D. at Western Norway University of Applied Sciences on the topics of semantic interoperability and consistency management among heterogeneous software models.
 \authorcontact[https://past.corrlang.io/]{Patrick.Stunkel@helse-bergen.no}}
 
-% \section*{Appendix}
+\section*{Appendix}
+
+\lstinputlisting[
+label=lst:tJunctionControllerMaude,
+language=Interaction,
+float=*,
+caption=Example rewriting rules for the T-Junction controller]{figures/tJunctionController.maude}
+
+\lstinputlisting[
+label=lst:synchRuleMaude,
+language=Interaction,
+float=*,
+caption=Global Maude rule to switch to phase 1]{figures/synch.maude}
 
 \begin{figure*}[ht]
     \centering
