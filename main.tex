@@ -193,7 +193,7 @@ A pool is depicted as a horizontal lane with a name on the left.
 Message flows (arrows with dashed lines) are only allowed between two different pools.
 
 \autoref{fig:t_junction} shows how a possible controller for a T-Junction behaves in the traffic management system.
-When a T-Junction controller is started, we assume that the traffic lights are showing the colors according to phase 1 (see \cref{fig:junction-phases}).
+When a TJunction controller is started, we assume that the traffic lights are showing the colors according to phase 1 (see \cref{fig:junction-phases}).
 Thus, the controller enters a subprocess called phase 1 (see top right in \cref{fig:communication}), which we describe together with the subprocess called phase 2 later.
 However, when a fixed amount of time has passed, the subprocess is interrupted by the attached timer boundary event.
 Then, the controller executes the next activity and switches to phase 2.
@@ -206,7 +206,7 @@ Typically, the controller does not stop, which is indicated by the default seque
 \begin{figure*}[h]
     \centering
     \includegraphics[width=1\textwidth]{figures/t-junction.pdf}
-    \caption{Model for a T-Junction controller}
+    \caption{Model for a TJunction controller}
     \label{fig:t_junction}
 \end{figure*}
 
@@ -301,7 +301,7 @@ However, to check the global properties, we must execute the system with the beh
 This is not straightforward since the multi-model of the use case consists of a \gls*{srm} relating two heterogeneous behavioral models.
 In addition, the system configuration instantiates two of the behavioral models multiple times with different parameters.
 Furthermore, we face the problem that the models are not independent of each other.
-For example, the T-Junction controller must control when the traffic lights A, B, and C switch their states.
+For example, the TJunction controller must control when the traffic lights A, B, and C switch their states.
 Thus, if we were to run the models independently in parallel, the properties would be violated.
 
 % Current approaches can only simulate a set of interacting heterogeneous behavioral models, as discussed in \autoref{sec:introduction}.
@@ -388,7 +388,7 @@ In our approach, we define a system relationship metamodel to formally specify t
 % Behavioral relationships can be n-ary in the future, not only binary.
 
 We are using a graph based syntax to define \gls*{srm}s (see \cref{fig:systemRelationshipModel}), where each node corresponds to a behavioral model (typed by a \textsf{BehavioralMetamodel}), while each arrow corresponds to a \textsf{BehavioralRelationship} (see concrete syntax depicted in clouds).
-For example, the \gls*{srm} for the use case (see \cref{fig:systemRelationshipModel}) has three behavioral relationships from \textsf{TJunction} to \textsf{TrafficLight} since a T-Junction controller interacts with three different traffic lights A, B, and C.
+For example, the \gls*{srm} for the use case (see \cref{fig:systemRelationshipModel}) has three behavioral relationships from \textsf{TJunction} to \textsf{TrafficLight} since a TJunction controller interacts with three different traffic lights A, B, and C.
 Furthermore, there is a behavioral relationship from \textsf{TJunction} to \textsf{Bus} because we want to check the safety properties \eqref{eq:property3} and \eqref{eq:property4}. 
 To summarize, behavioral relationships define \emph{which} behavioral models \emph{may} interact, while the interactions in the next step of the workflow describe \emph{how} they interact.
 
@@ -489,24 +489,26 @@ Inspecting other behavioral languages, such as Petri Nets or \gls*{uml} activity
     \label{fig:srm_metamodel}
 \end{figure}
 
-An \textsf{Interaction} has an \textsf{interactionHost}, a set of interaction \textsf{parts} and an \textsf{InteractionType}.
+An \textsf{Interaction} has a \textsf{sender}, a set of \textsf{receivers} and an \textsf{InteractionType}.
 Currently, there is only the \textsf{synchronous} \textsf{InteractionType}.
 However, more interaction types, for example, asynchronous interactions or interactions with message passing, could be added in the future.
-Asynchronous interactions can also be modeled using two synchronous interactions with an additional behavioral model, such as a queue.
-Each \textsf{InteractionPart} references one \textsf{BehavioralRelationship} and one \textsf{StateChangingElement}.
+We model the role of sender and receiver in interactions to accommodate for these interaction types in the future.
+The two roles are not needed for synchronous interactions and are hidden from the user in the concrete syntax used later in \cref{lst:interactions}.
+Furthermore, asynchronous interactions can also be modeled using two synchronous interactions with an additional behavioral model, such as a queue.
+Each \textsf{InteractionReceiver} references one \textsf{BehavioralRelationship} and one \textsf{StateChangingElement}.
 
-The \textsf{interactionHost} and the elements of the \textsf{InteractionPart}s describe a state change for their concrete behavioral model.
+The \textsf{sender} and the elements of the \textsf{InteractionReceiver}s describe a state change for their behavioral models.
 By connecting them with a synchronous interaction, we define simultaneous state changes in one atomic step. 
 Consequently, an interaction can define a synchronization between behavioral models.
 In addition, one can only define interactions for state-changing elements if their behavioral models are connected by a behavioral relationship (see constraint \eqref{eq:interactionConstraint}).
 We use "." in constraints to navigate along associations.
-For example, \textsf{i.parts} means following all \textsf{parts} links for an \textsf{Interaction} object, resulting in a set of \textsf{InteractionPart} objects.
+For example, \textsf{i.receivers} means following all \textsf{receivers} links for an \textsf{Interaction} object, resulting in a set of \textsf{InteractionReceiver} objects.
 
 \begin{equation} \label{eq:interactionConstraint}
     \begin{aligned}
-    & \forall i \in Interaction: \forall p \in i.parts : \\
-    & \quad p.element \in p.relationship.target.elements \; \wedge \\
-    & \quad i.interactionHost \in p.relationship.source.elements
+    & \forall i \in Interaction: \forall r \in i.receivers : \\
+    & \quad r.element \in r.relationship.target.elements \; \wedge \\
+    & \quad i.sender \in r.relationship.source.elements
     \end{aligned}
 \end{equation}
 
@@ -518,13 +520,13 @@ If such a situation occurs, it must be resolved by the modeler by deleting one o
 \begin{equation} \label{eq:noOverlap}
     \begin{aligned}
     & \forall i_1,i_2 \in Interaction : \\
-    & \quad (i_1.parts.element \cup i_1.interactionHost) \; \cap \\
-    & \quad (i_2.parts.element \cup i_2.interactionHost) = \emptyset
+    & \quad (i_1.receivers.element \cup i_1.sender) \; \cap \\
+    & \quad (i_2.receivers.element \cup i_2.sender) = \emptyset
     \end{aligned}
 \end{equation}
 
-In the use case, the T-Junction controller interacts with the three traffic lights, \textbf{A}, \textbf{B}, and \textbf{C}.
-\autoref{lst:interactions} defines two interactions synchronizing T-Junction controller and the traffic lights, using a textual \gls*{dsl}.
+In the use case, the TJunction controller interacts with the three traffic lights, \textbf{A}, \textbf{B}, and \textbf{C}.
+\autoref{lst:interactions} defines two interactions synchronizing TJunction controller and the traffic lights, using a textual \gls*{dsl}.
 The \textbf{synchronize} keyword specifies the \textsf{InteractionType} to be \textsf{synchronous}.
 
 \lstinputlisting[
@@ -533,14 +535,14 @@ language=Interaction,
 caption=Interactions for the use case]{figures/interactions.txt}
 
 We can explain the interactions as follows.
-The first line defines that the interactions are specified from the viewpoint of the T-Junction in the \gls*{srm} in \cref{fig:systemRelationshipModel}.
 The first interaction defines that the task \textsf{Switch to P1} and three other state-changing elements synchronize.
-Furthermore, line 3 specifies that one of the synchronization partners is the element \emph{turn green} connected by the relationship \emph{A}.
+Furthermore, line 2 specifies that one of the synchronization partners is the element \emph{turn green} connected by the relationship \emph{A}.
 Similarly, two other transitions of the traffic lights \emph{B} and \emph{C} are specified in the following two lines.
 Thus, the interaction defines a synchronization of a task and three traffic light transitions. 
 The second interaction defines a synchronization for the task \textsf{Switch to P2} and three traffic light transitions.
+Each interaction is defined starting from the same node, such that a structure matching the \gls*{srm} is described and constraint \eqref{eq:interactionConstraint} is fulfilled.
 
-To summarize the system relationship metamodel is used to define the relations between the behavioral models in a multi-model.
+To summarize, we use the system relationship metamodel to define the relations between the behavioral models in a multi-model.
 Thus, the inter-relations between behavioral models in a multi-model are given by interactions and their behavioral relationships.
 
 
@@ -604,9 +606,9 @@ The merging process to obtain the global rules is done in two steps:
     \item Rules generated from state-changing elements that are not part of interactions remain unchanged and are added to the global rule set.
     \item For each interaction, we do the following:
      \begin{enumerate}
-         \item Find the corresponding rule\footnote{If one state-changing element results in more than one rule, one can define a strategy to pick the appropriate rule.} $P_0$ for the interaction host of the interaction and find the rules $P_1, P_2, \ldots P_n$ for the state-changing elements taking part in the interaction using the saved traces.
+         \item Find the corresponding rule\footnote{If one state-changing element results in more than one rule, one can define a strategy to pick the appropriate rule.} $P_0$ for the sender of the interaction and find the rules $P_1, P_2, \ldots P_n$ for the receiver state-changing elements using the saved traces.
          \item Create a \emph{global rule} for the rules $P_0, P_1, \ldots, P_n$, which applies them simultaneously, i.e., synchronizes the state changes of the behavioral models.
-         \item For each part of the interaction, instantiate the corresponding behavioral relationship from the behavioral model in $P_0$ to the behavioral model in $P_i$, for 1 < i $\leq$ n.
+         \item For each receiver of the interaction, instantiate the corresponding behavioral relationship from the behavioral model in $P_0$ to the behavioral model in $P_i$, for 1 < i $\leq$ n.
          Thus, only behaviorally related models may interact, i.e., change their state simultaneously.
      \end{enumerate}
 \end{enumerate}
@@ -655,13 +657,13 @@ All generated \gls*{gt} systems, including further instructions regarding execut
 \subsubsection{BPMN semantics}
 The local higher-order \gls*{mt} to generate \gls*{gt} rules for \gls*{bpmn} processes is challenging, and we are currently only supporting a subset of the \gls*{bpmn} semantics \cite{krauterFormalizationAnalysisBPMN2022}, similar to the extent supported by \cite{vangorpVisualTokenbasedFormalization2013}.
 Generally, we construct one or more rules for each flow node in a \gls*{bpmn} model.
-\autoref{fig:bpmn_example_rules} shows \gls*{gt} rules for some flow nodes of the T-Junction controller.
+\autoref{fig:bpmn_example_rules} shows \gls*{gt} rules for some flow nodes of the TJunction controller.
 It uses the concrete syntax introduced in \cref{fig:bpmn_snapshot_metamodel} to represent process snapshots containing tokens.
 
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.475\textwidth]{figures/bpmn_rules.pdf}
-    \caption{Example \gls*{gt} rules for the T-Junction controller}
+    \caption{Example \gls*{gt} rules for the TJunction controller}
     \label{fig:bpmn_example_rules}
 \end{figure}
 
@@ -676,7 +678,7 @@ Furthermore the artifacts of this paper \cite{krauterArtifactsBehavioralConsiste
 \subsubsection{Check behavioral consistency}
 The defined interactions change the rules for switching to phases 1 and 2.
 \autoref{fig:global_rule} shows the resulting rule for switching to phase 1.
-We decided that the interactions between the traffic lights and the T-Junction controller should synchronize with the end of the task, not the start.
+We decided that the interactions between the traffic lights and the TJunction controller should synchronize with the end of the task, not the start.
 
 \begin{figure}[h]
     \centering
@@ -732,7 +734,7 @@ The generated Maude specifications and example Maude executions can be found in 
 \subsubsection{BPMN semantics}
 The rewriting rule generation is similar to the \gls*{gt} rule generation and supports the same subset of \gls*{bpmn} semantics.
 Similarly, one or more rules are constructed for each flow node in a \gls*{bpmn} process, where objects conform to the \gls*{bpmn} snapshot metamodel.
-\autoref{lst:tJunctionControllerMaude} in the appendix shows two Maude rewriting rules for the first two flow nodes of the T-Junction controller as depicted in \cref{fig:bpmn_example_rules}.
+\autoref{lst:tJunctionControllerMaude} in the appendix shows two Maude rewriting rules for the first two flow nodes of the TJunction controller as depicted in \cref{fig:bpmn_example_rules}.
 The remaining rules can be found in \cite{krauterArtifactsBehavioralConsistency2022}.
 For example, the rule \textsf{Controller\_started} from line 5 to line 11 moves a token from the controller started start event to the outgoing sequence flow by changing the token position.
 All other attributes of the \textsf{ProcessSnapshot} remain unchanged by the rule.
@@ -754,8 +756,8 @@ Atomic propositions can be represented in Maude using the encoded \gls*{srm} and
 \subsection{Behavioral consistency in the use case}
 Both specifications show that properties 1 and 2 hold, while properties 3 and 4 do \emph{not} hold (see artifacts in \cite{krauterArtifactsBehavioralConsistency2022}).
 The counterexamples for properties 3 and 4 show an unexpected race condition that must be handled.
-After the T-Junction controller signals that the traffic light A/B is green, bus B1/B2 can advance to the \textsf{Pass Junction} activity.
-However, at the same time, the T-Junction controller can enter the subprocess for the next phase, which can be interrupted by the associated timer event.
+After the TJunction controller signals that the traffic light A/B is green, bus B1/B2 can advance to the \textsf{Pass Junction} activity.
+However, at the same time, the TJunction controller can enter the subprocess for the next phase, which can be interrupted by the associated timer event.
 This can happen before the bus B1/B2 passes the junction, resulting in an invalid state.
 
 The system developers have different options to handle the uncovered inconsistencies.
@@ -763,7 +765,7 @@ One option is to keep the models unchanged and pay special attention to the foun
 This can be an acceptable solution since the \textsf{Pass Junction} activity is also modeled as a user activity, i.e., the bus driver decides when to cross the T-Junction.
 Furthermore, tolerating inconsistencies can be a viable option in \gls*{mde} \cite{weidmannToleranceModelDrivenEngineering2021}.
 Another option is to change the models to resolve the inconsistency.
-For example, the T-Junction controller could wait for the bus to pass before changing the traffic lights again.
+For example, the TJunction controller could wait for the bus to pass before changing the traffic lights again.
 
 
 \section{Related work} \label{sec:related_work}
@@ -946,7 +948,7 @@ Before that, Patrick did his Ph.D. at Western Norway University of Applied Scien
 label=lst:tJunctionControllerMaude,
 language=Interaction,
 float=*,
-caption=Example rewriting rules for the T-Junction controller]{figures/tJunctionController.maude}
+caption=Example rewriting rules for the TJunction controller]{figures/tJunctionController.maude}
 
 \lstinputlisting[
 label=lst:synchRuleMaude,

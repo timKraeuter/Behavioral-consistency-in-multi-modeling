@@ -1,11 +1,9 @@
-T-Junction {
-    synchronize(Switch_to_P1,
-                A.turn_green,
-                B.turn_red,
-                C.turn_green)
+synchronize(TJunction.Switch_to_P1,
+            TJunction.A.turn_green,
+            TJunction.B.turn_red,
+            TJunction.C.turn_green)
 
-    synchronize(Switch_to_P2,
-                A.turn_red,
-                B.turn_green,
-                C.turn_red)
-}
+synchronize(TJunction.Switch_to_P2,
+            TJunction.A.turn_red,
+            TJunction.B.turn_green,
+            TJunction.C.turn_red)
