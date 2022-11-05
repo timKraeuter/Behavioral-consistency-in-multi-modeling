@@ -130,7 +130,7 @@ For example, embedded and cyber-physical systems are composed of heterogeneous i
 % Existing solutions. But they are not sufficient!
 Several approaches exist for checking the consistency of pairs of behavioral models.
 For example, consistency checking for sequence diagrams and statecharts was implemented using Petri nets \cite{yaoConsistencyCheckingUML2006} and \gls*{csp} \cite{kusterExplicitBehavioralConsistency2003}.
-Moreover, some approaches for model simulation in heterogeneous scenarios have been developed, such as Ptolemy \cite{ekerTamingHeterogeneityPtolemy2003, leeDisciplinedHeterogeneousModeling2010} and GEMOC studio \cite{deantoniModelingBehavioralSemantics2016, varalarsenBehavioralCoordinationOperator2015}.
+Moreover, some approaches for model simulation in heterogeneous scenarios have been developed, such as Ptolemy \cite{ekerTamingHeterogeneityPtolemy2003, leeDisciplinedHeterogeneousModeling2010} and B-COoL for GEMOC studio \cite{varalarsenBehavioralCoordinationOperator2015}.
 However, current approaches either only allow for consistency checking of two behavioral models or do not allow for definition and checking of global behavioral properties.
 
 % Our approach summarized.
@@ -575,7 +575,7 @@ We describe consistency checking for the use case and its result in the end of t
 
 
 \section{Specification of the global behavior} \label{sec:specification_of_the_global_behavior}
-In this section, we will describe our implementation to generate formal specifications in Groove \cite{ghamarianModellingAnalysisUsing2012, rensinkGROOVESimulatorTool2004} and Maude \cite{manuelclavelAllMaudeHighPerformance2007}.
+In this section, we will describe our implementation to generate formal specifications in Groove \cite{rensinkGROOVESimulatorTool2004} and Maude \cite{manuelclavelAllMaudeHighPerformance2007}.
 Then, we use the generated specifications to check behavioral consistency for the use case and discuss the results.
 
 Both implementations utilize a \emph{global model transformation} from the behavioral models and their interactions to \gls*{gt} rules (Groove) or rewriting rules (Maude).
@@ -616,7 +616,7 @@ In the following sections we describe how global rules are created in Groove and
 \subsection{Groove specification} 
 % Graph transformation rules and their generation from the behavioral models
 This section describes how graph transformations can be used as one possible formalism for behavioral consistency management.
-Concretely, we utilize the Groove tool set to run the generated specifications, i.e., \gls*{gt} systems \cite{ghamarianModellingAnalysisUsing2012, rensinkGROOVESimulatorTool2004}.
+Concretely, we utilize the Groove tool set to run the generated specifications, i.e., \gls*{gt} systems \cite{rensinkGROOVESimulatorTool2004}.
 
 A \gls*{gt} system consists of a set of \gls*{gt} rules of the form $L \to R$, where the graph $L$ is called left-hand side and the graph $R$ is called right-hand side of the rule.
 Nodes/edges in $R$ but not in $L$ are added by a rule, while nodes/edges in $L$ and $R$ are preserved, and a rule deletes nodes/edges that are in $L$ but not in $R$.
@@ -786,16 +786,16 @@ Generally, their approach is compatible with ours since we do not mandate a spec
 However, we have chosen \gls*{gt} rules as the first formalism to use in our approach since they operate on a higher abstraction level.
 In addition, it was shown that many formalisms, for example, the $\pi$-calculus \cite{gadducciGraphRewritingPcalculus2007}, can be implemented using \gls*{gt} rules.
 
-% Gemoc Studio/BCOOL?
-\cite{deantoniModelingBehavioralSemantics2016} tackles the problem of dealing with relationships between heterogeneous behavioral models.
-They coordinate the different models using their coordination language B-COoL \cite{varalarsenBehavioralCoordinationOperator2015}, similar to the interactions we define between behavioral models.
+% B-COoL
+\cite{varalarsenBehavioralCoordinationOperator2015} tackles the problem of coordinating heterogeneous behavioral models.
+They coordinate the models using their coordination language B-COoL, similar to the interactions we define between behavioral models.
 To execute the models with the a specified coordination, they transform them into \gls*{ccsl} models.  
 Their work also results in plugins for GEMOC studio, which support running and debugging the models.
 % Ptolemy
 \cite{ekerTamingHeterogeneityPtolemy2003, leeDisciplinedHeterogeneousModeling2010} propose an actor-oriented solution to the model composition problem in the presence of heterogeneity.
 Their approach results in the tool Ptolemy \cite{ptolemaeusSystemDesignModeling2014}.
 
-% very nice, but only simulation for Ptolemy and no real verification support (LTL model checking and atomic prop definition) in BCool/Gemoc.
+% very nice, but only simulation for Ptolemy and no real verification support (LTL model checking and atomic prop definition) in B-COoL/Gemoc.
 However, both approaches focus on simulation rather than consistency or model-checking.
 Neither provides concrete means to define atomic propositions and check global behavioral properties.
 Furthermore, \cite{varalarsenBehavioralCoordinationOperator2015} assumes a fixed system configuration while we can check different system configurations.
@@ -881,7 +881,7 @@ In our opinion, partial-order reduction must be implemented to analyze models fr
 \section{Conclusion and future work} \label{sec:conclusion_and_future_work}
 % Conclusion
 Our work represents the first general fully-formalized approach to behavioral consistency management in a heterogeneous modeling scenario, enabling formulating and checking \emph{global} properties.
-Previous work either only dealt with the behavioral consistency between specific pairs of models \cite{yaoConsistencyCheckingUML2006, kusterExplicitBehavioralConsistency2003} or focused on the simulation in a heterogeneous scenario \cite{deantoniModelingBehavioralSemantics2016, varalarsenBehavioralCoordinationOperator2015, ekerTamingHeterogeneityPtolemy2003, leeDisciplinedHeterogeneousModeling2010}.
+Previous work either only dealt with the behavioral consistency between specific pairs of models \cite{yaoConsistencyCheckingUML2006, kusterExplicitBehavioralConsistency2003} or focused on the simulation in a heterogeneous scenario \cite{varalarsenBehavioralCoordinationOperator2015, ekerTamingHeterogeneityPtolemy2003, leeDisciplinedHeterogeneousModeling2010}.
 
 Our approach follows five key steps (see \cref{fig:approach}).
 % Describe the five steps
