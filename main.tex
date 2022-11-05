@@ -6,9 +6,9 @@
 
 \jotdetails{
     volume=vv,      % volume
-    number=nn,       % number or issue
+    number=nn,      % number or issue
     articleno=aa,   % article number, eg a1 for research articles, e for editorials
-    year=2022,      % year
+    year=2023,      % year
     license=ccby    % choose from ccby, ccbynd, ccbyncnd
 }
 \newcommand{\command}[1]{{\color{codepurple}\texttt{\textbackslash #1}}}
@@ -578,18 +578,18 @@ We describe consistency checking for the use case and its result in the end of t
 In this section, we will describe our implementation to generate formal specifications in Groove \cite{rensinkGROOVESimulatorTool2004} and Maude \cite{manuelclavelAllMaudeHighPerformance2007}.
 Then, we use the generated specifications to check behavioral consistency for the use case and discuss the results.
 
-Both implementations utilize a \emph{global model transformation} from the behavioral models and their interactions to \gls*{gt} rules (Groove) or rewriting rules (Maude).
-We will now describe this transformation generally using the general term \emph{rules} to mean either \gls*{gt} rules or rewriting rules.
+Both implementations utilize a \emph{global higher-order model transformation} from the behavioral models and their interactions to \gls*{gt} rules (Groove) or rewriting rules (Maude).
+We will now describe this transformation generally using \emph{rules} to mean either \gls*{gt} rules or rewriting rules.
 The details specific to each implementation are given in the following sections.
 
-The global model transformation can be decomposed into two steps.
+The higher-order model transformation can be decomposed into two steps.
 The first step to generate a specification of the global behavior is to generate rules for each behavioral model contained in the multi-model.
 Each set of rules must describe the behavior of the given behavioral model by manipulating instances of the snapshot metamodels.
 For example, a rule for a transition in a state machine changes the current state of a state machine snapshot from the source to the target of the transition. 
 
-Thus, we need a \emph{local model transformation} for each behavioral modeling language producing sets of rules.
-Each local model transformation only has to be implemented once by an \gls*{mde} tool developer and made available, for example, as a plugin, such that it can then be reused in any future setting the language is needed.
-In addition, each local model transformation must keep traces of the generated set of rules.
+Thus, we need \emph{local higher-order model transformations} for each behavioral modeling language producing sets of rules.
+Each local higher-order model transformation only has to be implemented once by an \gls*{mde} tool developer and made available, for example, as a plugin, such that it can then be reused in any future setting the language is needed.
+In addition, each local higher-order model transformation must keep traces of the generated set of rules.
 Concretely, it has to save which rules originated from which state-changing elements in the behavioral model.
 Coming back to the state machine example, we must know which transition results in which rule.
 In general, multiple rules may be associated with one state-changing element of a behavioral model.
@@ -630,11 +630,11 @@ Together with a system configuration, i.e., a start graph, we can obtain an exec
 Consequently, this can be used to check behavioral consistency.
 
 We will now explain how the \gls*{gt} rules are generated for the use case.
-To apply our approach to the use case, we need to define local model transformations from state machines and \gls*{bpmn} processes to \gls*{gt} rules.
+To apply our approach to the use case, we need to define local higher-order model transformations from state machines and \gls*{bpmn} processes to \gls*{gt} rules.
 
 
 \subsubsection{State machine semantics}
-The local model transformation to generate \gls*{gt} rules for finite state machines is straightforward.
+The local higher-order model transformation to generate \gls*{gt} rules for finite state machines is straightforward.
 Each transition leads to a \gls*{gt} rule.
 For example, \cref{fig:sm_rules} shows the \gls*{gt} rules for the transitions \textsf{turn red-amber} and \textsf{turn green} of the traffic light model.
 It uses the concrete syntax introduced in \cref{fig:fsm_snapshot_metamodel} to depict state machine snapshots and their current states.
@@ -652,7 +652,7 @@ All generated \gls*{gt} systems, including further instructions regarding execut
 
 
 \subsubsection{BPMN semantics}
-The local model transformation to generate \gls*{gt} rules for \gls*{bpmn} processes is challenging, and we are currently only supporting a subset of the \gls*{bpmn} semantics \cite{krauterFormalizationAnalysisBPMN2022}, similar to the extent supported by \cite{vangorpVisualTokenbasedFormalization2013}.
+The local higher-order model transformation to generate \gls*{gt} rules for \gls*{bpmn} processes is challenging, and we are currently only supporting a subset of the \gls*{bpmn} semantics \cite{krauterFormalizationAnalysisBPMN2022}, similar to the extent supported by \cite{vangorpVisualTokenbasedFormalization2013}.
 Generally, we construct one or more rules for each flow node in a \gls*{bpmn} model.
 \autoref{fig:bpmn_example_rules} shows \gls*{gt} rules for some flow nodes of the T-Junction controller.
 It uses the concrete syntax introduced in \cref{fig:bpmn_snapshot_metamodel} to represent process snapshots containing tokens.
@@ -707,7 +707,7 @@ Furthermore, behavioral relationships as defined in the interaction, are added t
 Similarly to the process for \gls*{gt} rules, individual rules are deleted.
 
 We will now explain how rewriting rules are generated for the use case.
-To apply our approach to the use case, we need to define local model transformations from state machines and \gls*{bpmn} processes to rewriting rules.
+To apply our approach to the use case, we need to define local higher-order model transformations from state machines and \gls*{bpmn} processes to rewriting rules.
 
 
 \subsubsection{State machine semantics}
