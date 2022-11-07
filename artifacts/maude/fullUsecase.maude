@@ -329,19 +329,19 @@ mod FINAL-CHECK is
     var X : Configuration .
 endm
 --- Prop1:
----red modelCheck(systemConfig, [] ~( (A-is("green") \/ A-is("amber")) /\ (B-is("green") \/ B-is("amber")) )) .
+---red modelCheck(systemConfigNoBuses, [] ~( (A-is("green") \/ A-is("amber")) /\ (B-is("green") \/ B-is("amber")) )) .
 
 --- Prop1 as a search command. Maybe not optimized yet. More but faster rewrites roughly the same time.
----search systemConfig =>* X such that ((X |= A-is("green") or X |= A-is("green")) and (X |= B-is("green") or X |= B-is("amber"))) = true .
+---search systemConfigNoBuses =>* X such that ((X |= A-is("green") or X |= A-is("green")) and (X |= B-is("green") or X |= B-is("amber"))) = true .
 
 --- Prop2:
----red modelCheck(systemConfig, [] ~( (C-is("green") \/ C-is("amber")) /\ (B-is("green") \/ B-is("amber")) )) .
+---red modelCheck(systemConfigNoBuses, [] ~( (C-is("green") \/ C-is("amber")) /\ (B-is("green") \/ B-is("amber")) )) .
 
---- Prop3:
+--- Prop3 (Checking with two incoming buses):
 ---red modelCheck(systemConfig, [] ~( B1-passing /\ (A-is("red") \/ A-is("red-amber")) )) .
 
---- Prop4:
----red modelCheck(systemConfig, [] ~( B2-passing /\ (B-is("red") \/ B-is("red-amber")) )) .
+--- Prop4 (Checking with one incoming bus):
+---red modelCheck(systemConfigOneBus, [] ~( B2-passing /\ (B-is("red") \/ B-is("red-amber")) )) .
 
 --- Full state space (searches for all final states).
 ---search systemConfig =>! X .
