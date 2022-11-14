@@ -584,7 +584,8 @@ In this section, we will describe our implementation to generate formal specific
 Then, we use the generated specifications to check behavioral consistency for the use case and discuss the results.
 
 Both implementations utilize a \emph{global higher-order \gls*{mt}} from the behavioral models and their interactions to \gls*{gt} rules (Groove) or rewriting rules (Maude).
-We will now describe this transformation generally using \emph{rules} to mean either \gls*{gt} rules or rewriting rules.
+Since the results of the \gls*{mt} can be regarded as \gls*{mt}s themselves, we say the \gls*{mt} is \textit{higher-order}.
+We will now describe this transformation using the term \emph{rules} to mean either \gls*{gt} or rewriting rules.
 The details specific to each implementation are given in the following sections.
 
 The higher-order \gls*{mt} can be decomposed into two steps.
