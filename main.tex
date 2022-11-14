@@ -115,7 +115,7 @@ Our approach is independent of the particular formalism used in the generated sp
 In this way, \gls*{mde} promotes a clear separation of concerns and raises the abstraction level throughout the entire development process \cite{franceModeldrivenDevelopmentComplex2007}.
 These models are then used to generate portions of the system leading to an increase in productivity and reduction of errors \cite{brambillaModeldrivenSoftwareEngineering2017}.
 As multiple interacting systems are needed to realize the requirements of complex domains, a set of corresponding models would be needed to represent these systems and their interactions.
-Such a collection of inter-related models is referred to as a \emph{multi-model} \cite{boronatWhatMultimodelingLanguage2009, stunkelComprehensiveSystemsFormal2021}, which is usually heterogeneous, meaning it consists of models conforming to different modeling languages.
+Such a collection of inter-related models is referred to as a \emph{multi-model} \cite{stunkelComprehensiveSystemsFormal2021}, which is usually heterogeneous, meaning it consists of models conforming to different modeling languages.
 % Consistency in multi-modeling
 Models in a multi-model contradicting each other can lead to problems during development, system generation, and system execution.
 Consequently, continuous multi-model consistency management during the development process is a significant issue for multi-models \cite{spanoudakisInconsistencyManagementSoftware2001, cicchettiMultiviewApproachesSoftware2019}.
@@ -779,7 +779,7 @@ Consequently, they do not consider the general problem of behavioral consistency
 To combine behavioral models, they use Event structures as an underlying formalism and show how different homogeneous behavioral models can be combined.
 Nonetheless, they do not apply their approach to heterogeneous models.
 Generally, their approach is compatible with ours since we do not mandate a specific formalism in our approach.
-However, we have chosen \gls*{gt} rules as the first formalism to use in our approach since they operate on a higher abstraction level.
+However, we have chosen \gls*{gt} rules and term rewriting rules as formalisms to use in our approach since they operate on a higher abstraction level.
 In addition, it was shown that many formalisms, for example, the $\pi$-calculus \cite{gadducciGraphRewritingPcalculus2007}, can be implemented using \gls*{gt} rules.
 
 % B-COoL
@@ -911,7 +911,7 @@ We leave consistency restoration of behavioral models as a problem for future wo
 
 \bibliography{bib}
 
-\begin{figure*}[ht]
+\begin{figure*}[h!]
     \centering
     \includegraphics[width=1\textwidth]{figures/allConcepts.pdf}
     \caption{Overview of all concepts and their usage in the use case}
