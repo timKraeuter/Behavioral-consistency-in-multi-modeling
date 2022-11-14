@@ -15,4 +15,3 @@ rl [Switch_to_P1_end] :
     =>
 < "use-case-execution" : BPMNSystem | messages : (none), processes : (
     < o0 : ProcessSnapshot | name : "T-Junction controller", tokens : ("Switch_to_P1_A_&_C_are_green_Phase_1" T), signals : (none), subprocesses : (S), state : Running > P) > .
-    
