@@ -9,6 +9,28 @@ This repository contains our paper's sources and **additional artifacts**. The p
 
 ## Maude specification
 
+
+### State machine semantics
+
+**Rewriting rules and start configuration for a traffic light:**
+```python
+var X : String . --- Object id
+--- Generated rules
+rl [turn_red_amber] : < X : FSM | name : "trafficLight", state : "red" >
+                   => < X : FSM | name : "trafficLight", state : "red-amber" > .
+rl [turn_green] : < X : FSM | name : "trafficLight", state : "red-amber" >
+               => < X : FSM | name : "trafficLight", state : "green" > .
+rl [turn_amber] : < X : FSM | name : "trafficLight", state : "green" >
+               => < X : FSM | name : "trafficLight", state : "amber" > .
+rl [turn_red] : < X : FSM | name : "trafficLight", state : "amber" >
+             => < X : FSM | name : "trafficLight", state : "red" > .
+--- Generated initial config representing the start state of the FSM.
+op initial : -> Configuration .
+eq initial = < "1" : FSM | name : "trafficLight", state : "red" > .
+```
+
+### BPMN semantics
+
 **Example rewriting rules for the TJunction controller:**
 ```python
 vars o0 : Oid . --- Object ids
@@ -30,7 +52,7 @@ rl [Switch_to_P1_end] :
     < o0 : ProcessSnapshot | name : "T-Junction controller", tokens : ("Switch_to_P1_A_&_C_are_green_Phase_1" T), signals : (none), subprocesses : (S), state : Running > P) > .
 ```
 
-
+### Check behavioral consistency
 
 **Global Maude rule to switch to phase 1:**
 ```python
