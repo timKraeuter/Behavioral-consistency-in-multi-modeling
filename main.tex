@@ -733,17 +733,16 @@ The generated Maude specifications and example Maude executions can be found in 
 \subsubsection{BPMN semantics}
 The rewriting rule generation is similar to the \gls*{gt} rule generation and supports the same subset of \gls*{bpmn} semantics.
 Similarly, one or more rules are constructed for each flow node in a \gls*{bpmn} process, where objects conform to the \gls*{bpmn} snapshot metamodel.
-\autoref{lst:tJunctionControllerMaude} in the appendix shows two Maude rewriting rules for the first two flow nodes of the TJunction controller as depicted in \cref{fig:bpmn_example_rules}.
-The remaining rules can be found in \cite{krauterArtifactsBehavioralConsistency2022}.
-For example, the rule \textsf{Controller\_started} from line 5 to line 11 moves a token from the controller started start event to the outgoing sequence flow by changing the token position.
-All other attributes of the \textsf{ProcessSnapshot} remain unchanged by the rule.
+The artifacts in \cite{krauterArtifactsBehavioralConsistency2022} show two Maude rewriting rules for the first two flow nodes of the TJunction controller as depicted in \cref{fig:bpmn_example_rules}.
+The full Maude modules can also be found there.
 
 Like the \gls*{gt} rules, the rewriting rules move tokens by changing their position according to the given \gls*{bpmn} model.
 Thus, we can generate Maude rewriting rules that implement the behavioral semantics of the \gls*{bpmn} models in the use case (see \cite{krauterArtifactsBehavioralConsistency2022}).
 
 
 \subsubsection{Check behavioral consistency}
-The defined interactions change the rules for switching to phases 1 and 2. \autoref{lst:synchRuleMaude} in the appendix shows the resulting rule for switching to phase 1, where a synchronization with the end of the task was chosen.
+The defined interactions change the rules for switching to phases 1 and 2.
+The artifacts in \cite{krauterArtifactsBehavioralConsistency2022} show the resulting rule for switching to phase 1, where a synchronization with the end of the task was chosen.
 \autoref{fig:global_rule} shows the equivalent \gls*{gt} rule.
 The rule changes all traffic lights simultaneously and finishes the task.
 Similarly, a global rule for switching to phase 2 is created and all individual rules are deleted.
@@ -942,18 +941,6 @@ Before that, Patrick did his Ph.D. at Western Norway University of Applied Scien
 \authorcontact[https://past.corrlang.io/]{Patrick.Stunkel@helse-bergen.no}}
 
 % \section*{Appendix}
-
-\lstinputlisting[
-label=lst:tJunctionControllerMaude,
-language=Interaction,
-float=*,
-caption=Example rewriting rules for the TJunction controller]{figures/tJunctionController.maude}
-
-\lstinputlisting[
-label=lst:synchRuleMaude,
-language=Interaction,
-float=*,
-caption=Global Maude rule to switch to phase 1]{figures/synch.maude}
 
 \begin{figure*}[ht]
     \centering
