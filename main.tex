@@ -137,7 +137,7 @@ However, current approaches either only allow for consistency checking of two be
 % Our approach summarized.
 We propose a novel approach for consistency management of heterogeneous multi-models, which allows us to define and check \emph{global} behavioral properties.
 Our approach facilitates specifying \emph{interactions} between multiple potentially heterogeneous behavioral models, which are in turn used to generate a specification of the global behavior.
-Our approach is independent of the particular formalism used in the specification, and we can generate specifications in two different formalisms.
+Our approach is independent of the particular formalism used in the specification, and currently we can generate specifications in two different formalisms.
 The generation of the global behavior specification is \emph{fully automatic} and results in graph transformation rules (term rewriting rules) executable in Groove (Maude).
 Afterward, we can use the built-in verification mechanisms in Groove (Maude) to check the previously defined global behavioral properties.
 
@@ -235,7 +235,7 @@ A \gls*{bpmn} model for a bus controller parameterized with the direction A or C
 In addition, the bus controller also communicates with the phase 2 subprocess, which we only hint at in \cref{fig:communication}.
 The phase 2 subprocess has the same structure as the phase 1 subprocess but reports that A and C are red, while B is green.
 Similarly, it terminates if green is requested for A or C.
-The full model and all other models are part of the artifacts of this paper \cite{krauterArtifactsBehavioralConsistency2022}.
+The full model and all other models are available from \cite{krauterArtifactsBehavioralConsistency2022}.
 
 Having developed behavioral models for the system, we want to check the previously stated \emph{safe traffic} requirement while buses are prioritized.
 We can lower the overall development cost if we find bugs related to these requirements as early as possible during system development.
@@ -324,7 +324,7 @@ In the remainder of this paper, we will describe our approach to address behavio
     \label{fig:approach}
 \end{figure*}
 
-Our approach consists of five steps.
+ur approach consists of five steps.
 \begin{enumerate}
     \item We define a \glsfirst*{srm} describing which behavioral models may interact.
     \item We specify consistency requirements as global behavioral properties for the \gls*{srm}.
@@ -513,7 +513,7 @@ For example, \textsf{i.receivers} means following all \textsf{receivers} links f
 \end{equation}
 
 We allow the definition of as many interactions as desired.
-The interactions restrict the local behavior of the models since some parts of their behavior must synchronize.
+The interactions restrict the local behavior of the models since some parts of their behavior must be synchronized.
 Two interactions are not allowed to share state-changing elements (see constraint \eqref{eq:noOverlap}).
 If such a situation occurs, it must be resolved by the modeler by deleting one of the interactions or merging the two interactions into one.
 
@@ -536,7 +536,7 @@ caption=Interactions for the use case]{figures/interactions.txt}
 
 We can explain the interactions as follows.
 The first interaction defines that the task \textsf{Switch to P1} and three other state-changing elements synchronize.
-Furthermore, line 2 specifies that one of the synchronization partners is the element \emph{turn green} connected by the relationship \emph{A}.
+Furthermore, line 2 specifies that one of the synchronization receivers is the element \emph{turn green} connected by the relationship \emph{A}.
 Similarly, two other transitions of the traffic lights \emph{B} and \emph{C} are specified in the following two lines.
 Thus, the interaction defines a synchronization of a task and three traffic light transitions. 
 The second interaction defines a synchronization for the task \textsf{Switch to P2} and three traffic light transitions.
@@ -561,24 +561,23 @@ In \cref{sec:specification_of_the_global_behavior}, we describe how we generate 
 
 To summarize, we generate a specification of the global system behavior.
 This generation takes the models and interactions as input and is fully automated to allow frequent model changes.
-Regeneration is not needed if only the defined properties change.
 
 
 \subsection{Check behavioral consistency}
 % Model checking for a system configuration
-In this step, we use the generated specification of the global behavior to check consistency when given a system configuration.
+In this step, we use the generated specification of the global behavior to check consistency given a system configuration.
 A system configuration is an instance of the \gls*{srm} and is automatically translated into the formalism of the specification.
 We then check the consistency of the defined properties using the specification and the system configuration.
 This step is fully automated, such that it can be executed as many times as needed for different system configurations and properties but using the same specification.
 
 Finally, if a consistency requirement is not fulfilled, a violation, including a counterexample, will be presented to the user.
-Adopting the same concrete syntax to visualize the counterexample as for the atomic propositions should be ideal for helping a user understand the counterexample. 
+Adopting the same concrete syntax to visualize the counterexample as for the atomic propositions should be ideal to help a user understand it. 
 An unsuccessful consistency check leads to a consistency restoration process, which is crucial but out of the scope of this paper.
 We describe consistency checking for the use case and its result in the end of the next section.
 
 
 \section{Specification of the global behavior} \label{sec:specification_of_the_global_behavior}
-In this section, we will describe our implementation to generate formal specifications in Groove \cite{rensinkGROOVESimulatorTool2004} and Maude \cite{manuelclavelAllMaudeHighPerformance2007}.
+In this section, we will describe our implementation to generate formal specifications in Groove \cite{rensinkGROOVESimulatorTool2004} and Maude \cite{clavelAllMaudeHighPerformance2007}.
 Then, we use the generated specifications to check behavioral consistency for the use case and discuss the results.
 
 Both implementations utilize a \emph{global higher-order \gls*{mt}} from the behavioral models and their interactions to \gls*{gt} rules (Groove) or rewriting rules (Maude).
@@ -603,11 +602,11 @@ Interactions define synchronization of systems which we encode by merging the in
 The merging process to obtain the global rules is done in two steps:
 
 \begin{enumerate}
-    \item Rules generated from state-changing elements that are not part of interactions remain unchanged and are added to the global rule set.
+    \item Rules generated from state-changing elements that are \textit{not} part of interactions remain unchanged and are added to the global rule set.
     \item For each interaction, we do the following:
      \begin{enumerate}
          \item Find the corresponding rule\footnote{If one state-changing element results in more than one rule, one can define a strategy to pick the appropriate rule.} $P_0$ for the sender of the interaction and find the rules $P_1, P_2, \ldots P_n$ for the receiver state-changing elements using the saved traces.
-         \item Create a \emph{global rule} for the rules $P_0, P_1, \ldots, P_n$, which applies them simultaneously, i.e., synchronizes the state changes of the behavioral models.
+         \item Create a \emph{global rule} for the rules $P_0, P_1, \ldots, P_n$, which applies all of them at once, i.e., synchronizes the state changes of the behavioral models.
          \item For each receiver of the interaction, instantiate the corresponding behavioral relationship from the behavioral model in $P_0$ to the behavioral model in $P_i$, for 1 < i $\leq$ n.
          Thus, only behaviorally related models may interact, i.e., change their state simultaneously.
      \end{enumerate}
@@ -760,7 +759,7 @@ After the TJunction controller signals that the traffic light A/B is green, bus 
 However, at the same time, the TJunction controller can enter the subprocess for the next phase, which can be interrupted by the associated timer event.
 This can happen before the bus B1/B2 passes the junction, resulting in an invalid state.
 
-The system developers have different options to handle the uncovered inconsistencies.
+The system developers have different options to handle the detected inconsistencies.
 One option is to keep the models unchanged and pay special attention to the found race condition during system implementation.
 This can be an acceptable solution since the \textsf{Pass Junction} activity is also modeled as a user activity, i.e., the bus driver decides when to cross the T-Junction.
 Furthermore, tolerating inconsistencies can be a viable option in \gls*{mde} \cite{weidmannToleranceModelDrivenEngineering2021}.
