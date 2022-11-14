@@ -5,7 +5,20 @@ This repository contains our paper's sources and **additional artifacts**. The p
 ## Groove specification
 
 ### State machine semantics
+
+**Traffic light start graph and GT-Rules:**
+
 ![Traffic light start graph and GT-Rules](./artifacts/figures/FSM_Groove.svg)
+
+The full GT system in Groove is linked in [Groove specification](https://github.com/timKraeuter/Towards-behavioral-consistency-in-multi-modeling/blob/main/README.md#groove-specification-1).
+
+### BPMN semantics
+
+**Example GT rules for the TJunction controller:**
+
+![Example GT rules for the TJunction controller](./artifacts/figures/BPMN_Groove.svg)
+
+The full GT system in Groove is linked in [Groove specification](https://github.com/timKraeuter/Towards-behavioral-consistency-in-multi-modeling/blob/main/README.md#groove-specification-1).
 
 ## Maude specification
 
