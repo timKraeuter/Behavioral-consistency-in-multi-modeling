@@ -14,7 +14,7 @@ The full GT system in Groove is linked in [Groove specification](https://github.
 
 ### BPMN semantics
 
-**Example GT rules for the TJunction controller:**
+**Example start graph and GT rules for the TJunction controller:**
 
 ![Example GT rules for the TJunction controller](./artifacts/figures/BPMN_Groove.svg)
 
