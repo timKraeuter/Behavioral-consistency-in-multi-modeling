@@ -638,15 +638,15 @@ To apply our approach to the use case, we need to define local higher-order \gls
 \subsubsection{State machine semantics}
 The local higher-order \gls*{mt} to generate \gls*{gt} rules for finite state machines is straightforward.
 Each transition leads to a \gls*{gt} rule.
-For example, \cref{fig:sm_rules} shows the \gls*{gt} rules for the transitions \textsf{turn red-amber} and \textsf{turn green} of the traffic light model.
+For example, \cref{fig:sm_rule} shows the \gls*{gt} rules for the transitions \textsf{turn red-amber} of the traffic light model.
 It uses the concrete syntax introduced in \cref{fig:fsm_snapshot_metamodel} to depict state machine snapshots and their current states.
 We depict a \gls*{gt} rule by showing the graph $L$ on the left, $R$ on the right, and a named white arrow from $L$ to $R$.
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.3\textwidth]{figures/sm_rules.pdf}
-    \caption{\gls*{gt} rules for \emph{turn red-amber} and \emph{turn green}}
-    \label{fig:sm_rules}
+    \includegraphics[width=0.35\textwidth]{figures/sm_rule.pdf}
+    \caption{\gls*{gt} rule for \emph{turn red-amber}}
+    \label{fig:sm_rule}
 \end{figure}
 
 Using a traffic light snapshot with the state red as a start graph, we generate the same state space in Groove as the traffic light state machine describes.
