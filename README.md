@@ -4,6 +4,9 @@ This repository contains our paper's sources and **additional artifacts**. The p
 
 ## Groove specification
 
+### State machine semantics
+![Traffic light start graph and GT-Rules](./artifacts/figures/FSM_Groove.svg)
+
 ## Maude specification
 
 **Example rewriting rules for the TJunction controller:**
