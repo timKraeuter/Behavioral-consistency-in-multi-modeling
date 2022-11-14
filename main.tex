@@ -131,7 +131,7 @@ Multi-models consisting of different interacting behavioral models are found, fo
 % Existing solutions. But they are not sufficient!
 Several approaches exist for checking the consistency of pairs of behavioral models.
 For example, consistency checking for sequence diagrams and statecharts was implemented using Petri nets \cite{yaoConsistencyCheckingUML2006} and \gls*{csp} \cite{kusterExplicitBehavioralConsistency2003}.
-Moreover, some approaches for model simulation in heterogeneous scenarios have been developed, such as Ptolemy \cite{ekerTamingHeterogeneityPtolemy2003, leeDisciplinedHeterogeneousModeling2010} and B-COoL for GEMOC studio \cite{varalarsenBehavioralCoordinationOperator2015}.
+Moreover, some approaches for model simulation in heterogeneous scenarios have been developed, such as Ptolemy \cite{ekerTamingHeterogeneityPtolemy2003} and B-COoL for GEMOC studio \cite{varalarsenBehavioralCoordinationOperator2015}.
 However, current approaches either only allow for consistency checking of two behavioral models or do not allow for definition and checking of global behavioral properties.
 
 % Our approach summarized.
@@ -791,8 +791,8 @@ They coordinate the models using their coordination language B-COoL, similar to 
 To execute the models with the specified coordination, they transform them into \gls*{ccsl} models.  
 Their work also results in plugins for GEMOC studio, which support running and debugging the models.
 % Ptolemy
-\cite{ekerTamingHeterogeneityPtolemy2003, leeDisciplinedHeterogeneousModeling2010} propose an actor-oriented solution to the model composition problem in the presence of heterogeneity.
-Their approach results in the tool Ptolemy \cite{ptolemaeusSystemDesignModeling2014}.
+\cite{ekerTamingHeterogeneityPtolemy2003} propose an actor-oriented solution to the model composition problem in the presence of heterogeneity.
+Their approach is implemented in the tool Ptolemy.
 
 % very nice, but only simulation for Ptolemy and no real verification support (LTL model checking and atomic prop definition) in B-COoL/Gemoc.
 However, both approaches focus on simulation rather than consistency or model-checking.
@@ -880,7 +880,7 @@ In our opinion, partial-order reduction must be implemented to analyze models fr
 \section{Conclusion and future work} \label{sec:conclusion_and_future_work}
 % Conclusion
 Our work represents the first general fully-formalized approach to behavioral consistency management in a heterogeneous modeling scenario, enabling formulating and checking \emph{global} properties.
-Previous work either only dealt with the behavioral consistency between specific pairs of models \cite{yaoConsistencyCheckingUML2006, kusterExplicitBehavioralConsistency2003} or focused on the simulation in a heterogeneous scenario \cite{varalarsenBehavioralCoordinationOperator2015, ekerTamingHeterogeneityPtolemy2003, leeDisciplinedHeterogeneousModeling2010}.
+Previous work either only dealt with the behavioral consistency between specific pairs of models \cite{yaoConsistencyCheckingUML2006, kusterExplicitBehavioralConsistency2003} or focused on the simulation in a heterogeneous scenario \cite{ekerTamingHeterogeneityPtolemy2003, varalarsenBehavioralCoordinationOperator2015}.
 
 Our approach follows five key steps (see \cref{fig:approach}).
 % Describe the five steps
