@@ -638,7 +638,7 @@ To apply our approach to the use case, we need to define local higher-order \gls
 \subsubsection{State machine semantics}
 The local higher-order \gls*{mt} to generate \gls*{gt} rules for finite state machines is straightforward.
 Each transition leads to a \gls*{gt} rule.
-For example, \cref{fig:sm_rule} shows the \gls*{gt} rules for the transitions \textsf{turn red-amber} of the traffic light model.
+For example, \cref{fig:sm_rule} shows the \gls*{gt} rules for the transition \textsf{turn red-amber} of the traffic light model.
 It uses the concrete syntax introduced in \cref{fig:fsm_snapshot_metamodel} to depict state machine snapshots and their current states.
 We depict a \gls*{gt} rule by showing the graph $L$ on the left, $R$ on the right, and a named white arrow from $L$ to $R$.
 
@@ -654,9 +654,9 @@ All generated \gls*{gt} systems, including further instructions regarding execut
 
 
 \subsubsection{BPMN semantics}
-The local higher-order \gls*{mt} to generate \gls*{gt} rules for \gls*{bpmn} processes is challenging, and we are currently only supporting a subset of the \gls*{bpmn} semantics \cite{krauterFormalizationAnalysisBPMN2022}, similar to the extent supported by \cite{vangorpVisualTokenbasedFormalization2013}.
+The local higher-order \gls*{mt} to generate \gls*{gt} rules for \gls*{bpmn} processes is challenging, and we are currently only supporting a subset of the \gls*{bpmn} semantics \cite{krauterFormalizationAnalysisBPMN2022}.
 Generally, we construct one or more rules for each flow node in a \gls*{bpmn} model.
-\autoref{fig:bpmn_example_rules} shows \gls*{gt} rules for some flow nodes of the TJunction controller.
+\autoref{fig:bpmn_example_rules} shows the \gls*{gt} rules for the task \textsf{Switch to P1} of the TJunction controller.
 It uses the concrete syntax introduced in \cref{fig:bpmn_snapshot_metamodel} to represent process snapshots containing tokens.
 
 \begin{figure}[h]
@@ -666,11 +666,9 @@ It uses the concrete syntax introduced in \cref{fig:bpmn_snapshot_metamodel} to 
     \label{fig:bpmn_example_rules}
 \end{figure}
 
-Due to limited space, we only show a subset of the rules resulting from our \gls*{bpmn} semantics specification.
+Due to limited space, we only show the \textsf{Switch to P1} rules but the artifacts of this paper \cite{krauterArtifactsBehavioralConsistency2022} contain the full \gls*{gt} system.
 A detailed explanation of the \gls*{gt} rule generation is given in \cite{krauterFormalizationAnalysisBPMN2022}.
-
 To summarize, we can generate \gls*{gt} systems that implement the behavioral semantics of the \gls*{bpmn}.
-Furthermore the artifacts of this paper \cite{krauterArtifactsBehavioralConsistency2022} contain \gls*{gt} systems for the \gls*{bpmn} models of the use case.
 
 
 % HERE HERE (Adrian stopped reading here)
@@ -715,20 +713,17 @@ To apply our approach to the use case, we need to define local higher-order \gls
 \subsubsection{State machine semantics}
 The generation of rewriting rules is similar to the generation of \gls*{gt} rules.
 Each state machine transition leads to one rewriting rule, which rewrites state machines conforming to the state machine snapshot metamodel.
-\autoref{lst:trafficLightMaude} shows the rewriting rules for the traffic light model.
-For example, line 3-4 defines a rewriting rule \textsf{turn\_red\_amber}, which changes the state of a traffic light object from red to red-amber.
-
-In addition to the rewriting rules, a start configuration is generated based on the defined start state (see lines 7 and 8).
-The start configuration is the Maude counterpart of the start graph in \gls*{gt} systems.
+\autoref{lst:trafficLightMaude} shows the rewriting rule for the transition \textsf{turn red-amber} of the traffic light model.
+The rewriting rule is equivalent to the \gls*{gt} rule in \cref{fig:sm_rule}.
 
 \lstinputlisting[
 label=lst:trafficLightMaude,
 language=Interaction,
 float=*,
-caption=Rewriting rules and start configuration for a traffic light]{figures/trafficLight.maude}
+caption=Maude rule for \emph{turn red-amber}]{figures/trafficLight.maude}
 
 Using Maude's search command and search graph visualization, we can verify that the generated state space conforms to the traffic light state machine.
-The generated Maude specifications and example Maude executions can be found in \cite{krauterArtifactsBehavioralConsistency2022}.
+The generated Maude specifications and example executions can be found in \cite{krauterArtifactsBehavioralConsistency2022}.
 
 \subsubsection{BPMN semantics}
 The rewriting rule generation is similar to the \gls*{gt} rule generation and supports the same subset of \gls*{bpmn} semantics.
@@ -916,6 +911,12 @@ We leave consistency restoration of behavioral models as a problem for future wo
 
 \bibliography{bib}
 
+\begin{figure*}[ht]
+    \centering
+    \includegraphics[width=1\textwidth]{figures/allConcepts.pdf}
+    \caption{Overview of all concepts and their usage in the use case}
+    \label{fig:allConcepts}
+\end{figure*}
 
 \section*{About the authors}
 
@@ -939,14 +940,5 @@ He is currently applying MDSE to create Adaptive Software Technologies for menta
 \shortbio{Patrick Stünkel}{is currently working as a postdoctoral researcher at Haukeland University Hospital in Bergen, Norway, where he is working on applying process mining, workflow modeling, and optimization techniques in digital pathology.
 Before that, Patrick did his Ph.D. at Western Norway University of Applied Sciences on the topics of semantic interoperability and consistency management among heterogeneous software models.
 \authorcontact[https://past.corrlang.io/]{Patrick.Stunkel@helse-bergen.no}}
-
-% \section*{Appendix}
-
-\begin{figure*}[ht]
-    \centering
-    \includegraphics[width=1\textwidth]{figures/allConcepts.pdf}
-    \caption{Overview of all concepts and their usage in the use case}
-    \label{fig:allConcepts}
-\end{figure*}
 
 \end{document}
