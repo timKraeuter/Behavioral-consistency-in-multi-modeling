@@ -52,6 +52,8 @@ rl [Switch_to_P1_end] :
     < o0 : ProcessSnapshot | name : "T-Junction controller", tokens : ("Switch_to_P1_A_&_C_are_green_Phase_1" T), signals : (none), subprocesses : (S), state : Running > P) > .
 ```
 
+The full Maude model is linked [here](https://github.com/timKraeuter/Towards-behavioral-consistency-in-multi-modeling/blob/main/README.md#maude-specification-1).
+
 ### Check behavioral consistency
 
 **Global Maude rule to switch to phase 1:**
@@ -76,7 +78,7 @@ rl [Switch_to_P1] :  < "use-case-execution" : BPMNSystem | messages : (M), proce
                          < Tl2 : FSM | name : "trafficLight", state : "red" >
                          < Tl3 : FSM | name : "trafficLight", state : "green" > .
 ```
-
+The full Maude model is linked [here](https://github.com/timKraeuter/Towards-behavioral-consistency-in-multi-modeling/blob/main/README.md#maude-specification-1).
 
 # State space explosion
 A description how to run the **Maude benchmark** can be found [here](./artifacts/maude/benchmark/maudeBenchmark.md), while the description for the **Groove benchmark** can be found [here](./artifacts/graphGrammars/grooveBenchmark.md).
