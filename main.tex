@@ -554,7 +554,7 @@ Using the \gls*{srm} and snapshot metamodels, we can represent the global states
 The specification of the global behavior used in our approach must fulfill the following three requirements:
 \begin{enumerate}
     \item The specification must respect the semantics of each behavioral model, except for interactions.
-    \item The specification semantics must reflect the defined interactions between the behavioral models.
+    \item The specification must reflect the defined interactions between the behavioral models.
     \item The specification semantics must allow the checking of behavioral properties for a given system configuration.
 \end{enumerate}
 Thus, a specification in any formalism fulfilling these three requirements can be used in our approach.
@@ -576,7 +576,7 @@ This step is fully automated, such that it can be executed as many times as need
 Finally, if a consistency requirement is not fulfilled, a violation, including a counterexample, will be presented to the user.
 Adopting the same concrete syntax to visualize the counterexample as for the atomic propositions should be ideal to help a user understand it. 
 An unsuccessful consistency check leads to a consistency restoration process, which is crucial but out of the scope of this paper.
-We describe consistency checking for the use case and its result in the end of the next section.
+We describe consistency checking for the use case and its result at the end of the next section.
 
 
 \section{Specification of the global behavior} \label{sec:specification_of_the_global_behavior}
@@ -629,9 +629,9 @@ Nodes/edges in $R$ but not in $L$ are added by a rule, while nodes/edges in $L$ 
 Applying a \gls*{gt} system to a given graph one obtains a state space where each state is a graph, and each transition is a rule application.
 A formal description of \gls*{gt} systems can, for example, be found in \cite{ehrigFundamentalsAlgebraicGraph2006}. % Section 3.1, especially Definition 3.4.
 
-We generate typed \gls*{gt} systems, where the \gls*{srm} including the snapshot metamodels is the type graph since it fits our rules changing the global state.
+We generate typed \gls*{gt} systems, where the \gls*{srm} including the snapshot metamodels is the type graph which fits individual rules and rules changing the global state.
 Interactions result in global rules which change multiple parts in the global state.
-A global rule is given by a parallel production rule \cite[Definition 3.2.7]{baldanConcurrentSemanticsAlgebraic1999} of all individuals rules which essentially results in a pairwise sum of individual rules.
+A global rule is given by a parallel production rule \cite[Definition 3.2.7]{baldanConcurrentSemanticsAlgebraic1999} of all individual rules which essentially results in a pairwise sum of individual rules.
 Together with a system configuration, i.e., a start graph, we can obtain an executable formal specification of the global behavior.
 Consequently, this can be used to check behavioral consistency.
 
@@ -800,6 +800,9 @@ However, both approaches focus on simulation rather than consistency or model-ch
 Neither provides concrete means to define atomic propositions and check global behavioral properties.
 Furthermore, \cite{varalarsenBehavioralCoordinationOperator2015} assumes a fixed system configuration while we can check different system configurations.
 
+
+
+
 \section{State space explosion} \label{sec:state_space_explosion}
 State space explosion is one of the predominant issues when applying model checking to complex systems, as they are often found in real-world applications.
 As one can see in \cref{table:grooveRuntime} and \cref{table:maudeRuntime} our approach is not immune to state space explosion.
@@ -917,7 +920,7 @@ We leave consistency restoration of behavioral models as a problem for future wo
 
 \begin{figure*}[ht!]
     \centering
-    \includegraphics[width=1\textwidth]{figures/allConcepts.pdf}
+    \includegraphics[width=0.8\textwidth]{figures/allConcepts.pdf}
     \caption{Overview of all concepts and their usage in the use case}
     \label{fig:allConcepts}
 \end{figure*}
