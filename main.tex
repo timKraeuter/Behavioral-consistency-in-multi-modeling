@@ -543,7 +543,7 @@ Furthermore, line 2 specifies that one of the synchronization receivers is the e
 Similarly, two other transitions of the traffic lights \emph{B} and \emph{C} are specified in the following two lines.
 Thus, the interaction defines a synchronization of a task and three traffic light transitions. 
 The second interaction defines a synchronization for the task \textsf{Switch to P2} and three traffic light transitions.
-Each interaction is defined starting from the same node, such that a structure matching the \gls*{srm} is described and constraint \eqref{eq:interactionConstraint} is fulfilled.
+Each interaction is defined starting from the same node, such that a structure matching the \gls*{srm} in \autoref{fig:systemRelationshipModel} is described and constraint \eqref{eq:interactionConstraint} is fulfilled.
 
 To summarize, we use the system relationship metamodel to define the relations between the behavioral models in a multi-model.
 Thus, the inter-relations between behavioral models in a multi-model are given by interactions and their behavioral relationships.
@@ -611,12 +611,12 @@ The merging process to obtain the global rules is done in two steps:
      \begin{enumerate}
          \item Find the corresponding rule\footnote{If one state-changing element results in more than one rule, one can define a strategy to pick the appropriate rule.} $P_0$ for the sender of the interaction and find the rules $P_1, P_2, \ldots P_n$ for the receiver state-changing elements using the saved traces.
          \item Create a \emph{global rule} for the rules $P_0, P_1, \ldots, P_n$, which applies all of them at once, i.e., synchronizes the state changes of the behavioral models.
-         \item For each receiver of the interaction, instantiate the corresponding behavioral relationship from the behavioral model in $P_0$ to the behavioral model in $P_i$, for 1 < i $\leq$ n.
+         \item For each receiver of the interaction, instantiate the corresponding behavioral relationship from the behavioral model in $P_0$ to the behavioral model in $P_i$, for 1 < i $\leq$ n and add it to the global rule.
          Thus, only behaviorally related models may interact, i.e., change their state simultaneously.
      \end{enumerate}
 \end{enumerate}
 
-In the following sections we describe how global rules are created in Groove and Maude.
+In the following sections we describe how global rules for interactions are created in Groove and Maude.
 
 
 \subsection{Groove specification} 
