@@ -407,36 +407,30 @@ Furthermore, the transitions between these states depend on the semantics of the
 In our approach, we call the state representation a \emph{snapshot metamodel} which is specified using class diagrams.
 
 For example, in the use case, we define snapshot metamodels for state machines and \gls*{bpmn}.
-A stat machine is in one state at a time, as shown in the snapshot metamodel $M_s^1$ in \cref{fig:fsm_snapshot_metamodel}.
-We are reusing the concrete syntax elements from the state machine metamodel $M^1$ in \cref{fig:fsm_metamodel}.
+A state machine is in one state at a time, as shown in the snapshot metamodel on the left of \cref{fig:snapshot_metamodels}.
+We are reusing the concrete syntax elements from the state machine metamodel (see \cref{fig:fsm_metamodel}) for the snapshot metamodel.
 In addition, each snapshot metamodel has a root element in our approach, highlighted in light blue.
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.25\textwidth]{figures/state_machine_snapshot_metamodel.pdf}
-    \caption{Finite state machine snapshot metamodel $M_s^1$}
-    \label{fig:fsm_snapshot_metamodel}
+    \includegraphics[width=0.475\textwidth]{figures/snapshot_metamodels.pdf}
+    \caption{BPMN and FSM snapshot metamodels}
+    \label{fig:snapshot_metamodels}
 \end{figure}
 
-The snapshot metamodel for \gls*{bpmn} is based on a \textsf{Token} distribution as described in the \gls*{bpmn} specifications \cite{objectmanagementgroupBusinessProcessModel2013} (see \cref{fig:bpmn_snapshot_metamodel}). 
-% That is, a \emph{snapshot} representing a state of a BPMN model is a distribution of tokens across flow elements. of a process is a set of \textsf{Token}s.
+The snapshot metamodel for \gls*{bpmn} is based on a \textsf{Token} distribution as described in the \gls*{bpmn} specifications \cite{objectmanagementgroupBusinessProcessModel2013} (see on the right of \cref{fig:snapshot_metamodels}).
 The root element \textsf{ProcessSnapshot} has \textsf{tokens} and \textsf{subprocesses}.
 A \textsf{Token} indicates where it is located in the \gls*{bpmn} model using its \textsf{position} attribute.
 A valid \textsf{position} is the \textsf{id} of a \textsf{FlowElement} (see \cref{fig:bpmn_metamodel}).
-Also for the snapshot metamodel of \gls*{bpmn} we reuse the concrete syntax of the \gls*{bpmn} metamodel.
+Also, for the snapshot metamodel of \gls*{bpmn} we reuse the concrete syntax of the \gls*{bpmn} metamodel.
 In addition, \textsf{Token}s are highlighted with green bubbles in the middle of sequence flows and the top right of an activity.
 
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.25\textwidth]{figures/bpmn_snapshot_metamodel.pdf}
-    \caption{BPMN snapshot metamodel $M_s^2$}
-    \label{fig:bpmn_snapshot_metamodel}
-\end{figure}
+% Old figure was here
 
-% Propositions need the \gls*{srm} and all snapshot metamodels
+% Propositions need the SRM and all snapshot metamodels
 Using the snapshot metamodels, one can only specify local behavioral properties.
 To specify global behavioral properties, we combine the information of the \gls*{srm} with the snapshot metamodels.
 Each behavioral model is typed by a behavioral metamodel, which has a snapshot metamodel describing its state structure.
-Thus, we know how states of behavioral model are represented, when they are instantiated.
+Thus, we know how states of behavioral models are represented when they are instantiated.
 % Use case example propositions
 For example, \cref{fig:atomic_propositions} shows how to specify the atomic propositions $A_{green}$ and $B1_{passing}$, used in the global properties in \autoref{sec:usecase}.
 Snapshot links connect instances of behavioral models with root element instances of the corresponding snapshot metamodel. 
@@ -643,7 +637,7 @@ To apply our approach to the use case, we need to define local higher-order \gls
 The local higher-order \gls*{mt} to generate \gls*{gt} rules for finite state machines is straightforward.
 Each transition leads to a \gls*{gt} rule.
 For example, \cref{fig:sm_rule} shows the \gls*{gt} rules for the transition \textsf{turn red-amber} of the traffic light model.
-It uses the concrete syntax introduced in \cref{fig:fsm_snapshot_metamodel} to depict state machine snapshots and their current states.
+It uses the concrete syntax introduced in \cref{fig:snapshot_metamodels} to depict state machine snapshots and their current states.
 We depict a \gls*{gt} rule by showing the graph $L$ on the left, $R$ on the right, and a named white arrow from $L$ to $R$.
 
 \begin{figure}[h]
@@ -661,7 +655,7 @@ All generated \gls*{gt} systems, including further instructions regarding execut
 The local higher-order \gls*{mt} to generate \gls*{gt} rules for \gls*{bpmn} processes is challenging, and we are currently only supporting a subset of the \gls*{bpmn} semantics \cite{krauterFormalizationAnalysisBPMN2022}.
 Generally, we construct one or more rules for each flow node in a \gls*{bpmn} model.
 \autoref{fig:bpmn_example_rules} shows the \gls*{gt} rules for the task \textsf{Switch to P1} of the TJunction controller.
-It uses the concrete syntax introduced in \cref{fig:bpmn_snapshot_metamodel} to represent process snapshots containing tokens.
+It uses the concrete syntax introduced in \cref{fig:snapshot_metamodels} to represent process snapshots containing tokens.
 
 \begin{figure}[h]
     \centering
@@ -707,7 +701,7 @@ In addition, we add behavioral relationships from the \gls*{srm} such that we ca
 Our Maude rules always rewrite multisets of objects, where individual objects are denoted in angle brackets ($<\cdots>$).
 Interactions lead to rule merges in Maude, where the left and right side of each rule is added to a global rule.
 The global rule is a valid Maude rule since the union of two multisets always results in a multiset. 
-Furthermore, behavioral relationships as defined in the interaction, are added to the rule as additional objects on both sides.
+Furthermore, behavioral relationships, as defined in the interaction, are added to the rule as additional objects on both sides.
 Similarly to the process for \gls*{gt} rules, individual rules are deleted.
 
 We will now explain how rewriting rules are generated for the use case.
@@ -751,7 +745,7 @@ Atomic propositions can be represented in Maude using the encoded \gls*{srm} and
 
 
 \subsection{Behavioral consistency in the use case}
-Both specifications show that properties 1 and 2 hold, while properties 3 and 4 do \emph{not} hold (see artifacts in \cite{krauterArtifactsBehavioralConsistency2022}).
+Both specifications show that properties \eqref{eq:property1} and \eqref{eq:property2} hold, while properties \eqref{eq:property3} and \eqref{eq:property4} do \emph{not} hold (see artifacts in \cite{krauterArtifactsBehavioralConsistency2022}).
 The counterexamples for properties 3 and 4 show an unexpected race condition that must be handled.
 After the TJunction controller signals that the traffic light A/B is green, bus B1/B2 can advance to the \textsf{Pass Junction} activity.
 However, simultaneously, the TJunction controller can enter the subprocess for the next phase, which can be interrupted by the associated timer event.
