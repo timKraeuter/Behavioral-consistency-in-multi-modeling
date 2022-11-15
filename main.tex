@@ -623,9 +623,9 @@ Nodes/edges in $R$ but not in $L$ are added by a rule, while nodes/edges in $L$ 
 Applying a \gls*{gt} system to a given graph one obtains a state space where each state is a graph, and each transition is a rule application.
 A formal description of \gls*{gt} systems can, for example, be found in \cite{ehrigFundamentalsAlgebraicGraph2006}. % Section 3.1, especially Definition 3.4.
 
-We generate typed \gls*{gt} systems, where the \gls*{srm} including the snapshot metamodels is the type graph which fits individual rules and rules changing the global state.
-Interactions result in global rules which change multiple parts in the global state.
-A global rule is given by a parallel production rule \cite[Definition 3.2.7]{baldanConcurrentSemanticsAlgebraic1999} of all individual rules which essentially results in a pairwise sum of individual rules.
+We generate typed \gls*{gt} systems, where the \gls*{srm}, including the snapshot metamodels, is the type graph that fits individual rules and rules changing the global state.
+Interactions result in global rules which change multiple parts of the global state.
+A global \gls*{gt} rule is calculated by taking the sum of all left-hand sides and right-hand sides of the individual \gls*{gt} rules.
 Together with a system configuration, i.e., a start graph, we can obtain an executable formal specification of the global behavior.
 Consequently, this can be used to check behavioral consistency.
 
