@@ -44,54 +44,11 @@ eq initial = < "1" : FSM | name : "trafficLight", state : "red" > .
 
 ### BPMN semantics
 
-**Example rewriting rules for the TJunction controller:**
-```python
-vars o0 : Oid . --- Object ids
-vars SIG M T : MSet . --- Signals, messages and tokens
-vars P S : Configuration . --- Processes and subprocesses
---- Switch to P1 start rule
-rl [Switch_to_P1_start] :
-< "use-case-execution" : BPMNSystem | messages : (M), processes : (
-    < o0 : ProcessSnapshot | name : "T-Junction controller", tokens : ("Phase_2_Switch_to_P1" T), signals : (SIG), subprocesses : (S), state : Running > P) >
-    =>
-< "use-case-execution" : BPMNSystem | messages : (none), processes : (
-    < o0 : ProcessSnapshot | name : "T-Junction controller", tokens : ("Switch_to_P1" T), signals : (none), subprocesses : (S), state : Running > P) > .
---- Switch to P1 end rule
-rl [Switch_to_P1_end] :
-< "use-case-execution" : BPMNSystem | messages : (M), processes : (
-    < o0 : ProcessSnapshot | name : "T-Junction controller", tokens : ("Switch_to_P1" T), signals : (SIG), subprocesses : (S), state : Running > P) >
-    =>
-< "use-case-execution" : BPMNSystem | messages : (none), processes : (
-    < o0 : ProcessSnapshot | name : "T-Junction controller", tokens : ("Switch_to_P1_A_&_C_are_green_Phase_1" T), signals : (none), subprocesses : (S), state : Running > P) > .
-```
-
-The full Maude module is linked in [Maude specification](https://github.com/timKraeuter/Towards-behavioral-consistency-in-multi-modeling/blob/main/README.md#maude-specification-1).
+The Maude module is linked in [Maude specification](https://github.com/timKraeuter/Towards-behavioral-consistency-in-multi-modeling/blob/main/README.md#maude-specification-1).
 
 ### Check behavioral consistency
 
-**Global Maude rule to switch to phase 1:**
-```python
-vars X Tl1 Tl2 Tl3 : String . --- Object ids
-vars P S : Configuration . --- Processes and subprocesses
-vars SIG M T : MSet . --- Signals, messages and tokens
-
-rl [Switch_to_P1] :  < "use-case-execution" : BPMNSystem | messages : (M), processes : (< X : ProcessSnapshot | name : "T-Junction controller", tokens : ("Switch_to_P1" T), signals : (SIG), subprocesses : (S), state : Running > P) >
-                         < "A" : BehavioralRelationship | from : X, to : Tl1 >
-                         < "B" : BehavioralRelationship | from : X, to : Tl2 >
-                         < "C" : BehavioralRelationship | from : X, to : Tl3 >
-                         < Tl1 : FSM | name : "trafficLight", state : "red-amber" >
-                         < Tl2 : FSM | name : "trafficLight", state : "amber" >
-                         < Tl3 : FSM | name : "trafficLight", state : "red-amber" >
-                          =>
-                         < "use-case-execution" : BPMNSystem | messages : (none), processes : (< X : ProcessSnapshot | name : "T-Junction controller", tokens : ("Switch_to_P1_A_&_C_are_green_Phase_1" T), signals : (none), subprocesses : (S), state : Running > P) >
-                         < "A" : BehavioralRelationship | from : X, to : Tl1 >
-                         < "B" : BehavioralRelationship | from : X, to : Tl2 >
-                         < "C" : BehavioralRelationship | from : X, to : Tl3 >
-                         < Tl1 : FSM | name : "trafficLight", state : "green" >
-                         < Tl2 : FSM | name : "trafficLight", state : "red" >
-                         < Tl3 : FSM | name : "trafficLight", state : "green" > .
-```
-The full Maude module is linked in [Maude specification](https://github.com/timKraeuter/Towards-behavioral-consistency-in-multi-modeling/blob/main/README.md#maude-specification-1).
+The Maude module is linked in [Maude specification](https://github.com/timKraeuter/Towards-behavioral-consistency-in-multi-modeling/blob/main/README.md#maude-specification-1).
 
 # State space explosion
 A description how to run the **Maude benchmark** can be found [here](./artifacts/maude/benchmark/maudeBenchmark.md), while the description for the **Groove benchmark** can be found [here](./artifacts/graphGrammars/grooveBenchmark.md).
