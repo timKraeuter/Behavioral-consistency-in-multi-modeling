@@ -717,7 +717,8 @@ The rewriting rule is equivalent to the \gls*{gt} rule in \cref{fig:sm_rule}.
 \lstinputlisting[
 label=lst:trafficLightMaude,
 language=Interaction,
-float=*,
+float=*t,
+belowskip=-1.5 \baselineskip,
 caption=Maude rule for \emph{turn red-amber}]{figures/trafficLight.maude}
 
 Using Maude's search command and search graph visualization, we can verify that the generated state space conforms to the traffic light state machine.
@@ -726,8 +727,15 @@ The generated Maude specifications and example executions can be found in \cite{
 \subsubsection{BPMN semantics}
 The rewriting rule generation is similar to the \gls*{gt} rule generation and supports the same subset of \gls*{bpmn} semantics.
 Similarly, one or more rules are constructed for each flow node in a \gls*{bpmn} process, where objects conform to the \gls*{bpmn} snapshot metamodel.
-The artifacts in \cite{krauterArtifactsBehavioralConsistency2022} show two Maude rewriting rules for the first two flow nodes of the TJunction controller as depicted in \cref{fig:bpmn_example_rules}.
-The full Maude modules can also be found there.
+\Cref{lst:tJunctionControllerMaude} shows the Maude rewriting rules for the task \textsf{Switch to P1} of the TJunction controller.
+The rewriting rules are equivalent to the \gls*{gt} rules in \cref{fig:bpmn_example_rules}.
+
+\lstinputlisting[
+label=lst:tJunctionControllerMaude,
+language=Interaction,
+float=*t,
+belowskip=-1.5 \baselineskip,
+caption=Example rewriting rules for the TJunction controller]{figures/tJunctionController.maude}
 
 Like the \gls*{gt} rules, the rewriting rules move tokens by changing their position according to the given \gls*{bpmn} model.
 Thus, we can generate Maude rewriting rules that implement the behavioral semantics of the \gls*{bpmn} models in the use case (see \cite{krauterArtifactsBehavioralConsistency2022}).
@@ -735,10 +743,17 @@ Thus, we can generate Maude rewriting rules that implement the behavioral semant
 
 \subsubsection{Check behavioral consistency}
 The defined interactions change the rules for switching to phases 1 and 2.
-The artifacts in \cite{krauterArtifactsBehavioralConsistency2022} show the resulting rule for switching to phase 1, where synchronization with the end of the task was chosen.
-\autoref{fig:global_rule} shows the equivalent \gls*{gt} rule.
+\Cref{lst:synchRuleMaude} shows the resulting rule for switching to phase 1, where synchronization with the end of the task was chosen.
+The rewriting rule is equivalent to the \gls*{gt} rule in \cref{fig:global_rule}.
 The rule changes all traffic lights simultaneously and finishes the task.
 Similarly, a global rule for switching to phase 2 is created and all individual rules are deleted.
+
+\lstinputlisting[
+label=lst:synchRuleMaude,
+language=Interaction,
+float=*t,
+belowskip=-1.5 \baselineskip,
+caption=Global Maude rule to switch to phase 1]{figures/synch.maude}
 
 Finally, we can use the Maude model checker module to check the requirements formalized by the \gls*{ltl} properties 1-4.
 Atomic propositions can be represented in Maude using the encoded \gls*{srm} and the snapshot metamodels.
@@ -912,12 +927,12 @@ We leave consistency restoration of behavioral models as a problem for future wo
 
 \bibliography{bib}
 
-\begin{figure*}[ht!]
+\begin{figure}[ht!]
     \centering
-    \includegraphics[width=0.8\textwidth]{figures/allConcepts.pdf}
-    \caption{Overview of all concepts and their usage in the use case}
+    \includegraphics[width=0.5\textwidth]{figures/allConcepts.pdf}
+    \caption{Overview of all concepts and their example usage}
     \label{fig:allConcepts}
-\end{figure*}
+\end{figure}
 
 \section*{About the authors}
 

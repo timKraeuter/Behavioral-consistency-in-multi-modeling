@@ -49,13 +49,13 @@ eq initial = < "1" : FSM | name : "trafficLight", state : "red" > .
 vars o0 : Oid . --- Object ids
 vars SIG M T : MSet . --- Signals, messages and tokens
 vars P S : Configuration . --- Processes and subprocesses
---- Controller started rule
-rl [Controller_started] :
+--- Switch to P1 start rule
+rl [Switch_to_P1_start] :
 < "use-case-execution" : BPMNSystem | messages : (M), processes : (
-    < o0 : ProcessSnapshot | name : "T-Junction controller", tokens : ("Controller_started" T), signals : (SIG), subprocesses : (S), state : Running > P) >
+    < o0 : ProcessSnapshot | name : "T-Junction controller", tokens : ("Phase_2_Switch_to_P1" T), signals : (SIG), subprocesses : (S), state : Running > P) >
     =>
-< "use-case-execution" : BPMNSystem | messages : none, processes : (
-    < o0 : ProcessSnapshot | name : "T-Junction controller", tokens : ("Controller_started_e1" T), signals : none, subprocesses : (S), state : Running > P) > .
+< "use-case-execution" : BPMNSystem | messages : (none), processes : (
+    < o0 : ProcessSnapshot | name : "T-Junction controller", tokens : ("Switch_to_P1" T), signals : (none), subprocesses : (S), state : Running > P) > .
 --- Switch to P1 end rule
 rl [Switch_to_P1_end] :
 < "use-case-execution" : BPMNSystem | messages : (M), processes : (
