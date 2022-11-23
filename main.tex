@@ -137,8 +137,8 @@ However, current approaches either only allow for consistency checking of two be
 % Our approach summarized.
 We propose a novel approach for consistency management of heterogeneous multi-models, which allows us to define and check \emph{global} behavioral properties.
 Our approach facilitates specifying \emph{interactions} between multiple potentially heterogeneous behavioral models, which are in turn used to generate a specification of the global behavior.
-Our approach is independent of the particular formalism used in the specification, and currently we can generate specifications in two different formalisms.
-The generation of the global behavior specification is \emph{fully automatic} and results in graph transformation rules (term rewriting rules) executable in Groove (Maude).
+Our approach is generally independent of the particular formalism used in the specification, and currently we can generate specifications in two different formalisms.
+The generation of the global behavior specification is \emph{fully automatic} and results in graph transformation rules (or respectively term rewriting rules) executable in Groove (Maude).
 Afterward, we can use the built-in verification mechanisms in Groove (Maude) to check the previously defined global behavioral properties.
 
 % Paper outline
@@ -324,11 +324,11 @@ In the remainder of this paper, we will describe our approach to address behavio
     \label{fig:approach}
 \end{figure*}
 
-ur approach consists of five steps.
+Our approach consists of five steps.
 \begin{enumerate}
-    \item We define a \glsfirst*{srm} describing which behavioral models may interact.
+    \item We define a \emph{\glsfirst*{srm}} describing which behavioral models may interact.
     \item We specify consistency requirements as global behavioral properties for the \gls*{srm}.
-    \item We define interactions between the behavioral models using the \gls*{srm}.
+    \item We define \emph{interactions} between the behavioral models using the \gls*{srm}.
     \item We automatically generate a specification of the specified global behavior using the interactions and the \gls*{srm}.
     \item Given a system configuration we check the global behavioral properties using the generated specification.
 \end{enumerate}
@@ -344,8 +344,8 @@ The metamodel ensures that models specified in the corresponding languages are w
 This is crucial when automating parts of the consistency checking.
 
 The use case utilizes state machine and \gls*{bpmn} models which conform, respectively, to the metamodels of state machines (see \cref{fig:fsm_metamodel}) and \gls*{bpmn} (see \cref{fig:bpmn_metamodel}).
-The metamodel of state machines is defined by a \gls*{uml} class diagram with additional information depicted in clouds.
-The clouds define a concrete syntax for state machines inspired by \gls*{uml} statecharts.
+The metamodel of state machines is defined by a \gls*{uml} class diagram.
+In addition, the clouds depict the concrete syntax that is used to denote the models conforming to the metamodel.
 The traffic light model in \cref{fig:trafficLight} uses this concrete syntax.
 
 % state machine
@@ -473,7 +473,7 @@ Similarly, the flow nodes are the \textsf{StateChangingElement}s of a \gls*{bpmn
 The interaction of behavioral models is only possible through instances of the \textsf{StateChangingElement}s.
 
 Our approach is based on the requirement that state-changing elements can be identified in metamodels for any behavioral formalism.
-This requirement is not difficult to meet since behavioral modeling languages must have some construct to describe state-change.
+This requirement is not difficult to meet since behavioral modeling languages must have some construct to describe state changes.
 Inspecting other behavioral languages, such as Petri Nets or \gls*{uml} activity diagrams, shows that identifying state-changing elements (transitions, activity nodes) is unproblematic. 
 
 \begin{figure}[h]
@@ -553,8 +553,8 @@ The specification of the global behavior used in our approach must fulfill the f
 \end{enumerate}
 Thus, a specification in any formalism fulfilling these three requirements can be used in our approach.
 Consequently, one can experiment with different formalisms, for example, graph transformations, rewriting logic, state machines, Petri nets, or process algebras, without changing the general framework.
-One can then pick the most suitable formalism for the modeling scenario at hand regarding, for example, consistency checking performance.
-In \cref{sec:specification_of_the_global_behavior}, we describe how we generate specifications for the graph transformation toolset Groove and the Maude system.
+One can then pick the most suitable formalism for the modeling scenario at hand regarding, for example, performance of consistency checking.
+In \cref{sec:specification_of_the_global_behavior}, we describe how we generate specifications for the graph transformation toolset Groove and the term-rewriting system Maude.
 
 To summarize, we generate a specification of the global system behavior.
 This generation takes the models and interactions as input and is fully automated to allow frequent model changes.
@@ -669,7 +669,7 @@ It uses the concrete syntax introduced in \cref{fig:snapshot_metamodels} to repr
 
 Due to limited space, we only show the \textsf{Switch to P1} rules but the artifacts of this paper \cite{krauterArtifactsBehavioralConsistency2022} contain the full \gls*{gt} system.
 A detailed explanation of the \gls*{gt} rule generation is given in \cite{krauterFormalizationAnalysisBPMN2022}.
-To summarize, we can generate \gls*{gt} systems that implement the behavioral semantics of the \gls*{bpmn}.
+To summarize, we can generate \gls*{gt} systems that implement the behavioral semantics of \gls*{bpmn}.
 
 
 % HERE HERE (Adrian stopped reading here)
@@ -777,12 +777,8 @@ Another option is to change the models to resolve the inconsistency.
 For example, the TJunction controller could wait for the bus to pass before changing the traffic lights again.
 
 
-
-
-
-
 \section{State space explosion} \label{sec:state_space_explosion}
-State space explosion is one of the predominant issues when applying model checking to complex systems, as they are often found in real-world applications.
+State space explosion is one of the predominant issues when applying model checking to complex systems, which are often found in real-world applications.
 As one can see in \cref{table:grooveRuntime} and \cref{table:maudeRuntime} our approach is not immune to state space explosion.
 The tables show the states, transitions (rewrites), and average runtime of a full state space exploration in the Groove (Maude) specification.
 Four scenarios were benchmarked, starting with the use case multi-model without approaching buses and then increasing the number of buses up to three.
@@ -838,7 +834,7 @@ However, as expected, neither of the tools is immune to state space explosion.
 % Discussion
 % Full state space is not what you do. You check properties.
 As in our use case, one is generally not interested in a full state space exploration as in \cref{table:grooveRuntime} and \cref{table:maudeRuntime} but rather in the validity of a set of behavioral properties.
-Checking, for example, a property specified in \gls*{ltl}, does not necessarily lead to a full state space exploration.
+Checking a property specified in \gls*{ltl}, does not necessarily lead to a full state space exploration.
 Furthermore, not every property is concerned with all behavioral models.
 For example, properties (1) and (2) of the use case do not involve buses and can be checked on the much smaller state spaces, not including approaching buses.
 In addition, checking a set of properties can be run in parallel.
@@ -846,13 +842,13 @@ If some properties show to be computationally expensive, they can be run on dedi
 Thus, checking the consistency of a multi-model can be seen as an additional test during \gls*{mde}, which can be run locally but, in addition, is a vital part of continuous integration.
 
 % Ways to mitigate state space explosion.
-The Maude \gls*{ltl} model-checker has performance comparable to the popular SPIN model checker \cite{ekerMaudeLTLModel2004} and thus is proven to have a good performance.
+The performance of the Maude \gls*{ltl} model checker is comparable to the popular SPIN model checker \cite{ekerMaudeLTLModel2004} and thus is proven to be competitive.
 However, one could use different techniques to mitigate the state space explosion problem further.
 One technique is to abstract models further such that they only contain information relevant to the set of properties to be checked.
 Thus, minimal models are synchronized, leading to smaller state spaces.
 However, finding correct minimal models might not be trivial.
 
-Partial-order reduction is a well-known and successful technique to mitigate the state space explosion problem.
+Partial-order reduction is a well-known and effective technique to mitigate the state space explosion problem.
 It is currently not implemented in the Maude LTL model-checker, but there is promising work to integrate partial-order reduction into the model-checker \cite{farzanPartialOrderReduction2007}, showing substantial state space reductions.
 The potential to reduce the state space using this technique is huge, especially for model-checking concurrent systems \cite{clarkeHandbookModelChecking2018}.
 Our approach analyzes concurrent systems with some interaction, and thus model-checking would greatly benefit from partial-order reduction.
@@ -864,11 +860,11 @@ In our opinion, partial-order reduction must be implemented to analyze models fr
 \section{Related work} \label{sec:related_work}
 This contribution builds on our previous publication \cite{krauterBehavioralConsistencyHeterogeneous2021}.
 However, we refined the behavioral consistency management workflow into five steps and introduced new concepts such as interactions, behavioral relationships, and state-changing elements (see \gls*{srm}).
-Moreover, we outlined a general approach to defining atomic propositions, leading to global behavioral properties.
+Moreover, we outlined a general approach for defining atomic propositions, leading to global behavioral properties.
 In addition, our previous work did not support \gls*{bpmn} models and was solely based on \gls*{gt}s.
 
 % Highlight some specific combinations/ad-hoc approaches for a single modeling language.
-The general idea of transforming different behavioral formalisms to a single semantics domain to reason about cross-cutting concerns is not new, see, e.g., \cite{engelsMethodologySpecifyingAnalyzing2001}.
+The general idea of transforming different behavioral formalisms to a single formalism to reason about cross-cutting concerns is not new, see, e.g., \cite{engelsMethodologySpecifyingAnalyzing2001}.
 For example, \cite{kusterExplicitBehavioralConsistency2003} developed consistency checking for sequence diagrams and statecharts based on \gls*{csp}, while \cite{yaoConsistencyCheckingUML2006} used Petri nets for the same scenario.
 Furthermore, \cite{cunhaFormalVerificationUML2011} analyzes sequence diagrams in the context of embedded systems using a transformation to Petri nets.
 Nevertheless, all approaches focus on a single modeling language or a fixed combination of two languages.
