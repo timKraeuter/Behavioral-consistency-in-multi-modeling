@@ -1,7 +1,7 @@
 ## Groove Prerequisites:
 - Installed java (check with ```java -version```). Tested with version 1.8.0_301.
 
-Run **Groove** by executing the following command in this directory:
+Run **Groove** by executing the following command in **this directory**:
 ```
 java -jar ../groove-5_8_1/bin/Simulator.jar
 ```
