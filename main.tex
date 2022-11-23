@@ -628,7 +628,7 @@ A formal description of \gls*{gt} systems can, for example, be found in \cite{eh
 
 We generate typed \gls*{gt} systems, where the \gls*{srm}, including the snapshot metamodels, is the type graph that fits individual rules and rules changing the global state.
 Interactions result in global rules which change multiple parts of the global state.
-A global \gls*{gt} rule is calculated by taking the sum of all left-hand sides and right-hand sides of the individual \gls*{gt} rules.
+A global \gls*{gt} rule is calculated by taking the sum of all left-hand sides and right-hand sides of the individual \gls*{gt} rules (implements step 2(b) in \cref{sec:specification_of_the_global_behavior} for Groove).
 Together with a system configuration, i.e., a start graph, we can obtain an executable formal specification of the global behavior.
 Consequently, this can be used to check behavioral consistency.
 
@@ -702,7 +702,7 @@ Thus, we can represent state machine snapshots and \gls*{bpmn} process snapshots
 In addition, we add behavioral relationships from the \gls*{srm} such that we can instantiate them to create the system configuration described in the use case.
 
 Our Maude rules always rewrite multisets of objects, where individual objects are denoted in angle brackets ($<\cdots>$).
-Interactions lead to rule merges in Maude, where the left and right side of each rule is added to a global rule.
+Interactions lead to rule merges in Maude, where the left and right side of each rule are added to a global rule (implements step 2(b) in \cref{sec:specification_of_the_global_behavior} for Maude).
 The global rule is a valid Maude rule since the union of two multisets always results in a multiset. 
 Furthermore, behavioral relationships, as defined in the interaction, are added to the rule as additional objects on both sides.
 Similarly to the process for \gls*{gt} rules, individual rules are deleted.
@@ -934,6 +934,7 @@ We leave consistency restoration of behavioral models as a problem for future wo
     \caption{Overview of all concepts and their example usage}
     \label{fig:allConcepts}
 \end{figure}
+% Change SRM Syntax to not look like a class diagram? Open question/discussion.
 
 \bibliography{bib}
 
