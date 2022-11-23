@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <gxl xmlns="http://www.gupro.de/GXL/gxl-1.0.dtd">
-    <graph role="type" edgeids="false" edgemode="directed" id="component_model">
+    <graph role="type" edgeids="false" edgemode="directed" id="system_relationship_model">
         <attr name="$version">
             <string>curly</string>
         </attr>
@@ -29,6 +29,11 @@
                 <string>37 264 22 18</string>
             </attr>
         </node>
+        <edge from="n0" to="n1">
+            <attr name="label">
+                <string>C</string>
+            </attr>
+        </edge>
         <edge from="n0" to="n0">
             <attr name="label">
                 <string>type:TJunction</string>
@@ -36,17 +41,7 @@
         </edge>
         <edge from="n0" to="n1">
             <attr name="label">
-                <string>A</string>
-            </attr>
-        </edge>
-        <edge from="n0" to="n1">
-            <attr name="label">
                 <string>B</string>
-            </attr>
-        </edge>
-        <edge from="n0" to="n1">
-            <attr name="label">
-                <string>C</string>
             </attr>
         </edge>
         <edge from="n0" to="n2">
@@ -54,19 +49,24 @@
                 <string>sub:</string>
             </attr>
         </edge>
+        <edge from="n0" to="n1">
+            <attr name="label">
+                <string>A</string>
+            </attr>
+        </edge>
         <edge from="n0" to="n4">
             <attr name="label">
                 <string>approaching</string>
             </attr>
         </edge>
-        <edge from="n1" to="n1">
-            <attr name="label">
-                <string>type:TrafficLight</string>
-            </attr>
-        </edge>
         <edge from="n1" to="n3">
             <attr name="label">
                 <string>sub:</string>
+            </attr>
+        </edge>
+        <edge from="n1" to="n1">
+            <attr name="label">
+                <string>type:TrafficLight</string>
             </attr>
         </edge>
         <edge from="n2" to="n2">

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <gxl xmlns="http://www.gupro.de/GXL/gxl-1.0.dtd">
-    <graph role="type" edgeids="false" edgemode="directed" id="fsm_e_model">
+    <graph role="type" edgeids="false" edgemode="directed" id="fsm_snapshot_metamodel">
         <attr name="$version">
             <string>curly</string>
         </attr>
@@ -16,12 +16,12 @@
         </node>
         <edge from="n0" to="n0">
             <attr name="label">
-                <string>type:State</string>
+                <string>string:name</string>
             </attr>
         </edge>
         <edge from="n0" to="n0">
             <attr name="label">
-                <string>string:name</string>
+                <string>type:State</string>
             </attr>
         </edge>
         <edge from="n1" to="n1">

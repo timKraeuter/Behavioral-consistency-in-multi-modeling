@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <gxl xmlns="http://www.gupro.de/GXL/gxl-1.0.dtd">
-    <graph role="type" edgeids="false" edgemode="directed" id="bpmn_e_model">
+    <graph role="type" edgeids="false" edgemode="directed" id="bpmn_snapshot_metamodel">
         <attr name="$version">
             <string>curly</string>
         </attr>
@@ -59,9 +59,19 @@
                 <string>string:position</string>
             </attr>
         </edge>
+        <edge from="n0" to="n5">
+            <attr name="label">
+                <string>subprocess</string>
+            </attr>
+        </edge>
         <edge from="n0" to="n0">
             <attr name="label">
                 <string>type:ProcessSnapshot</string>
+            </attr>
+        </edge>
+        <edge from="n0" to="n4">
+            <attr name="label">
+                <string>decisions</string>
             </attr>
         </edge>
         <edge from="n0" to="n0">
@@ -69,9 +79,9 @@
                 <string>string:name</string>
             </attr>
         </edge>
-        <edge from="n0" to="n4">
+        <edge from="n0" to="n13">
             <attr name="label">
-                <string>decisions</string>
+                <string>tokens</string>
             </attr>
         </edge>
         <edge from="n0" to="n1">
@@ -81,22 +91,12 @@
         </edge>
         <edge from="n0" to="n5">
             <attr name="label">
-                <string>subprocess</string>
+                <string>sub:</string>
             </attr>
         </edge>
         <edge from="n0" to="n6">
             <attr name="label">
                 <string>messages</string>
-            </attr>
-        </edge>
-        <edge from="n0" to="n5">
-            <attr name="label">
-                <string>sub:</string>
-            </attr>
-        </edge>
-        <edge from="n0" to="n13">
-            <attr name="label">
-                <string>tokens</string>
             </attr>
         </edge>
         <edge from="n1" to="n1">
@@ -109,14 +109,14 @@
                 <string>type:ProcessState</string>
             </attr>
         </edge>
-        <edge from="n2" to="n2">
-            <attr name="label">
-                <string>type:Running</string>
-            </attr>
-        </edge>
         <edge from="n2" to="n1">
             <attr name="label">
                 <string>sub:</string>
+            </attr>
+        </edge>
+        <edge from="n2" to="n2">
+            <attr name="label">
+                <string>type:Running</string>
             </attr>
         </edge>
         <edge from="n3" to="n3">
