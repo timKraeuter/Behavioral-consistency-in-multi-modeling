@@ -7,7 +7,7 @@
 
 # Maude use case benchmark
 1. Clone this repository.
-2. Open a terminal in **this folder**.
+2. Open a terminal in **this folder** (on linux or inside WSL on windows see prerequisite 1).
 3. Run the following command for a **complete benchmark**:
     ```bash
     hyperfine -L file noBuses.maude,oneBus.maude,twoBuses.maude,threeBuses.maude "maude {file}" --output ./output.txt --export-json stats.json
