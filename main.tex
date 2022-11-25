@@ -299,7 +299,7 @@ However, to check the global properties, we must execute the system with the beh
 This is not straightforward since the multi-model of the use case consists of a \gls*{srm} relating two heterogeneously typed behavioral models.
 In addition, the system configuration instantiates two behavioral models multiple times with different parameters.
 Furthermore, we face the problem that the models are not independent of each other.
-For example, the TJunction controller must decide when the traffic lights A, B, and C switch states.
+For example, the T-Junction controller must decide when the traffic lights A, B, and C switch states.
 Thus, if we were to run the models independently in parallel, the properties would be violated.
 
 A multi-model is behaviorally consistent if it satisfies all of its behavioral properties.
@@ -338,7 +338,7 @@ Each of these models conforms to its metamodel, corresponding to the behavioral 
 The metamodel ensures that models specified in the corresponding languages are well-defined and machine-readable.
 This is crucial when automating parts of the consistency checking.
 
-The use case utilizes state machine and \gls*{bpmn} models which conform, respectively, to the metamodels of state machines (see \cref{fig:fsm_metamodel}) and \gls*{bpmn} (see \cref{fig:bpmn_metamodel}).
+The use case utilizes state machine and \gls*{bpmn} models, which conform, respectively, to the metamodels of state machines (see \cref{fig:fsm_metamodel}) and \gls*{bpmn} (see \cref{fig:bpmn_metamodel}).
 The metamodel of state machines is defined by a \gls*{uml} class diagram.
 In addition, the clouds depict the concrete syntax that we use to denote the models conforming to the metamodel.
 The traffic light model in \cref{fig:trafficLight} uses this concrete syntax.
