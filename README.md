@@ -1,4 +1,4 @@
-This repository contains our paper's sources and **additional artifacts**. The paper has been **submitted for review** to ECMFA2023.
+This repository contains our paper's sources and **additional artifacts**. The ![paper](./paper.pdf) has been **submitted for review** to ECMFA2023.
 
 # Specification of the global behavior
 
