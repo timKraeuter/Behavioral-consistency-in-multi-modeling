@@ -7,7 +7,7 @@
 \jotdetails{
     volume=vv,      % volume
     number=nn,      % number or issue
-    articleno=aa,   % article number, eg a1 for research articles, e for editorials
+    articleno=a1,   % article number, eg a1 for research articles, e for editorials
     year=2023,      % year
     license=ccby    % choose from ccby, ccbynd, ccbyncnd
 }
@@ -51,8 +51,6 @@ Graph transformation
 \newtheorem{definition}{Definition}
 \newcommand{\definitionautorefname}{Definition}
 
-% Table
-
 \usepackage{glossaries}
 \usepackage[nameinlink]{cleveref} % Reference footnotes.
 \crefname{figure}{{figure}}{figures}
@@ -86,7 +84,6 @@ Graph transformation
 }
 
 \begin{abstract}
-%ABOUT: Introduce multi-model and motivate global behavior checking
 Multiple heterogeneous interacting systems are needed to realize the requirements of complex domains.
 Describing the interactions between these systems and checking their global behavioral consistency is a general, well-known challenge in software engineering.
 To address this challenge, model-driven software engineering utilizes abstract representations of the constituting systems and their interactions, resulting in a \emph{multi-model} representing the overall system.
@@ -123,7 +120,7 @@ Consequently, continuous multi-model consistency management during the developme
 % Consistency can be checked for a set of structural models
 Recent research describes methods to check the structural consistency of a multi-model \cite{stunkelComprehensiveSystemsFormal2021, klareCommonalitiesPreservingConsistency2019}.
 Structural models, like UML class diagrams, describe structural aspects of systems, i.e., domain concepts and relations between these concepts.
-This is usually referred to as the denotational semantics of the software system as it only describes the set of valid instances or states of the system.
+This is usually referred to as the denotational semantics of the software system, as it only describes the set of valid instances or states of the system.
 % Challenge: Consistency for a set of behavioral models.
 Nevertheless, approaches to multi-model consistency management must also include a means to maintain \emph{behavioral consistency} since behavioral models, like \gls*{bpmn} models, are associated with execution semantics describing dynamic aspects of the system \cite{objectmanagementgroupUnifiedModelingLanguage2017, objectmanagementgroupBusinessProcessModel2013}.
 Multi-models consisting of different interacting behavioral models are found, for example, when modeling embedded and cyber-physical systems \cite{varalarsenBehavioralCoordinationOperator2015}.
@@ -137,7 +134,7 @@ However, current approaches either only allow for consistency checking of two be
 % Our approach summarized.
 We propose a novel approach for consistency management of heterogeneous multi-models, which allows us to define and check \emph{global} behavioral properties.
 Our approach facilitates specifying \emph{interactions} between multiple potentially heterogeneous behavioral models, which are in turn used to generate a specification of the global behavior.
-Our approach is generally independent of the particular formalism used in the specification, and currently we can generate specifications in two different formalisms.
+Our approach is generally independent of the particular formalism used in the specification, and currently, we can generate specifications in two different formalisms.
 The generation of the global behavior specification is \emph{fully automatic} and results in graph transformation rules (or respectively, term rewriting rules) executable in Groove (Maude).
 Afterward, we can use the built-in verification mechanisms in Groove (Maude) to check the previously defined global behavioral properties.
 
@@ -166,11 +163,12 @@ This so-called bus priority signal is a widely implemented technique to improve 
 \end{figure}
 
 To develop the behavior of the traffic management system, we follow an \gls*{mde} approach.
-First, we model the behavior of a traffic light as a \gls*{uml} state machine, and then we use \gls*{bpmn} to model the different traffic phases of the T-Junction, including the prioritization of approaching buses.
+First, we model the behavior of a traffic light as a \gls*{uml} state machine.
+Then we use \gls*{bpmn} to model the different traffic phases of the T-Junction, including the prioritization of approaching buses.
 
 Using different behavioral modeling languages in the use case has two reasons.
 First, two software development teams might work on the system in parallel but prefer different modeling languages.
-Second, each team is free to choose the most appropriate modeling language for defining their part of the system.
+Second, each team can choose the most appropriate modeling language for defining their part of the system.
 In this use case, the behavior of a traffic light and a T-Junction differs significantly in complexity and requirements, resulting in the use of two different behavioral modeling languages, namely \gls*{uml} state machines, and \gls*{bpmn}.
 
 The behavior of a traffic light is straightforward since it uses only three colors to guide the traffic.
@@ -188,7 +186,7 @@ However, the T-Junction's behavior is more complex since it should coordinate th
 Consequently, we are using \gls*{bpmn} to model this aspect of the system's behavior and utilize \gls*{bpmn} message and signal events to implement the communication with approaching buses.
 
 We model two processes, one for the T-Junction and one for the Bus.
-Each process is modeled in its own \gls*{bpmn} \emph{pool}.
+Each process is modeled in its \gls*{bpmn} \emph{pool}.
 A pool is depicted as a horizontal lane with a name on the left.
 Message flows (arrows with dashed lines) are only allowed between two different pools.
 
@@ -232,7 +230,7 @@ If it is green, the bus can pass the junction.
 However, if it is red, the bus requests to change B to green and waits for a signal that the controller has changed the traffic light.
 After receiving the signal, the bus passes the junction.
 A \gls*{bpmn} model for a bus controller parameterized with the direction A or C looks nearly identical.
-In addition, the bus controller also communicates with the phase 2 subprocess, which we only hint at in \cref{fig:communication}.
+In addition, the bus controller communicates with the phase 2 subprocess, which we only hint at in \cref{fig:communication}.
 The phase 2 subprocess has the same structure as the phase 1 subprocess but reports that A and C are red, while B is green.
 Similarly, it terminates if green is requested for A or C.
 The full model and all other models are available from \cite{krauterArtifactsBehavioralConsistency2022}.
@@ -306,7 +304,7 @@ Thus, if we were to run the models independently in parallel, the properties wou
 
 A multi-model is behaviorally consistent if it satisfies all of its behavioral properties.
 A behavioral property is given in temporal logic, for example, \gls*{ltl} in the use case, and is characterized as \emph{local} if it constrains only one model and as \emph{global} if it spans two or more models in a multi-model.
-Furthermore, global properties are dependent on the system configuration, i.e., the instance of the \gls*{srm} used.
+Furthermore, global properties depend on the system configuration, i.e., the instance of the \gls*{srm} used.
 In the remainder of this paper, we will describe our approach to address behavioral consistency in multi-modeling and apply it to this use case.
 
 
@@ -327,7 +325,7 @@ Our approach consists of five steps.
     \item We specify consistency requirements as global behavioral properties for the \gls*{srm}.
     \item We define \emph{interactions} between the behavioral models using the \gls*{srm}.
     \item We automatically generate a specification of the specified global behavior using the interactions and the \gls*{srm}.
-    \item Given a system configuration we check the global behavioral properties using the generated specification.
+    \item Given a system configuration, we check the global behavioral properties using the generated specification.
 \end{enumerate}
 The behavioral consistency management workflow potentially uncovers violations, describing counter-examples in which the global behavioral properties are not valid.
 In the following sections, we will describe each step in detail.
@@ -336,7 +334,7 @@ In addition, the appendix contains \cref{fig:allConcepts}, which gives an overvi
 
 \subsection{Define the system relationship model}
 As mentioned, a set of behavioral models might be used to describe the behavior of a software system.
-Each of these models conforms to its own metamodel which in turn corresponds to the behavioral language used to specify the model.
+Each of these models conforms to its metamodel, corresponding to the behavioral language used to specify the model.
 The metamodel ensures that models specified in the corresponding languages are well-defined and machine-readable.
 This is crucial when automating parts of the consistency checking.
 
@@ -362,7 +360,7 @@ A \gls*{bpmn} \textsf{Process} contains a set of \textsf{FlowNode}s connected by
 A \textsf{FlowNode} can be an \textsf{Activity}, \textsf{Gateway}, or \textsf{Event}.
 All special activities, gateways and events are defined in the \gls*{bpmn} specification \cite{objectmanagementgroupBusinessProcessModel2013}. % See BPMN class diagrams in figures 10.104/10.6/10.69.
 
-% BPMN (subset of the needed constructs)
+% BPMN (a subset of the needed constructs)
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.475\textwidth]{figures/bpmn_metamodel.pdf}
@@ -396,7 +394,7 @@ Different instances of the \gls*{srm} can be used to analyze the global behavior
 
 \subsection{Specify consistency requirements} \label{subsec:specify_consistency_requirements}
 In this step, we specify behavioral consistency requirements as global behavioral properties.
-These properties are defined using a temporal logic, for example \gls*{ltl} as in the use case.
+These properties are defined using a temporal logic, for example, \gls*{ltl} as in the use case.
 Temporal logic properties are built upon a set of atomic propositions which are either true or false in a given state.
 Each behavioral language (e.g., the BPMN) specification defines how these states are represented.
 Furthermore, the transitions between these states depend on the semantics of the behavioral models.
@@ -681,7 +679,7 @@ We decided that the interactions between the traffic lights and the TJunction co
 The rule changes all traffic lights simultaneously and finishes the task.
 The corresponding individual rules no longer exist, so synchronization of the behavior is guaranteed.
 A similar rule exists for switching to phase 2, resulting from the other interaction.
-All other rules are left untouched during the construction of the global \gls*{gt} system.
+All other rules are left untouched while constructing the global \gls*{gt} system.
 
 Finally, we can generate the global state space of the system using the global \gls*{gt} system, which can be found in \cite{krauterArtifactsBehavioralConsistency2022}.
 To check the requirements formalized by properties 1-4, we must also encode the used atomic propositions.
@@ -767,12 +765,12 @@ One option is to keep the models unchanged and pay special attention to the foun
 This can be an acceptable solution since the \textsf{Pass Junction} activity is also modeled as a user activity, i.e., the bus driver decides when to cross the T-Junction.
 Furthermore, tolerating inconsistencies can be a viable option in \gls*{mde} \cite{weidmannToleranceModelDrivenEngineering2021}.
 Another option is to change the models to resolve the inconsistency.
-For example, the TJunction controller could wait for the bus to pass before changing the traffic lights again.
+For example, the T-Junction controller could wait for the bus to pass before changing the traffic lights again.
 
 
 \section{State space explosion} \label{sec:state_space_explosion}
 State space explosion is one of the predominant issues when applying model checking to complex systems, which are often found in real-world applications.
-As one can see in \cref{table:grooveRuntime} and \cref{table:maudeRuntime} our approach is not immune to state space explosion.
+As one can see in \cref{table:grooveRuntime} and \cref{table:maudeRuntime}, our approach is not immune to state space explosion.
 The tables show the states, transitions (rewrites), and average runtime of a full state space exploration in the Groove (Maude) specification.
 Four scenarios were benchmarked, starting with the use case multi-model without approaching buses and then increasing the number of buses up to three.
 
@@ -829,9 +827,9 @@ However, as expected, neither of the tools is immune to state space explosion.
 As in our use case, one is generally not interested in a full state space exploration as in \cref{table:grooveRuntime} and \cref{table:maudeRuntime} but rather in the validity of a set of behavioral properties.
 Checking a property specified in \gls*{ltl} does not necessarily lead to a full state space exploration.
 Furthermore, not every property is concerned with all behavioral models.
-For example, properties (1) and (2) of the use case do not involve buses and can be checked on the much smaller state spaces, not including approaching buses.
+For example, properties (1) and (2) of the use case do not involve buses and can be checked on smaller state spaces, not including approaching buses.
 In addition, checking a set of properties can be run in parallel.
-If some properties show to be computationally expensive, they can be run on dedicated hardware, for example, during a continuous integration pipeline once a day in case of behavioral model or interaction changes.
+If some properties are computationally expensive, they can be run on dedicated hardware, for example, during a continuous integration pipeline once a day in case of a behavioral model or interaction change.
 Thus, checking the consistency of a multi-model can be seen as an additional test during \gls*{mde}, which can be run locally but, in addition, is a vital part of continuous integration.
 
 % Ways to mitigate state space explosion.
