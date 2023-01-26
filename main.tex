@@ -172,7 +172,7 @@ Second, each team can choose the most appropriate modeling language for defining
 In this use case, the behavior of a traffic light and a T-Junction differs significantly in complexity and requirements, resulting in the use of two different behavioral modeling languages, namely \gls*{uml} state machines, and \gls*{bpmn}.
 
 The behavior of a traffic light is straightforward since it uses only three colors to guide the traffic.
-\autoref{fig:trafficLight} shows the typical European\footnote{Traffic lights in other parts of the world might not show red and amber simultaneously before switching to green.} traffic light that switches from \textsf{red} to \textsf{red-amber}, \textsf{green}, \textsf{amber}, and back to \textsf{red}.
+\autoref{fig:trafficLight} shows a typical traffic light that switches from \textsf{red} to \textsf{red-amber}, \textsf{green}, \textsf{amber}, and back to \textsf{red}.
 The start state of the traffic light in \cref{fig:trafficLight} is \textsf{red} but can be any of the four possible states.
 
 \begin{figure}[h]
@@ -329,7 +329,7 @@ Our approach consists of five steps.
 \end{enumerate}
 The behavioral consistency management workflow potentially uncovers violations, describing counter-examples in which the global behavioral properties are not valid.
 In the following sections, we will describe each step in detail.
-In addition, the appendix contains \cref{fig:allConcepts}, which gives an overview of all the new concepts and how they are applied to the use case.
+In addition, \cref{fig:allConcepts} at the end of the paper, gives an overview of all the new concepts and how they are applied to the use case.
 
 
 \subsection{Define the system relationship model}
@@ -778,8 +778,8 @@ To calculate the average runtime, we used the hyperfine benchmarking tool \cite{
 Timing evaluations were done on a notebook with an AMD Ryzen PRO 3500U processor and 16 GB of RAM running Maude version 3.2.1 (inside the Windows Subsystem for Linux) and Groove version 5.8.1.
 A description of how to run the benchmarks is available in \cite{krauterArtifactsBehavioralConsistency2022}.
 
-The benchmarks include start-up times, for example, the state space exploration for the \textsf{No Buses} scenario takes \textasciitilde 500ms according to Groove.
-Thus, most of the exploration time in Groove and Maude for the \textsf{No Buses} scenario is attributed to the start-up time.
+The benchmarks include start-up times, for example, Groove reports the state space exploration for the \textsf{No Buses} taking only \textasciitilde 500ms.
+Thus, most of the exploration time in Groove for the \textsf{No Buses} scenario is attributed to the start-up time.
 Generally, the Maude exploration time is lower despite larger state spaces due to technical differences in implementing the \gls*{bpmn} semantics.
 However, as expected, neither of the tools is immune to state space explosion.
 
@@ -920,7 +920,7 @@ We leave consistency restoration of behavioral models as a problem for future wo
 \begin{figure}[ht!]
     \centering
     \includegraphics[width=0.5\textwidth]{figures/allConcepts.pdf}
-    \caption{Overview of all concepts and their example usage}
+    \caption{Overview of all concepts and their usage}
     \label{fig:allConcepts}
 \end{figure}
 % Change SRM Syntax to not look like a class diagram? Open question/discussion.
