@@ -775,11 +775,9 @@ The tables show the states, transitions (rewrites), and average runtime of a ful
 Four scenarios were benchmarked, starting with the use case multi-model without approaching buses and then increasing the number of buses up to three.
 
 To calculate the average runtime, we used the hyperfine benchmarking tool \cite{peterHyperfine2022} (version 1.15.0), which ran state space exploration for each scenario ten times.
-Timing evaluations were done on a notebook with an AMD Ryzen PRO 3500U processor and 16 GB of RAM running Maude version 3.2.1 (inside the Windows Subsystem for Linux) and Groove version 5.8.1.
+Timing evaluations were done with an AMD Ryzen 7700X processor and 32 GB of RAM running Maude version 3.1 (inside the Windows Subsystem for Linux) and Groove version 5.8.1.
 A description of how to run the benchmarks is available in \cite{krauterArtifactsBehavioralConsistency2022}.
 
-The benchmarks include start-up times, for example, Groove reports the state space exploration for the \textsf{No Buses} taking only \textasciitilde 500ms.
-Thus, most of the exploration time in Groove for the \textsf{No Buses} scenario is attributed to the start-up time.
 Generally, the Maude exploration time is lower despite larger state spaces due to technical differences in implementing the \gls*{bpmn} semantics.
 However, as expected, neither of the tools is immune to state space explosion.
 
@@ -790,13 +788,13 @@ However, as expected, neither of the tools is immune to state space explosion.
  \hline
  Use case & States & Transitions & Exploration time \\
  \hline\hline
- No buses & 168 & 438 & \textasciitilde 2.948 ms \\
+ No buses & 168 & 438 & \textasciitilde 1.201 ms \\
  \hline
- 1 bus & 2.888 & 10.046 & \textasciitilde 4.510 ms \\
+ 1 bus & 2.888 & 10.046 & \textasciitilde 1.647 ms \\
  \hline
- 2 buses & 27.880 & 121.554 & \textasciitilde 11.629 ms \\
+ 2 buses & 27.880 & 121.554 & \textasciitilde 4.087 ms \\
  \hline
- 3 buses & 195.336 & 1.028.340 & \textasciitilde 63.487 ms \\
+ 3 buses & 195.336 & 1.028.340 & \textasciitilde 25.137 ms \\
  \hline
 \end{tabular}
 \caption[State space exploration in Groove]{State space exploration in Groove}
@@ -808,13 +806,13 @@ However, as expected, neither of the tools is immune to state space explosion.
  \hline
  Use case & States & Rewrites & Exploration time \\
  \hline\hline
- No buses & 168 & 664 & \textasciitilde 63.3 ms \\
+ No buses & 168 & 664 & \textasciitilde 28 ms \\
  \hline
- 1 bus & 3.304 & 19.958 & \textasciitilde 277.8 ms \\
+ 1 bus & 3.304 & 19.958 & \textasciitilde 120 ms \\
  \hline
- 2 buses & 35.280 & 27.9776 & \textasciitilde 2.994 ms \\
+ 2 buses & 35.280 & 27.9776 & \textasciitilde 1.279 ms \\
  \hline
- 3 buses & 260.176 & 2.522.582 & \textasciitilde 28.091 ms \\
+ 3 buses & 260.176 & 2.522.582 & \textasciitilde 12.599 ms \\
  \hline
 \end{tabular}
 \caption[State space exploration in Maude]{State space exploration in Maude}
