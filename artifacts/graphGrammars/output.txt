@@ -2,7 +2,7 @@ Grammar:	global
 Start graph:	Three_B2
 Control:	main
 Exploration:	bfs / final / infinite
-Timestamp:	Tue Sep 20 12:07:24 CEST 2022
+Timestamp:	Fri Jan 27 09:17:44 CET 2023
 
 Progress: (s = 100 states, t = 100 transitions):
   ttsttttsttttsttttsttttstttttsttttstttttstttttsttttstttttstttttstttttstttttstttttstttttstttttstttttst 1823s (352x) 8200t
@@ -129,8 +129,8 @@ Progress: (s = 100 states, t = 100 transitions):
   ttttsttttttsttttttsttttttttsttttttstttttstttttttsttttttttstttttttsttttttttstttttstttttttsttttttttstt 194912s (382x) 1025100t
   tttttsttttttttstttttttstttttttttsttt
 
-Time (ms):          60173
-Space (kB):         53166
+Time (ms):          23027
+Space (kB):         54145
 
 States:       195336
 Transitions:  1028340

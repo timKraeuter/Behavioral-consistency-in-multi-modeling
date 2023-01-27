@@ -1,7 +1,7 @@
 # Prerequisites
 1. A working installation of Maude. Installation instructions can be found [here](https://maude.cs.illinois.edu/w/index.php/Maude_download_and_installation).
    - On machines running windows, Maude can be installed and run inside the [Windows Subsystem for Linux (WSL)](https://docs.microsoft.com/en-us/windows/wsl/install).
-   - The benchmark was run with Maude version **3.2.1** under Ubuntu in the WSL.
+   - The benchmark was run with Maude version **3.1** under Ubuntu in the WSL.
 2. Install the command-line benchmark tool [hyperfine](https://github.com/sharkdp/hyperfine#installation).
    - The benchmark was run with hyperfine version **1.15.0** under Ubuntu in the WSL.
 

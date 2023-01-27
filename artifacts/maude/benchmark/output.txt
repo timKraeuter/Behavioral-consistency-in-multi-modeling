@@ -1,14 +1,14 @@
 		     \||||||||||||||||||/
 		   --- Welcome to Maude ---
 		     /||||||||||||||||||\
-	    Maude 3.2.1 built: Feb 21 2022 18:21:17
-	     Copyright 1997-2022 SRI International
-		   Tue Oct 11 10:25:03 2022
+	     Maude 3.1
+	     Copyright 1997-2020 SRI International
+		   Fri Jan 27 09:06:21 2023
 ==========================================
 search in FINAL-CHECK : systemConfigThreeBuses =>! X .
 
 Solution 1 (state 42712)
-states: 47942  rewrites: 380109 in 4450ms cpu (4442ms real) (85417
+states: 47942  rewrites: 380109 in 1750ms cpu (1751ms real) (217205
     rewrites/second)
 X --> < "A" : FSM | name : "trafficLight",state : "amber" > < "A" :
     BehavioralRelationship | from : "1",to : "A" > < "B" : FSM | name :
@@ -26,7 +26,7 @@ X --> < "A" : FSM | name : "trafficLight",state : "amber" > < "A" :
     state : Running >) >
 
 Solution 2 (state 84910)
-states: 92288  rewrites: 743945 in 8920ms cpu (8915ms real) (83401
+states: 92288  rewrites: 743945 in 3560ms cpu (3555ms real) (208973
     rewrites/second)
 X --> < "A" : FSM | name : "trafficLight",state : "amber" > < "A" :
     BehavioralRelationship | from : "1",to : "A" > < "B" : FSM | name :
@@ -44,7 +44,7 @@ X --> < "A" : FSM | name : "trafficLight",state : "amber" > < "A" :
     subprocesses : none,state : Running >) >
 
 Solution 3 (state 84916)
-states: 92289  rewrites: 743959 in 8920ms cpu (8915ms real) (83403
+states: 92289  rewrites: 743959 in 3560ms cpu (3555ms real) (208977
     rewrites/second)
 X --> < "A" : FSM | name : "trafficLight",state : "amber" > < "A" :
     BehavioralRelationship | from : "1",to : "A" > < "B" : FSM | name :
@@ -63,7 +63,7 @@ X --> < "A" : FSM | name : "trafficLight",state : "amber" > < "A" :
     signals : none,subprocesses : none,state : Running >) >
 
 Solution 4 (state 108559)
-states: 116959  rewrites: 959740 in 11480ms cpu (11473ms real) (83601
+states: 116959  rewrites: 959740 in 4590ms cpu (4588ms real) (209093
     rewrites/second)
 X --> < "A" : FSM | name : "trafficLight",state : "amber" > < "A" :
     BehavioralRelationship | from : "1",to : "A" > < "B" : FSM | name :
@@ -80,7 +80,7 @@ X --> < "A" : FSM | name : "trafficLight",state : "amber" > < "A" :
     tokens : none,signals : none,subprocesses : none,state : Terminated >) >
 
 Solution 5 (state 133585)
-states: 140780  rewrites: 1164104 in 14260ms cpu (14253ms real) (81634
+states: 140780  rewrites: 1164104 in 5670ms cpu (5673ms real) (205309
     rewrites/second)
 X --> < "A" : FSM | name : "trafficLight",state : "amber" > < "A" :
     BehavioralRelationship | from : "1",to : "A" > < "B" : FSM | name :
@@ -98,7 +98,7 @@ X --> < "A" : FSM | name : "trafficLight",state : "amber" > < "A" :
     signals : none,subprocesses : none,state : Running >) >
 
 Solution 6 (state 133591)
-states: 140781  rewrites: 1164118 in 14260ms cpu (14254ms real) (81635
+states: 140781  rewrites: 1164118 in 5670ms cpu (5673ms real) (205311
     rewrites/second)
 X --> < "A" : FSM | name : "trafficLight",state : "amber" > < "A" :
     BehavioralRelationship | from : "1",to : "A" > < "B" : FSM | name :
@@ -118,7 +118,7 @@ X --> < "A" : FSM | name : "trafficLight",state : "amber" > < "A" :
     signals : none,subprocesses : none,state : Running >) >
 
 Solution 7 (state 161905)
-states: 169251  rewrites: 1463079 in 17500ms cpu (17497ms real) (83604
+states: 169251  rewrites: 1463079 in 6970ms cpu (6968ms real) (209910
     rewrites/second)
 X --> < "A" : FSM | name : "trafficLight",state : "amber" > < "A" :
     BehavioralRelationship | from : "1",to : "A" > < "B" : FSM | name :
@@ -136,7 +136,7 @@ X --> < "A" : FSM | name : "trafficLight",state : "amber" > < "A" :
     : Terminated >) >
 
 Solution 8 (state 161957)
-states: 169290  rewrites: 1464045 in 17510ms cpu (17505ms real) (83611
+states: 169290  rewrites: 1464045 in 6970ms cpu (6970ms real) (210049
     rewrites/second)
 X --> < "A" : FSM | name : "trafficLight",state : "amber" > < "A" :
     BehavioralRelationship | from : "1",to : "A" > < "B" : FSM | name :
@@ -156,7 +156,7 @@ X --> < "A" : FSM | name : "trafficLight",state : "amber" > < "A" :
     : Terminated >) >
 
 Solution 9 (state 176706)
-states: 183618  rewrites: 1611317 in 19270ms cpu (19261ms real) (83617
+states: 183618  rewrites: 1611317 in 7690ms cpu (7690ms real) (209534
     rewrites/second)
 X --> < "A" : FSM | name : "trafficLight",state : "amber" > < "A" :
     BehavioralRelationship | from : "1",to : "A" > < "B" : FSM | name :
@@ -173,7 +173,7 @@ X --> < "A" : FSM | name : "trafficLight",state : "amber" > < "A" :
     none,subprocesses : none,state : Terminated >) >
 
 Solution 10 (state 179647)
-states: 186302  rewrites: 1632995 in 19600ms cpu (19594ms real) (83316
+states: 186302  rewrites: 1632995 in 7830ms cpu (7826ms real) (208556
     rewrites/second)
 X --> < "A" : FSM | name : "trafficLight",state : "amber" > < "A" :
     BehavioralRelationship | from : "1",to : "A" > < "B" : FSM | name :
@@ -192,7 +192,7 @@ X --> < "A" : FSM | name : "trafficLight",state : "amber" > < "A" :
     none,state : Running >) >
 
 Solution 11 (state 179653)
-states: 186303  rewrites: 1633009 in 19600ms cpu (19594ms real) (83316
+states: 186303  rewrites: 1633009 in 7830ms cpu (7826ms real) (208557
     rewrites/second)
 X --> < "A" : FSM | name : "trafficLight",state : "amber" > < "A" :
     BehavioralRelationship | from : "1",to : "A" > < "B" : FSM | name :
@@ -213,7 +213,7 @@ X --> < "A" : FSM | name : "trafficLight",state : "amber" > < "A" :
     none,state : Running >) >
 
 Solution 12 (state 201664)
-states: 205860  rewrites: 1829110 in 22100ms cpu (22096ms real) (82765
+states: 205860  rewrites: 1829110 in 8870ms cpu (8873ms real) (206213
     rewrites/second)
 X --> < "A" : FSM | name : "trafficLight",state : "amber" > < "A" :
     BehavioralRelationship | from : "1",to : "A" > < "B" : FSM | name :
@@ -231,7 +231,7 @@ X --> < "A" : FSM | name : "trafficLight",state : "amber" > < "A" :
     subprocesses : none,state : Terminated >) >
 
 Solution 13 (state 201695)
-states: 205883  rewrites: 1829559 in 22100ms cpu (22098ms real) (82785
+states: 205883  rewrites: 1829559 in 8870ms cpu (8874ms real) (206263
     rewrites/second)
 X --> < "A" : FSM | name : "trafficLight",state : "amber" > < "A" :
     BehavioralRelationship | from : "1",to : "A" > < "B" : FSM | name :
@@ -251,7 +251,7 @@ X --> < "A" : FSM | name : "trafficLight",state : "amber" > < "A" :
     subprocesses : none,state : Terminated >) >
 
 Solution 14 (state 214604)
-states: 219083  rewrites: 1995143 in 23720ms cpu (23718ms real) (84112
+states: 219083  rewrites: 1995143 in 9550ms cpu (9546ms real) (208915
     rewrites/second)
 X --> < "A" : FSM | name : "trafficLight",state : "amber" > < "A" :
     BehavioralRelationship | from : "1",to : "A" > < "B" : FSM | name :
@@ -268,7 +268,7 @@ X --> < "A" : FSM | name : "trafficLight",state : "amber" > < "A" :
     : none,signals : none,subprocesses : none,state : Terminated >) >
 
 Solution 15 (state 214672)
-states: 219133  rewrites: 1996604 in 23730ms cpu (23728ms real) (84138
+states: 219133  rewrites: 1996604 in 9550ms cpu (9548ms real) (209068
     rewrites/second)
 X --> < "A" : FSM | name : "trafficLight",state : "amber" > < "A" :
     BehavioralRelationship | from : "1",to : "A" > < "B" : FSM | name :
@@ -287,7 +287,7 @@ X --> < "A" : FSM | name : "trafficLight",state : "amber" > < "A" :
     : none,signals : none,subprocesses : none,state : Terminated >) >
 
 Solution 16 (state 223536)
-states: 227480  rewrites: 2086355 in 24810ms cpu (24809ms real) (84093
+states: 227480  rewrites: 2086355 in 10010ms cpu (10005ms real) (208427
     rewrites/second)
 X --> < "A" : FSM | name : "trafficLight",state : "amber" > < "A" :
     BehavioralRelationship | from : "1",to : "A" > < "B" : FSM | name :
@@ -304,6 +304,6 @@ X --> < "A" : FSM | name : "trafficLight",state : "amber" > < "A" :
     none,state : Terminated >) >
 
 No more solutions.
-states: 260176  rewrites: 2522582 in 29520ms cpu (29519ms real) (85453
+states: 260176  rewrites: 2522582 in 11970ms cpu (11966ms real) (210742
     rewrites/second)
 Bye.
