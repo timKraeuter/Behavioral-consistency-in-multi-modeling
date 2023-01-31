@@ -371,16 +371,7 @@ All special activities, gateways and events are defined in the \gls*{bpmn} speci
 % System relationship metamodel
 Behavioral models \emph{interact} to realize the global system behavior.
 A \gls*{srm} describes which behavioral models exist in the system and whether they are behaviorally related, i.e., they may interact during execution.
-In our approach, we define a system relationship metamodel to formally specify these relationships (see \cref{fig:srm_metamodel_excerpt}).
-
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.45\textwidth]{figures/srm_metamodel_excerpt.pdf}
-    \caption{System relationship metamodel excerpt}
-    \label{fig:srm_metamodel_excerpt}
-\end{figure}
-% Also: Behavioral relationships have multiplicities to restrict possible system configurations. But already known for structural models and thus not relevant here.
-% Behavioral relationships can be n-ary in the future, not only binary.
+In our approach, we define a system relationship metamodel to formally specify these relationships.
 
 We are using a graph-based syntax to define \gls*{srm}s (see \cref{fig:systemRelationshipModel}), where each node corresponds to a behavioral model (typed by a \textsf{BehavioralMetamodel}), while each arrow corresponds to a \textsf{BehavioralRelationship} (see concrete syntax depicted in clouds).
 For example, the \gls*{srm} for the use case (see \cref{fig:systemRelationshipModel}) has three behavioral relationships from \textsf{TJunction} to \textsf{TrafficLight} since a TJunction controller interacts with three different traffic lights A, B, and C.
@@ -454,7 +445,7 @@ To check the behavioral consistency of a system, we are primarily interested in 
 However, global behavior depends not only on the local behavior of the models but also on their interactions.
 Consequently, we call these inter-model relationships \emph{interactions} since they carry behavioral meaning while commonalities carry structural meaning \cite{krauterBehavioralConsistencyHeterogeneous2021}.
 
-To specify interactions between different behavioral models, we defined an interaction language given by the full system relationship metamodel in \cref{fig:srm_metamodel}.
+To specify interactions between different behavioral models, we defined an interaction language given by the system relationship metamodel in \cref{fig:srm_metamodel}.
 In addition, we introduce the concept of \emph{state-changing elements}.
 Each \textsf{BehavioralMetamodel} specifies a set of \textsf{StateChangingElement}s.
 For example, a state machine defines states and transitions, but only the transitions describe how the states in a state machine change.
