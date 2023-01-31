@@ -388,6 +388,11 @@ Different instances of the \gls*{srm} can be used to analyze the global behavior
 \subsection{Specify consistency requirements} \label{subsec:specify_consistency_requirements}
 In this step, we specify behavioral consistency requirements as global behavioral properties.
 These properties are defined using a temporal logic, for example, \gls*{ltl} as in the use case.
+Theoretically any temporal logic can be used together with our approach, however in practice the underlying system which runs the generated specifications must support it.
+Furthermore, we agree with \cite{meyersProMoBoxFrameworkGenerating2014}, that modelers are usually not familiar with temporal logic.
+Thus, lifting property specification to the domain-specific level is a promising idea that fits into our approach \cite{meyersProMoBoxFrameworkGenerating2014}.
+Nevertheless, for now, a modeler must define temporal logic properties.
+
 Temporal logic properties are built upon a set of atomic propositions which are either true or false in a given state.
 Each behavioral language (e.g., the BPMN) specification defines how these states are represented.
 Furthermore, the transitions between these states depend on the semantics of the behavioral models.
@@ -411,8 +416,10 @@ A valid \textsf{position} is the \textsf{id} of a \textsf{FlowElement} (see \cre
 Also, for the snapshot metamodel of \gls*{bpmn} we reuse the concrete syntax of the \gls*{bpmn} metamodel.
 In addition, \textsf{Token}s are highlighted with green bubbles in the middle of sequence flows and the top right of an activity.
 
-Using the snapshot metamodels, one can only specify local behavioral properties.
-To specify global behavioral properties, we combine the information of the \gls*{srm} with the snapshot metamodels.
+Each instance of a snapshot metamodel can represent an atomic propositions, since a system can either be in the state specified by this instance or not.
+Since instances of snapshot metamodels are essentially graphs they can be matched to a given system state in the same way \cite{dacostacavalheiroSpecificationPatternsProperties2012}. 
+Thus, using the snapshot metamodels to create atomic propositions, we can specify local behavioral properties for any modeling language.
+However, to specify global behavioral properties, we must combine the information of the \gls*{srm} with the snapshot metamodels.
 Each behavioral model is typed by a behavioral metamodel, which has a snapshot metamodel describing its state structure.
 Thus, we know how states of behavioral models are represented when they are instantiated.
 For example, \cref{fig:atomic_propositions} shows how to specify the atomic propositions $A_{green}$ and $B1_{passing}$, used in the global properties in \autoref{sec:usecase}.
