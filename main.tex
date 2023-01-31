@@ -67,6 +67,7 @@ Graph transformation
 \newacronym{srm}{SRM}{system relationship model}
 \newacronym{gt}{GT}{graph transformation}
 \newacronym{mt}{MT}{model transformation}
+\newacronym{hot}{HOT}{higher-order model transformation}
 
 % correct bad hyphenation here
 \hyphenation{be-ha-vi-o-ral}
@@ -352,7 +353,8 @@ The traffic light model in \cref{fig:trafficLight} uses this concrete syntax.
 \end{figure}
 
 A \textsf{StateMachine} has a \textsf{startState} and \textsf{transitions}, whereas each \textsf{Transition} connects two \textsf{State}s.
-The states of a state machine are not explicitly modeled but can be derived from the states connected by the transitions of a state machine, assuming no isolated states.
+The states of a state machine are not explicitly modeled but can be derived from the transitions of a state machine.
+Furthermore, isolated states are not allowed.
 
 The metamodel for \gls*{bpmn} (see \cref{fig:bpmn_metamodel}) is defined analogously to the one of state machines. 
 A \gls*{bpmn} \textsf{Process} contains a set of \textsf{FlowNode}s connected by \textsf{SequenceFlow}s.
@@ -558,19 +560,19 @@ We describe consistency checking for the use case and its result at the end of t
 In this section, we will describe our implementation to generate formal specifications in Groove \cite{rensinkGROOVESimulatorTool2004} and Maude \cite{clavelAllMaudeHighPerformance2007}.
 Then, we use the generated specifications to check behavioral consistency for the use case and discuss the results.
 
-Both implementations utilize a \emph{global higher-order \gls*{mt}} from the behavioral models and their interactions to \gls*{gt} rules (Groove) or rewriting rules (Maude).
+Both implementations utilize a \emph{global} \gls*{hot} from the behavioral models and their interactions to \gls*{gt} rules (Groove) or rewriting rules (Maude).
 Since the results of the \gls*{mt} can be regarded as \gls*{mt}s themselves, we say the \gls*{mt} is \textit{higher-order} \cite{tisiUseHigherOrderModel2009}.
-We will now describe this transformation using the term \emph{rules} to mean either \gls*{gt} or rewriting rules.
+We will now describe this \gls*{hot} using the term \emph{rules} to mean either \gls*{gt} or rewriting rules.
 The details specific to each implementation are given in the following sections.
 
-The higher-order \gls*{mt} can be decomposed into two steps.
+The \gls*{hot} can be decomposed into two steps.
 The first step to generate a specification of the global behavior is to generate rules for each behavioral model contained in the multi-model.
 Each set of rules must describe the behavior of the given behavioral model by manipulating instances of the snapshot metamodels.
 For example, a rule for a transition in a state machine changes the current state of a state machine snapshot from the source to the target of the transition. 
 
-Thus, we need \emph{local higher-order \gls*{mt}s} for each behavioral modeling language producing sets of rules.
-Each local higher-order \gls*{mt} only has to be implemented once by an \gls*{mde} tool developer and made available, for example, as a plugin, such that it can then be reused in any future setting the language is needed.
-In addition, each local higher-order \gls*{mt} must keep traces of the generated rules.
+Thus, we need \emph{local} \gls*{hot}s for each behavioral modeling language producing sets of rules.
+Each local \gls*{hot} only has to be implemented once by an \gls*{mde} tool developer and made available, for example, as a plugin, such that it can then be reused in any future setting the language is needed.
+In addition, each local \gls*{hot} must keep traces of the generated rules.
 Concretely, it has to save which rules originated from which state-changing elements in the behavioral model.
 Returning to the state machine example, we must know which transition results in which rule.
 In general, multiple rules may be associated with one state-changing element of a behavioral model.
@@ -615,11 +617,11 @@ Together with a system configuration, i.e., a start graph, we can obtain an exec
 Consequently, this can be used to check behavioral consistency.
 
 We will now explain how the \gls*{gt} rules are generated for the use case.
-To apply our approach to the use case, we need to define local higher-order \gls*{mt}s from state machines and \gls*{bpmn} processes to \gls*{gt} rules.
+To apply our approach to the use case, we need to define local \gls*{hot}s from state machines and \gls*{bpmn} processes to \gls*{gt} rules.
 
 
 \subsubsection{State machine semantics}
-The local higher-order \gls*{mt} to generate \gls*{gt} rules for finite state machines is straightforward.
+The local \gls*{hot} to generate \gls*{gt} rules for finite state machines is straightforward.
 Each transition leads to a \gls*{gt} rule.
 For example, \cref{fig:sm_rule} shows the \gls*{gt} rules for the transition \textsf{turn red-amber} of the traffic light model.
 It uses the concrete syntax introduced in \cref{fig:snapshot_metamodels} to depict state machine snapshots and their current states.
@@ -637,7 +639,7 @@ All generated \gls*{gt} systems, including further instructions regarding execut
 
 
 \subsubsection{BPMN semantics}
-The local higher-order \gls*{mt} to generate \gls*{gt} rules for \gls*{bpmn} processes is challenging, and we are currently only supporting a subset of the \gls*{bpmn} semantics \cite{krauterFormalizationAnalysisBPMN2022}.
+The local \gls*{hot} to generate \gls*{gt} rules for \gls*{bpmn} processes is challenging, and we are currently only supporting a subset of the \gls*{bpmn} semantics \cite{krauterFormalizationAnalysisBPMN2022}.
 Generally, we construct one or more rules for each flow node in a \gls*{bpmn} model.
 \autoref{fig:bpmn_example_rules} shows the \gls*{gt} rules for the task \textsf{Switch to P1} of the TJunction controller.
 It uses the concrete syntax introduced in \cref{fig:snapshot_metamodels} to represent process snapshots containing tokens.
@@ -690,7 +692,7 @@ Furthermore, behavioral relationships, as defined in the interaction, are added 
 Similarly to the process for \gls*{gt} rules, individual rules are deleted.
 
 We will now explain how rewriting rules are generated for the use case.
-To apply our approach to the use case, we need to define local higher-order \gls*{mt}s from state machines and \gls*{bpmn} processes to rewriting rules.
+To apply our approach to the use case, we need to define local \gls*{hot}s from state machines and \gls*{bpmn} processes to rewriting rules.
 
 
 \subsubsection{State machine semantics}
