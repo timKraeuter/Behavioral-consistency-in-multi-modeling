@@ -630,7 +630,7 @@ We depict a \gls*{gt} rule by showing the graph $L$ on the left, $R$ on the righ
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.35\textwidth]{figures/sm_rule.pdf}
-    \caption{\gls*{gt} rule for \emph{turn red-amber}}
+    \caption{\gls*{gt} rules for \emph{turn green} and \emph{turn red}}
     \label{fig:sm_rule}
 \end{figure}
 
@@ -656,11 +656,12 @@ A detailed explanation of the \gls*{gt} rule generation is given in \cite{kraute
 To summarize, we can generate \gls*{gt} systems that implement the behavioral semantics of \gls*{bpmn}.
 
 
-% HERE HERE (Adrian stopped reading here)
 \subsubsection{Check behavioral consistency}
 The defined interactions change the rules for switching to phases 1 and 2.
 \autoref{fig:global_rule} shows the resulting rule for switching to phase 1.
 We decided that the interactions between the traffic lights and the TJunction controller should synchronize with the end of the task, not the start.
+Thus, the rule was constructed using the individual rules \textit{turn green} and \textit{turn red} for traffic lights (see \cref{fig:sm_rule}) and the rule \textit{End Switch to P1} (see \cref{fig:bpmn_example_rules}).
+Exactly these rules were used since they are generated from the state-changing elements specified in the first interaction (see \cref{lst:interactions}).
 
 \begin{figure}[h]
     \centering
