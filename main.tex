@@ -474,6 +474,10 @@ The two roles are not needed for synchronous interactions and are hidden from th
 Furthermore, asynchronous interactions can be modeled using two synchronous interactions with an additional behavioral model, such as a queue.
 Each \textsf{InteractionReceiver} references one \textsf{BehavioralRelationship} and one \textsf{StateChangingElement}.
 
+Adding new interaction types only impacts steps 3.3 and 3.4 in our approach (see \cref{fig:approach}).
+Concretely, a new interaction type has to be added to the enumeration in the system relationship metamodel and must be accounted for in the concrete syntax for interactions.
+Then, the semantics of the new interaction type must be added to the generation of the global behavior specification in step 3.4. 
+
 The \textsf{sender} and the elements of the \textsf{InteractionReceiver}s describe a state change for their behavioral models.
 By connecting them with a synchronous interaction, we define simultaneous state changes in one atomic step. 
 Consequently, an interaction can define a synchronization between behavioral models.
