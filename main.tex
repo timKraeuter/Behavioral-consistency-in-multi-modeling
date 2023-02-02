@@ -68,6 +68,7 @@ Graph transformation
 \newacronym{gt}{GT}{graph transformation}
 \newacronym{mt}{MT}{model transformation}
 \newacronym{hot}{HOT}{higher-order model transformation}
+\newacronym{xdsl}{xDSL}{executable Domain-Specific Language}
 
 % correct bad hyphenation here
 \hyphenation{be-ha-vi-o-ral}
@@ -417,7 +418,7 @@ Also, for the snapshot metamodel of \gls*{bpmn} we reuse the concrete syntax of 
 In addition, \textsf{Token}s are highlighted with green bubbles in the middle of sequence flows and the top right of an activity.
 
 Each instance of a snapshot metamodel can represent an atomic propositions, since a system can either be in the state specified by this instance or not.
-Since instances of snapshot metamodels are essentially graphs they can be matched to a given system state in the same way \cite{dacostacavalheiroSpecificationPatternsProperties2012}. 
+Since instances of snapshot metamodels are essentially graphs they can be matched to a given system state in the same way \cite{dacostacavalheiroSpecificationPatternsProperties2012}.
 Thus, using the snapshot metamodels to create atomic propositions, we can specify local behavioral properties for any modeling language.
 However, to specify global behavioral properties, we must combine the information of the \gls*{srm} with the snapshot metamodels.
 Each behavioral model is typed by a behavioral metamodel, which has a snapshot metamodel describing its state structure.
@@ -855,6 +856,7 @@ However, we refined the behavioral consistency management workflow into five ste
 Moreover, we outlined a general approach for defining atomic propositions, leading to global behavioral properties.
 In addition, our previous work did not support \gls*{bpmn} models and was solely based on \gls*{gt}s.
 
+\subsection{Ad-hoc approaches}
 % Highlight some specific combinations/ad-hoc approaches for a single modeling language.
 The general idea of transforming different behavioral formalisms to a single formalism to reason about cross-cutting concerns is not new, see, e.g., \cite{engelsMethodologySpecifyingAnalyzing2001}.
 For example, \cite{kusterExplicitBehavioralConsistency2003} developed consistency checking for sequence diagrams and statecharts based on \gls*{csp}, while \cite{yaoConsistencyCheckingUML2006} used Petri nets for the same scenario.
@@ -862,6 +864,7 @@ Furthermore, \cite{cunhaFormalVerificationUML2011} analyzes sequence diagrams in
 Nevertheless, all approaches focus on a single modeling language or a fixed combination of two languages.
 Consequently, they do not consider the general problem of behavioral consistency in a heterogeneous modeling scenario.
 
+\subsection{General approaches}
 % Kienzle with event structures
 \cite{kienzleUnifyingFrameworkHomogeneous2019} proposes a unifying framework for homogeneous model composition.
 To combine behavioral models, they use Event structures as an underlying formalism and show how different homogeneous behavioral models can be combined.
@@ -884,6 +887,21 @@ However, both approaches focus on simulation rather than consistency or model-ch
 Neither provides concrete means to define atomic propositions and check global behavioral properties.
 Furthermore, \cite{varalarsenBehavioralCoordinationOperator2015} assumes a fixed system configuration while we can check different system configurations.
 
+\subsection{Co-Simulation/Multi-paradigm modeling}
+
+% I think Ptolemy fits this. In addition fmi/fmu. check leroy paper
+
+\subsection{Behavioral interfaces}
+
+Most behavioral languages are \glspl{xdsl} since they have a well defined execution semantics.
+\cite{leroyBehavioralInterfacesExecutable2020} propose a metalanguage to define behavioral interfaces for \glspl{xdsl}.
+Behavioral interfaces create the opportunity to handle conforming \glspl{xdsl} in a uniform way.
+For example, to define a generic event injector or other reusable tools \cite{leroyBehavioralInterfacesExecutable2020}.
+
+To use our approach with certain behavioral languages, one must identify the state-changing elements for each individual language.
+Thus, state-changing elements resemble a simple behavioral interface which each language in our approach must implement.
+This simple behavioral interface allows us to handle all conforming behavioral languages in a uniform way, when defining interactions.
+Similarly, in B-COoL a user must define a behavioral interface for each language which should be coordinated \cite{varalarsenBCOolBehavioralCoordination2016}.
 
 \section{Conclusion and future work} \label{sec:conclusion_and_future_work}
 % Conclusion
