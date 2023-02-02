@@ -22,6 +22,7 @@ The full GT system in Groove is linked in the section [Groove specification](htt
 
 ## Maude specification
 
+A description how Maude specifications can be used in our approach is available [here](./artifacts/maude//Maude_Specification.pdf). 
 
 ### State machine semantics
 
