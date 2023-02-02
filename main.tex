@@ -100,8 +100,7 @@ The approach introduces a workflow in which we
 Our approach is independent of the particular formalism used in the generated specification, and we currently support graph transformations (Groove) and rewriting logic (Maude).
 \end{abstract}
 
-% TODO: Include after acceptance and helpful feedback.
-% \acknowledgment{We want to thank the anonymous reviewers for their valuable comments and helpful suggestions.}
+\acknowledgment{We want to thank the anonymous reviewers for their valuable comments and helpful suggestions.}
 
 \begin{document}    
 \maketitle
@@ -143,9 +142,9 @@ Afterward, we can use the built-in verification mechanisms in Groove (Maude) to 
 % Paper outline
 The remainder of this paper is structured as follows.
 We introduce a simplified use case (\autoref{sec:usecase}) before explaining our behavioral consistency management approach in detail (\autoref{sec:behavioral_consistency_checking}).
-Afterward, we show how we can use the Groove tool set and the Maude system to check behavioral consistency (\autoref{sec:specification_of_the_global_behavior}).
+Afterward, we show how we can use the graph transformation toolset Groove to check behavioral consistency (\autoref{sec:specification_of_the_global_behavior}).
 Furthermore, we examine related work in \autoref{sec:related_work}.
-Finally, we discuss the state space explosion problem in \autoref{sec:state_space_explosion} and conclude in \autoref{sec:conclusion_and_future_work}.
+Finally, we discuss the inevitable state space explosion problem in \autoref{sec:state_space_explosion} and conclude in \autoref{sec:conclusion_and_future_work}.
 
 
 \section{Use Case} \label{sec:usecase}
@@ -235,7 +234,7 @@ A \gls*{bpmn} model for a bus controller parameterized with the direction A or C
 In addition, the bus controller communicates with the phase 2 subprocess, which we only hint at in \cref{fig:communication}.
 The phase 2 subprocess has the same structure as the phase 1 subprocess but reports that A and C are red, while B is green.
 Similarly, it terminates if green is requested for A or C.
-The full model and all other models are available from \cite{krauterArtifactsBehavioralConsistency2022}.
+The full model and all other models are available from \cite{krauterArtifactsBehavioralConsistency2023}.
 
 Having developed behavioral models for the system, we want to check the previously stated \emph{safe traffic} requirement while buses are prioritized.
 We can lower the overall development cost if we find bugs related to these requirements as early as possible during system development.
@@ -549,7 +548,12 @@ The specification of the global behavior used in our approach must fulfill the f
 Thus, a specification in any formalism fulfilling these three requirements can be used in our approach.
 Consequently, one can experiment with different formalisms, for example, graph transformations, rewriting logic, state machines, Petri nets, or process algebras, without changing the general framework.
 One can then pick the most suitable formalism for the modeling scenario at hand regarding, for example, the performance of consistency checking.
-In \cref{sec:specification_of_the_global_behavior}, we describe how we generate specifications for the graph transformation toolset Groove and the term-rewriting system Maude.
+In \cref{sec:specification_of_the_global_behavior}, we describe how we generate specifications for the graph transformation toolset Groove.
+% focus on groove . visual rules are more understandable
+We have chosen to use the \gls*{gt} formalism to describe our approach.
+\gls*{gt} provide a visual representation of the rules and allow for a clear understanding.
+% Maude description can be found here online.
+Additionally, a description of the term-rewriting implementation in Maude is part of the artifacts of this paper \cite{krauterArtifactsBehavioralConsistency2023}.
 
 To summarize, we generate a specification of the global system behavior.
 This generation takes the models and interactions as input and is fully automated to allow frequent model changes.
@@ -623,7 +627,7 @@ Nodes/edges in $R$ but not in $L$ are added by a rule, while nodes/edges in $L$ 
 Applying a \gls*{gt} system to a given graph, one obtains a state space where each state is a graph, and each transition is a rule application.
 A formal description of \gls*{gt} systems can, for example, be found in \cite{ehrigFundamentalsAlgebraicGraph2006}. % Section 3.1, especially Definition 3.4.
 
-We generate typed \gls*{gt} systems, where the merge of the \gls*{srm} and the snapshot metamodels is the type graph \cite{krauterArtifactsBehavioralConsistency2022}.
+We generate typed \gls*{gt} systems, where the merge of the \gls*{srm} and the snapshot metamodels is the type graph \cite{krauterArtifactsBehavioralConsistency2023}.
 Individual rules and rules changing the global state conform to this type graph.
 Interactions result in global rules which change multiple parts of the global state.
 A global \gls*{gt} rule is calculated by taking the sum of all left-hand sides and right-hand sides of the individual \gls*{gt} rules (implements step 2(b) in \cref{sec:specification_of_the_global_behavior} for Groove) \cite[Definition 3.2.7]{baldanConcurrentSemanticsAlgebraic1999}.
@@ -649,7 +653,7 @@ We depict a \gls*{gt} rule by showing the graph $L$ on the left, $R$ on the righ
 \end{figure}
 
 Using a traffic light snapshot with the state red as a start graph, we generate the same state space in Groove as the traffic light state machine describes.
-All generated \gls*{gt} systems, including further instructions regarding execution and consistency checking, can be found in \cite{krauterArtifactsBehavioralConsistency2022}.
+All generated \gls*{gt} systems, including further instructions regarding execution and consistency checking, can be found in \cite{krauterArtifactsBehavioralConsistency2023}.
 
 
 \subsubsection{BPMN semantics}
@@ -665,7 +669,7 @@ It uses the concrete syntax introduced in \cref{fig:snapshot_metamodels} to repr
     \label{fig:bpmn_example_rules}
 \end{figure}
 
-Due to limited space, we only show the \textsf{Switch to P1} rules but the artifacts of this paper \cite{krauterArtifactsBehavioralConsistency2022} contain the full \gls*{gt} system.
+Due to limited space, we only show the \textsf{Switch to P1} rules but the artifacts of this paper \cite{krauterArtifactsBehavioralConsistency2023} contain the full \gls*{gt} system.
 A detailed explanation of the \gls*{gt} rule generation is given in \cite{krauterFormalizationAnalysisBPMN2022}.
 To summarize, we can generate \gls*{gt} systems that implement the behavioral semantics of \gls*{bpmn}.
 
@@ -689,7 +693,7 @@ The corresponding individual rules no longer exist, so synchronization of the be
 A similar rule exists for switching to phase 2, resulting from the other interaction.
 All other rules are left untouched while constructing the global \gls*{gt} system.
 
-Finally, we can generate the global state space of the system using the global \gls*{gt} system, which can be found in \cite{krauterArtifactsBehavioralConsistency2022}.
+Finally, we can generate the global state space of the system using the global \gls*{gt} system, which can be found in \cite{krauterArtifactsBehavioralConsistency2023}.
 To check the requirements formalized by properties 1-4, we must also encode the used atomic propositions.
 These are specified as \emph{graph conditions} in Groove.
 A graph condition in Groove is a rule that does not change elements but can be used as an atomic proposition in model checking.
@@ -724,7 +728,7 @@ belowskip=-1.5 \baselineskip,
 caption=Maude rule for \emph{turn red-amber}]{figures/trafficLight.maude}
 
 Using Maude's search command and search graph visualization, we can verify that the generated state space conforms to the traffic light state machine.
-The generated Maude specifications and example executions can be found in \cite{krauterArtifactsBehavioralConsistency2022}.
+The generated Maude specifications and example executions can be found in \cite{krauterArtifactsBehavioralConsistency2023}.
 
 \subsubsection{BPMN semantics}
 The rewriting rule generation is similar to the \gls*{gt} rule generation and supports the same subset of \gls*{bpmn} semantics.
@@ -740,7 +744,7 @@ belowskip=-1.5 \baselineskip,
 caption=Example rewriting rules for the TJunction controller]{figures/tJunctionController.maude}
 
 Like the \gls*{gt} rules, the rewriting rules move tokens by changing their position according to the given \gls*{bpmn} model.
-Thus, we can generate Maude rewriting rules that implement the behavioral semantics of the \gls*{bpmn} models in the use case (see \cite{krauterArtifactsBehavioralConsistency2022}).
+Thus, we can generate Maude rewriting rules that implement the behavioral semantics of the \gls*{bpmn} models in the use case (see \cite{krauterArtifactsBehavioralConsistency2023}).
 
 
 \subsubsection{Check behavioral consistency}
@@ -762,7 +766,7 @@ Atomic propositions can be represented in Maude using the encoded \gls*{srm} and
 
 
 \subsection{Behavioral consistency in the use case}
-Both specifications show that properties \eqref{eq:property1} and \eqref{eq:property2} hold, while properties \eqref{eq:property3} and \eqref{eq:property4} do \emph{not} hold (see artifacts in \cite{krauterArtifactsBehavioralConsistency2022}).
+Both specifications show that properties \eqref{eq:property1} and \eqref{eq:property2} hold, while properties \eqref{eq:property3} and \eqref{eq:property4} do \emph{not} hold (see artifacts in \cite{krauterArtifactsBehavioralConsistency2023}).
 The counterexamples for properties 3 and 4 show an unexpected race condition that must be handled:
 After the TJunction controller signals that the traffic light A/B is green, bus B1/B2 can advance to the \textsf{Pass Junction} activity.
 However, simultaneously, the TJunction controller can enter the subprocess for the next phase, which can be interrupted by the associated timer event.
@@ -784,7 +788,7 @@ Four scenarios were benchmarked, starting with the use case multi-model without 
 
 To calculate the average runtime, we used the hyperfine benchmarking tool \cite{peterHyperfine2022} (version 1.15.0), which ran state space exploration for each scenario ten times.
 Timing evaluations were done with an AMD Ryzen 7700X processor and 32 GB of RAM running Maude version 3.1 (inside the Windows Subsystem for Linux) and Groove version 5.8.1.
-A description of how to run the benchmarks is available in \cite{krauterArtifactsBehavioralConsistency2022}.
+A description of how to run the benchmarks is available in \cite{krauterArtifactsBehavioralConsistency2023}.
 
 Generally, the Maude exploration time is lower despite larger state spaces due to technical differences in implementing the \gls*{bpmn} semantics.
 However, as expected, neither of the tools is immune to state space explosion.
