@@ -549,11 +549,6 @@ Thus, a specification in any formalism fulfilling these three requirements can b
 Consequently, one can experiment with different formalisms, for example, graph transformations, rewriting logic, state machines, Petri nets, or process algebras, without changing the general framework.
 One can then pick the most suitable formalism for the modeling scenario at hand regarding, for example, the performance of consistency checking.
 In \cref{sec:specification_of_the_global_behavior}, we describe how we generate specifications for the graph transformation toolset Groove.
-% focus on groove . visual rules are more understandable
-We have chosen to use the \gls*{gt} formalism to describe our approach.
-\gls*{gt} provide a visual representation of the rules and allow for a clear understanding.
-% Maude description can be found here online.
-Additionally, a description of the term-rewriting implementation in Maude is part of the artifacts of this paper \cite{krauterArtifactsBehavioralConsistency2023}.
 
 To summarize, we generate a specification of the global system behavior.
 This generation takes the models and interactions as input and is fully automated to allow frequent model changes.
@@ -575,20 +570,23 @@ We describe consistency checking for the use case and its result at the end of t
 
 
 \section{Specification of the global behavior} \label{sec:specification_of_the_global_behavior}
-In this section, we will describe our implementation to generate formal specifications in Groove \cite{rensinkGROOVESimulatorTool2004} and Maude \cite{clavelAllMaudeHighPerformance2007}.
-Then, we use the generated specifications to check behavioral consistency for the use case and discuss the results.
+In this section, we will describe our implementation to generate formal \gls*{gt} specifications in Groove \cite{rensinkGROOVESimulatorTool2004}.
+Then, we use the generated specification to check behavioral consistency for the use case and discuss the results.
+% focus on groove . visual rules are more understandable
+We have chosen to use the \gls*{gt} formalism to describe our approach because \gls*{gt} provide a visual representation of the rules and allow for a clear understanding.
+% Maude description can be found here online.
+Additionally, a description of the term-rewriting implementation in Maude is part of the artifacts of this paper \cite{krauterArtifactsBehavioralConsistency2023}.
 
-Both implementations utilize a \emph{global} \gls*{hot} from the behavioral models and their interactions to \gls*{gt} rules (Groove) or rewriting rules (Maude).
+Both implementations utilize a \emph{global} \gls*{hot} from the behavioral models and their interactions to \gls*{gt} rules (Groove) or term rewriting rules (Maude).
 Since the results of the \gls*{mt} can be regarded as \gls*{mt}s themselves, we say the \gls*{mt} is \textit{higher-order} \cite{tisiUseHigherOrderModel2009}.
-We will now describe this \gls*{hot} using the term \emph{rules} to mean either \gls*{gt} or rewriting rules.
-The details specific to each implementation are given in the following sections.
+We will now generally describe this \gls*{hot} using \emph{rule} to mean either \gls*{gt} or term rewriting rule depending on the target formalism.
 
 The \gls*{hot} can be decomposed into two steps.
-The first step to generate a specification of the global behavior is to generate rules for each behavioral model contained in the multi-model.
+The first step to generate a specification of the global behavior is to create rules for each behavioral model contained in the multi-model.
 Each set of rules must describe the behavior of the given behavioral model by manipulating instances of the snapshot metamodels.
 For example, a rule for a transition in a state machine changes the current state of a state machine snapshot from the source to the target of the transition. 
 
-Thus, we need \emph{local} \gls*{hot}s for each behavioral modeling language producing sets of rules.
+Thus, we need \emph{local} \gls*{hot}s for each behavioral modeling language producing rules.
 Each local \gls*{hot} only has to be implemented once by an \gls*{mde} tool developer and made available, for example, as a plugin, such that it can then be reused in any future setting the language is needed.
 In addition, each local \gls*{hot} must keep traces of the generated rules.
 Concretely, it has to save which rules originated from which state-changing elements in the behavioral model.
@@ -614,7 +612,7 @@ The merging process to obtain the global rules is done in two steps:
 \Cref{fig:global_rule} shows the global rule resulting from the merging process for graph transformation rules.
 The global rule contains four individual rules changing the state of three traffic lights state machines and one T-Junction \gls*{bpmn} process due to step 2(b).
 In addition, it contains three instances of behavioral relationships connecting the behavioral models as described in step 2(c). 
-In the following sections, we describe in more detail how global rules for interactions are created in Groove and Maude.
+In the following sections, we describe the local \glspl*{hot} to \gls*{gt} rules and how global rules are created from the multiple \gls*{gt} rules.
 
 
 \subsection{Groove specification} 
@@ -628,6 +626,7 @@ Applying a \gls*{gt} system to a given graph, one obtains a state space where ea
 A formal description of \gls*{gt} systems can, for example, be found in \cite{ehrigFundamentalsAlgebraicGraph2006}. % Section 3.1, especially Definition 3.4.
 
 We generate typed \gls*{gt} systems, where the merge of the \gls*{srm} and the snapshot metamodels is the type graph \cite{krauterArtifactsBehavioralConsistency2023}.
+% This is possible since a class diagram can be seen as an attributed type graph with inheritance \cite{heckelGraphTransformationSoftware2020}.
 Individual rules and rules changing the global state conform to this type graph.
 Interactions result in global rules which change multiple parts of the global state.
 A global \gls*{gt} rule is calculated by taking the sum of all left-hand sides and right-hand sides of the individual \gls*{gt} rules (implements step 2(b) in \cref{sec:specification_of_the_global_behavior} for Groove) \cite[Definition 3.2.7]{baldanConcurrentSemanticsAlgebraic1999}.
@@ -698,75 +697,8 @@ To check the requirements formalized by properties 1-4, we must also encode the 
 These are specified as \emph{graph conditions} in Groove.
 A graph condition in Groove is a rule that does not change elements but can be used as an atomic proposition in model checking.
 
-
-\subsection{Maude specification}
-We are using the predefined Maude module for object-based programming to encode the snapshot metamodels in Maude.
-Thus, we can represent state machine snapshots and \gls*{bpmn} process snapshots as objects in Maude.
-In addition, we add behavioral relationships from the \gls*{srm} such that we can instantiate them to create the system configuration described in the use case.
-
-Our Maude rules always rewrite multisets of objects, where individual objects are denoted in angle brackets ($<\cdots>$).
-Interactions lead to rule merges in Maude, where the left and right sides of each rule are added to a global rule (implements step 2(b) in \cref{sec:specification_of_the_global_behavior} for Maude).
-The global rule is a valid Maude rule since the union of two multisets always results in a multiset. 
-Furthermore, behavioral relationships, as defined in the interaction, are added to the rule as additional objects on both sides.
-Similarly to the process for \gls*{gt} rules, individual rules are deleted.
-
-We will now explain how rewriting rules are generated for the use case.
-To apply our approach to the use case, we need to define local \gls*{hot}s from state machines and \gls*{bpmn} processes to rewriting rules.
-
-
-\subsubsection{State machine semantics}
-The generation of rewriting rules is similar to the generation of \gls*{gt} rules.
-Each state machine transition leads to one rewriting rule, which rewrites state machines conforming to the state machine snapshot metamodel.
-\autoref{lst:trafficLightMaude} shows the rewriting rule for the transition \textsf{turn red-amber} of the traffic light model.
-The rewriting rule is equivalent to the \gls*{gt} rule in \cref{fig:sm_rule}.
-
-\lstinputlisting[
-label=lst:trafficLightMaude,
-language=Interaction,
-float=*t,
-belowskip=-1.5 \baselineskip,
-caption=Maude rule for \emph{turn red-amber}]{figures/trafficLight.maude}
-
-Using Maude's search command and search graph visualization, we can verify that the generated state space conforms to the traffic light state machine.
-The generated Maude specifications and example executions can be found in \cite{krauterArtifactsBehavioralConsistency2023}.
-
-\subsubsection{BPMN semantics}
-The rewriting rule generation is similar to the \gls*{gt} rule generation and supports the same subset of \gls*{bpmn} semantics.
-Similarly, one or more rules are constructed for each flow node in a \gls*{bpmn} process, where objects conform to the \gls*{bpmn} snapshot metamodel.
-\Cref{lst:tJunctionControllerMaude} shows the Maude rewriting rules for the task \textsf{Switch to P1} of the TJunction controller.
-The rewriting rules are equivalent to the \gls*{gt} rules in \cref{fig:bpmn_example_rules}.
-
-\lstinputlisting[
-label=lst:tJunctionControllerMaude,
-language=Interaction,
-float=*t,
-belowskip=-1.5 \baselineskip,
-caption=Example rewriting rules for the TJunction controller]{figures/tJunctionController.maude}
-
-Like the \gls*{gt} rules, the rewriting rules move tokens by changing their position according to the given \gls*{bpmn} model.
-Thus, we can generate Maude rewriting rules that implement the behavioral semantics of the \gls*{bpmn} models in the use case (see \cite{krauterArtifactsBehavioralConsistency2023}).
-
-
-\subsubsection{Check behavioral consistency}
-The defined interactions change the rules for switching to phases 1 and 2.
-\Cref{lst:synchRuleMaude} shows the resulting rule for switching to phase 1, where synchronization with the end of the task was chosen.
-The rewriting rule is equivalent to the \gls*{gt} rule in \cref{fig:global_rule}.
-The rule changes all traffic lights simultaneously and finishes the task.
-Similarly, a global rule for switching to phase 2 is created and all individual rules are deleted.
-
-\lstinputlisting[
-label=lst:synchRuleMaude,
-language=Interaction,
-float=*t,
-belowskip=-1.5 \baselineskip,
-caption=Global Maude rule to switch to phase 1]{figures/synch.maude}
-
-Finally, we can use the Maude model checker module to check the requirements formalized by the \gls*{ltl} properties 1-4.
-Atomic propositions can be represented in Maude using the encoded \gls*{srm} and the snapshot metamodels.
-
-
 \subsection{Behavioral consistency in the use case}
-Both specifications show that properties \eqref{eq:property1} and \eqref{eq:property2} hold, while properties \eqref{eq:property3} and \eqref{eq:property4} do \emph{not} hold (see artifacts in \cite{krauterArtifactsBehavioralConsistency2023}).
+Running the obtained \gls*{gt} specification shows that properties \eqref{eq:property1} and \eqref{eq:property2} hold, while properties \eqref{eq:property3} and \eqref{eq:property4} do \emph{not} hold (see artifacts in \cite{krauterArtifactsBehavioralConsistency2023}).
 The counterexamples for properties 3 and 4 show an unexpected race condition that must be handled:
 After the TJunction controller signals that the traffic light A/B is green, bus B1/B2 can advance to the \textsf{Pass Junction} activity.
 However, simultaneously, the TJunction controller can enter the subprocess for the next phase, which can be interrupted by the associated timer event.
@@ -822,7 +754,7 @@ However, as expected, neither of the tools is immune to state space explosion.
  \hline
  1 bus & 3.304 & 19.958 & \textasciitilde 120 ms \\
  \hline
- 2 buses & 35.280 & 27.9776 & \textasciitilde 1.279 ms \\
+ 2 buses & 35.280 & 279.776 & \textasciitilde 1.279 ms \\
  \hline
  3 buses & 260.176 & 2.522.582 & \textasciitilde 12.599 ms \\
  \hline
@@ -861,6 +793,8 @@ This contribution builds on our previous publication \cite{krauterBehavioralCons
 However, we refined the behavioral consistency management workflow into five steps and introduced new concepts such as interactions, behavioral relationships, and state-changing elements (see \gls*{srm}).
 Moreover, we outlined a general approach for defining atomic propositions, leading to global behavioral properties.
 In addition, our previous work did not support \gls*{bpmn} models and was solely based on \gls*{gt}s.
+% Add some intro to the following sections
+% Also clearly scope my work
 
 \subsection{Ad-hoc approaches}
 % Highlight some specific combinations/ad-hoc approaches for a single modeling language.
@@ -868,16 +802,16 @@ The general idea of transforming different behavioral formalisms to a single for
 For example, \cite{kusterExplicitBehavioralConsistency2003} developed consistency checking for sequence diagrams and statecharts based on \gls*{csp}, while \cite{yaoConsistencyCheckingUML2006} used Petri nets for the same scenario.
 Furthermore, \cite{cunhaFormalVerificationUML2011} analyzes sequence diagrams in the context of embedded systems using a transformation to Petri nets.
 Nevertheless, all approaches focus on a single modeling language or a fixed combination of two languages.
-Consequently, they do not consider the general problem of behavioral consistency in a heterogeneous modeling scenario.
+Consequently, they only solve specific problems with ad-hoc solutions but do not consider the general problem of behavioral consistency in a heterogeneous modeling scenario.
 
 \subsection{General approaches}
 % Kienzle with event structures
-\cite{kienzleUnifyingFrameworkHomogeneous2019} proposes a unifying framework for homogeneous model composition.
+\cite{kienzleUnifyingFrameworkHomogeneous2019} proposes a unifying framework for homogeneous model composition of structural and behavioral models.
 To combine behavioral models, they use Event structures as an underlying formalism and show how different homogeneous behavioral models can be combined.
-Nonetheless, they do not apply their approach to heterogeneous models.
-Generally, their approach is compatible with ours since we do not mandate a specific formalism in our approach.
-However, we have chosen \gls*{gt} rules and term rewriting rules as formalisms to use in our approach since they operate on a higher abstraction level.
-In addition, it was shown that many formalisms, for example, the $\pi$-calculus \cite{gadducciGraphRewritingPcalculus2007}, can be implemented using \gls*{gt} rules.
+Nonetheless, they do not apply their approach to heterogeneous models as we deal with in the use case.
+Generally, their approach is compatible with ours since we do not mandate a specific formalism.
+Thus, one could also experiment with Event structures besides the two currently implemented formalisms.
+Since, the research challenges they identify and the resulting work items align well with our work, we see our work as a continuation of \cite{kienzleUnifyingFrameworkHomogeneous2019}.
 
 % B-COoL
 \cite{varalarsenBehavioralCoordinationOperator2015} tackles the problem of coordinating heterogeneous behavioral models.
@@ -889,7 +823,7 @@ Their work also results in plugins for GEMOC studio, which support running and d
 Their approach is implemented in the tool Ptolemy.
 
 % very nice, but only simulation for Ptolemy and no real verification support (LTL model checking and atomic prop definition) in B-COoL/Gemoc.
-However, both approaches focus on simulation rather than consistency or model-checking.
+While both approaches can deal with arbitrary many behavioral models, they focus on simulation rather than consistency or model-checking.
 Neither provides concrete means to define atomic propositions and check global behavioral properties.
 Furthermore, \cite{varalarsenBehavioralCoordinationOperator2015} assumes a fixed system configuration while we can check different system configurations.
 
@@ -908,6 +842,9 @@ To use our approach with certain behavioral languages, one must identify the sta
 Thus, state-changing elements resemble a simple behavioral interface which each language in our approach must implement.
 This simple behavioral interface allows us to handle all conforming behavioral languages in a uniform way, when defining interactions.
 Similarly, in B-COoL a user must define a behavioral interface for each language which should be coordinated \cite{varalarsenBCOolBehavioralCoordination2016}.
+
+
+\subsection{Relations to structural consistency}
 
 \section{Conclusion and future work} \label{sec:conclusion_and_future_work}
 % Conclusion
