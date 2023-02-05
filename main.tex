@@ -64,11 +64,15 @@ Graph transformation
 \newacronym{csp}{CSP}{Communicating Sequential Processes}
 \newacronym{ccsl}{CCSL}{Clock Constraint Specification Language}
 \newacronym{dsl}{DSL}{Domain-Specific Language}
-\newacronym{srm}{SRM}{system relationship model}
-\newacronym{gt}{GT}{graph transformation}
-\newacronym{mt}{MT}{model transformation}
-\newacronym{hot}{HOT}{higher-order model transformation}
+\newacronym{srm}{SRM}{System Relationship Model}
+\newacronym{gt}{GT}{Graph Transformation}
+\newacronym{mt}{MT}{Model Transformation}
+\newacronym{hot}{HOT}{Higher-Order model Transformation}
 \newacronym{xdsl}{xDSL}{executable Domain-Specific Language}
+\newacronym{mpm}{MPM}{Multi-Paradigm Modeling}
+\newacronym{fsm}{FSM}{Finite State Machine}
+\newacronym{dtds}{DTDS}{Discrete Time Discrete State System Specification}
+\newacronym{devs}{DEVS}{Discrete Event System Specification}
 
 % correct bad hyphenation here
 \hyphenation{be-ha-vi-o-ral}
@@ -790,13 +794,16 @@ In our opinion, partial-order reduction must be implemented to analyze models fr
 
 \section{Related work} \label{sec:related_work}
 This contribution builds on our previous publication \cite{krauterBehavioralConsistencyHeterogeneous2021}.
-However, we refined the behavioral consistency management workflow into five steps and introduced new concepts such as interactions, behavioral relationships, and state-changing elements (see \gls*{srm}).
-Moreover, we outlined a general approach for defining atomic propositions, leading to global behavioral properties.
-In addition, our previous work did not support \gls*{bpmn} models and was solely based on \gls*{gt}s.
+However, we refined the behavioral consistency management workflow into five steps and introduced new key concepts such as interactions, behavioral relationships, and state-changing elements (see \gls*{srm}).
 % Add some intro to the following sections
-% Also clearly scope my work
 
-\subsection{Ad-hoc approaches}
+% First ad-hoc
+% General solutions? Problem: Heterogeneous model composiotion
+% MPM: The MPM part nicely scopes my work.
+% Co-Simulatin: Ptolemy and TBD overview paper from Harald.
+% Behavioral interfaces and coordination?
+
+\subsection{Ad-hoc solutions}
 % Highlight some specific combinations/ad-hoc approaches for a single modeling language.
 The general idea of transforming different behavioral formalisms to a single formalism to reason about cross-cutting concerns is not new, see, e.g., \cite{engelsMethodologySpecifyingAnalyzing2001}.
 For example, \cite{kusterExplicitBehavioralConsistency2003} developed consistency checking for sequence diagrams and statecharts based on \gls*{csp}, while \cite{yaoConsistencyCheckingUML2006} used Petri nets for the same scenario.
@@ -804,34 +811,52 @@ Furthermore, \cite{cunhaFormalVerificationUML2011} analyzes sequence diagrams in
 Nevertheless, all approaches focus on a single modeling language or a fixed combination of two languages.
 Consequently, they only solve specific problems with ad-hoc solutions but do not consider the general problem of behavioral consistency in a heterogeneous modeling scenario.
 
-\subsection{General approaches}
-% Kienzle with event structures
+\subsection{Model composition}
+% Kienzle with event structures: composition
 \cite{kienzleUnifyingFrameworkHomogeneous2019} proposes a unifying framework for homogeneous model composition of structural and behavioral models.
 To combine behavioral models, they use Event structures as an underlying formalism and show how different homogeneous behavioral models can be combined.
-Nonetheless, they do not apply their approach to heterogeneous models as we deal with in the use case.
+Nonetheless, they do not apply their approach to heterogeneous models.
 Generally, their approach is compatible with ours since we do not mandate a specific formalism.
 Thus, one could also experiment with Event structures besides the two currently implemented formalisms.
 Since, the research challenges they identify and the resulting work items align well with our work, we see our work as a continuation of \cite{kienzleUnifyingFrameworkHomogeneous2019}.
+However, they focus on composition which is only the first step towards behavioral consistency checking.
 
-% B-COoL
-\cite{varalarsenBehavioralCoordinationOperator2015} tackles the problem of coordinating heterogeneous behavioral models.
-They coordinate the models using their coordination language B-COoL, similar to the interactions we define between behavioral models.
-To execute the models with the specified coordination, they transform them into \gls*{ccsl} models.  
-Their work also results in plugins for GEMOC studio, which support running and debugging the models.
+
+\subsection{Multi-paradigm modeling and Co-Simulation}
+% Introduce MPM. 
+\gls*{mpm} is based on the idea to model every aspect and part of a system using the most appropriate modelling formalism(s) \cite{amraniMultiparadigmModellingCyber2021}.
+Thus, \gls*{mpm} often leads to multi-modeling scenarios where models conforming to different modeling formalisms are used.
+
+These heterogeneous behavioral formalisms can be classified using two criteria: \textit{time} and \textit{values of state variables} \cite{wainerDiscreteeventModelingSimulation2009}.
+\Cref{fig:classification} shows the classification where time and state variables can either be \textit{discrete} or \textit{continous}.
+% Co-Simulation is a subfield of this, i.e., running the models modeled in multiple paradigms together.
+
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=0.49\textwidth]{figures/diagrams-classification.pdf}
+    \caption{Classification of behavioral formalisms according to the nature of the \textit{time} and \textit{state variables} \cite{wainerDiscreteeventModelingSimulation2009, amraniMultiparadigmModellingCyber2021}}
+    \label{fig:classification}
+\end{figure}
+
+% We only support formalisms where states are discrete (lower part).
+So far we have seen \glspl*{dtds} like \gls*{fsm} and \gls*{bpmn} in this work, where time and states are discrete.
+Furthermore, our approach can also support \glspl*{devs} since the underlying formalisms support continuous time, see for example \cite{olveczkyRealTimeMaudeIts2014}.
+
+However, we do not support formalisms with continuous state variables (top part of \cref{fig:classification}), since the central concept of \textit{state-changing elements} would need to be changed.
+We think that supporting \gls*{devs} formalisms is a good trade off between usefulness and complexity of our approach, since \gls*{devs} covers a wide variety of formalisms \cite{vangheluweIntroductionMultiparadigmModelling2002}.
+
+
 % Ptolemy
 \cite{ekerTamingHeterogeneityPtolemy2003} propose an actor-oriented solution to the model composition problem in the presence of heterogeneity.
 Their approach is implemented in the tool Ptolemy.
 
 % very nice, but only simulation for Ptolemy and no real verification support (LTL model checking and atomic prop definition) in B-COoL/Gemoc.
-While both approaches can deal with arbitrary many behavioral models, they focus on simulation rather than consistency or model-checking.
-Neither provides concrete means to define atomic propositions and check global behavioral properties.
 Furthermore, \cite{varalarsenBehavioralCoordinationOperator2015} assumes a fixed system configuration while we can check different system configurations.
+Neither provides concrete means to define atomic propositions and check global behavioral properties.
+% Their goal is simulation not model-checking. Which is probably even harder in continous models.
+% I think Ptolemy fits Co-Similuation. In addition fmi/fmu. check leroy paper
 
-\subsection{Co-Simulation/Multi-paradigm modeling}
-
-% I think Ptolemy fits this. In addition fmi/fmu. check leroy paper
-
-\subsection{Behavioral interfaces}
+\subsection{Behavioral interfaces and coordination}
 
 Most behavioral languages are \glspl{xdsl} since they have a well defined execution semantics.
 \cite{leroyBehavioralInterfacesExecutable2020} propose a metalanguage to define behavioral interfaces for \glspl{xdsl}.
@@ -842,6 +867,9 @@ To use our approach with certain behavioral languages, one must identify the sta
 Thus, state-changing elements resemble a simple behavioral interface which each language in our approach must implement.
 This simple behavioral interface allows us to handle all conforming behavioral languages in a uniform way, when defining interactions.
 Similarly, in B-COoL a user must define a behavioral interface for each language which should be coordinated \cite{varalarsenBCOolBehavioralCoordination2016}.
+They coordinate the models using their coordination language B-COoL, similar to the interactions we define between behavioral models.
+To execute the models with the specified coordination, they transform them into \gls*{ccsl} models.  
+Their work also results in plugins for GEMOC studio, which support running and debugging the models.
 
 
 \subsection{Relations to structural consistency}
