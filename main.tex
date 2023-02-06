@@ -73,6 +73,8 @@ Graph transformation
 \newacronym{fsm}{FSM}{Finite State Machine}
 \newacronym{dtds}{DTDS}{Discrete Time Discrete State System Specification}
 \newacronym{devs}{DEVS}{Discrete Event System Specification}
+\newacronym{fmi}{FMI}{Functional Mock-up Interface}
+\newacronym{fmu}{FMU}{Functional Mock-up Unit}
 
 % correct bad hyphenation here
 \hyphenation{be-ha-vi-o-ral}
@@ -825,7 +827,7 @@ In addition, they cover the same class of behavioral formalisms as our approach 
 However, they focus on composition which is only the first step towards behavioral consistency checking.
 % They also only cover DEVS
 
-\subsection{Multi-paradigm modeling and Co-Simulation}
+\subsection{Multi-paradigm modeling and co-simulation}
 % Introduce MPM. 
 \gls*{mpm} is based on the idea to model every aspect and part of a system using the most appropriate modelling formalism(s) \cite{amraniMultiparadigmModellingCyber2021}.
 Thus, \gls*{mpm} often leads to multi-modeling scenarios where models conforming to different modeling formalisms are used.
@@ -837,7 +839,7 @@ These heterogeneous behavioral formalisms can be classified using two criteria: 
 \begin{figure}[ht!]
     \centering
     \includegraphics[width=0.49\textwidth]{figures/diagrams-classification.pdf}
-    \caption{Classification of behavioral formalisms according to the nature of the \textit{time} and \textit{state variables} \cite{wainerDiscreteeventModelingSimulation2009, amraniMultiparadigmModellingCyber2021}}
+    \caption{Classification of behavioral formalisms according to the nature of the \textit{time} and \textit{state variables} (adopted from \cite{wainerDiscreteeventModelingSimulation2009, amraniMultiparadigmModellingCyber2021})}
     \label{fig:classification}
 \end{figure}
 
@@ -848,16 +850,22 @@ Furthermore, our approach can be applied to \glspl*{devs} since the underlying f
 However, we do not support formalisms with continuous state variables (top part of \cref{fig:classification}), since our central concept of \textit{state-changing elements} would need to be changed.
 We think that supporting \gls*{devs} formalisms is a good trade off between usefulness and complexity of our approach, since \gls*{devs} covers a wide variety of formalisms \cite{vangheluweIntroductionMultiparadigmModelling2002}.
 
-% transition into co-simulation by motivating it 
-Co-Simulation \cite{gomesCoSimulationSurvey2019}
-
+% transition into co-simulation by motivating it
+Due to the use of different modelling formalisms system simulation when following the \gls*{mpm} paradigm is not an easy task.
+Co-Simulation aims to solve this problem by composing the simulation of a system's parts into a global simulation \cite{gomesCoSimulationSurvey2019}.
 % Ptolemy is one co-simulation approach
-\cite{ekerTamingHeterogeneityPtolemy2003} propose an actor-oriented solution to the model composition problem in the presence of heterogeneity.
-Their approach is implemented in the tool Ptolemy.
 
-% FMI/FMU standard should be named. check leroy paper
+For example, \cite{ekerTamingHeterogeneityPtolemy2003} propose an actor-oriented co-simulation approach, where each system part is represented as an actor.
+An actor can communicate through its interfaces with other actors.
+Their approach is implemented in the tool \textit{Ptolemy} and supports continuous time and state variables.
+% FMI/FMU standard
+Furthermore, the \gls*{fmi}\footnote{\url{https://fmi-standard.org/}} is a co-simulation standard to exchange executable systems parts, so called \glspl*{fmu}.
+Each \gls*{fmu}, similar to the actors in Ptolemy, comes with an XML model to describe its interface, for example the \gls*{fmu}'s exposed variables.
+\glspl*{fmu} support continuous time and state variables and are widely used in the industry.
 
-% Their goal is simulation not model-checking. Which is probably even harder in continous models.
+% Their goal is simulation not behavioral consistency checking.
+However, with co-simulations, one can only simulate systems not check global behavioral properties.
+Our approach supports this by introducing a minimal behavioral interface (state and state-changing elements) and only allowing formalisms with discrete state variables.
 \subsection{Behavioral interfaces and coordination}
 
 Most behavioral languages are \glspl{xdsl} since they have a well defined execution semantics.
@@ -872,10 +880,6 @@ Similarly, in B-COoL a user must define a behavioral interface for each language
 They coordinate the models using their coordination language B-COoL, similar to the interactions we define between behavioral models.
 To execute the models with the specified coordination, they transform them into \gls*{ccsl} models.  
 Their work also results in plugins for GEMOC studio, which support running and debugging the models.
-
-
-\subsection{Relations to structural consistency}
-% Needed or expand in the introduction?
 
 \section{Conclusion and future work} \label{sec:conclusion_and_future_work}
 % Conclusion
