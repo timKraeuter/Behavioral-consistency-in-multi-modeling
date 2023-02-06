@@ -848,17 +848,16 @@ Furthermore, our approach can be applied to \glspl*{devs} since the underlying f
 However, we do not support formalisms with continuous state variables (top part of \cref{fig:classification}), since our central concept of \textit{state-changing elements} would need to be changed.
 We think that supporting \gls*{devs} formalisms is a good trade off between usefulness and complexity of our approach, since \gls*{devs} covers a wide variety of formalisms \cite{vangheluweIntroductionMultiparadigmModelling2002}.
 
+% transition into co-simulation by motivating it 
+Co-Simulation \cite{gomesCoSimulationSurvey2019}
 
-% Ptolemy
+% Ptolemy is one co-simulation approach
 \cite{ekerTamingHeterogeneityPtolemy2003} propose an actor-oriented solution to the model composition problem in the presence of heterogeneity.
 Their approach is implemented in the tool Ptolemy.
 
-% very nice, but only simulation for Ptolemy and no real verification support (LTL model checking and atomic prop definition) in B-COoL/Gemoc.
-Furthermore, \cite{varalarsenBehavioralCoordinationOperator2015} assumes a fixed system configuration while we can check different system configurations.
-Neither provides concrete means to define atomic propositions and check global behavioral properties.
-% Their goal is simulation not model-checking. Which is probably even harder in continous models.
-% I think Ptolemy fits Co-Similuation. In addition fmi/fmu. check leroy paper
+% FMI/FMU standard should be named. check leroy paper
 
+% Their goal is simulation not model-checking. Which is probably even harder in continous models.
 \subsection{Behavioral interfaces and coordination}
 
 Most behavioral languages are \glspl{xdsl} since they have a well defined execution semantics.
