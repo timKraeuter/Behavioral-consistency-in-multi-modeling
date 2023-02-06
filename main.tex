@@ -131,10 +131,10 @@ Nevertheless, approaches to multi-model consistency management must also include
 Multi-models consisting of different interacting behavioral models are found, for example, when modeling embedded and cyber-physical systems \cite{varalarsenBehavioralCoordinationOperator2015}.
 
 % Existing solutions. But they are not sufficient!
-Several approaches exist for checking the consistency of pairs of behavioral models.
+Several approaches exist for checking the consistency of specific pairs of behavioral models.
 For example, consistency checking for sequence diagrams and statecharts was implemented using Petri nets \cite{yaoConsistencyCheckingUML2006} and \gls*{csp} \cite{kusterExplicitBehavioralConsistency2003}.
 Moreover, some approaches for model simulation in heterogeneous scenarios have been developed, such as Ptolemy \cite{ekerTamingHeterogeneityPtolemy2003} and B-COoL for GEMOC studio \cite{varalarsenBehavioralCoordinationOperator2015}.
-However, current approaches either only allow for consistency checking of two behavioral models or do not allow for the definition and checking of global behavioral properties.
+However, there is no approach to check \textit{consistency} of \textit{arbitrary many} behavioral models.
 
 % Our approach summarized.
 We propose a novel approach for consistency management of heterogeneous multi-models, which allows us to define and check \emph{global} behavioral properties.
@@ -142,13 +142,14 @@ Our approach facilitates specifying \emph{interactions} between multiple potenti
 Our approach is generally independent of the particular formalism used in the specification, and currently, we can generate specifications in two different formalisms.
 The generation of the global behavior specification is \emph{fully automatic} and results in graph transformation rules (or respectively, term rewriting rules) executable in Groove (Maude).
 Afterward, we can use the built-in verification mechanisms in Groove (Maude) to check the previously defined global behavioral properties.
+Our approach applies to behavioral formalisms where state variables are discrete (see related work in \cref{sec:related_work}).
 
 % Paper outline
 The remainder of this paper is structured as follows.
 We introduce a simplified use case (\autoref{sec:usecase}) before explaining our behavioral consistency management approach in detail (\autoref{sec:behavioral_consistency_checking}).
 Afterward, we show how we can use the graph transformation toolset Groove to check behavioral consistency (\autoref{sec:specification_of_the_global_behavior}).
-Furthermore, we examine related work in \autoref{sec:related_work}.
-Finally, we discuss the inevitable state space explosion problem in \autoref{sec:state_space_explosion} and conclude in \autoref{sec:conclusion_and_future_work}.
+Furthermore, we discuss the inevitable state space explosion problem in \autoref{sec:state_space_explosion}.
+Finally, we examine related work in \autoref{sec:related_work} and conclude in \autoref{sec:conclusion_and_future_work}.
 
 
 \section{Use Case} \label{sec:usecase}
@@ -797,11 +798,11 @@ This contribution builds on our previous publication \cite{krauterBehavioralCons
 However, we refined the behavioral consistency management workflow into five steps and introduced new key concepts such as interactions, behavioral relationships, and state-changing elements (see \gls*{srm}).
 % Add some intro to the following sections
 
-% First ad-hoc
-% General solutions? Problem: Heterogeneous model composiotion
-% MPM: The MPM part nicely scopes my work.
-% Co-Simulatin: Ptolemy and TBD overview paper from Harald.
-% Behavioral interfaces and coordination?
+% First ad-hoc solutions --> Has checking but ad-hoc
+% Model composition in MDE --> Has no checking
+% MPM + Co-Simulation: Ptolemy and TBD overview paper from Harald. --> Has no checking
+% Behavioral interfaces and coordination. Interactions achieved differently
+% Structural consistency???
 
 \subsection{Ad-hoc solutions}
 % Highlight some specific combinations/ad-hoc approaches for a single modeling language.
@@ -815,12 +816,14 @@ Consequently, they only solve specific problems with ad-hoc solutions but do not
 % Kienzle with event structures: composition
 \cite{kienzleUnifyingFrameworkHomogeneous2019} proposes a unifying framework for homogeneous model composition of structural and behavioral models.
 To combine behavioral models, they use Event structures as an underlying formalism and show how different homogeneous behavioral models can be combined.
+
 Nonetheless, they do not apply their approach to heterogeneous models.
 Generally, their approach is compatible with ours since we do not mandate a specific formalism.
 Thus, one could also experiment with Event structures besides the two currently implemented formalisms.
 Since, the research challenges they identify and the resulting work items align well with our work, we see our work as a continuation of \cite{kienzleUnifyingFrameworkHomogeneous2019}.
+In addition, they cover the same class of behavioral formalisms as our approach (see \acrshort*{devs} in the next subsection).
 However, they focus on composition which is only the first step towards behavioral consistency checking.
-
+% They also only cover DEVS
 
 \subsection{Multi-paradigm modeling and Co-Simulation}
 % Introduce MPM. 
@@ -840,9 +843,9 @@ These heterogeneous behavioral formalisms can be classified using two criteria: 
 
 % We only support formalisms where states are discrete (lower part).
 So far we have seen \glspl*{dtds} like \gls*{fsm} and \gls*{bpmn} in this work, where time and states are discrete.
-Furthermore, our approach can also support \glspl*{devs} since the underlying formalisms support continuous time, see for example \cite{olveczkyRealTimeMaudeIts2014}.
+Furthermore, our approach can be applied to \glspl*{devs} since the underlying formalisms support continuous time, see for example \cite{olveczkyRealTimeMaudeIts2014}.
 
-However, we do not support formalisms with continuous state variables (top part of \cref{fig:classification}), since the central concept of \textit{state-changing elements} would need to be changed.
+However, we do not support formalisms with continuous state variables (top part of \cref{fig:classification}), since our central concept of \textit{state-changing elements} would need to be changed.
 We think that supporting \gls*{devs} formalisms is a good trade off between usefulness and complexity of our approach, since \gls*{devs} covers a wide variety of formalisms \cite{vangheluweIntroductionMultiparadigmModelling2002}.
 
 
@@ -873,6 +876,7 @@ Their work also results in plugins for GEMOC studio, which support running and d
 
 
 \subsection{Relations to structural consistency}
+% Needed or expand in the introduction?
 
 \section{Conclusion and future work} \label{sec:conclusion_and_future_work}
 % Conclusion
