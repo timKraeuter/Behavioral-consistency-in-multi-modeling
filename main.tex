@@ -256,7 +256,7 @@ A \gls*{bpmn} model for a bus controller parameterized with the direction A or C
 In addition, the bus controller communicates with the phase 2 subprocess, which we only hint at in \cref{fig:communication}.
 The phase 2 subprocess has the same structure as the phase 1 subprocess but reports that A and C are red, while B is green.
 Similarly, it terminates if green is requested for A or C.
-The full model and all other models are available from \cite{krauterArtifactsBehavioralConsistency2023}.
+The full model and all other models are available in \cite{krauterArtifactsBehavioralConsistency2023}.
 
 Having developed behavioral models for the system, we want to check the previously stated \emph{safe traffic} requirement while buses are prioritized.
 We can lower the overall development cost if we find bugs related to these requirements as early as possible during system development.
@@ -672,7 +672,8 @@ All generated \gls*{gt} systems, including further instructions regarding execut
 
 
 \subsubsection{BPMN semantics}
-The local \gls*{hot} to generate \gls*{gt} rules for \gls*{bpmn} processes is challenging, and we are currently only supporting a subset of the \gls*{bpmn} semantics \cite{krauterFormalizationAnalysisBPMN2022}.
+The local \gls*{hot} to generate \gls*{gt} rules for \gls*{bpmn} processes is challenging, and we are currently only supporting a subset of the \gls*{bpmn} semantics.
+% cite a potential paper explaining the BPMN semantics here.
 Generally, we construct one or more rules for each flow node in a \gls*{bpmn} model.
 \autoref{fig:bpmn_example_rules} shows the \gls*{gt} rules for the task \textsf{Switch to P1} of the TJunction controller.
 It uses the concrete syntax introduced in \cref{fig:snapshot_metamodels} to represent process snapshots containing tokens.
@@ -684,8 +685,7 @@ It uses the concrete syntax introduced in \cref{fig:snapshot_metamodels} to repr
     \label{fig:bpmn_example_rules}
 \end{figure}
 
-Due to limited space, we only show the \textsf{Switch to P1} rules but the artifacts of this paper \cite{krauterArtifactsBehavioralConsistency2023} contain the full \gls*{gt} system.
-A detailed explanation of the \gls*{gt} rule generation is given in \cite{krauterFormalizationAnalysisBPMN2022}.
+Due to limited space, we only show the \textsf{Switch to P1} rules but the artifacts of this paper \cite{krauterArtifactsBehavioralConsistency2023} contain the full \gls*{gt} system and a wiki explaining the \gls*{hot} in detail.
 To summarize, we can generate \gls*{gt} systems that implement the behavioral semantics of \gls*{bpmn}.
 
 
@@ -807,21 +807,19 @@ In our opinion, partial-order reduction must be implemented to analyze models fr
 \section{Related work} \label{sec:related_work}
 This contribution builds on our previous publication \cite{krauterBehavioralConsistencyHeterogeneous2021}.
 However, we refined the behavioral consistency management workflow into five steps and introduced new key concepts such as interactions, behavioral relationships, and state-changing elements (see \gls*{srm}).
-% Add some intro to the following sections
 
-% First ad-hoc solutions --> Has checking but ad-hoc
-% Model composition in MDE --> Has no checking
-% MPM + Co-Simulation: Ptolemy and TBD overview paper from Harald. --> Has no checking
-% Behavioral interfaces and coordination. Interactions achieved differently
-% Structural consistency???
+% Intro to the following sections
+First, we discuss ad-hoc solutions to the problem of behavioral consistency.
+Then, we look at a general framework to compose heterogeneous models.
+Afterwards, we relate our work to the fields of \gls*{mpm} and co-simulation.
+Finally, we refer to the literature on behavioral interfaces and coordination languages.
 
 \subsection{Ad-hoc solutions}
 % Highlight some specific combinations/ad-hoc approaches for a single modeling language.
 The general idea of transforming different behavioral formalisms to a single formalism to reason about cross-cutting concerns is not new, see, e.g., \cite{engelsMethodologySpecifyingAnalyzing2001}.
 For example, \cite{kusterExplicitBehavioralConsistency2003} developed consistency checking for sequence diagrams and statecharts based on \gls*{csp}, while \cite{yaoConsistencyCheckingUML2006} used Petri nets for the same scenario.
-Furthermore, \cite{cunhaFormalVerificationUML2011} analyzes sequence diagrams in the context of embedded systems using a transformation to Petri nets.
-Nevertheless, all approaches focus on a single modeling language or a fixed combination of two languages.
-Consequently, they only solve specific problems with ad-hoc solutions but do not consider the general problem of behavioral consistency in a heterogeneous modeling scenario.
+Nevertheless, the approaches only resemble ad-hoc solutions to specific combinations of two languages.
+They do not consider the general problem of behavioral consistency in a heterogeneous modeling scenario.
 
 \subsection{Model composition}
 % Kienzle with event structures: composition
@@ -892,7 +890,8 @@ Their work also results in plugins for GEMOC studio, which support running and d
 \section{Conclusion and future work} \label{sec:conclusion_and_future_work}
 % Conclusion
 Our work represents a first formalization of behavioral consistency management in a heterogeneous modeling scenario, enabling formulating and checking \emph{global} properties.
-Previous work either only dealt with the behavioral consistency between specific pairs of models \cite{yaoConsistencyCheckingUML2006, kusterExplicitBehavioralConsistency2003} or focused on the simulation in a heterogeneous scenario \cite{ekerTamingHeterogeneityPtolemy2003, varalarsenBehavioralCoordinationOperator2015}.
+Previous work either only dealt with the behavioral consistency between specific pairs of models or focused on the simulation in a heterogeneous scenario.
+% Reiterate the novelty regarding a minimal behavioral interface for consistency checking and interactions!
 
 Our approach follows five key steps (see \cref{fig:approach}).
 % Describe the five steps
@@ -909,7 +908,7 @@ The successful implementation shows that our approach can work with different un
 Furthermore, we discussed the state space explosion problem and how it can be mitigated.
 
 In future work, we plan to extend our implementation to support more behavioral formalisms such as activity diagrams, hierarchical state machines, and the $\pi$-calculus.
-Especially integrating the $\pi$-calculus, which was formalized using \gls*{gt} systems in \cite{gadducciGraphRewritingPcalculus2007}, will be beneficial since it is profoundly different from the currently supported formalisms.
+In addition, we aim to apply the approach to real-life industrial case studies.
 
 % Data transfer
 Furthermore, two systems often exchange data while interacting, for example, using name-passing or messaging.
