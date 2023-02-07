@@ -128,6 +128,10 @@ Consequently, continuous multi-model consistency management during the developme
 Recent research describes methods to check the structural consistency of a multi-model \cite{stunkelComprehensiveSystemsFormal2021, klareCommonalitiesPreservingConsistency2019}.
 Structural models, like UML class diagrams, describe structural aspects of systems, i.e., domain concepts and relations between these concepts.
 This is usually referred to as the denotational semantics of the software system, as it only describes the set of valid instances or states of the system.
+Structural models in a multi-model often contain related information.
+Thus, current approaches define so-called \emph{commonalities} to explicate these relationships and keep the information consistent.
+Afterwards, these commonalities can be used to get a comprehensive view of the global system, for example by \textit{merging} all models into a global view.
+Structural consistency can then be verified using the global view.
 % Challenge: Consistency for a set of behavioral models.
 Nevertheless, approaches to multi-model consistency management must also include a means to maintain \emph{behavioral consistency} since behavioral models, like \gls*{bpmn} models, are associated with execution semantics describing dynamic aspects of the system \cite{objectmanagementgroupUnifiedModelingLanguage2017, objectmanagementgroupBusinessProcessModel2013}.
 Multi-models consisting of different interacting behavioral models are found, for example, when modeling embedded and cyber-physical systems \cite{varalarsenBehavioralCoordinationOperator2015}.
@@ -135,16 +139,24 @@ Multi-models consisting of different interacting behavioral models are found, fo
 % Existing solutions. But they are not sufficient!
 Several approaches exist for checking the consistency of specific pairs of behavioral models.
 For example, consistency checking for sequence diagrams and statecharts was implemented using Petri nets \cite{yaoConsistencyCheckingUML2006} and \gls*{csp} \cite{kusterExplicitBehavioralConsistency2003}.
-Moreover, some approaches for model simulation in heterogeneous scenarios have been developed, such as Ptolemy \cite{ekerTamingHeterogeneityPtolemy2003} and B-COoL for GEMOC studio \cite{varalarsenBehavioralCoordinationOperator2015}.
-However, there is no approach to check \textit{consistency} of \textit{arbitrary many} behavioral models.
+Moreover, the co-simulation field tackles the simulation of interacting models by composing their individual simulations.
+For example by developing the \gls*{fmi} standard and implementing simulation tools such as Ptolemy \cite{ekerTamingHeterogeneityPtolemy2003}.
+However, there is no approach to define and check \textit{consistency} of \textit{arbitrary many} behavioral models.
 
 % Our approach summarized.
 We propose a novel approach for consistency management of heterogeneous multi-models, which allows us to define and check \emph{global} behavioral properties.
 Our approach facilitates specifying \emph{interactions} between multiple potentially heterogeneous behavioral models, which are in turn used to generate a specification of the global behavior.
-Our approach is generally independent of the particular formalism used in the specification, and currently, we can generate specifications in two different formalisms.
+The approach is generally independent of the particular formalism used in the specification, and currently, we can generate specifications in two different formalisms.
 The generation of the global behavior specification is \emph{fully automatic} and results in graph transformation rules (or respectively, term rewriting rules) executable in Groove (Maude).
 Afterward, we can use the built-in verification mechanisms in Groove (Maude) to check the previously defined global behavioral properties.
 Our approach applies to behavioral formalisms where state variables are discrete (see related work in \cref{sec:related_work}).
+
+% Our approach related to structural consistency
+The proposed approach partly resembles the state of the art approaches for structural consistency.
+Interactions correspond to commonalities as both add necessary inter-model information.
+Then, a global representation of the system's behavior/structure is constructed by composing the individual models using the interaction/commonality information.
+The generation of a global behavior specification is similar to merging structural models into a global view.
+Generally, we adapt the three steps for structural consistency management: Alignment, Verification and Reconciliation as proposed in \cite{stunkelComprehensiveSystemsFormal2021} to a multi-model containing behavioral models.
 
 % Paper outline
 The remainder of this paper is structured as follows.
@@ -335,7 +347,7 @@ Our approach consists of five steps.
     \item We automatically generate a specification of the specified global behavior using the interactions and the \gls*{srm}.
     \item Given a system configuration, we check the global behavioral properties using the generated specification.
 \end{enumerate}
-The behavioral consistency management workflow potentially uncovers violations, describing counter-examples in which the global behavioral properties are not valid.
+The behavioral consistency management workflow potentially uncovers violations, describing counterexamples in which the global behavioral properties are not valid.
 In the following sections, we will describe each step in detail.
 In addition, \cref{fig:allConcepts} at the end of the paper, gives an overview of all the new concepts and how they are applied to the use case.
 
@@ -454,13 +466,7 @@ It is worth noting that the defined atomic propositions are \emph{model-specific
 
 
 \subsection{Define model interactions}
-Structural models in a multi-model might contain related information.
-Thus, current approaches define so-called \emph{commonalities} to explicate these relationships and keep the information consistent \cite{stunkelComprehensiveSystemsFormal2021,klareCommonalitiesPreservingConsistency2019}.
-
-To check the behavioral consistency of a system, we are primarily interested in global system behavior.
-However, global behavior depends not only on the local behavior of the models but also on their interactions.
-Consequently, we call these inter-model relationships \emph{interactions} since they carry behavioral meaning while commonalities carry structural meaning \cite{krauterBehavioralConsistencyHeterogeneous2021}.
-
+We call behavioral inter-model relationships \emph{interactions} since they carry behavioral meaning while commonalities carry structural meaning \cite{stunkelComprehensiveSystemsFormal2021, klareCommonalitiesPreservingConsistency2019}.
 To specify interactions between different behavioral models, we defined an interaction language given by the system relationship metamodel in \cref{fig:srm_metamodel}.
 In addition, we introduce the concept of \emph{state-changing elements}.
 Each \textsf{BehavioralMetamodel} specifies a set of \textsf{StateChangingElement}s.
@@ -832,7 +838,7 @@ However, they focus on composition which is only the first step towards behavior
 \gls*{mpm} is based on the idea to model every aspect and part of a system using the most appropriate modelling formalism(s) \cite{amraniMultiparadigmModellingCyber2021}.
 Thus, \gls*{mpm} often leads to multi-modeling scenarios where models conforming to different modeling formalisms are used.
 
-These heterogeneous behavioral formalisms can be classified using two criteria: \textit{time} and \textit{values of state variables} \cite{wainerDiscreteeventModelingSimulation2009}.
+Different behavioral formalisms can be classified using two criteria: \textit{time} and \textit{values of state variables} \cite{wainerDiscreteeventModelingSimulation2009}.
 \Cref{fig:classification} shows the classification where time and state variables can either be \textit{discrete} or \textit{continous}.
 % Co-Simulation is a subfield of this, i.e., running the models modeled in multiple paradigms together.
 
@@ -844,9 +850,8 @@ These heterogeneous behavioral formalisms can be classified using two criteria: 
 \end{figure}
 
 % We only support formalisms where states are discrete (lower part).
-So far we have seen \glspl*{dtds} like \gls*{fsm} and \gls*{bpmn} in this work, where time and states are discrete.
+So far we have seen \glspl*{dtds} like \gls*{fsm} and \gls*{bpmn} in this work, where time and state variables are discrete.
 Furthermore, our approach can be applied to \glspl*{devs} since the underlying formalisms support continuous time, see for example \cite{olveczkyRealTimeMaudeIts2014}.
-
 However, we do not support formalisms with continuous state variables (top part of \cref{fig:classification}), since our central concept of \textit{state-changing elements} would need to be changed.
 We think that supporting \gls*{devs} formalisms is a good trade off between usefulness and complexity of our approach, since \gls*{devs} covers a wide variety of formalisms \cite{vangheluweIntroductionMultiparadigmModelling2002}.
 
