@@ -119,7 +119,7 @@ Our approach is independent of the particular formalism used in the generated sp
 In this way, \gls*{mde} promotes a clear separation of concerns and raises the abstraction level throughout the entire development process \cite{franceModeldrivenDevelopmentComplex2007}.
 These models are then used to generate portions of the system leading to an increase in productivity and reduction of errors \cite{brambillaModeldrivenSoftwareEngineering2017}.
 As multiple interacting systems are needed to realize the requirements of complex domains, a set of corresponding models would be needed to represent these systems and their interactions.
-Such a collection of inter-related models is referred to as a \emph{multi-model} \cite{boronatWhatMultimodelingLanguage2009, stunkelComprehensiveSystemsFormal2021}, which is usually heterogeneous, meaning it consists of models conforming to different modeling languages.
+Such a collection of inter-related models is referred to as a \emph{multi-model} \cite{boronatWhatMultimodelingLanguage2009}, which is usually heterogeneous, meaning it consists of models conforming to different modeling languages.
 % Consistency in multi-modeling
 Models in a multi-model contradicting each other can lead to problems during development, system generation, and system execution.
 Consequently, continuous multi-model consistency management during the development process is a significant issue for multi-models \cite{spanoudakisInconsistencyManagementSoftware2001, cicchettiMultiviewApproachesSoftware2019}.
@@ -132,8 +132,9 @@ Structural models in a multi-model often contain related information.
 Thus, current approaches define so-called \emph{commonalities} to explicate these relationships and keep the information consistent.
 Afterwards, these commonalities can be used to get a comprehensive view of the global system, for example by \textit{merging} all models into a global view.
 Structural consistency can then be verified using the global view.
+
 % Challenge: Consistency for a set of behavioral models.
-Nevertheless, approaches to multi-model consistency management must also include a means to maintain \emph{behavioral consistency} since behavioral models, like \gls*{bpmn} models, are associated with execution semantics describing dynamic aspects of the system \cite{objectmanagementgroupUnifiedModelingLanguage2017, objectmanagementgroupBusinessProcessModel2013}.
+Nevertheless, approaches to multi-model consistency management must also include a means to maintain \emph{behavioral consistency} since behavioral models, like \gls*{bpmn} models, are associated with execution semantics describing dynamic aspects of the system \cite{objectmanagementgroupBusinessProcessModel2013}.
 Multi-models consisting of different interacting behavioral models are found, for example, when modeling embedded and cyber-physical systems \cite{varalarsenBehavioralCoordinationOperator2015}.
 
 % Existing solutions. But they are not sufficient!
@@ -141,7 +142,7 @@ Several approaches exist for checking the consistency of specific pairs of behav
 For example, consistency checking for sequence diagrams and statecharts was implemented using Petri nets \cite{yaoConsistencyCheckingUML2006} and \gls*{csp} \cite{kusterExplicitBehavioralConsistency2003}.
 Moreover, the co-simulation field tackles the simulation of interacting models by composing their individual simulations.
 For example by developing the \gls*{fmi} standard and implementing simulation tools such as Ptolemy \cite{ekerTamingHeterogeneityPtolemy2003}.
-However, there is no approach to define and check \textit{consistency} of \textit{arbitrary many} behavioral models.
+However, there is no approach to define and \textit{check consistency} of \textit{arbitrary many} behavioral models.
 
 % Our approach summarized.
 We propose a novel approach for consistency management of heterogeneous multi-models, which allows us to define and check \emph{global} behavioral properties.
@@ -156,6 +157,8 @@ The proposed approach partly resembles the state of the art approaches for struc
 Interactions correspond to commonalities as both add necessary inter-model information.
 Then, a global representation of the system's behavior/structure is constructed by composing the individual models using the interaction/commonality information.
 The generation of a global behavior specification is similar to merging structural models into a global view.
+To achieve a global view for structural models they introduce a base language in which individual models and the global view can be represented.
+Likewise, generating our global behavior specification is based on the two key concepts of state and state-changing elements.
 Generally, we adapt the three steps for structural consistency management: Alignment, Verification and Reconciliation as proposed in \cite{stunkelComprehensiveSystemsFormal2021} to a multi-model containing behavioral models.
 
 % Paper outline
