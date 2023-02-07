@@ -397,6 +397,7 @@ All special activities, gateways and events are defined in the \gls*{bpmn} speci
 Behavioral models \emph{interact} to realize the global system behavior.
 A \gls*{srm} describes which behavioral models exist in the system and whether they are behaviorally related, i.e., they may interact during execution.
 In our approach, we define a system relationship metamodel to formally specify these relationships.
+The constructed \gls*{srm} is use-case specific, while the metamodels for the participating languages must only be defined once.
 
 We are using a graph-based syntax to define \gls*{srm}s (see \cref{fig:systemRelationshipModel}), where each node corresponds to a behavioral model (typed by a \textsf{BehavioralMetamodel}), while each arrow corresponds to a \textsf{BehavioralRelationship} (see concrete syntax depicted in clouds).
 For example, the \gls*{srm} for the use case (see \cref{fig:systemRelationshipModel}) has three behavioral relationships from \textsf{TJunction} to \textsf{TrafficLight} since a TJunction controller interacts with three different traffic lights A, B, and C.
@@ -407,13 +408,12 @@ In addition, we allow enumerations and attributes in \gls*{srm}s.
 These may be used as parameters, e.g., to define the start state in a state machine (see \cref{fig:systemRelationshipModel}).
 Different instances of the \gls*{srm} can be used to analyze the global behavior of \emph{different} system configurations by changing the parameters.
 
-
 \subsection{Specify consistency requirements} \label{subsec:specify_consistency_requirements}
 In this step, we specify behavioral consistency requirements as global behavioral properties.
 These properties are defined using a temporal logic, for example, \gls*{ltl} as in the use case.
 Theoretically any temporal logic can be used together with our approach, however in practice the underlying system which runs the generated specifications must support it.
 Furthermore, we agree with \cite{meyersProMoBoxFrameworkGenerating2014}, that modelers are usually not familiar with temporal logic.
-Thus, lifting property specification to the domain-specific level is a promising idea that fits into our approach \cite{meyersProMoBoxFrameworkGenerating2014}.
+Thus, lifting property specification to the domain-specific level is a promising idea that fits into our approach.
 Nevertheless, for now, a modeler must define temporal logic properties.
 
 Temporal logic properties are built upon a set of atomic propositions which are either true or false in a given state.
@@ -467,7 +467,7 @@ For example, \cref{fig:atomic_propositions_concrete} shows the same atomic propo
 
 With the defined atomic propositions as ingredients, one can use temporal logic to define global behavioral properties such as the properties \eqref{eq:property1}-\eqref{eq:property4} in \autoref{sec:usecase}.
 It is worth noting that the defined atomic propositions are \emph{model-specific}, meaning they exactly fit the given multi-model.
-
+Thus, property definition (including atomic propositions) is done for each use case, while snapshot metamodels for behavioral languages must only be defined once.
 
 \subsection{Define model interactions}
 We call behavioral inter-model relationships \emph{interactions} since they carry behavioral meaning while commonalities carry structural meaning \cite{stunkelComprehensiveSystemsFormal2021, klareCommonalitiesPreservingConsistency2019}.
@@ -481,7 +481,7 @@ The interaction of behavioral models is only possible through instances of the \
 
 Our approach is based on the requirement that state-changing elements can be identified in metamodels for any behavioral formalism.
 This requirement is not difficult to meet since behavioral modeling languages must have some \textit{observable} construct to describe state changes.
-Inspecting other behavioral languages, such as Petri Nets or \gls*{uml} activity diagrams, shows that identifying state-changing elements (transitions, activity nodes) is unproblematic. 
+Inspecting other behavioral languages, such as Petri Nets or activity diagrams, shows that identifying state-changing elements (transitions, activity nodes) is unproblematic. 
 
 \begin{figure}[h]
     \centering
@@ -551,7 +551,7 @@ The second interaction defines a synchronization for the task \textsf{Switch to 
 
 To summarize, we use the system relationship metamodel to define the relations between the behavioral models in a multi-model.
 Thus, the inter-relations between behavioral models in a multi-model are given by interactions and their behavioral relationships.
-
+Interactions are specific to each use case but identifying state-changing elements for a behavioral language must only be done once.
 
 \subsection{Generate a global behavior specification}
 Using the \gls*{srm} and snapshot metamodels, we can represent the global states of the system.
@@ -591,7 +591,7 @@ In this section, we will describe our implementation to generate formal \gls*{gt
 Then, we use the generated specification to check behavioral consistency for the use case and discuss the results.
 % focus on groove . visual rules are more understandable
 We have chosen to use the \gls*{gt} formalism to describe our approach because \gls*{gt} provide a visual representation of the rules and allow for a clear understanding.
-% Maude description can be found here online.
+% Maude description can be found online.
 Additionally, a description of the term-rewriting implementation in Maude is part of the artifacts of this paper \cite{krauterArtifactsBehavioralConsistency2023}.
 
 Both implementations utilize a \emph{global} \gls*{hot} from the behavioral models and their interactions to \gls*{gt} rules (Groove) or term rewriting rules (Maude).
