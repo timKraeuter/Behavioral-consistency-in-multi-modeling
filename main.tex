@@ -148,7 +148,7 @@ However, there is no approach to define and \textit{check consistency} of \texti
 We propose a novel approach for consistency management of heterogeneous multi-models, which allows us to define and check \emph{global} behavioral properties.
 Our approach facilitates specifying \emph{interactions} between multiple potentially heterogeneous behavioral models, which are in turn used to generate a specification of the global behavior.
 The approach is generally independent of the particular formalism used in the specification, and currently, we can generate specifications in two different formalisms.
-The generation of the global behavior specification is \emph{fully automatic} and results in graph transformation rules (or respectively, term rewriting rules) executable in Groove (Maude).
+The generation of the global behavior specification is \emph{fully automatic} and results in \gls*{gt} rules (or respectively, term rewriting rules) executable in Groove (Maude).
 Afterward, we can use the built-in verification mechanisms in Groove (Maude) to check the previously defined global behavioral properties.
 Our approach applies to behavioral formalisms where state variables are discrete (see related work in \cref{sec:related_work}).
 
@@ -164,7 +164,7 @@ Generally, we adapt the three steps for structural consistency management: Align
 % Paper outline
 The remainder of this paper is structured as follows.
 We introduce a simplified use case (\autoref{sec:usecase}) before explaining our behavioral consistency management approach in detail (\autoref{sec:behavioral_consistency_checking}).
-Afterward, we show how we can use the graph transformation toolset Groove to check behavioral consistency (\autoref{sec:specification_of_the_global_behavior}).
+Afterward, we show how we can use the \gls*{gt} toolset Groove to check behavioral consistency (\autoref{sec:specification_of_the_global_behavior}).
 Furthermore, we discuss the inevitable state space explosion problem in \autoref{sec:state_space_explosion}.
 Finally, we examine related work in \autoref{sec:related_work} and conclude in \autoref{sec:conclusion_and_future_work}.
 
@@ -563,9 +563,9 @@ The specification of the global behavior used in our approach must fulfill the f
     \item The specification semantics must allow the checking of behavioral properties for a given system configuration.
 \end{enumerate}
 Thus, a specification in any formalism fulfilling these three requirements can be used in our approach.
-Consequently, one can experiment with different formalisms, for example, graph transformations, rewriting logic, state machines, Petri nets, or process algebras, without changing the general framework.
+Consequently, one can experiment with different formalisms, for example, \glspl*{gt}, rewriting logic, state machines, Petri nets, or process algebras, without changing the general framework.
 One can then pick the most suitable formalism for the modeling scenario at hand regarding, for example, the performance of consistency checking.
-In \cref{sec:specification_of_the_global_behavior}, we describe how we generate specifications for the graph transformation toolset Groove.
+In \cref{sec:specification_of_the_global_behavior}, we describe how we generate specifications for the \gls*{gt} toolset Groove.
 
 To summarize, we generate a specification of the global system behavior.
 This generation takes the models and interactions as input and is fully automated to allow frequent model changes.
@@ -587,24 +587,26 @@ We describe consistency checking for the use case and its result at the end of t
 
 
 \section{Specification of the global behavior} \label{sec:specification_of_the_global_behavior}
-In this section, we will describe our implementation to generate formal \gls*{gt} specifications in Groove \cite{rensinkGROOVESimulatorTool2004}.
+In this section, we will describe our implementation to generate formal \gls*{gt} specifications for Groove \cite{rensinkGROOVESimulatorTool2004}.
 Then, we use the generated specification to check behavioral consistency for the use case and discuss the results.
 % focus on groove . visual rules are more understandable
-We have chosen to use the \gls*{gt} formalism to describe our approach because \gls*{gt} provide a visual representation of the rules and allow for a clear understanding.
+We have chosen to use the \gls*{gt} formalism to describe our approach because \glspl*{gt} provide a visual representation and allow for a clearer understanding.
 % Maude description can be found online.
 Additionally, a description of the term-rewriting implementation in Maude is part of the artifacts of this paper \cite{krauterArtifactsBehavioralConsistency2023}.
 
 Both implementations utilize a \emph{global} \gls*{hot} from the behavioral models and their interactions to \gls*{gt} rules (Groove) or term rewriting rules (Maude).
 Since the results of the \gls*{mt} can be regarded as \gls*{mt}s themselves, we say the \gls*{mt} is \textit{higher-order} \cite{tisiUseHigherOrderModel2009}.
-We will now generally describe this \gls*{hot} using \emph{rule} to mean either \gls*{gt} or term rewriting rule depending on the target formalism.
+In the following, we describe the \gls*{hot} to generate \gls*{gt} specifications for Groove.
+The \gls*{hot} works similarly when generating a term-rewriting specification for Maude.
 
 The \gls*{hot} can be decomposed into two steps.
-The first step to generate a specification of the global behavior is to create rules for each behavioral model contained in the multi-model.
+The first step to generate a specification of the global behavior is to create \gls*{gt} rules for each behavioral model contained in the multi-model.
 Each set of rules must describe the behavior of the given behavioral model by manipulating instances of the snapshot metamodels.
 For example, a rule for a transition in a state machine changes the current state of a state machine snapshot from the source to the target of the transition. 
 
 Thus, we need \emph{local} \gls*{hot}s for each behavioral modeling language producing rules.
-Each local \gls*{hot} only has to be implemented once by an \gls*{mde} tool developer and made available, for example, as a plugin, such that it can then be reused in any future setting the language is needed.
+Each local \gls*{hot} only has to be implemented once by an \gls*{mde} tool developer.
+The \gls*{hot}, metamodel and snapshot metamodel for a behavioral language can be shared together, for example, as a plugin, such that they can be reused in any future setting the language is needed.
 In addition, each local \gls*{hot} must keep traces of the generated rules.
 Concretely, it has to save which rules originated from which state-changing elements in the behavioral model.
 Returning to the state machine example, we must know which transition results in which rule.
@@ -626,15 +628,15 @@ The merging process to obtain the global rules is done in two steps:
      \end{enumerate}
 \end{enumerate}
 
-\Cref{fig:global_rule} shows the global rule resulting from the merging process for graph transformation rules.
+\Cref{fig:global_rule} shows the global rule resulting from the merging process for \gls*{gt} rules.
 The global rule contains four individual rules changing the state of three traffic lights state machines and one T-Junction \gls*{bpmn} process due to step 2(b).
 In addition, it contains three instances of behavioral relationships connecting the behavioral models as described in step 2(c). 
-In the following sections, we describe the local \glspl*{hot} to \gls*{gt} rules and how global rules are created from the multiple \gls*{gt} rules.
+In the following section, we describe the local \glspl*{hot} to \gls*{gt} rules and how global rules are created from individual \gls*{gt} rules.
 
 
 \subsection{Groove specification} 
 % Graph transformation rules and their generation from the behavioral models
-This section describes how graph transformations can be used as one possible formalism for behavioral consistency management.
+This section describes how \glspl*{gt} can be used as one possible formalism for behavioral consistency management.
 We utilize the Groove tool set to run the generated specifications, i.e., \gls*{gt} systems \cite{rensinkGROOVESimulatorTool2004}.
 
 A \gls*{gt} system consists of a set of \gls*{gt} rules of the form $L \to R$, where the graph $L$ is called the left-hand side and the graph $R$ is called the right-hand side of the rule.
