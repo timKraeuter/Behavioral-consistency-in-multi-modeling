@@ -677,9 +677,11 @@ All generated \gls*{gt} systems, including further instructions regarding execut
 \subsubsection{BPMN semantics}
 The local \gls*{hot} to generate \gls*{gt} rules for \gls*{bpmn} processes is challenging, and we are currently only supporting a subset of the \gls*{bpmn} semantics.
 % cite a potential paper explaining the BPMN semantics here.
-Generally, we construct one or more rules for each flow node in a \gls*{bpmn} model.
+Generally, we construct one or more rules for each flow node, i.e., type of state-changing element in a \gls*{bpmn} model.
+Furthermore, we created a large test suite to ensure correctness of our \gls*{hot} \cite{krauterArtifactsBehavioralConsistency2023}.
 \autoref{fig:bpmn_example_rules} shows the \gls*{gt} rules for the task \textsf{Switch to P1} of the TJunction controller.
 It uses the concrete syntax introduced in \cref{fig:snapshot_metamodels} to represent process snapshots containing tokens.
+
 
 \begin{figure}[h]
     \centering
