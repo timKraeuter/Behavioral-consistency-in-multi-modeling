@@ -6,9 +6,9 @@ This repository contains our paper's sources and **additional artifacts**. The !
 
 ### State machine semantics
 
-**Traffic light start graph and GT-Rules:**
+**Example start graph and GT rules for the traffic light:**
 
-![Traffic light start graph and GT-Rules](./artifacts/figures/FSM_Groove.svg)
+![Example start graph and GT rules for the traffic light](./artifacts/figures/FSM_Groove.svg)
 
 The full GT system in Groove is linked in the section [Groove specification](https://github.com/timKraeuter/Towards-behavioral-consistency-in-multi-modeling/blob/main/README.md#groove-specification-1).
 
