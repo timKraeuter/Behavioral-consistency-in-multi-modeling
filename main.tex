@@ -424,7 +424,8 @@ Nevertheless, for now, a modeler must define temporal logic properties.
 Temporal logic properties are built upon a set of atomic propositions which are either true or false in a given state.
 Each behavioral language (e.g., the BPMN) specification defines how these states are represented.
 Furthermore, the transitions between these states depend on the semantics of the behavioral models.
-In our approach, we call the state representation a \emph{snapshot metamodel} which is specified using class diagrams.
+In our approach, the first fundamental concept is to make \textit{state} structure explicit.
+We will call the resulting models \emph{snapshot metamodels} and specify them using class diagrams.
 
 For example, in the use case, we define snapshot metamodels for state machines and \gls*{bpmn}.
 A state machine is in one state at a time, as shown in the snapshot metamodel on the left of \cref{fig:snapshot_metamodels}.
@@ -477,7 +478,7 @@ Thus, property definition (including atomic propositions) is done for each use c
 \subsection{Define model interactions}
 We call behavioral inter-model relationships \emph{interactions} since they carry behavioral meaning while commonalities carry structural meaning \cite{stunkelComprehensiveSystemsFormal2021, klareCommonalitiesPreservingConsistency2019}.
 To specify interactions between different behavioral models, we defined an interaction language given by the system relationship metamodel in \cref{fig:srm_metamodel}.
-In addition, we introduce the concept of \emph{state-changing elements}.
+In addition, we introduce the second fundamental concept of \emph{state-changing elements}.
 Each \textsf{BehavioralMetamodel} specifies a set of \textsf{StateChangingElement}s.
 For example, a state machine defines states and transitions, but only the transitions describe how the states in a state machine change.
 Thus, the transitions are the state-changing elements of a state machine (highlighted in purple, see \cref{fig:fsm_metamodel}).
