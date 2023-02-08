@@ -475,12 +475,13 @@ To specify interactions between different behavioral models, we defined an inter
 In addition, we introduce the concept of \emph{state-changing elements}.
 Each \textsf{BehavioralMetamodel} specifies a set of \textsf{StateChangingElement}s.
 For example, a state machine defines states and transitions, but only the transitions describe how the states in a state machine change.
-Thus, the transitions are the \textsf{StateChangingElement}s of a state machine (highlighted in purple, see \cref{fig:fsm_metamodel}).
-Similarly, the flow nodes are the \textsf{StateChangingElement}s of a \gls*{bpmn} process (highlighted in purple, see \cref{fig:bpmn_metamodel})\footnote{One exception is the event-based gateway, which is not part of the \textsf{StateChangingElement}s.}.
-The interaction of behavioral models is only possible through instances of the \textsf{StateChangingElement}s.
+Thus, the transitions are the state-changing elements of a state machine (highlighted in purple, see \cref{fig:fsm_metamodel}).
+Similarly, the flow nodes are the state-changing elements of a \gls*{bpmn} process (highlighted in purple, see \cref{fig:bpmn_metamodel})\footnote{One exception is the event-based gateway, which is not part of the state-changing elements.}.
+The interaction of behavioral models is only possible through instances of the state-changing elements.
+Thus, state-changing elements function as a minimal \textit{behavioral interface} to uniformly define interactions for heterogeneous behavioral languages.
 
-Our approach is based on the requirement that state-changing elements can be identified in metamodels for any behavioral formalism.
-This requirement is not difficult to meet since behavioral modeling languages must have some \textit{observable} construct to describe state changes.
+Our approach is based on the requirement that state-changing elements can be identified in metamodels for any used behavioral formalism.
+This requirement is not difficult to meet since behavioral modeling languages with a discrete state must have some \textit{observable} construct to describe state changes.
 Inspecting other behavioral languages, such as Petri Nets or activity diagrams, shows that identifying state-changing elements (transitions, activity nodes) is unproblematic. 
 
 \begin{figure}[h]
@@ -504,7 +505,9 @@ Then, the semantics of the new interaction type must be added to the generation 
 
 The \textsf{sender} and the elements of the \textsf{InteractionReceiver}s describe a state change for their behavioral models.
 By connecting them with a synchronous interaction, we define simultaneous state changes in one atomic step. 
-Consequently, an interaction can define a synchronization between behavioral models.
+Consequently, an interaction defines a synchronization between behavioral models.
+Generally, models behave in a distributed independent fashion until they reach a state-changing element which is part of an interaction.
+To execute these state changes the models must then interact, i.e, synchronize as described.
 In addition, one can only define interactions for state-changing elements if their behavioral models are connected by a behavioral relationship (see constraint \eqref{eq:interactionConstraint}).
 We use "." in constraints to navigate along associations.
 For example, \textsf{i.receivers} means following all \textsf{receivers} links for an \textsf{Interaction} object, resulting in a set of \textsf{InteractionReceiver} objects.
@@ -518,7 +521,6 @@ For example, \textsf{i.receivers} means following all \textsf{receivers} links f
 \end{equation}
 
 We allow the definition of as many interactions as desired.
-The interactions restrict the local behavior of the models since some parts of their behavior must be synchronized.
 Two interactions are not allowed to share state-changing elements (see constraint \eqref{eq:noOverlap}).
 If such a situation occurs, it must be resolved by the modeler by deleting one of the interactions or merging the two interactions into one.
 
@@ -638,6 +640,7 @@ In the following section, we describe the local \glspl*{hot} to \gls*{gt} rules 
 % Graph transformation rules and their generation from the behavioral models
 This section describes how \glspl*{gt} can be used as one possible formalism for behavioral consistency management.
 We utilize the Groove tool set to run the generated specifications, i.e., \gls*{gt} systems \cite{rensinkGROOVESimulatorTool2004}.
+The successful implementation serves as a \emph{proof of concept}.
 
 A \gls*{gt} system consists of a set of \gls*{gt} rules of the form $L \to R$, where the graph $L$ is called the left-hand side and the graph $R$ is called the right-hand side of the rule.
 Nodes/edges in $R$ but not in $L$ are added by a rule, while nodes/edges in $L$ and $R$ are preserved, and a rule deletes nodes/edges that are in $L$ but not in $R$.
@@ -814,30 +817,35 @@ This contribution builds on our previous publication \cite{krauterBehavioralCons
 However, we refined the behavioral consistency management workflow into five steps and introduced new key concepts such as interactions, behavioral relationships, and state-changing elements (see \gls*{srm}).
 
 % Intro to the following sections
-First, we discuss ad-hoc solutions to the problem of behavioral consistency.
-Then, we look at a general framework to compose heterogeneous models.
-Afterwards, we relate our work to the fields of \gls*{mpm} and co-simulation.
-Finally, we refer to the literature on behavioral interfaces and coordination languages.
+First, we discuss ad-hoc and more general solutions to the problem of behavioral consistency.
+Then, we relate our work to the fields of \gls*{mpm} and co-simulation.
 
-\subsection{Ad-hoc solutions}
+\subsection{Ad-hoc and general solutions}
 % Highlight some specific combinations/ad-hoc approaches for a single modeling language.
 The general idea of transforming different behavioral formalisms to a single formalism to reason about cross-cutting concerns is not new, see, e.g., \cite{engelsMethodologySpecifyingAnalyzing2001}.
 For example, \cite{kusterExplicitBehavioralConsistency2003} developed consistency checking for sequence diagrams and statecharts based on \gls*{csp}, while \cite{yaoConsistencyCheckingUML2006} used Petri nets for the same scenario.
-Nevertheless, the approaches only resemble ad-hoc solutions to specific combinations of two languages.
+Nevertheless, these approaches only resemble ad-hoc solutions to specific combinations of two languages.
 They do not consider the general problem of behavioral consistency in a heterogeneous modeling scenario.
 
-\subsection{Model composition}
 % Kienzle with event structures: composition
 \cite{kienzleUnifyingFrameworkHomogeneous2019} proposes a unifying framework for homogeneous model composition of structural and behavioral models.
 To combine behavioral models, they use Event structures as an underlying formalism and show how different homogeneous behavioral models can be combined.
-
-Nonetheless, they do not apply their approach to heterogeneous models.
+In addition, to express behavioral relationships between different models they create causal relationships, which are used during model composition. 
+In the future, they plan to apply their framework to combine heterogeneous models but have not done so yet. 
 Generally, their approach is compatible with ours since we do not mandate a specific formalism.
-Thus, one could also experiment with Event structures besides the two currently implemented formalisms.
-Since, the research challenges they identify and the resulting work items align well with our work, we see our work as a continuation of \cite{kienzleUnifyingFrameworkHomogeneous2019}.
+Thus, Event structures could be considered, where interactions are realized using causal relationships.
+Since, their research challenges and resulting work items align well with our work, we see our work following the same line of research.
 In addition, they cover the same class of behavioral formalisms as our approach (see \acrshort*{devs} in the next subsection).
-However, they focus on composition which is only the first step towards behavioral consistency checking.
-% They also only cover DEVS
+
+\cite{varalarsenBCOolBehavioralCoordination2016} propose the coordination language B-COoL.
+In B-COoL a user defines a behavioral interface for each behavioral language, which are then used to specify interactions between models.
+To execute the models with the specified interactions, they transform them into \gls*{ccsl} models.  
+Their work results in plugins for GEMOC studio, which support running and debugging the models.
+
+Both approaches are similar to our approach since both have mechanisms to define interactions between behavioral models and generate a global behavioral specification based on these interactions.
+Furthermore, the generation of the global behavior is achieved by transforming models to a certain formalism like the \gls*{hot} in our approach.
+However, the generated specification does not allow to check global behavioral properties since they do not make the state structure (snapshot metamodels in our approach) of the participating models explicit.
+In this paper, we identified the concept of \textit{state} and the minimal behavioral interface of \textit{state-changing elements} as the two necessary factors to check behavioral consistency when heterogeneous models interact.
 
 \subsection{Multi-paradigm modeling and co-simulation}
 % Introduce MPM. 
@@ -877,53 +885,34 @@ Each \gls*{fmu}, similar to the actors in Ptolemy, comes with an XML model to de
 % Their goal is simulation not behavioral consistency checking.
 However, with co-simulations, one can only simulate systems not check global behavioral properties.
 Our approach supports this by introducing a minimal behavioral interface (state and state-changing elements) and only allowing formalisms with discrete state variables.
-\subsection{Behavioral interfaces and coordination}
+% \subsection{Behavioral interfaces and coordination}
 
-Most behavioral languages are \glspl{xdsl} since they have a well defined execution semantics.
-\cite{leroyBehavioralInterfacesExecutable2020} propose a metalanguage to define behavioral interfaces for \glspl{xdsl}.
-Behavioral interfaces create the opportunity to handle conforming \glspl{xdsl} in a uniform way.
-For example, to define a generic event injector or other reusable tools \cite{leroyBehavioralInterfacesExecutable2020}.
+% Most behavioral languages are \glspl{xdsl} since they have a well defined execution semantics.
+% \cite{leroyBehavioralInterfacesExecutable2020} propose a metalanguage to define behavioral interfaces for \glspl{xdsl}.
+% Behavioral interfaces create the opportunity to handle conforming \glspl{xdsl} in a uniform way.
+% For example, to define a generic event injector or other reusable tools \cite{leroyBehavioralInterfacesExecutable2020}.
 
-To use our approach with certain behavioral languages, one must identify the state-changing elements for each individual language.
-Thus, state-changing elements resemble a simple behavioral interface which each language in our approach must implement.
-This simple behavioral interface allows us to handle all conforming behavioral languages in a uniform way, when defining interactions.
-Similarly, in B-COoL a user must define a behavioral interface for each language which should be coordinated \cite{varalarsenBCOolBehavioralCoordination2016}.
-They coordinate the models using their coordination language B-COoL, similar to the interactions we define between behavioral models.
-To execute the models with the specified coordination, they transform them into \gls*{ccsl} models.  
-Their work also results in plugins for GEMOC studio, which support running and debugging the models.
+% To use our approach with certain behavioral languages, one must identify the state-changing elements for each individual language.
+% Thus, state-changing elements resemble a simple behavioral interface which each language in our approach must implement.
+% This simple behavioral interface allows us to handle all conforming behavioral languages in a uniform way, when defining interactions.
 
 \section{Conclusion and future work} \label{sec:conclusion_and_future_work}
 % Conclusion
-Our work represents a first formalization of behavioral consistency management in a heterogeneous modeling scenario, enabling formulating and checking \emph{global} properties.
-Previous work either only dealt with the behavioral consistency between specific pairs of models or focused on the simulation in a heterogeneous scenario.
-% Reiterate the novelty regarding a minimal behavioral interface for consistency checking and interactions!
+Our work represents the first formalization of behavioral consistency management in a heterogeneous modeling scenario, enabling formulating and checking \emph{global} properties.
+Previous work either only dealt with the behavioral consistency between specific pairs of models or focused on the simulation in a heterogeneous scenario but lacked checking global properties.
 
-Our approach follows five key steps (see \cref{fig:approach}).
-% Describe the five steps
-First, we define which behavioral models in the multi-model \emph{may interact} by creating a \gls*{srm}.
-Second, we specify consistency requirements as \emph{global behavioral properties}.
-Third, we specify how behavioral models interact.
-Then, we generate a formal specification of the \emph{global behavior} using the \gls*{srm} and defined interactions.
-The global behavior specification is based on the defined interactions but preserves the original behavior of each model except for interactions.
-Finally, we check the \emph{global behavioral properties} using this specification.
-In addition, not only fully automatized model-checking but also a user-driven simulation of the multi-model and its interactions is possible.
-
-Our approach is independent of the particular formalism used in the generated specification, and we currently support generating \gls*{gt} systems (Groove) and rewriting logic (Maude).
-The successful implementation shows that our approach can work with different underlying formalisms and serves as a \emph{proof of concept}.
-Furthermore, we discussed the state space explosion problem and how it can be mitigated.
+Our approach is based on two fundamental concepts: \textit{state} and \textit{state-changing elements}.
+The state structure of each participating behavioral language must be explicitly defined such that we can infer how global states are structured.
+Furthermore, state-changing elements serve as a minimal behavioral interface to uniformly define interactions between heterogeneous models.
+These two fundamental concepts can be found in most, if not every \gls*{devs} formalism.
+Thus, our approach can support behavioral formalisms with discrete state variables.
 
 In future work, we plan to extend our implementation to support more behavioral formalisms such as activity diagrams, hierarchical state machines, and the $\pi$-calculus.
 In addition, we aim to apply the approach to real-life industrial case studies.
-
 % Data transfer
 Furthermore, two systems often exchange data while interacting, for example, using name-passing or messaging.
 The exchanged data then greatly influences the future behavior of the systems.
 Thus, adding data transfers to interactions between heterogeneous models is an important issue left for future work.
-
-% Multi-model runtime verification
-In addition, it is important to check that running systems behave as specified in their behavioral models, including the defined interactions between them.
-Thus, extending runtime verification techniques to include systems specified by a multi-model with interactions constitutes a challenging problem.
-
 % Consistency restoration
 Finally, if consistency violations are found, consistency restoration must be achieved.
 We leave consistency restoration of behavioral models as a problem for future work.
