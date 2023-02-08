@@ -158,7 +158,7 @@ Interactions correspond to commonalities as both add necessary inter-model infor
 Then, a global representation of the system's behavior/structure is constructed by composing the individual models using the interaction/commonality information.
 The generation of a global behavior specification is similar to merging structural models into a global view.
 To achieve a global view for structural models they introduce a base language in which individual models and the global view can be represented.
-Likewise, generating our global behavior specification is based on the two key concepts of state and state-changing elements.
+Likewise, generating our global behavior specification is based on the two fundamental concepts of \textit{state} and \textit{state-changing elements}.
 Generally, we adapt the three steps for structural consistency management: Alignment, Verification and Reconciliation as proposed in \cite{stunkelComprehensiveSystemsFormal2021} to a multi-model containing behavioral models.
 
 % Paper outline
@@ -814,10 +814,11 @@ In our opinion, partial-order reduction must be implemented to analyze models fr
 
 \section{Related work} \label{sec:related_work}
 This contribution builds on our previous publication \cite{krauterBehavioralConsistencyHeterogeneous2021}.
-However, we refined the behavioral consistency management workflow into five steps and introduced new key concepts such as interactions, behavioral relationships, and state-changing elements (see \gls*{srm}).
+However, we refined the behavioral consistency management workflow into five steps and introduced new key concepts such as state, state-changing elements, interactions, and behavioral relationships.
 
 % Intro to the following sections
-First, we discuss ad-hoc and more general solutions to the problem of behavioral consistency.
+We organized related work into two sections.
+First, we discuss ad-hoc and general solutions applicable to the problem of behavioral consistency.
 Then, we relate our work to the fields of \gls*{mpm} and co-simulation.
 
 \subsection{Ad-hoc and general solutions}
@@ -845,7 +846,7 @@ Their work results in plugins for GEMOC studio, which support running and debugg
 Both approaches are similar to our approach since both have mechanisms to define interactions between behavioral models and generate a global behavioral specification based on these interactions.
 Furthermore, the generation of the global behavior is achieved by transforming models to a certain formalism like the \gls*{hot} in our approach.
 However, the generated specification does not allow to check global behavioral properties since they do not make the state structure (snapshot metamodels in our approach) of the participating models explicit.
-In this paper, we identified the concept of \textit{state} and the minimal behavioral interface of \textit{state-changing elements} as the two necessary factors to check behavioral consistency when heterogeneous models interact.
+In this paper, we identified the two fundamental concepts: \textit{state} and \textit{state-changing elements} to check behavioral consistency when heterogeneous models interact.
 
 \subsection{Multi-paradigm modeling and co-simulation}
 % Introduce MPM. 
@@ -884,7 +885,8 @@ Each \gls*{fmu}, similar to the actors in Ptolemy, comes with an XML model to de
 
 % Their goal is simulation not behavioral consistency checking.
 However, with co-simulations, one can only simulate systems not check global behavioral properties.
-Our approach supports this by introducing a minimal behavioral interface (state and state-changing elements) and only allowing formalisms with discrete state variables.
+Our approach supports global properties by introducing the two fundamental concepts: \textit{state} and \textit{state-changing elements} and only allowing formalisms with discrete state variables.
+
 % \subsection{Behavioral interfaces and coordination}
 
 % Most behavioral languages are \glspl{xdsl} since they have a well defined execution semantics.
