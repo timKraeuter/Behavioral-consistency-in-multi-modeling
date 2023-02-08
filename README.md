@@ -10,7 +10,7 @@ This repository contains our paper's sources and **additional artifacts**. The !
 
 ![Example start graph and GT rules for the traffic light](./artifacts/figures/FSM_Groove.svg)
 
-The full GT system in Groove is linked in the section [Groove specification](https://github.com/timKraeuter/Towards-behavioral-consistency-in-multi-modeling/blob/main/README.md#groove-specification-1).
+The full GT system in Groove is linked in the artifacts section [Groove specification](https://github.com/timKraeuter/Towards-behavioral-consistency-in-multi-modeling/blob/main/README.md#groove-specification-1).
 
 ### BPMN semantics
 
@@ -21,7 +21,7 @@ The wiki also includes our comprehensive [test suite](https://github.com/timKrae
 
 ![Example GT rules for the TJunction controller](./artifacts/figures/BPMN_Groove.svg)
 
-The full GT system in Groove is linked in the section [Groove specification](https://github.com/timKraeuter/Towards-behavioral-consistency-in-multi-modeling/blob/main/README.md#groove-specification-1).
+The full GT system in Groove is linked in the artifacts section [Groove specification](https://github.com/timKraeuter/Towards-behavioral-consistency-in-multi-modeling/blob/main/README.md#groove-specification-1).
 
 ## Maude specification
 
@@ -48,11 +48,11 @@ eq initial = < "1" : FSM | name : "trafficLight", state : "red" > .
 
 ### BPMN semantics
 
-The Maude module is linked in the section [Maude specification](https://github.com/timKraeuter/Towards-behavioral-consistency-in-multi-modeling/blob/main/README.md#maude-specification-1).
+The Maude module is linked in the artifacts section [Maude specification](https://github.com/timKraeuter/Towards-behavioral-consistency-in-multi-modeling/blob/main/README.md#maude-specification-1).
 
 ### Check behavioral consistency
 
-The Maude module is linked in the section [Maude specification](https://github.com/timKraeuter/Towards-behavioral-consistency-in-multi-modeling/blob/main/README.md#maude-specification-1).
+The Maude module is linked in the artifacts section [Maude specification](https://github.com/timKraeuter/Towards-behavioral-consistency-in-multi-modeling/blob/main/README.md#maude-specification-1).
 
 # State space explosion
 A description how to run the **Maude benchmark** can be found [here](./artifacts/maude/benchmark/maudeBenchmark.md), while the description for the **Groove benchmark** can be found [here](./artifacts/graphGrammars/grooveBenchmark.md).
