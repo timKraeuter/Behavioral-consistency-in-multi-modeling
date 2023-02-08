@@ -150,16 +150,21 @@ Our approach facilitates specifying \emph{interactions} between multiple potenti
 The approach is generally independent of the particular formalism used in the specification, and currently, we can generate specifications in two different formalisms.
 The generation of the global behavior specification is \emph{fully automatic} and results in \gls*{gt} rules (or respectively, term rewriting rules) executable in Groove (Maude).
 Afterward, we can use the built-in verification mechanisms in Groove (Maude) to check the previously defined global behavioral properties.
-Our approach applies to behavioral formalisms where state variables are discrete (see related work in \cref{sec:related_work}).
+
+Our approach is based on two fundamental concepts: \textit{state} and \textit{state-changing elements}.
+The state structure of each participating behavioral language must be explicitly defined such that we can infer how global states are structured.
+Furthermore, state-changing elements must be identified in each participating behavioral language.
+Thus, state-changing elements serve as a minimal \textit{behavioral interface} to uniformly define interactions for heterogeneous models.
+Our approach applies to behavioral formalisms where these two concepts can be found which are most formalisms with discrete state variables (see related work in \cref{sec:related_work}).
 
 % Our approach related to structural consistency
 The proposed approach partly resembles the state of the art approaches for structural consistency.
 Interactions correspond to commonalities as both add necessary inter-model information.
 Then, a global representation of the system's behavior/structure is constructed by composing the individual models using the interaction/commonality information.
 The generation of a global behavior specification is similar to merging structural models into a global view.
-To achieve a global view for structural models they introduce a base language in which individual models and the global view can be represented.
+To achieve a global view for structural models one introduces a base language in which individual models and the global view can be represented.
 Likewise, generating our global behavior specification is based on the two fundamental concepts of \textit{state} and \textit{state-changing elements}.
-Generally, we adapt the three steps for structural consistency management: Alignment, Verification and Reconciliation as proposed in \cite{stunkelComprehensiveSystemsFormal2021} to a multi-model containing behavioral models.
+In summary, we adapt the three steps for structural consistency management: Alignment, Verification and Reconciliation as proposed in \cite{stunkelComprehensiveSystemsFormal2021} to a multi-model containing behavioral models.
 
 % Paper outline
 The remainder of this paper is structured as follows.
@@ -905,7 +910,7 @@ Previous work either only dealt with the behavioral consistency between specific
 
 Our approach is based on two fundamental concepts: \textit{state} and \textit{state-changing elements}.
 The state structure of each participating behavioral language must be explicitly defined such that we can infer how global states are structured.
-Furthermore, state-changing elements serve as a minimal behavioral interface to uniformly define interactions between heterogeneous models.
+Furthermore, state-changing elements serve as a minimal behavioral interface to uniformly define interactions for heterogeneous models.
 These two fundamental concepts can be found in most, if not every \gls*{devs} formalism.
 Thus, our approach can support behavioral formalisms with discrete state variables.
 
