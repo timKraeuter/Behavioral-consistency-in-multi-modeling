@@ -119,7 +119,7 @@ Our approach is independent of the particular formalism used in the generated sp
 In this way, \gls*{mde} promotes a clear separation of concerns and raises the abstraction level throughout the entire development process \cite{franceModeldrivenDevelopmentComplex2007}.
 These models are then used to generate portions of the system leading to an increase in productivity and reduction of errors \cite{brambillaModeldrivenSoftwareEngineering2017}.
 As multiple interacting systems are needed to realize the requirements of complex domains, a set of corresponding models would be needed to represent these systems and their interactions.
-Such a collection of inter-related models is referred to as a \emph{multi-model} \cite{boronatWhatMultimodelingLanguage2009}, which is usually heterogeneous, meaning it consists of models conforming to different modeling languages.
+Such a collection of interrelated models is referred to as a \emph{multi-model} \cite{boronatWhatMultimodelingLanguage2009}, which is usually heterogeneous, meaning it consists of models conforming to different modeling languages.
 % Consistency in multi-modeling
 Models in a multi-model contradicting each other can lead to problems during development, system generation, and system execution.
 Consequently, continuous multi-model consistency management during the development process is a significant issue for multi-models \cite{spanoudakisInconsistencyManagementSoftware2001, cicchettiMultiviewApproachesSoftware2019}.
@@ -130,23 +130,23 @@ Structural models, like UML class diagrams, describe structural aspects of syste
 This is usually referred to as the denotational semantics of the software system, as it only describes the set of valid instances or states of the system.
 Structural models in a multi-model often contain related information.
 Thus, current approaches define so-called \emph{commonalities} to explicate these relationships and keep the information consistent.
-Afterwards, these commonalities can be used to get a comprehensive view of the global system, for example by \textit{merging} all models into a global view.
+Afterward, these commonalities can be used to get a comprehensive view of the global system, for example, by \textit{merging} all models into a global view.
 Structural consistency can then be verified using the global view.
 
 % Challenge: Consistency for a set of behavioral models.
 Nevertheless, approaches to multi-model consistency management must also include a means to maintain \emph{behavioral consistency} since behavioral models, like \gls*{bpmn} models, are associated with execution semantics describing dynamic aspects of the system \cite{objectmanagementgroupBusinessProcessModel2013}.
-Multi-models consisting of different interacting behavioral models are found, for example, when modeling embedded and cyber-physical systems \cite{varalarsenBehavioralCoordinationOperator2015}.
+For example, multi-models consisting of different interacting behavioral models are found when modeling embedded and cyber-physical systems \cite{varalarsenBehavioralCoordinationOperator2015}.
 
 % Existing solutions. But they are not sufficient!
 Several approaches exist for checking the consistency of specific pairs of behavioral models.
 For example, consistency checking for sequence diagrams and statecharts was implemented using Petri nets \cite{yaoConsistencyCheckingUML2006} and \gls*{csp} \cite{kusterExplicitBehavioralConsistency2003}.
 Moreover, the co-simulation field tackles the simulation of interacting models by composing their individual simulations.
-For example by developing the \gls*{fmi} standard and implementing simulation tools such as Ptolemy \cite{ekerTamingHeterogeneityPtolemy2003}.
+For example, by developing the \gls*{fmi} standard and implementing simulation tools such as Ptolemy \cite{ekerTamingHeterogeneityPtolemy2003}.
 However, there is no approach to define and \textit{check consistency} of \textit{arbitrary many} behavioral models.
 
 % Our approach summarized.
 We propose a novel approach for consistency management of heterogeneous multi-models, which allows us to define and check \emph{global} behavioral properties.
-Our approach facilitates specifying \emph{interactions} between multiple potentially heterogeneous behavioral models, which are in turn used to generate a specification of the global behavior.
+Our approach facilitates specifying \emph{interactions} between multiple potentially heterogeneous behavioral models, which are used to generate a specification of the global behavior.
 The approach is generally independent of the particular formalism used in the specification, and currently, we can generate specifications in two different formalisms.
 The generation of the global behavior specification is \emph{fully automatic} and results in \gls*{gt} rules (or respectively, term rewriting rules) executable in Groove (Maude).
 Afterward, we can use the built-in verification mechanisms in Groove (Maude) to check the previously defined global behavioral properties.
@@ -161,10 +161,10 @@ Our approach applies to behavioral formalisms where these two concepts can be fo
 The proposed approach partly resembles the state of the art approaches for structural consistency.
 Interactions correspond to commonalities as both add necessary inter-model information.
 Then, a global representation of the system's behavior/structure is constructed by composing the individual models using the interaction/commonality information.
-The generation of a global behavior specification is similar to merging structural models into a global view.
-To achieve a global view for structural models one introduces a base language in which individual models and the global view can be represented.
+Generating a global behavior specification is similar to merging structural models into a global view.
+To achieve a global view for structural models, one introduces a base language in which individual models and the global view can be represented.
 Likewise, generating our global behavior specification is based on the two fundamental concepts of \textit{state} and \textit{state-changing elements}.
-In summary, we adapt the three steps for structural consistency management: Alignment, Verification and Reconciliation as proposed in \cite{stunkelComprehensiveSystemsFormal2021} to a multi-model containing behavioral models.
+In summary, we adapt the three steps for structural consistency management: Alignment, Verification, and Reconciliation as proposed in \cite{stunkelComprehensiveSystemsFormal2021} to a multi-model containing behavioral models.
 
 % Paper outline
 The remainder of this paper is structured as follows.
@@ -178,7 +178,7 @@ Finally, we examine related work in \autoref{sec:related_work} and conclude in \
 This section motivates our approach with a simplified use case in which a traffic management system is developed to guide the traffic at a T-Junction with three traffic lights.
 The traffic management system should control the traffic by switching between the two traffic phases highlighted in \cref{fig:junction-phases}.
 In addition, it must fulfill the following two requirements.
-First, it must guarantee safe traffic by changing the three traffic lights, A, B, and C, correctly.
+First, it must guarantee safe traffic by correctly changing the three traffic lights, A, B, and C.
 Second, it should prioritize arriving buses, i.e., switch the traffic lights quicker than usual to let an approaching bus pass (early green).
 This so-called bus priority signal is a widely implemented technique to improve service and reduce delays in public transport.
 
@@ -226,7 +226,7 @@ Then, the controller executes the next activity and switches to phase 2.
 The controller will pass a throwing signal event before entering a subprocess for phase 2 and repeat the same steps.
 This signal event represents a broadcast to all buses waiting for traffic light B to become green.
 After switching back from phase 2 to phase 1 and signaling that traffic lights A and C are green, the controller can stop or execute the described steps again.
-Typically, the controller does not stop, which is indicated by the default sequence flow going back to the process beginning.
+Typically, the controller does not stop, indicated by the default sequence flow going back to the beginning of the process.
 
 % T-Junction BPMN model
 \begin{figure*}[h]
@@ -326,7 +326,7 @@ We formalize these requirements again by using \gls*{ltl} safety properties \eqr
 However, to check the global properties, we must execute the system with the behavior specified in the behavioral models according to the test configuration.
 This is not straightforward since the multi-model of the use case consists of a \gls*{srm} relating two heterogeneously typed behavioral models.
 In addition, the system configuration instantiates two behavioral models multiple times with different parameters.
-Furthermore, we face the problem that the models are not independent of each other.
+Furthermore, we face the problem that the models are not independent.
 For example, the T-Junction controller must decide when the traffic lights A, B, and C switch states.
 Thus, if we were to run the models independently in parallel, the properties would be violated.
 
@@ -358,12 +358,12 @@ Our approach consists of five steps.
 The first three steps are marked as manual and must be completed to use our approach in a given use case.
 However, the last two steps are automated and reusable without user intervention in any use case.
 In the following sections, we will describe each step in detail, highlighting what a user must repeatedly do for each use case and what must only be done once for each participating behavioral language.
-In addition, \cref{fig:allConcepts} at the end of the paper, gives an overview of all the new concepts and how they are applied to the use case.
+In addition, \cref{fig:allConcepts} at the end of the paper gives an overview of all the new concepts and how they are applied to the use case.
 
 
 \subsection{Define the system relationship model}
 As mentioned, a set of behavioral models might be used to describe the behavior of a software system.
-Each of these models conforms to its metamodel, corresponding to the behavioral language used to specify the model.
+Each model conforms to its metamodel, corresponding to the behavioral language used to specify the model.
 The metamodel ensures that models specified in the corresponding languages are well-defined and machine-readable.
 This is crucial when automating parts of the consistency checking.
 
@@ -388,7 +388,7 @@ The metamodel for \gls*{bpmn} (see \cref{fig:bpmn_metamodel}) is defined analogo
 A \gls*{bpmn} \textsf{Process} contains a set of \textsf{FlowNode}s connected by \textsf{SequenceFlow}s.
 \textsf{FlowNode}s and \textsf{SequenceFlow}s are \textsf{FlowElement}s, inheriting an \textsf{id} and a \textsf{name}.
 A \textsf{FlowNode} can be an \textsf{Activity}, \textsf{Gateway}, or \textsf{Event}.
-All special activities, gateways and events are defined in the \gls*{bpmn} specification \cite{objectmanagementgroupBusinessProcessModel2013}. % See BPMN class diagrams in figures 10.104/10.6/10.69.
+All special activities, gateways, and events are defined in the \gls*{bpmn} specification \cite{objectmanagementgroupBusinessProcessModel2013}. % See BPMN class diagrams in figures 10.104/10.6/10.69.
 
 % BPMN (a subset of the needed constructs)
 \begin{figure}[h]
@@ -401,7 +401,7 @@ All special activities, gateways and events are defined in the \gls*{bpmn} speci
 % System relationship metamodel
 Behavioral models \emph{interact} to realize the global system behavior.
 A \gls*{srm} describes which behavioral models exist in the system and whether they are behaviorally related, i.e., they may interact during execution.
-In our approach, we define a system relationship metamodel to formally specify these relationships.
+In our approach, we define a system relationship metamodel to specify these relationships formally.
 The constructed \gls*{srm} is use-case specific, while the metamodels for the participating languages must only be defined once.
 
 We are using a graph-based syntax to define \gls*{srm}s (see \cref{fig:systemRelationshipModel}), where each node corresponds to a behavioral model (typed by a \textsf{BehavioralMetamodel}), while each arrow corresponds to a \textsf{BehavioralRelationship} (see concrete syntax depicted in clouds).
@@ -416,9 +416,9 @@ Different instances of the \gls*{srm} can be used to analyze the global behavior
 \subsection{Specify consistency requirements} \label{subsec:specify_consistency_requirements}
 In this step, we specify behavioral consistency requirements as global behavioral properties.
 These properties are defined using a temporal logic, for example, \gls*{ltl} as in the use case.
-Theoretically any temporal logic can be used together with our approach, however in practice the underlying system which runs the generated specifications must support it.
-Furthermore, we agree with \cite{meyersProMoBoxFrameworkGenerating2014}, that modelers are usually not familiar with temporal logic.
-Thus, lifting property specification to the domain-specific level is a promising idea that fits into our approach.
+Theoretically, any temporal logic can be used together with our approach, however, in practice, the underlying system which runs the generated specifications must support it.
+Furthermore, we agree with \cite{meyersProMoBoxFrameworkGenerating2014} that modelers are usually not familiar with temporal logic.
+Thus, lifting property specification to the domain-specific level is a promising idea that fits our approach.
 Nevertheless, for now, a modeler must define temporal logic properties.
 
 Temporal logic properties are built upon a set of atomic propositions which are either true or false in a given state.
@@ -445,8 +445,8 @@ A valid \textsf{position} is the \textsf{id} of a \textsf{FlowElement} (see \cre
 Also, for the snapshot metamodel of \gls*{bpmn} we reuse the concrete syntax of the \gls*{bpmn} metamodel.
 In addition, \textsf{Token}s are highlighted with green bubbles in the middle of sequence flows and the top right of an activity.
 
-Each instance of a snapshot metamodel can represent an atomic propositions, since a system can either be in the state specified by this instance or not.
-Since instances of snapshot metamodels are essentially graphs they can be matched to a given system state in a uniform way.
+Each instance of a snapshot metamodel can represent an atomic proposition since a system can either be in the state specified by this instance or not.
+Since instances of snapshot metamodels are essentially graphs, they can be matched to a given system state uniformly.
 Thus, using the snapshot metamodels to create atomic propositions, we can specify local behavioral properties for any modeling language.
 However, to specify global behavioral properties, we must combine the information of the \gls*{srm} with the snapshot metamodels.
 Each behavioral model is typed by a behavioral metamodel, which has a snapshot metamodel describing its state structure.
@@ -483,8 +483,8 @@ Each \textsf{BehavioralMetamodel} specifies a set of \textsf{StateChangingElemen
 For example, a state machine defines states and transitions, but only the transitions describe how the states in a state machine change.
 Thus, the transitions are the state-changing elements of a state machine (highlighted in purple, see \cref{fig:fsm_metamodel}).
 Similarly, the flow nodes are the state-changing elements of a \gls*{bpmn} process (highlighted in purple, see \cref{fig:bpmn_metamodel})\footnote{One exception is the event-based gateway, which is not part of the state-changing elements.}.
-The interaction of behavioral models is only possible through instances of the state-changing elements.
-Thus, state-changing elements function as a minimal \textit{behavioral interface} to uniformly define interactions for heterogeneous behavioral languages.
+The interaction of behavioral models is only possible through instances of state-changing elements.
+Thus, state-changing elements function as a minimal \textit{behavioral interface} to define interactions for heterogeneous behavioral languages uniformly.
 
 Our approach is based on the requirement that state-changing elements can be identified in metamodels for any used behavioral formalism.
 This requirement is not difficult to meet since behavioral modeling languages with a discrete state must have some \textit{observable} construct to describe state changes.
@@ -512,9 +512,9 @@ Then, the semantics of the new interaction type must be added to the generation 
 The \textsf{sender} and the elements of the \textsf{InteractionReceiver}s describe a state change for their behavioral models.
 By connecting them with a synchronous interaction, we define simultaneous state changes in one atomic step. 
 Consequently, an interaction defines a synchronization between behavioral models.
-Generally, models behave in a distributed independent fashion until they reach a state-changing element which is part of an interaction.
-To execute these state changes the models must then interact, i.e, synchronize as described.
-In addition, one can only define interactions for state-changing elements if their behavioral models are connected by a behavioral relationship (see constraint \eqref{eq:interactionConstraint}).
+Generally, models behave in a distributed independent fashion until they reach a state-changing element that is part of an interaction.
+To execute these state changes, the models must then interact, i.e., synchronize as described.
+In addition, one can only define interactions for state-changing elements if a behavioral relationship connects their behavioral models (see constraint \eqref{eq:interactionConstraint}).
 We use "." in constraints to navigate along associations.
 For example, \textsf{i.receivers} means following all \textsf{receivers} links for an \textsf{Interaction} object, resulting in a set of \textsf{InteractionReceiver} objects.
 
@@ -559,7 +559,7 @@ The second interaction defines a synchronization for the task \textsf{Switch to 
 
 To summarize, we use the system relationship metamodel to define the relations between the behavioral models in a multi-model.
 Thus, the inter-relations between behavioral models in a multi-model are given by interactions and their behavioral relationships.
-Interactions are specific to each use case but identifying state-changing elements must only be done once for each behavioral language.
+Interactions are specific to each use case, but identifying state-changing elements must only be done once for each behavioral language.
 
 \subsection{Generate a global behavior specification}
 Using the \gls*{srm} and snapshot metamodels, we can represent the global states of the system.
@@ -597,9 +597,7 @@ We describe consistency checking for the use case and its result at the end of t
 \section{Specification of the global behavior} \label{sec:specification_of_the_global_behavior}
 In this section, we will describe our implementation to generate formal \gls*{gt} specifications for Groove \cite{rensinkGROOVESimulatorTool2004}.
 Then, we use the generated specification to check behavioral consistency for the use case and discuss the results.
-% focus on groove . visual rules are more understandable
 We have chosen to use the \gls*{gt} formalism to describe our approach because \glspl*{gt} provide a visual representation and allow for a clearer understanding.
-% Maude description can be found online.
 Additionally, a description of the term-rewriting implementation in Maude is part of the artifacts of this paper \cite{krauterArtifactsBehavioralConsistency2023}.
 
 Both implementations utilize a \emph{global} \gls*{hot} from the behavioral models and their interactions to \gls*{gt} rules (Groove) or term rewriting rules (Maude).
@@ -622,7 +620,7 @@ In general, multiple rules may be associated with one state-changing element of 
 For example, a receive task in a \gls*{bpmn} process is represented by two rules since it starts and then waits for an incoming message before finishing.
 
 The second step is to modify the generated rules to reflect the defined interactions.
-Interactions define the synchronization of systems which we encode by merging the individual rules into rules describing the global behavior.
+Interactions define the synchronization of systems, which we encode by merging the individual rules into rules describing the global behavior.
 The merging process to obtain the global rules is done in two steps:
 
 \begin{enumerate}
@@ -654,7 +652,6 @@ Applying a \gls*{gt} system to a given graph, one obtains a state space where ea
 A formal description of \gls*{gt} systems can, for example, be found in \cite{ehrigFundamentalsAlgebraicGraph2006}. % Section 3.1, especially Definition 3.4.
 
 We generate typed \gls*{gt} systems, where the merge of the \gls*{srm} and the snapshot metamodels is the type graph \cite{krauterArtifactsBehavioralConsistency2023}.
-% This is possible since a class diagram can be seen as an attributed type graph with inheritance \cite{heckelGraphTransformationSoftware2020}.
 Individual rules and rules changing the global state conform to this type graph.
 Interactions result in global rules which change multiple parts of the global state.
 A global \gls*{gt} rule is calculated by taking the sum of all left-hand sides and right-hand sides of the individual \gls*{gt} rules (implements step 2(b) in \cref{sec:specification_of_the_global_behavior} for Groove) \cite[Definition 3.2.7]{baldanConcurrentSemanticsAlgebraic1999}.
@@ -685,9 +682,8 @@ All generated \gls*{gt} systems, including further instructions regarding execut
 
 \subsubsection{BPMN semantics}
 The local \gls*{hot} to generate \gls*{gt} rules for \gls*{bpmn} processes is challenging, and we are currently only supporting a subset of the \gls*{bpmn} semantics.
-% cite a potential paper explaining the BPMN semantics here.
 Generally, we construct one or more rules for each flow node, i.e., type of state-changing element in a \gls*{bpmn} model.
-Furthermore, we created a large test suite to ensure correctness of our \gls*{hot} \cite{krauterArtifactsBehavioralConsistency2023}.
+Furthermore, we created a comprehensive test suite to ensure the correctness of our \gls*{hot} \cite{krauterArtifactsBehavioralConsistency2023}.
 \autoref{fig:bpmn_example_rules} shows the \gls*{gt} rules for the task \textsf{Switch to P1} of the TJunction controller.
 It uses the concrete syntax introduced in \cref{fig:snapshot_metamodels} to represent process snapshots containing tokens.
 
@@ -732,7 +728,7 @@ Running the obtained \gls*{gt} specification shows that properties \eqref{eq:pro
 The counterexamples for properties 3 and 4 show an unexpected race condition that must be handled:
 After the TJunction controller signals that the traffic light A/B is green, bus B1/B2 can advance to the \textsf{Pass Junction} activity.
 However, simultaneously, the TJunction controller can enter the subprocess for the next phase, which can be interrupted by the associated timer event.
-This can happen before the bus B1/B2 passes the junction, resulting in an invalid state.
+This can happen before bus B1/B2 passes the junction, resulting in an invalid state.
 
 The system developers have different options to handle the detected inconsistencies.
 One option is to keep the models unchanged and pay special attention to the found race condition during system implementation.
@@ -742,7 +738,7 @@ Another option is to change the models to resolve the inconsistency.
 For example, the T-Junction controller could wait for the bus to pass before changing the traffic lights again.
 
 \section{Discussion} \label{sec:discussion}
-In this section we discuss two potential problems of our approach: supporting new modeling languages and state space explosion.
+In this section, we discuss two potential problems of our approach: supporting new modeling languages and state space explosion.
 
 \subsection{Support for new modeling languages}
 To support a new modeling language in our approach one has to do the following: describe the state structure in a snapshot metamodel, identify state-changing elements in the language's metamodel, and implement a \gls*{hot} to the chosen formalism.
@@ -852,11 +848,11 @@ In addition, to express behavioral relationships between different models they c
 In the future, they plan to apply their framework to combine heterogeneous models but have not done so yet. 
 Generally, their approach is compatible with ours since we do not mandate a specific formalism.
 Thus, Event structures could be considered, where interactions are realized using causal relationships.
-Since, their research challenges and resulting work items align well with our work, we see our work following the same line of research.
+Since their research challenges and resulting work items align with our work, we see our work following the same line of research.
 In addition, they cover the same class of behavioral formalisms as our approach (see \acrshort*{devs} in the next subsection).
 
 \cite{varalarsenBehavioralCoordinationOperator2015} propose the coordination language B-COoL.
-In B-COoL a user defines a behavioral interface for each behavioral language, which are then used to specify interactions between models.
+In B-COoL a user defines behavioral interfaces for each behavioral language, which are then used to specify interactions between models.
 To execute the models with the specified interactions, they transform them into \gls*{ccsl} models.  
 Their work results in plugins for GEMOC studio, which support running and debugging the models.
 
@@ -867,11 +863,11 @@ In this paper, we identified the two fundamental concepts: \textit{state} and \t
 
 \subsection{Multi-paradigm modeling and co-simulation}
 % Introduce MPM. 
-\gls*{mpm} is based on the idea to model every aspect and part of a system using the most appropriate modelling formalism(s) \cite{amraniMultiparadigmModellingCyber2021}.
+\gls*{mpm} is based on the idea to model every aspect and part of a system using the most appropriate modeling formalism(s) \cite{amraniMultiparadigmModellingCyber2021}.
 Thus, \gls*{mpm} often leads to multi-modeling scenarios where models conforming to different modeling formalisms are used.
 
 Different behavioral formalisms can be classified using two criteria: \textit{time} and \textit{values of state variables} \cite{wainerDiscreteeventModelingSimulation2009}.
-\Cref{fig:classification} shows the classification where time and state variables can either be \textit{discrete} or \textit{continous}.
+\Cref{fig:classification} shows the classification where time and state variables can either be \textit{discrete} or \textit{continuous}.
 % Co-Simulation is a subfield of this, i.e., running the models modeled in multiple paradigms together.
 
 \begin{figure}[ht!]
@@ -885,35 +881,21 @@ Different behavioral formalisms can be classified using two criteria: \textit{ti
 So far we have seen \glspl*{dtds} like \gls*{fsm} and \gls*{bpmn} in this work, where time and state variables are discrete.
 Furthermore, our approach can be applied to \glspl*{devs} since the underlying formalisms support continuous time, see for example \cite{olveczkyRealTimeMaudeIts2014}.
 However, we do not support formalisms with continuous state variables (top part of \cref{fig:classification}), since our central concept of \textit{state-changing elements} would need to be changed.
-We think that supporting \gls*{devs} formalisms is a good trade off between usefulness and complexity of our approach, since \gls*{devs} covers a wide variety of formalisms \cite{vangheluweIntroductionMultiparadigmModelling2002}.
+We think that supporting \gls*{devs} formalisms is a good trade-off between the usefulness and complexity of our approach, since \gls*{devs} covers a wide variety of formalisms \cite{vangheluweIntroductionMultiparadigmModelling2002}.
 
-% transition into co-simulation by motivating it
-Due to the use of different modelling formalisms system simulation when following the \gls*{mpm} paradigm is not an easy task.
+Due to the use of different modeling formalisms system simulation when following the \gls*{mpm} paradigm is not an easy task.
 Co-Simulation aims to solve this problem by composing the simulation of a system's parts into a global simulation \cite{gomesCoSimulationSurvey2019}.
-% Ptolemy is one co-simulation approach
 
 For example, \cite{ekerTamingHeterogeneityPtolemy2003} propose an actor-oriented co-simulation approach, where each system part is represented as an actor.
 An actor can communicate through its interfaces with other actors.
 Their approach is implemented in the tool \textit{Ptolemy} and supports continuous time and state variables.
 % FMI/FMU standard
-Furthermore, the \gls*{fmi}\footnote{\url{https://fmi-standard.org/}} is a co-simulation standard to exchange executable systems parts, so called \glspl*{fmu}.
-Each \gls*{fmu}, similar to the actors in Ptolemy, comes with an XML model to describe its interface, for example the \gls*{fmu}'s exposed variables.
+Furthermore, the \gls*{fmi}\footnote{\url{https://fmi-standard.org/}} is a co-simulation standard to exchange executable systems parts, so-called \glspl*{fmu}.
+Each \gls*{fmu}, similar to the actors in Ptolemy, comes with an XML model to describe its interface, for example, the \gls*{fmu}'s exposed variables.
 \glspl*{fmu} support continuous time and state variables and are widely used in the industry.
 
-% Their goal is simulation not behavioral consistency checking.
 However, with co-simulations, one can only simulate systems not check global behavioral properties.
 Our approach supports global properties by introducing the two fundamental concepts: \textit{state} and \textit{state-changing elements} and only allowing formalisms with discrete state variables.
-
-% \subsection{Behavioral interfaces and coordination}
-
-% Most behavioral languages are \glspl{xdsl} since they have a well defined execution semantics.
-% \cite{leroyBehavioralInterfacesExecutable2020} propose a metalanguage to define behavioral interfaces for \glspl{xdsl}.
-% Behavioral interfaces create the opportunity to handle conforming \glspl{xdsl} in a uniform way.
-% For example, to define a generic event injector or other reusable tools \cite{leroyBehavioralInterfacesExecutable2020}.
-
-% To use our approach with certain behavioral languages, one must identify the state-changing elements for each individual language.
-% Thus, state-changing elements resemble a simple behavioral interface which each language in our approach must implement.
-% This simple behavioral interface allows us to handle all conforming behavioral languages in a uniform way, when defining interactions.
 
 \section{Conclusion and future work} \label{sec:conclusion_and_future_work}
 % Conclusion
@@ -957,7 +939,7 @@ Previously he worked as a software developer and acquired a master of science in
 Before entering academia, he worked at SAP in Walldorf and received his Ph.D. in pure Mathematics from Leibniz University in Hannover, Germany. \authorcontact{harald.koenig@fhdw.de}}
 
 \shortbio{Adrian Rutle}{is a professor at the Department of Computer science, Electrical engineering and Mathematical sciences at the Western Norway University of Applied Sciences, Bergen, Norway.
-Rutle’s main interest is applying theoretical results from the field of model-driven software engineering to practical domains and has his main expertise in the development of formal modeling frameworks for domain-specific modeling languages, graph-based logic for reasoning about static and dynamic properties of models, and the use of model transformations for the definition of the semantics of modeling languages.
+Rutle’s main interest is applying theoretical results from the field of model-driven software engineering to practical domains and his main expertise is in the development of formal modeling frameworks for domain-specific modeling languages, graph-based logic for reasoning about static and dynamic properties of models, and the use of model transformations for the definition of the semantics of modeling languages.
 His recent research focuses on multilevel modeling, model repair, multi-model consistency management, modeling and simulation for robotics, digital fabrication, smart systems, and applications of machine learning in model-driven software engineering.
 \authorcontact{aru@hvl.no}}
 
