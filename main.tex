@@ -446,7 +446,7 @@ Also, for the snapshot metamodel of \gls*{bpmn} we reuse the concrete syntax of 
 In addition, \textsf{Token}s are highlighted with green bubbles in the middle of sequence flows and the top right of an activity.
 
 Each instance of a snapshot metamodel can represent an atomic propositions, since a system can either be in the state specified by this instance or not.
-Since instances of snapshot metamodels are essentially graphs they can be matched to a given system state in the same way \cite{dacostacavalheiroSpecificationPatternsProperties2012}.
+Since instances of snapshot metamodels are essentially graphs they can be matched to a given system state in a uniform way.
 Thus, using the snapshot metamodels to create atomic propositions, we can specify local behavioral properties for any modeling language.
 However, to specify global behavioral properties, we must combine the information of the \gls*{srm} with the snapshot metamodels.
 Each behavioral model is typed by a behavioral metamodel, which has a snapshot metamodel describing its state structure.
@@ -844,7 +844,7 @@ Thus, Event structures could be considered, where interactions are realized usin
 Since, their research challenges and resulting work items align well with our work, we see our work following the same line of research.
 In addition, they cover the same class of behavioral formalisms as our approach (see \acrshort*{devs} in the next subsection).
 
-\cite{varalarsenBCOolBehavioralCoordination2016} propose the coordination language B-COoL.
+\cite{varalarsenBehavioralCoordinationOperator2015} propose the coordination language B-COoL.
 In B-COoL a user defines a behavioral interface for each behavioral language, which are then used to specify interactions between models.
 To execute the models with the specified interactions, they transform them into \gls*{ccsl} models.  
 Their work results in plugins for GEMOC studio, which support running and debugging the models.
