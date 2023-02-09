@@ -742,9 +742,7 @@ Another option is to change the models to resolve the inconsistency.
 For example, the T-Junction controller could wait for the bus to pass before changing the traffic lights again.
 
 \section{Discussion} \label{sec:discussion}
-In this section we discuss the following aspects regarding our approach: semantic gaps, how to support new modeling languages, and the state space explosion problem.
-
-\subsection{Semantic gaps}
+In this section we discuss two potential problems of our approach: supporting new modeling languages and state space explosion.
 
 \subsection{Support for new modeling languages}
 To support a new modeling language in our approach one has to do the following: describe the state structure in a snapshot metamodel, identify state-changing elements in the language's metamodel, and implement a \gls*{hot} to the chosen formalism.
@@ -753,6 +751,7 @@ A plugin containing these three artifacts can then be reused.
 Implementing a \gls*{hot} that correctly implements a new modeling language's semantics takes time and effort.
 We learned that when implementing \glspl*{hot} to the same underlying formalism, one gets accustomed to the formalism and naturally builds a framework to generate and test specifications in this formalism.
 Thus, the work needed to implement new languages decreases over time, but one must always understand the semantics of a new language to map them to the chosen formalism.
+
 
 \subsection{State space explosion}
 State space explosion is one of the predominant issues when applying model checking to complex systems, which are often found in real-world applications.
