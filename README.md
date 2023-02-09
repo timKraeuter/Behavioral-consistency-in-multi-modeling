@@ -54,7 +54,13 @@ The Maude module is linked in the artifacts section [Maude specification](https:
 
 The Maude module is linked in the artifacts section [Maude specification](https://github.com/timKraeuter/Towards-behavioral-consistency-in-multi-modeling/blob/main/README.md#maude-specification-1).
 
-# State space explosion
+# Discussion
+
+## Support for new modeling languages
+The [implementation](https://github.com/timKraeuter/Rewrite_Rule_Generation) contains our frameworks to generate and test Groove and Maude specifications alongside the HOTS for FSM and BPMN.
+Furthermore, it contains the [comprehensive testsuite](https://github.com/timKraeuter/Rewrite_Rule_Generation/wiki/Test-Suite) to validate the BPMN HOT.
+
+## State space explosion
 A description how to run the **Maude benchmark** can be found [here](./artifacts/maude/benchmark/maudeBenchmark.md), while the description for the **Groove benchmark** can be found [here](./artifacts/graphGrammars/grooveBenchmark.md).
 
 # Artifacts
