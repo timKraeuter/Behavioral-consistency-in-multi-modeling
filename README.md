@@ -6,22 +6,26 @@ This repository contains our paper's sources and **additional artifacts**. The !
 
 ### State machine semantics
 
-**Traffic light start graph and GT-Rules:**
+**Example start graph and GT rules for the traffic light:**
 
-![Traffic light start graph and GT-Rules](./artifacts/figures/FSM_Groove.svg)
+![Example start graph and GT rules for the traffic light](./artifacts/figures/FSM_Groove.svg)
 
-The full GT system in Groove is linked in the section [Groove specification](https://github.com/timKraeuter/Towards-behavioral-consistency-in-multi-modeling/blob/main/README.md#groove-specification-1).
+The full GT system in Groove is linked in the artifacts section [Groove specification](https://github.com/timKraeuter/Towards-behavioral-consistency-in-multi-modeling/blob/main/README.md#groove-specification-1).
 
 ### BPMN semantics
+
+The mapping from BPMN to GT rules is described in more detail in the corresponding [wiki](https://github.com/timKraeuter/Rewrite_Rule_Generation/wiki).
+The wiki also includes our comprehensive [test suite](https://github.com/timKraeuter/Rewrite_Rule_Generation/wiki/Test-Suite) to test our graph transformation rule generation, i.e., local HOT for BPMN.
 
 **Example start graph and GT rules for the TJunction controller:**
 
 ![Example GT rules for the TJunction controller](./artifacts/figures/BPMN_Groove.svg)
 
-The full GT system in Groove is linked in the section [Groove specification](https://github.com/timKraeuter/Towards-behavioral-consistency-in-multi-modeling/blob/main/README.md#groove-specification-1).
+The full GT system in Groove is linked in the artifacts section [Groove specification](https://github.com/timKraeuter/Towards-behavioral-consistency-in-multi-modeling/blob/main/README.md#groove-specification-1).
 
 ## Maude specification
 
+A description how Maude specifications can be used in our approach is available [here](./artifacts/maude//Maude_Specification.pdf). 
 
 ### State machine semantics
 
@@ -44,13 +48,19 @@ eq initial = < "1" : FSM | name : "trafficLight", state : "red" > .
 
 ### BPMN semantics
 
-The Maude module is linked in the section [Maude specification](https://github.com/timKraeuter/Towards-behavioral-consistency-in-multi-modeling/blob/main/README.md#maude-specification-1).
+The Maude module is linked in the artifacts section [Maude specification](https://github.com/timKraeuter/Towards-behavioral-consistency-in-multi-modeling/blob/main/README.md#maude-specification-1).
 
 ### Check behavioral consistency
 
-The Maude module is linked in the section [Maude specification](https://github.com/timKraeuter/Towards-behavioral-consistency-in-multi-modeling/blob/main/README.md#maude-specification-1).
+The Maude module is linked in the artifacts section [Maude specification](https://github.com/timKraeuter/Towards-behavioral-consistency-in-multi-modeling/blob/main/README.md#maude-specification-1).
 
-# State space explosion
+# Discussion
+
+## Support for new modeling languages
+The [implementation](https://github.com/timKraeuter/Rewrite_Rule_Generation) contains our frameworks to generate and test Groove and Maude specifications alongside the HOTS for FSM and BPMN.
+Furthermore, it contains the [comprehensive testsuite](https://github.com/timKraeuter/Rewrite_Rule_Generation/wiki/Test-Suite) to validate the BPMN HOT.
+
+## State space explosion
 A description how to run the **Maude benchmark** can be found [here](./artifacts/maude/benchmark/maudeBenchmark.md), while the description for the **Groove benchmark** can be found [here](./artifacts/graphGrammars/grooveBenchmark.md).
 
 # Artifacts
