@@ -645,7 +645,7 @@ To apply our approach to the use case, we need to define local \gls*{hot}s from 
 \subsubsection{State machine semantics}
 The local \gls*{hot} to generate \gls*{gt} rules for finite state machines is straightforward.
 Each transition leads to a \gls*{gt} rule.
-For example, \cref{fig:sm_rule} shows the \gls*{gt} rules for the transition \textsf{turn red-amber} of the traffic light model.
+For example, \cref{fig:sm_rule} shows the \gls*{gt} rules for the transitions \textsf{turn green} and \textsf{turn red} of the traffic light model.
 It uses the concrete syntax introduced in \cref{fig:snapshot_metamodels} to depict state machine snapshots and their current states.
 We depict a \gls*{gt} rule by showing the graph $L$ on the left, $R$ on the right, and a named white arrow from $L$ to $R$.
 
@@ -744,7 +744,7 @@ Thus, the work needed to implement new languages decreases over time, but one mu
 
 These tasks are typically done by a language engineer which may be a different person than the modeler using our approach.
 Generally, we assume to roles: language engineer and modeler when adopting our approach.
-The modeler is in control of the use case and executes the manual tasks of the behavioral consistency management workflow (see \autoref{fig:approach}), while the language engineer is responsible for supporting all new modeling languages as described here.
+The modeler is in control of the use case and executes the manual tasks in \autoref{fig:approach}, while the language engineer is responsible for supporting all modeling languages that are needed.
 
 
 \subsection{State space explosion}
