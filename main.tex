@@ -742,16 +742,21 @@ For example, the T-Junction controller could wait for the bus to pass before cha
 In this section, we discuss two potential limitations of our approach: supporting new modeling languages and state space explosion.
 
 \subsection{Support for new modeling languages}
-To support a new modeling language in our approach one has to do the following: describe the state structure in a snapshot metamodel, identify state-changing elements in the language's metamodel, and implement a \gls*{hot} to the chosen formalism.
+To support a new modeling language in our approach one has to do the following tasks: describe the state structure in a snapshot metamodel, identify state-changing elements in the language's metamodel, and implement a \gls*{hot} to the chosen formalism.
 A plugin containing these three artifacts can then be reused.
 
 Implementing a \gls*{hot} that correctly implements a new modeling language's semantics takes time and effort.
 We learned that when implementing \glspl*{hot} to the same underlying formalism, one gets accustomed to the formalism and naturally builds a framework to generate and test specifications in this formalism.
 Thus, the work needed to implement new languages decreases over time, but one must always understand the semantics of the new language to map them to the chosen formalism.
 
+These tasks are typically done by a language engineer which may be a different person than the modeler using our approach.
+Generally, we assume to roles: language engineer and modeler when adopting our approach.
+The modeler is in control of the use case and executes the manual tasks of the behavioral consistency management workflow (see \autoref{fig:approach}), while the language engineer is responsible for supporting all new modeling languages as described here.
+
 
 \subsection{State space explosion}
 State space explosion is one of the predominant issues when applying model checking to complex systems, which are often found in real-world applications.
+We tested our approach using the generated \gls*{gt} system in Groove described earlier and the alternative implementation using rewriting logic with Maude.
 As one can see in \cref{table:grooveRuntime} and \cref{table:maudeRuntime}, our approach is not immune to state space explosion.
 The tables show the states, transitions (rewrites), and average runtime of a full state space exploration in the Groove (Maude) specification.
 Four scenarios were benchmarked, starting with the use case multi-model without approaching buses and then increasing the number of buses up to three.
