@@ -91,6 +91,7 @@ Graph transformation
     },emphstyle={\color{blue}\bfseries}
 }
 
+
 \begin{abstract}
 Multiple heterogeneous interacting systems are needed to realize the requirements of complex domains.
 Describing the interactions between these systems and checking their global behavioral consistency is a general, well-known challenge in software engineering.
@@ -130,8 +131,8 @@ Structural models, like UML class diagrams, describe structural aspects of syste
 This is usually referred to as the denotational semantics of the software system, as it only describes the set of valid instances or states of the system.
 Structural models in a multi-model often contain related information.
 Thus, current approaches define so-called \emph{commonalities} to explicate these relationships and keep the information consistent.
-Afterward, these commonalities can be used to get a comprehensive view of the global system, for example, by \textit{merging} all models into a global view.
-Structural consistency can then be verified using the global view.
+Afterwards, these commonalities can be used to get a comprehensive view of the global system, for example, by \textit{merging} all models into a global view.
+Structural consistency can then be verified using this global view.
 
 % Challenge: Consistency for a set of behavioral models.
 Nevertheless, approaches to multi-model consistency management must also include a means to maintain \emph{behavioral consistency} since behavioral models, like \gls*{bpmn} models, are associated with execution semantics describing dynamic aspects of the system \cite{objectmanagementgroupBusinessProcessModel2013}.
@@ -581,7 +582,7 @@ This generation takes the models and interactions as input and is fully automate
 
 \subsection{Check behavioral consistency}
 % Model checking for a system configuration
-In this step, we use the generated specification of the global behavior to check consistency given a system configuration.
+In this step, for a given system configuration, we use the generated specification of the global behavior to check consistency.
 A system configuration is an instance of the \gls*{srm} and is automatically translated into the formalism used in the specification.
 We then check the consistency of the defined properties using the specification and the system configuration.
 This step is fully automated, such that it can be executed as many times as needed for different system configurations and properties but using the same specification.
