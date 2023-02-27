@@ -720,9 +720,9 @@ A graph condition in Groove is a rule that does not change elements but can be u
 \subsection{Behavioral consistency in the use case}
 Running the obtained \gls*{gt} specification shows that properties \eqref{eq:property1} and \eqref{eq:property2} hold, while properties \eqref{eq:property3} and \eqref{eq:property4} do \textit{not} hold (see artifacts in \cite{krauterArtifactsBehavioralConsistency2023}).
 The counterexamples for properties 3 and 4 show an unexpected race condition that must be handled:
-After the TJunction controller signals that the traffic light A/B is green, bus B1/B2 can advance to the \textsf{Pass Junction} activity.
+After the TJunction controller signals that the traffic light A is green, bus B1 can advance to the \textsf{Pass Junction} activity.
 However, simultaneously, the TJunction controller can enter the subprocess for the next phase, which can be interrupted by the associated timer event.
-This can happen before bus B1/B2 passes the junction, resulting in an invalid state.
+This can happen before bus B1 passes the junction, resulting in a violation of the consistency requirement.
 
 The modelers have different options to handle the detected inconsistencies.
 One option is to keep the models unchanged and pay special attention to the found race condition during system implementation.
