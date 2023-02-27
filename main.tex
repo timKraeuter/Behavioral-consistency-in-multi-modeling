@@ -622,24 +622,7 @@ For example, a receive task in a \gls*{bpmn} process is represented by two rules
 
 The \textbf{second step} is to modify the generated rules to reflect the defined interactions.
 Interactions define the synchronization of systems, which we encode by merging the individual rules into rules describing the global behavior.
-The merging process to obtain the global rules is done in two steps:
-
-\begin{enumerate}
-    \item Rules generated from state-changing elements that are \textit{not} part of interactions remain unchanged and are added to the global rule set.
-    \item For each interaction, we do the following:
-     \begin{enumerate}
-         \item Find the corresponding rule\footnote{If one state-changing element results in more than one rule, one can define a strategy to pick the appropriate rule.} $P_0$ for the sender of the interaction and find the rules $P_1, P_2, \ldots P_n$ for the receiver state-changing elements using the saved traces.
-         \item Create a \textit{global rule} for the rules $P_0, P_1, \ldots, P_n$, which applies all of them at once, i.e., synchronizes the state changes of the behavioral models.
-         \item For each receiver of the interaction, instantiate the corresponding behavioral relationship from the behavioral model in $P_0$ to the behavioral model in $P_i$, for 1 $\leq$ i $\leq$ n, and add it to the global rule.
-         Thus, only behaviorally related models may interact, i.e., change their state simultaneously.
-     \end{enumerate}
-\end{enumerate}
-
-\Cref{fig:global_rule} shows the global rule resulting from the merging process.
-The global rule contains four individual rules changing the state of three traffic lights state machines and one T-Junction \gls*{bpmn} process due to step 2(b).
-In addition, it contains three instances of behavioral relationships connecting the behavioral models as described in step 2(c). 
-In the following section, we describe the local \glspl*{hot} to \gls*{gt} rules and how global rules are created from individual \gls*{gt} rules.
-
+In the following section, we describe these two steps in detail using the use case as an example.
 
 \subsection{Groove specification} 
 % Graph transformation rules and their generation from the behavioral models
@@ -696,7 +679,20 @@ Due to limited space, we only show the \textsf{Switch to P1} rules but the artif
 To summarize, we can generate \gls*{gt} systems that implement the behavioral semantics of \gls*{bpmn}.
 
 
-\subsubsection{Check behavioral consistency}
+\subsubsection{Realizing interactions}
+To realize interactions between the behavioral models we merge the previously generated rules as follows:
+
+\begin{enumerate}
+    \item Rules generated from state-changing elements that are \textit{not} part of interactions remain unchanged and are added to the global rule set.
+    \item For each interaction, we do the following:
+     \begin{enumerate}
+         \item Find the corresponding rule\footnote{If one state-changing element results in more than one rule, one can define a strategy to pick the appropriate rule.} $P_0$ for the sender of the interaction and find the rules $P_1, P_2, \ldots P_n$ for the receiver state-changing elements using the saved traces.
+         \item Create a \textit{global rule} for the rules $P_0, P_1, \ldots, P_n$, which applies all of them at once, i.e., synchronizes the state changes of the behavioral models.
+         \item For each receiver of the interaction, instantiate the corresponding behavioral relationship from the behavioral model in $P_0$ to the behavioral model in $P_i$, for 1 $\leq$ i $\leq$ n, and add it to the global rule.
+         Thus, only behaviorally related models may interact, i.e., change their state simultaneously.
+     \end{enumerate}
+\end{enumerate}
+
 The defined interactions change the rules for switching to phases 1 and 2.
 \autoref{fig:global_rule} shows the resulting rule for switching to phase 1.
 We decided that the interactions between the traffic lights and the TJunction controller should synchronize with the end of the task, not the start.
@@ -715,6 +711,7 @@ The corresponding individual rules no longer exist, so synchronization of the be
 A similar rule exists for switching to phase 2, resulting from the other interaction.
 All other rules are left untouched while constructing the global \gls*{gt} system.
 
+\subsubsection{Check behavioral consistency}
 Finally, we can generate the global state space of the system using the global \gls*{gt} system, which can be found in \cite{krauterArtifactsBehavioralConsistency2023}.
 To check the requirements formalized by properties 1-4, we must also encode the used atomic propositions.
 These are specified as \textit{graph conditions} in Groove.
