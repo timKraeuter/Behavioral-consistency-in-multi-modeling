@@ -38,8 +38,8 @@ Global behavioral consistency,
 Consistency verification,
 Multi-modeling,
 Heterogeneous models,
-Rewriting Logic,
-Graph transformation
+Graph transformation,
+Rewriting Logic
 }
 
 \runningtitle{Towards behavioral consistency in multi-modeling} % For use in the internal pages 
@@ -115,6 +115,7 @@ Our approach is independent of the particular formalism used in the generated fo
 
 % TODO: Yngve remarks.
 % TODO: consistency requirements in the abstract, behavioral consistency is defined by global behavioral properties. Make this clear and the language consistent.
+% TODO: State-changing elements remark in the cover letter. See notes in the last meeting.
 
 \section{Introduction} \label{sec:introduction}
 % Introduce multi-model
@@ -359,8 +360,8 @@ Our approach consists of five steps.
     \item Given a system configuration, we check the global behavioral properties using the generated specification.
 \end{enumerate}
 The first three steps are marked as manual and must be completed to use our approach in a given use case.
-However, the last two steps are automated and reusable without user intervention in any use case.
-In the following sections, we will describe each step in detail, highlighting what a user must repeatedly do for each use case and what must only be done once for each participating behavioral language.
+However, the last two steps are automated and reusable in any use case.
+In the following sections, we will describe each step in detail, highlighting what a modeler must repeatedly do for each use case and what must only be done once for each participating behavioral language.
 In addition, \cref{fig:allConcepts} at the end of the paper gives an overview of all the new concepts and how they are applied to the use case.
 
 
@@ -421,14 +422,14 @@ In this step, we specify behavioral consistency requirements as global behaviora
 These properties are defined using a temporal logic, for example, \gls*{ltl} as in the use case.
 Theoretically, any temporal logic can be used together with our approach, however, in practice, the underlying system which runs the generated specifications must support it.
 Furthermore, we agree with \cite{meyersProMoBoxFrameworkGenerating2014} that modelers are usually not familiar with temporal logic.
-Thus, lifting property specification to the domain-specific level is a promising idea that fits our approach.
+Lifting property specification to the domain-specific level is a promising idea that fits our approach.
 Nevertheless, for now, a modeler must define temporal logic properties.
 
 Temporal logic properties are built upon a set of atomic propositions which are either true or false in a given state.
 Each behavioral language (e.g., the BPMN) specification defines how these states are represented.
 Furthermore, the transitions between these states depend on the semantics of the behavioral models.
 In our approach, the first fundamental concept is to make \textit{state} structure explicit.
-We will call the resulting models \textit{snapshot metamodels} and specify them using class diagrams.
+We will call the models for the state structure \textit{snapshot metamodels} and specify them using class diagrams.
 
 For example, in the use case, we define snapshot metamodels for state machines and \gls*{bpmn}.
 A state machine is in one state at a time, as shown in the snapshot metamodel on the left of \cref{fig:snapshot_metamodels}.
@@ -479,7 +480,7 @@ It is worth noting that the defined atomic propositions are \textit{model-specif
 Thus, property definition (including atomic propositions) is done for each use case, while snapshot metamodels for behavioral languages must only be defined once.
 
 \subsection{Define model interactions}
-We call behavioral inter-model relationships \textit{interactions} since they carry behavioral meaning while commonalities carry structural meaning \cite{stunkelComprehensiveSystemsFormal2021, klareCommonalitiesPreservingConsistency2019}.
+In contrast to structural multi-modeling, we call behavioral inter-model relationships \textit{interactions} since they carry behavioral meaning while commonalities carry structural meaning \cite{stunkelComprehensiveSystemsFormal2021, klareCommonalitiesPreservingConsistency2019}.
 To specify interactions between different behavioral models, we define an interaction language given by the system relationship metamodel in \cref{fig:srm_metamodel}.
 In addition, we introduce the second fundamental concept of \textit{state-changing elements}.
 Each \textsf{BehavioralMetamodel} specifies a set of \textsf{StateChangingElement}s.
@@ -504,7 +505,7 @@ An \textsf{Interaction} has a \textsf{sender}, a set of \textsf{receivers}, and 
 Currently, there is only the \textsf{synchronous} \textsf{InteractionType}.
 However, more interaction types, for example, asynchronous interactions or interactions with message passing, could be added in the future.
 We model the role of sender and receiver in interactions to accommodate these interaction types in the future.
-The two roles are not needed for synchronous interactions and are hidden from the user in the concrete syntax used later in \cref{lst:interactions}.
+The two roles are not needed for synchronous interactions and are hidden from the modeler in the concrete syntax used later in \cref{lst:interactions}.
 Furthermore, asynchronous interactions can be modeled using two synchronous interactions with an additional behavioral model, such as a queue.
 Each \textsf{InteractionReceiver} references one \textsf{BehavioralRelationship} and one \textsf{StateChangingElement}.
 
@@ -569,8 +570,8 @@ Using the \gls*{srm} and snapshot metamodels, we can represent the global states
 However, we still need a formal specification of the global behavior to check the defined properties.
 The specification of the global behavior used in our approach must fulfill the following three requirements:
 \begin{enumerate}
-    \item The specification must respect the semantics of each behavioral model.
-    \item The specification must reflect the defined interactions between the behavioral models.
+    \item The specification must implement the semantics of each behavioral model.
+    \item The specification must realize the defined interactions between the behavioral models.
     \item The specification semantics must allow the checking of behavioral properties for a given system configuration.
 \end{enumerate}
 Thus, a specification in any formalism fulfilling these three requirements can be used in our approach.
@@ -593,15 +594,15 @@ Finally, a violation, including a counterexample, will be presented if a consist
 We can only show counterexamples if the concrete tool, executing the generated specifications, provides them.
 However, most modern tools, including Groove and Maude, will provide a counterexample.
 Adopting the same concrete syntax to visualize the counterexample as for the atomic propositions should be ideal for helping user understanding. 
-An unsuccessful consistency check leads to a consistency restoration process, which is crucial but out of the scope of this paper.
+Uncovered inconsistencies can lead to a consistency restoration process, which is crucial but out of the scope of this paper.
 We describe consistency checking for the use case and its result at the end of the next section.
 
 
 \section{Specification of the global behavior} \label{sec:specification_of_the_global_behavior}
-In this section, we will describe our implementation to generate formal \gls*{gt} specifications for Groove \cite{rensinkGROOVESimulatorTool2004}.
+In this section, we will describe our implementation to generate formal \gls*{gt} specifications executable in Groove \cite{rensinkGROOVESimulatorTool2004}.
 Then, we use the generated specification to check behavioral consistency for the use case and discuss the results.
 We have chosen to use the \gls*{gt} formalism to describe our approach because \glspl*{gt} provide a visual representation and allow for a clearer understanding.
-Additionally, a description of the term-rewriting implementation in Maude is part of the artifacts of this paper \cite{krauterArtifactsBehavioralConsistency2023}.
+As an alternative to \gls*{gt} and Groove, we describe in \cite{krauterArtifactsBehavioralConsistency2023} our implementation using rewriting logic and Maude.
 
 Both implementations utilize a \textit{global} \gls*{hot} from the behavioral models and their interactions to \gls*{gt} rules (Groove) or term rewriting rules (Maude).
 Since the results of the \gls*{mt} can be regarded as \gls*{mt}s themselves, we say the \gls*{mt} is \textit{higher-order} \cite{tisiUseHigherOrderModel2009}.
@@ -609,12 +610,12 @@ In the following, we describe the \gls*{hot} to generate \gls*{gt} specification
 The \gls*{hot} works similarly when generating a term-rewriting specification for Maude.
 
 The \gls*{hot} can be decomposed into two steps.
-The first step to generate a specification of the global behavior is to create \gls*{gt} rules for each behavioral model contained in the multi-model.
+The \textbf{first step} to generate a specification of the global behavior is to create \gls*{gt} rules for each behavioral model contained in the multi-model.
 Each set of rules must describe the behavior of the given behavioral model by manipulating instances of the snapshot metamodels.
 For example, a rule for a transition in a state machine changes the current state of a state machine snapshot from the source to the target of the transition. 
 
 Thus, we need \textit{local} \gls*{hot}s for each behavioral modeling language producing rules.
-Each local \gls*{hot} only has to be implemented once by an \gls*{mde} tool developer.
+Each local \gls*{hot} only has to be implemented once by a language engineer.
 The \gls*{hot}, metamodel and snapshot metamodel for a behavioral language can be shared together, for example, as a plugin, such that they can be reused in any future setting the language is needed.
 In addition, each local \gls*{hot} must keep traces of the generated rules.
 Concretely, it has to save which rules originated from which state-changing elements in the behavioral model.
@@ -622,7 +623,7 @@ Returning to the state machine example, we must know which transition results in
 In general, multiple rules may be associated with one state-changing element of a behavioral model.
 For example, a receive task in a \gls*{bpmn} process is represented by two rules since it starts and then waits for an incoming message before finishing.
 
-The second step is to modify the generated rules to reflect the defined interactions.
+The \textbf{second step} is to modify the generated rules to reflect the defined interactions.
 Interactions define the synchronization of systems, which we encode by merging the individual rules into rules describing the global behavior.
 The merging process to obtain the global rules is done in two steps:
 
@@ -733,7 +734,7 @@ After the TJunction controller signals that the traffic light A/B is green, bus 
 However, simultaneously, the TJunction controller can enter the subprocess for the next phase, which can be interrupted by the associated timer event.
 This can happen before bus B1/B2 passes the junction, resulting in an invalid state.
 
-The system developers have different options to handle the detected inconsistencies.
+The modelers have different options to handle the detected inconsistencies.
 One option is to keep the models unchanged and pay special attention to the found race condition during system implementation.
 This can be an acceptable solution since the \textsf{Pass Junction} activity is also modeled as a user activity, i.e., the bus driver decides when to cross the T-Junction.
 Furthermore, tolerating inconsistencies can be a viable option in \gls*{mde} \cite{weidmannToleranceModelDrivenEngineering2021}.
@@ -749,7 +750,7 @@ A plugin containing these three artifacts can then be reused.
 
 Implementing a \gls*{hot} that correctly implements a new modeling language's semantics takes time and effort.
 We learned that when implementing \glspl*{hot} to the same underlying formalism, one gets accustomed to the formalism and naturally builds a framework to generate and test specifications in this formalism.
-Thus, the work needed to implement new languages decreases over time, but one must always understand the semantics of a new language to map them to the chosen formalism.
+Thus, the work needed to implement new languages decreases over time, but one must always understand the semantics of the new language to map them to the chosen formalism.
 
 
 \subsection{State space explosion}
@@ -757,13 +758,12 @@ State space explosion is one of the predominant issues when applying model check
 As one can see in \cref{table:grooveRuntime} and \cref{table:maudeRuntime}, our approach is not immune to state space explosion.
 The tables show the states, transitions (rewrites), and average runtime of a full state space exploration in the Groove (Maude) specification.
 Four scenarios were benchmarked, starting with the use case multi-model without approaching buses and then increasing the number of buses up to three.
+Generally, the Maude exploration time is lower despite larger state spaces due to technical differences in implementing the \gls*{bpmn} semantics.
 
 To calculate the average runtime, we used the hyperfine benchmarking tool \cite{peterHyperfine2022} (version 1.15.0), which ran state space exploration for each scenario ten times.
 Timing evaluations were done with an AMD Ryzen 7700X processor and 32 GB of RAM running Maude version 3.1 (inside the Windows Subsystem for Linux) and Groove version 5.8.1.
 A description of how to run the benchmarks is available in \cite{krauterArtifactsBehavioralConsistency2023}.
 
-Generally, the Maude exploration time is lower despite larger state spaces due to technical differences in implementing the \gls*{bpmn} semantics.
-However, as expected, neither of the tools is immune to state space explosion.
 
 \begin{table}[ht]
 \centering
@@ -855,7 +855,7 @@ Since their research challenges and resulting work items align with our work, we
 In addition, they cover the same class of behavioral formalisms as our approach (see \acrshort*{devs} in the next subsection).
 
 \cite{varalarsenBehavioralCoordinationOperator2015} propose the coordination language B-COoL.
-In B-COoL a user defines behavioral interfaces for each behavioral language, which are then used to specify interactions between models.
+In B-COoL a modeler defines behavioral interfaces for each behavioral language, which are then used to specify interactions between models.
 To execute the models with the specified interactions, they transform them into \gls*{ccsl} models.  
 Their work results in plugins for GEMOC studio, which support running and debugging the models.
 
