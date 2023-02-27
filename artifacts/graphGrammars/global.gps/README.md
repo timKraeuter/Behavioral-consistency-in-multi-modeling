@@ -8,6 +8,15 @@ java -jar ../groove-5_8_1/bin/Simulator.jar
 Then load the example by clicking ```File < Load Grammar``` and selecting the following:
 - **global.gps**
 
+
+## Type graph
+
+The merge of the system relationship model and the snapshot metamodels is the type graph.
+Here we achieve the merge by adding inheritance from the behavioral models to the roots in the snapshot metamodels.
+In the paper, we use composition along a snapshot association, not inheritance.
+
+![Typegraph for the graph grammar](./typegraph.png)
+
 ## State space generation
 Using the generated production rules from the BPMN models, one can analyze different system configurations.
 
