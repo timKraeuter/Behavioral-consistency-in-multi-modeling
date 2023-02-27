@@ -479,7 +479,7 @@ Thus, property definition (including atomic propositions) is done for each use c
 
 \subsection{Define model interactions}
 We call behavioral inter-model relationships \textit{interactions} since they carry behavioral meaning while commonalities carry structural meaning \cite{stunkelComprehensiveSystemsFormal2021, klareCommonalitiesPreservingConsistency2019}.
-To specify interactions between different behavioral models, we defined an interaction language given by the system relationship metamodel in \cref{fig:srm_metamodel}.
+To specify interactions between different behavioral models, we define an interaction language given by the system relationship metamodel in \cref{fig:srm_metamodel}.
 In addition, we introduce the second fundamental concept of \textit{state-changing elements}.
 Each \textsf{BehavioralMetamodel} specifies a set of \textsf{StateChangingElement}s.
 For example, a state machine defines states and transitions, but only the transitions describe how the states in a state machine change.
@@ -490,7 +490,7 @@ Thus, state-changing elements function as a minimal \textit{behavioral interface
 
 Our approach is based on the requirement that state-changing elements can be identified in metamodels for any used behavioral formalism.
 This requirement is not difficult to meet since behavioral modeling languages with a discrete state must have some \textit{observable} construct to describe state changes.
-Inspecting other behavioral languages, such as Petri Nets or activity diagrams, shows that identifying state-changing elements (transitions, activity nodes) is unproblematic. 
+Inspecting other behavioral languages, such as Petri Nets or activity diagrams, shows that identifying state-changing elements (transitions and activity nodes, respectively) is unproblematic. 
 
 \begin{figure}[h]
     \centering
@@ -499,7 +499,7 @@ Inspecting other behavioral languages, such as Petri Nets or activity diagrams, 
     \label{fig:srm_metamodel}
 \end{figure}
 
-An \textsf{Interaction} has a \textsf{sender}, a set of \textsf{receivers}, and an \textsf{InteractionType}.
+An \textsf{Interaction} has a \textsf{sender}, a set of \textsf{receivers}, and a \textsf{type}.
 Currently, there is only the \textsf{synchronous} \textsf{InteractionType}.
 However, more interaction types, for example, asynchronous interactions or interactions with message passing, could be added in the future.
 We model the role of sender and receiver in interactions to accommodate these interaction types in the future.
@@ -568,7 +568,7 @@ Using the \gls*{srm} and snapshot metamodels, we can represent the global states
 However, we still need a formal specification of the global behavior to check the defined properties.
 The specification of the global behavior used in our approach must fulfill the following three requirements:
 \begin{enumerate}
-    \item The specification must respect the semantics of each behavioral model, except for interactions.
+    \item The specification must respect the semantics of each behavioral model.
     \item The specification must reflect the defined interactions between the behavioral models.
     \item The specification semantics must allow the checking of behavioral properties for a given system configuration.
 \end{enumerate}
