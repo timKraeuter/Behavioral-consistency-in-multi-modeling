@@ -655,7 +655,7 @@ A formal description of \gls*{gt} systems can, for example, be found in \cite{eh
 We generate typed \gls*{gt} systems, where the merge of the \gls*{srm} and the snapshot metamodels is the type graph \cite{krauterArtifactsBehavioralConsistency2023}.
 Individual rules and rules changing the global state conform to this type graph.
 Interactions result in global rules which change multiple parts of the global state.
-A global \gls*{gt} rule is calculated by taking the sum of all left-hand sides and right-hand sides of the individual \gls*{gt} rules (implements step 2(b) in \cref{sec:specification_of_the_global_behavior} for Groove) \cite[Definition 3.2.7]{baldanConcurrentSemanticsAlgebraic1999}.
+A global \gls*{gt} rule is calculated by taking the sum of all left-hand sides and right-hand sides of the individual \gls*{gt} rules (implements step 2(b)) \cite[Definition 3.2.7]{baldanConcurrentSemanticsAlgebraic1999}.
 Together with a system configuration, i.e., a start graph, we can obtain an executable formal specification of the global behavior.
 Consequently, this can be used to check behavioral consistency.
 
@@ -678,7 +678,7 @@ We depict a \gls*{gt} rule by showing the graph $L$ on the left, $R$ on the righ
 \end{figure}
 
 Using a traffic light snapshot with the state red as a start graph, we generate the same state space in Groove as the traffic light state machine describes.
-All generated \gls*{gt} systems, including further instructions regarding execution and consistency checking, can be found in \cite{krauterArtifactsBehavioralConsistency2023}.
+The generated \gls*{gt} system and the other \gls*{gt} systems of the use case, including further instructions regarding execution and consistency checking, can be found in \cite{krauterArtifactsBehavioralConsistency2023}.
 
 
 \subsubsection{BPMN semantics}
