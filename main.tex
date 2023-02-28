@@ -107,8 +107,7 @@ The approach introduces a workflow in which we
 Our approach is independent of the particular formalism used in the generated formal specification, and we currently support graph transformations (Groove) and rewriting logic (Maude).
 \end{abstract}
 
-% TODO: Add when accepted
-% \acknowledgment{We want to thank the anonymous reviewers for their valuable comments and helpful suggestions.}
+\acknowledgment{We want to thank the anonymous reviewers for their valuable comments and helpful suggestions.}
 
 \begin{document}    
 \maketitle
@@ -606,7 +605,7 @@ We have chosen to use the \gls*{gt} formalism to describe our approach because \
 As an alternative to \gls*{gt} and Groove, we describe in \cite{krauterArtifactsBehavioralConsistency2023} our implementation using rewriting logic and Maude.
 
 Both implementations utilize a \textit{global} \gls*{hot} from the behavioral models and their interactions to \gls*{gt} rules (Groove) or term rewriting rules (Maude).
-Since the results of the \gls*{mt} can be regarded as \gls*{mt}s themselves, we say the \gls*{mt} is \textit{higher-order}.
+Since the results of the \gls*{mt} can be regarded as \gls*{mt}s themselves, we say the \gls*{mt} is \textit{higher-order} \cite{tisiUseHigherOrderModel2009}.
 In the following, we describe the \gls*{hot} to generate \gls*{gt} specifications for Groove.
 The \gls*{hot} works similarly when generating a term-rewriting specification for Maude.
 
@@ -735,6 +734,7 @@ Furthermore, tolerating inconsistencies can be a viable option in \gls*{mde} \ci
 Another option is to change the models to resolve the inconsistency.
 For example, the T-Junction controller could wait for the bus to pass before changing the traffic lights again.
 
+
 \section{Discussion} \label{sec:discussion}
 In this section, we discuss two potential limitations of our approach: supporting new modeling languages and state space explosion.
 
@@ -811,6 +811,7 @@ Furthermore, not every property is concerned with all behavioral models.
 For example, properties (1) and (2) of the use case do not involve buses and can be checked on smaller state spaces, not including approaching buses.
 In addition, checking a set of properties can be run in parallel.
 If some properties are computationally expensive, they can be run on dedicated hardware, for example, during a continuous integration pipeline once a day in case a behavioral model or an interaction changes.
+% Could be deleted but I think its quite nice.
 Thus, checking the consistency of a multi-model can be seen as an additional test during \gls*{mde}, which can be run locally but, in addition, is a vital part of continuous integration.
 
 % Ways to mitigate state space explosion.
