@@ -117,9 +117,9 @@ Our approach is independent of the particular formalism used in the generated fo
 % Introduce multi-model
 \gls*{mde} addresses the increasing complexity of software systems by employing models to describe the different aspects of the system.
 In this way, \gls*{mde} promotes a clear separation of concerns and raises the abstraction level throughout the entire development process \cite{franceModeldrivenDevelopmentComplex2007}.
-These models are then used to generate portions of the system leading to an increase in productivity and reduction of errors \cite{brambillaModeldrivenSoftwareEngineering2017}.
+These models are then used to generate portions of the system, leading to increased productivity, and reduced errors \cite{brambillaModeldrivenSoftwareEngineering2017}.
 As multiple interacting systems are needed to realize the requirements of complex domains, a set of corresponding models would be needed to represent these systems and their interactions.
-Such a collection of interrelated models is referred to as a \textit{multi-model} \cite{boronatWhatMultimodelingLanguage2009}, which is usually heterogeneous, meaning it consists of models conforming to different modeling languages.
+Such a collection of interrelated models is called a \textit{multi-model} \cite{boronatWhatMultimodelingLanguage2009}, which is usually heterogeneous, meaning it consists of models conforming to different modeling languages.
 % Consistency in multi-modeling
 Models in a multi-model contradicting each other can lead to problems during development, system generation, and system execution.
 Consequently, continuous multi-model consistency management during the development process is a significant issue for multi-models \cite{spanoudakisInconsistencyManagementSoftware2001, cicchettiMultiviewApproachesSoftware2019}.
@@ -130,7 +130,7 @@ Structural models, like UML class diagrams, describe structural aspects of syste
 This is usually referred to as the denotational semantics of the software system, as it only describes the set of valid instances or states of the system.
 Structural models in a multi-model often contain related information.
 Thus, current approaches define so-called \textit{commonalities} to explicate these relationships and keep the information consistent.
-Afterwards, these commonalities can be used to get a comprehensive view of the global system, for example, by \textit{merging} all models into a global view.
+Afterward, these commonalities can be used to get a comprehensive view of the global system, for example, by \textit{merging} all models into a global view.
 Structural consistency can then be verified using this global view.
 
 % Challenge: Consistency for a set of behavioral models.
@@ -148,14 +148,14 @@ However, there is no approach to define and \textit{check consistency} of \texti
 We propose a novel approach for consistency management of heterogeneous multi-models, which allows us to define and check \textit{global} behavioral properties.
 Our approach facilitates specifying \textit{interactions} between multiple potentially heterogeneous behavioral models, which are used to generate a specification of the global behavior.
 The approach is generally independent of the particular formalism used in the specification, and currently, we can generate specifications in two different formalisms.
-The generation of the global behavior specification is \textit{fully automatic} and results in \gls*{gt} rules (or respectively, term rewriting rules) executable in Groove (Maude).
+The generation of the global behavior specification is \textit{fully automatic} and results in \gls*{gt} rules (or, respectively, term rewriting rules) executable in Groove (Maude).
 Afterward, we can use the built-in verification mechanisms in Groove (Maude) to check the previously defined global behavioral properties.
 
 Our approach is based on two fundamental concepts: \textit{state} and \textit{state-changing elements}.
-The state structure of each participating behavioral language must be explicitly defined such that we can infer how global states are structured.
+The state structure of each participating behavioral language must be explicitly defined to infer how global states are structured.
 Furthermore, state-changing elements must be identified in each participating behavioral language.
 Thus, state-changing elements serve as a minimal \textit{behavioral interface} to uniformly define interactions for heterogeneous models.
-Our approach applies to behavioral formalisms where these two concepts can be found which is the case for most formalisms with discrete state variables (see related work in \cref{sec:related_work}).
+Our approach applies to behavioral formalisms where these two concepts can be found, which is the case for most formalisms with discrete state variables (see related work in \cref{sec:related_work}).
 
 % Our approach related to structural consistency
 The proposed approach partly resembles the state of the art approaches for structural consistency.
@@ -173,7 +173,7 @@ However, we refined the behavioral consistency management workflow into five ste
 The remainder of this paper is structured as follows.
 We introduce a simplified use case (\autoref{sec:usecase}) before explaining our behavioral consistency management approach in detail (\autoref{sec:behavioral_consistency_checking}).
 Afterward, we show how we can use the \gls*{gt} toolset Groove to check behavioral consistency (\autoref{sec:specification_of_the_global_behavior}).
-Furthermore, we discuss potential limitations of our approach in \autoref{sec:discussion}.
+Furthermore, we discuss the potential limitations of our approach in \autoref{sec:discussion}.
 Finally, we examine related work in \autoref{sec:related_work} and conclude in \autoref{sec:conclusion_and_future_work}.
 
 
@@ -181,7 +181,7 @@ Finally, we examine related work in \autoref{sec:related_work} and conclude in \
 This section motivates our approach with a simplified use case in which a traffic management system is developed to guide the traffic at a T-Junction with three traffic lights.
 The traffic management system should control the traffic by switching between the two traffic phases highlighted in \cref{fig:junction-phases}.
 In addition, it must fulfill the following two requirements.
-First, it must guarantee safe traffic by correctly changing the three traffic lights, A, B, and C.
+First, it must guarantee safe traffic by correctly changing the three traffic lights A, B, and C.
 Second, it should prioritize arriving buses, i.e., switch the traffic lights quicker than usual to let an approaching bus pass (early green).
 This so-called bus priority signal is a widely implemented technique to improve service and reduce delays in public transport.
 
@@ -317,7 +317,7 @@ The resulting global properties \eqref{eq:property1} and \eqref{eq:property2} ar
     \square\neg((C_{green} \lor C_{amber}) \land (B_{green} \lor B_{amber})) \label{eq:property2}
 \end{align}
 
-If we include buses \textsf{B1} and \textsf{B2} in the system, we would like to check that they cannot pass when their traffic light is red or red-amber.
+If we include buses \textsf{B1} and \textsf{B2} in the system, we want to check that they cannot pass when their traffic light is red or red-amber.
 Concretely, this means the \textsf{Pass Junction} activity should not execute while the corresponding traffic light is \textsf{red} or \textsf{red-amber}.
 We formalize these requirements again by using \gls*{ltl} safety properties \eqref{eq:property3} and \eqref{eq:property4}, where the atomic proposition $B1_{passing}$ and $B2_{passing}$ represent that \textsf{Pass Junction} (see \cref{fig:communication}) has started but not finished yet.
 
@@ -418,9 +418,9 @@ Different instances of the \gls*{srm} can be used to analyze the global behavior
 
 \subsection{Specify consistency requirements} \label{subsec:specify_consistency_requirements}
 In this step, we specify behavioral consistency requirements as global behavioral properties.
-These properties are defined using a temporal logic, for example, \gls*{ltl} as in the use case.
+These properties are defined using temporal logic, for example, \gls*{ltl} as in the use case.
 Theoretically, any temporal logic can be used together with our approach, however, in practice, the underlying system which runs the generated specifications must support it.
-Furthermore, we agree with \cite{meyersProMoBoxFrameworkGenerating2014} that modelers are usually not familiar with temporal logic.
+Furthermore, we agree with \cite{meyersProMoBoxFrameworkGenerating2014} that modelers are usually unfamiliar with temporal logic.
 Lifting property specification to the domain-specific level is a promising idea that fits our approach.
 Nevertheless, for now, a modeler must define temporal logic properties.
 
@@ -584,7 +584,7 @@ This generation takes the models and interactions as input and is fully automate
 
 \subsection{Check behavioral consistency}
 % Model checking for a system configuration
-In this step, for a given system configuration, we use the generated specification of the global behavior to check consistency.
+In this step, for a given system configuration, we use the generated specification of the global behavior to check the consistency.
 A system configuration is an instance of the \gls*{srm} and is automatically translated into the formalism used in the specification.
 We then check the defined properties using the specification and the system configuration.
 This step is fully automated, such that it can be executed as many times as needed for different system configurations and properties while using the same specification.
@@ -616,7 +616,7 @@ For example, a rule for a transition in a state machine changes the current stat
 
 Thus, we need \textit{local} \gls*{hot}s for each behavioral modeling language producing rules.
 Each local \gls*{hot} only has to be implemented once by a language engineer.
-The \gls*{hot}, metamodel and snapshot metamodel for a behavioral language can be shared together, for example, as a plugin, such that they can be reused in any future setting the language is needed.
+The \gls*{hot}, metamodel, and snapshot metamodel for a behavioral language can be shared together, for example, as a plugin, such that they can be reused in any future setting the language is needed.
 In addition, each local \gls*{hot} must keep traces of the generated rules.
 Concretely, it has to save which rules originated from which state-changing elements in the behavioral model.
 Returning to the state machine example, we must know which transition results in which rule.
@@ -746,7 +746,7 @@ Implementing a \gls*{hot} that correctly implements a new modeling language's se
 We learned that when implementing \glspl*{hot} to the same underlying formalism, one gets accustomed to the formalism and naturally builds a framework to generate and test specifications in this formalism.
 Thus, the work needed to implement new languages decreases over time, but one must always understand the semantics of the new language to map them to the chosen formalism.
 
-These tasks are typically done by a language engineer which may be a different person than the modeler who uses our consistency management approach.
+These tasks are typically done by a language engineer who may be a different person than the modeler who uses our consistency management approach.
 Generally, we assume two roles: language engineer and modeler.
 The modeler is in control of the use case and executes the manual tasks in \autoref{fig:approach}, while the language engineer is responsible for supporting the  modeling languages which are used in the multi-model.
 
@@ -811,7 +811,7 @@ Furthermore, not every property is concerned with all behavioral models.
 For example, properties (1) and (2) of the use case do not involve buses and can be checked on smaller state spaces, not including approaching buses.
 In addition, checking a set of properties can be run in parallel.
 If some properties are computationally expensive, they can be run on dedicated hardware, for example, during a continuous integration pipeline once a day in case a behavioral model or an interaction changes.
-% Could be deleted but I think its quite nice.
+% Could be deleted but I think it's quite nice.
 Thus, checking the consistency of a multi-model can be seen as an additional test during \gls*{mde}, which can be run locally but, in addition, is a vital part of continuous integration.
 
 % Ways to mitigate state space explosion.
@@ -842,7 +842,7 @@ Nevertheless, these approaches only resemble ad-hoc solutions to specific combin
 They do not consider the general problem of behavioral consistency in a heterogeneous modeling scenario.
 
 % Kienzle with event structures: composition
-\cite{kienzleUnifyingFrameworkHomogeneous2019} proposes a unifying framework for homogeneous model composition of structural and behavioral models.
+\cite{kienzleUnifyingFrameworkHomogeneous2019} proposes a unifying framework for the homogeneous model composition of structural and behavioral models.
 To combine behavioral models, they use Event structures as an underlying formalism and show how different homogeneous behavioral models can be combined.
 In addition, to express behavioral relationships between different models they create causal relationships, which are used during model composition. 
 Generally, their approach is compatible with ours since we do not mandate a specific formalism.
@@ -884,7 +884,7 @@ We think that supporting \gls*{devs} formalisms is a good trade-off between the 
 
 Using different modeling formalisms as is the case when
 following the \gls*{mpm} paradigm makes system simulation challenging.
-Co-Simulation aims to solve this challenge by composing the simulation of a systems parts into a global simulation \cite{gomesCoSimulationSurvey2019}.
+Co-Simulation aims to solve this challenge by composing the simulation of a system's parts into a global simulation \cite{gomesCoSimulationSurvey2019}.
 
 For example, \cite{ekerTamingHeterogeneityPtolemy2003} propose an actor-oriented co-simulation approach, where each system part is represented as an actor.
 An actor can communicate through its interfaces with other actors.
@@ -902,7 +902,7 @@ Our work represents a formalization of behavioral consistency management in a he
 Previous work either only dealt with the behavioral consistency between specific pairs of models or focused on the simulation in a heterogeneous scenario but lacked checking global properties.
 
 Our approach is based on two fundamental concepts: \textit{state} and \textit{state-changing elements}.
-The state structure of each participating behavioral language must be explicitly defined such that we can infer how global states are structured.
+The state structure of each participating behavioral language must be explicitly defined to infer how global states are structured.
 Furthermore, state-changing elements serve as a minimal behavioral interface to uniformly define interactions for heterogeneous models.
 These two fundamental concepts can be found in most, if not every \gls*{devs} formalism.
 Thus, our approach can support behavioral formalisms with discrete state variables.
