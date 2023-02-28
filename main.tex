@@ -743,9 +743,9 @@ Implementing a \gls*{hot} that correctly implements a new modeling language's se
 We learned that when implementing \glspl*{hot} to the same underlying formalism, one gets accustomed to the formalism and naturally builds a framework to generate and test specifications in this formalism.
 Thus, the work needed to implement new languages decreases over time, but one must always understand the semantics of the new language to map them to the chosen formalism.
 
-These tasks are typically done by a language engineer which may be a different person than the modeler using our approach.
-Generally, we assume to roles: language engineer and modeler when adopting our approach.
-The modeler is in control of the use case and executes the manual tasks in \autoref{fig:approach}, while the language engineer is responsible for supporting all modeling languages that are needed.
+These tasks are typically done by a language engineer which may be a different person than the modeler who uses our consistency management approach.
+Generally, we assume two roles: language engineer and modeler.
+The modeler is in control of the use case and executes the manual tasks in \autoref{fig:approach}, while the language engineer is responsible for supporting the  modeling languages which are used in the multi-model.
 
 
 \subsection{State space explosion}
@@ -766,7 +766,7 @@ A description of how to run the benchmarks is available in \cite{krauterArtifact
 
 \begin{tabular}{|c || c | c | c |}
  \hline
- Use case & States & Transitions & Exploration time \\
+ Use cas                e & States & Transitions & Exploration time \\
  \hline\hline
  No buses & 168 & 438 & \textasciitilde 1.201 ms \\
  \hline
@@ -807,7 +807,7 @@ Checking a property specified in \gls*{ltl} does not necessarily lead to a full 
 Furthermore, not every property is concerned with all behavioral models.
 For example, properties (1) and (2) of the use case do not involve buses and can be checked on smaller state spaces, not including approaching buses.
 In addition, checking a set of properties can be run in parallel.
-If some properties are computationally expensive, they can be run on dedicated hardware, for example, during a continuous integration pipeline once a day in case of a behavioral model or interaction change.
+If some properties are computationally expensive, they can be run on dedicated hardware, for example, during a continuous integration pipeline once a day in case a behavioral model or an interaction changes.
 Thus, checking the consistency of a multi-model can be seen as an additional test during \gls*{mde}, which can be run locally but, in addition, is a vital part of continuous integration.
 
 % Ways to mitigate state space explosion.
@@ -858,7 +858,7 @@ Their work results in plugins for GEMOC studio, which support running and debugg
 Both approaches are similar to our approach since both have mechanisms to define interactions between behavioral models and generate a global behavioral specification based on these interactions.
 Furthermore, the generation of the global behavior is achieved by transforming models to a certain formalism like the \gls*{hot} in our approach.
 However, the generated specification does not allow to check global behavioral properties since they do not make the state structure (snapshot metamodels in our approach) of the participating models explicit.
-In this paper, we identified the two fundamental concepts: \textit{state} and \textit{state-changing elements} to check behavioral consistency when heterogeneous models interact.
+In our approach, we define the two fundamental concepts (\textit{state} and \textit{state-changing elements}) to check behavioral consistency when heterogeneous models interact.
 
 \subsection{Multi-paradigm modeling and co-simulation}
 % Introduce MPM. 
