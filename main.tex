@@ -881,7 +881,8 @@ Furthermore, our approach can be applied to \glspl*{devs} since the underlying f
 However, we do not support formalisms with continuous state variables (top part of \cref{fig:classification}), since our central concept of \textit{state-changing elements} would need to be changed.
 We think that supporting \gls*{devs} formalisms is a good trade-off between the usefulness and complexity of our approach, since \gls*{devs} covers a wide variety of formalisms \cite{vangheluweIntroductionMultiparadigmModelling2002}.
 
-Due to the use of different modeling formalisms system simulation when following the \gls*{mpm} paradigm is not an easy task.
+Using different modeling formalisms as is the case when
+following the \gls*{mpm} paradigm makes system simulation challenging.
 Co-Simulation aims to solve this challenge by composing the simulation of a systems parts into a global simulation \cite{gomesCoSimulationSurvey2019}.
 
 For example, \cite{ekerTamingHeterogeneityPtolemy2003} propose an actor-oriented co-simulation approach, where each system part is represented as an actor.
@@ -893,11 +894,10 @@ Each \gls*{fmu}, similar to the actors in Ptolemy, comes with an XML model to de
 \glspl*{fmu} support continuous time and state variables and are widely used in the industry.
 
 However, with co-simulations, one can only simulate systems not check global behavioral properties.
-Our approach supports global properties by introducing the two fundamental concepts: \textit{state} and \textit{state-changing elements} and only allowing formalisms with discrete state variables.
 
 \section{Conclusion and future work} \label{sec:conclusion_and_future_work}
 % Conclusion
-Our work represents a formalization of behavioral consistency management in a heterogeneous modeling scenario, enabling formulating and checking \textit{global} properties.
+Our work represents a formalization of behavioral consistency management in a heterogeneous modeling scenario, facilitating the formulation and checking of \textit{global} properties.
 Previous work either only dealt with the behavioral consistency between specific pairs of models or focused on the simulation in a heterogeneous scenario but lacked checking global properties.
 
 Our approach is based on two fundamental concepts: \textit{state} and \textit{state-changing elements}.
