@@ -104,11 +104,10 @@ The approach introduces a workflow in which we
 (iii) align the individual models by specifying \textit{how they interact},
 (iv) generate a formal specification of the \textit{global behavior}, and finally,
 (v) \textit{check} the global behavioral properties, which should be satisfied by the multi-model.
-Our approach is independent of the particular formalism used in the generated formal specification, and we currently support graph transformations (Groove) and rewriting logic (Maude).
+Our approach is decoupled from the particular formalism used in the generated formal specification, and we currently support graph transformations (Groove) and rewriting logic (Maude).
 \end{abstract}
 
 \acknowledgment{We want to thank the anonymous reviewers for their valuable comments and helpful suggestions.}
-
 \begin{document}    
 \maketitle
 \urlstyle{rm}
@@ -141,13 +140,13 @@ For example, multi-models consisting of different interacting behavioral models 
 Several approaches exist for checking the consistency of specific pairs of behavioral models.
 For example, consistency checking for sequence diagrams and statecharts was implemented using Petri nets \cite{yaoConsistencyCheckingUML2006} and \gls*{csp} \cite{kusterExplicitBehavioralConsistency2003}.
 Moreover, the co-simulation field tackles the simulation of interacting models by composing their individual simulations.
-For example, by developing the \gls*{fmi} standard and implementing simulation tools such as Ptolemy \cite{ekerTamingHeterogeneityPtolemy2003}.
+To facilitate composing simulations, the \gls*{fmi} standard for simulation models and simulation tools such as Ptolemy \cite{ekerTamingHeterogeneityPtolemy2003} were developed.
 However, there is no approach to define and \textit{check consistency} of \textit{arbitrary many} behavioral models.
 
 % Our approach summarized.
 We propose a novel approach for consistency management of heterogeneous multi-models, which allows us to define and check \textit{global} behavioral properties.
 Our approach facilitates specifying \textit{interactions} between multiple potentially heterogeneous behavioral models, which are used to generate a specification of the global behavior.
-The approach is generally independent of the particular formalism used in the specification, and currently, we can generate specifications in two different formalisms.
+The approach is decoupled from the particular formalism used in the specification, and currently, we can generate specifications in two different formalisms.
 The generation of the global behavior specification is \textit{fully automatic} and results in \gls*{gt} rules (or, respectively, term rewriting rules) executable in Groove (Maude).
 Afterward, we can use the built-in verification mechanisms in Groove (Maude) to check the previously defined global behavioral properties.
 
@@ -637,7 +636,7 @@ A formal description of \gls*{gt} systems can, for example, be found in \cite{eh
 We generate typed \gls*{gt} systems, where the merge of the \gls*{srm} and the snapshot metamodels is the type graph \cite{krauterArtifactsBehavioralConsistency2023}.
 Individual rules and rules changing the global state conform to this type graph.
 Interactions result in global rules which change multiple parts of the global state.
-A global \gls*{gt} rule is calculated by taking the sum of all left-hand sides and right-hand sides of the individual \gls*{gt} rules (implements step 2(b)) \cite[Definition 3.2.7]{baldanConcurrentSemanticsAlgebraic1999}.
+A global \gls*{gt} rule is calculated by taking the sum of all left-hand sides and right-hand sides of the individual \gls*{gt} rules \cite[Definition 3.2.7]{baldanConcurrentSemanticsAlgebraic1999}.
 Together with a system configuration, i.e., a start graph, we can obtain an executable formal specification of the global behavior.
 Consequently, this can be used to check behavioral consistency.
 
@@ -664,7 +663,7 @@ The generated \gls*{gt} system and the other \gls*{gt} systems of the use case, 
 
 
 \subsubsection{BPMN semantics}
-The local \gls*{hot} to generate \gls*{gt} rules for \gls*{bpmn} processes is challenging, and we are currently only supporting a subset of the \gls*{bpmn} semantics.
+The local \gls*{hot} to generate \gls*{gt} rules for \gls*{bpmn} processes is challenging, and we are currently only supporting a subset of the \gls*{bpmn} semantics (see \cite{krauterArtifactsBehavioralConsistency2023}).
 Generally, we construct one or more rules for each flow node, i.e., type of state-changing element in a \gls*{bpmn} model.
 Furthermore, we created a comprehensive test suite to ensure the correctness of our \gls*{hot} \cite{krauterArtifactsBehavioralConsistency2023}.
 \autoref{fig:bpmn_example_rules} shows the \gls*{gt} rules for the task \textsf{Switch to P1} of the TJunction controller.
@@ -723,7 +722,7 @@ A graph condition in Groove is a rule that does not change elements but can be u
 \subsection{Behavioral consistency in the use case}
 Running the obtained \gls*{gt} specification shows that properties \eqref{eq:property1} and \eqref{eq:property2} hold, while properties \eqref{eq:property3} and \eqref{eq:property4} do \textit{not} hold (see artifacts in \cite{krauterArtifactsBehavioralConsistency2023}).
 The counterexamples for properties 3 and 4 show an unexpected race condition that must be handled:
-After the TJunction controller signals that the traffic light A is green, bus B1 can advance to the \textsf{Pass Junction} activity.
+after the TJunction controller signals that the traffic light A is green, bus B1 can advance to the \textsf{Pass Junction} activity.
 However, simultaneously, the TJunction controller can enter the subprocess for the next phase, which can be interrupted by the associated timer event.
 This can happen before bus B1 passes the junction, resulting in a violation of the consistency requirement.
 
@@ -739,7 +738,7 @@ For example, the T-Junction controller could wait for the bus to pass before cha
 In this section, we discuss two potential limitations of our approach: supporting new modeling languages and state space explosion.
 
 \subsection{Support for new modeling languages}
-To support a new modeling language in our approach one has to do the following tasks: describe the state structure in a snapshot metamodel, identify state-changing elements in the language's metamodel, and implement a \gls*{hot} to the chosen formalism.
+To support a new modeling language in our approach one must do the following tasks: describe the state structure in a snapshot metamodel, identify state-changing elements in the language's metamodel, and implement a \gls*{hot} to the chosen formalism.
 A plugin containing these three artifacts can then be reused.
 
 Implementing a \gls*{hot} that correctly implements a new modeling language's semantics takes time and effort.
@@ -878,7 +877,7 @@ Different behavioral formalisms can be classified using two criteria: \textit{ti
 
 % We only support formalisms where states are discrete (lower part).
 So far we have seen \glspl*{dtds} like \gls*{fsm} and \gls*{bpmn} in this work, where time and state variables are discrete.
-Furthermore, our approach can be applied to \glspl*{devs} since the underlying formalisms support continuous time, see for example \cite{olveczkyRealTimeMaudeIts2014}.
+Furthermore, our approach can potentially be applied to \glspl*{devs} since the underlying formalisms support more complex notions of time but verification capabilities for \glspl*{devs} are more limited.
 However, we do not support formalisms with continuous state variables (top part of \cref{fig:classification}), since our central concept of \textit{state-changing elements} would need to be changed.
 We think that supporting \gls*{devs} formalisms is a good trade-off between the usefulness and complexity of our approach, since \gls*{devs} covers a wide variety of formalisms \cite{vangheluweIntroductionMultiparadigmModelling2002}.
 
