@@ -57,7 +57,7 @@ The Maude module is linked in the artifacts section [Maude specification](https:
 # Discussion
 
 ## Support for new modeling languages
-The [implementation](https://github.com/timKraeuter/Rewrite_Rule_Generation) contains our frameworks to generate and test Groove and Maude specifications alongside the HOTS for FSM and BPMN.
+The [implementation](https://github.com/timKraeuter/Rewrite_Rule_Generation) contains our frameworks to generate and test Groove and Maude specifications alongside the HOTs for FSM and BPMN.
 Furthermore, it contains the [comprehensive testsuite](https://github.com/timKraeuter/Rewrite_Rule_Generation/wiki/Test-Suite) to validate the BPMN HOT.
 
 ## State space explosion
