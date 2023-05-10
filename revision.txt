@@ -1,0 +1,44 @@
+Dear Program Committee and Reviewers,
+
+We thank the anonymous reviewers again for their valuable comments and helpful suggestions.
+Below we briefly explain how we addressed the reviewers’ comments to improve the manuscript.
+
+Review 1
+R1.1 “On page 10 (first column) you remark that only s subset of BPMN semantics is supported. Can you provide more details on this subset?”
+  Our answer: We added a citation of the artifacts at this remark. The artifacts contain a link to the wiki of our implementation which describes the supported subset in detail.
+
+R1.2 “In the last paragraph of Section 4.2 where you discuss the options for the detected inconsistencies. If you would have autonomous buses, how would this influence the options?”
+  Our answer: Autonomous buses mean there is no bus driver to make the final decision when to cross an intersection. In this case, the uncovered inconsistency must be fixed to prevent unsafe traffic. We added a small remark to section 4.2.
+
+R1.3 “In Section 5.1 you describe very concisely what needs to be done for new modelling languages. I miss a description of the requirements for the modelling languages, or are interactions and state-change elements sufficient?”
+  Our answer: Yes, but please note that besides state structure and state-changing elements, we require the implementation of a HOT, see first paragraph in section 5.1. The HOTs are essential to homogenizing the different modeling languages.
+
+
+Review 2
+
+R2.1 “From a broader perspective, despite I find the proposed approach technically sound, I have doubts about the practical adoption of this kind of solution. Notably, already scaling the scenario to three languages would make the specification of the links between the languages more complex (it seems to me that you might require a ”star” of links to cover all the possible interactions between the state changing variables). Moreover, this would lower the boundaries of experimentation values before hitting state explosion issues. Since the authors argue that one of the distinguishing features of their approach is allowing more than 2 languages integration, it would be worth to discuss more this aspect in the work (both in terms of example scenario and discussion of limitations).”
+  Our answer: The reviewer is correct that the specification of links/interactions can be improved. We plan to extend the syntax of our DSL step-by-step in the future once we apply our approach to more scenarios. One could define multiple interactions at once by using expressions to pick state-changing elements. As mentioned in future work, we also aim to apply the approach to real-life case studies.
+
+R2.2 “Minor comments”
+  Our answer: We addressed all minor comments by rewriting the mentioned sentences.
+
+
+Review 3
+
+R3.1 “I appreciate the positioning given in Section 6.2. Hence, the authors should avoid very general claim in the introduction like ”The approach is generally independent of the particular formalism used in the specification”. Making clear the scope of the approach will strengthen the contribution from the introduction, leaving apart some misunderstanding up to Section 6.2.”
+  Our answer: We updated the mentioned sentence to better explain our approach.
+
+R3.2 “Also, the distinction between 6.1 and 6.2 is not clear. Note also that both Kienzle 2019 and
+Vara Larsen 2015 approaches include similar concepts than the scenarios metamodel (aka runtime data, or dynamic information). Also, Vara Larsen 2015 provides facilities for state structure. However, the nature of the relationships sounds different and complementary.”
+  Our answer: Kienzle 2019 and Vara Larsen 2015 indeed contain information about state structure since, to some degree, this information is needed for the execution. However, they do not make this information explicit to check global behavioral properties.
+
+R3.3 “While illustrated on DTDS, authors claim to support DEVS (that I can concur). However,
+it would be great to indicate what is the impact (e.g., on the verification facilities, usually highly limited as soon as the time is taken into account), and how to refer to the time.”
+  Our answer: We revised the mentioned paragraph. The reviewer is right that switching to DEVS negatively impacts verification capabilities (see the citation in this paragraph). We now briefly mention this in the paper.
+
+R3.4 “Finally, I’m wondering why ”towards” in the title? and not a more specific title?”
+  Our answer: We changed the title to ”Behavioral consistency in multi-modeling”.
+
+We look forward to hearing about our revised submission. Best regards,
+
+Tim Kräuter, Harald König, Adrian Rutle, Yngve Lamo, and Patrick Stünkel
