@@ -263,7 +263,7 @@ A \gls*{bpmn} model for a bus controller parameterized with the direction A or C
 In addition, the bus controller communicates with the phase 2 subprocess, which we only hint at in \cref{fig:communication}.
 The phase 2 subprocess has the same structure as the phase 1 subprocess but reports that A and C are red, while B is green.
 Similarly, it terminates if green is requested for A or C.
-The full model and all other models are available in \cite{krauterArtifactsBehavioralConsistency2023}.
+The full model and all other models are available in \cite{krauterArtifactsECMFA20232023}.
 
 Having developed behavioral models for the system, we want to check the previously stated \textit{safe traffic} requirement while buses are prioritized.
 We can lower the overall development cost if we find bugs related to these requirements as early as possible during system development.
@@ -601,7 +601,7 @@ This section describes how \glspl*{gt} can be used as one possible formalism for
 We utilize the Groove tool set to run the generated specifications, i.e., \gls*{gt} systems \cite{rensinkGROOVESimulatorTool2004} for the use case and discuss the results.
 The successful implementation serves as a \textit{proof of concept} for our approach.
 We have chosen to use the \gls*{gt} formalism to describe our approach because \glspl*{gt} provide a visual representation and allow for a clearer understanding.
-As an alternative to \gls*{gt} and Groove, we describe in \cite{krauterArtifactsBehavioralConsistency2023} our implementation using rewriting logic and Maude.
+As an alternative to \gls*{gt} and Groove, we describe in \cite{krauterArtifactsECMFA20232023} our implementation using rewriting logic and Maude.
 
 Both implementations utilize a \textit{global} \gls*{hot} from the behavioral models and their interactions to \gls*{gt} rules (Groove) or term rewriting rules (Maude).
 Since the results of the \gls*{mt} can be regarded as \gls*{mt}s themselves, we say the \gls*{mt} is \textit{higher-order} \cite{tisiUseHigherOrderModel2009}.
@@ -633,7 +633,7 @@ Nodes/edges in $R$ but not in $L$ are added by a rule, while nodes/edges in $L$ 
 Applying a \gls*{gt} system to a given graph, one obtains a state space where each state is a graph, and each transition is a rule application.
 A formal description of \gls*{gt} systems can, for example, be found in \cite{ehrigFundamentalsAlgebraicGraph2006}. % Section 3.1, especially Definition 3.4.
 
-We generate typed \gls*{gt} systems, where the merge of the \gls*{srm} and the snapshot metamodels is the type graph \cite{krauterArtifactsBehavioralConsistency2023}.
+We generate typed \gls*{gt} systems, where the merge of the \gls*{srm} and the snapshot metamodels is the type graph \cite{krauterArtifactsECMFA20232023}.
 Individual rules and rules changing the global state conform to this type graph.
 Interactions result in global rules which change multiple parts of the global state.
 A global \gls*{gt} rule is calculated by taking the sum of all left-hand sides and right-hand sides of the individual \gls*{gt} rules \cite[Definition 3.2.7]{baldanConcurrentSemanticsAlgebraic1999}.
@@ -659,13 +659,13 @@ We depict a \gls*{gt} rule by showing the graph $L$ on the left, $R$ on the righ
 \end{figure}
 
 Using a traffic light snapshot with the state red as a start graph, we generate the same state space in Groove as the traffic light state machine describes.
-The generated \gls*{gt} system and the other \gls*{gt} systems of the use case, including further instructions regarding execution and consistency checking, can be found in \cite{krauterArtifactsBehavioralConsistency2023}.
+The generated \gls*{gt} system and the other \gls*{gt} systems of the use case, including further instructions regarding execution and consistency checking, can be found in \cite{krauterArtifactsECMFA20232023}.
 
 
 \subsubsection{BPMN semantics}
-The local \gls*{hot} to generate \gls*{gt} rules for \gls*{bpmn} processes is challenging, and we are currently only supporting a subset of the \gls*{bpmn} semantics (see \cite{krauterArtifactsBehavioralConsistency2023}).
+The local \gls*{hot} to generate \gls*{gt} rules for \gls*{bpmn} processes is challenging, and we are currently only supporting a subset of the \gls*{bpmn} semantics (see \cite{krauterArtifactsECMFA20232023}).
 Generally, we construct one or more rules for each flow node, i.e., type of state-changing element in a \gls*{bpmn} model.
-Furthermore, we created a comprehensive test suite to ensure the correctness of our \gls*{hot} \cite{krauterArtifactsBehavioralConsistency2023}.
+Furthermore, we created a comprehensive test suite to ensure the correctness of our \gls*{hot} \cite{krauterArtifactsECMFA20232023}.
 \autoref{fig:bpmn_example_rules} shows the \gls*{gt} rules for the task \textsf{Switch to P1} of the TJunction controller.
 It uses the concrete syntax introduced in \cref{fig:snapshot_metamodels} to represent process snapshots containing tokens.
 
@@ -677,7 +677,7 @@ It uses the concrete syntax introduced in \cref{fig:snapshot_metamodels} to repr
     \label{fig:bpmn_example_rules}
 \end{figure}
 
-Due to limited space, we only show the \textsf{Switch to P1} rules but the artifacts of this paper \cite{krauterArtifactsBehavioralConsistency2023} contain the full \gls*{gt} system and a wiki explaining the \gls*{hot} in detail.
+Due to limited space, we only show the \textsf{Switch to P1} rules but the artifacts of this paper \cite{krauterArtifactsECMFA20232023} contain the full \gls*{gt} system and a wiki explaining the \gls*{hot} in detail.
 To summarize, we can generate \gls*{gt} systems that implement the behavioral semantics of \gls*{bpmn}.
 
 
@@ -714,13 +714,13 @@ A similar rule exists for switching to phase 2, resulting from the other interac
 All other rules are left untouched while constructing the global \gls*{gt} system.
 
 \subsubsection{Check behavioral consistency}
-Finally, we can generate the global state space of the system using the global \gls*{gt} system, which can be found in \cite{krauterArtifactsBehavioralConsistency2023}.
+Finally, we can generate the global state space of the system using the global \gls*{gt} system, which can be found in \cite{krauterArtifactsECMFA20232023}.
 To check the requirements formalized by properties 1-4, we must also encode the used atomic propositions.
 These are specified as \textit{graph conditions} in Groove.
 A graph condition in Groove is a rule that does not change elements but can be used as an atomic proposition in model checking.
 
 \subsection{Behavioral consistency in the use case}
-Running the obtained \gls*{gt} specification shows that properties \eqref{eq:property1} and \eqref{eq:property2} hold, while properties \eqref{eq:property3} and \eqref{eq:property4} do \textit{not} hold (see artifacts in \cite{krauterArtifactsBehavioralConsistency2023}).
+Running the obtained \gls*{gt} specification shows that properties \eqref{eq:property1} and \eqref{eq:property2} hold, while properties \eqref{eq:property3} and \eqref{eq:property4} do \textit{not} hold (see artifacts in \cite{krauterArtifactsECMFA20232023}).
 The counterexamples for properties 3 and 4 show an unexpected race condition that must be handled:
 after the TJunction controller signals that the traffic light A is green, bus B1 can advance to the \textsf{Pass Junction} activity.
 However, simultaneously, the TJunction controller can enter the subprocess for the next phase, which can be interrupted by the associated timer event.
@@ -761,7 +761,7 @@ Generally, the Maude exploration time is lower despite larger state spaces due t
 
 To calculate the average runtime, we used the hyperfine benchmarking tool \cite{peterHyperfine2022} (version 1.15.0), which ran state space exploration for each scenario ten times.
 Timing evaluations were done with an AMD Ryzen 7700X processor and 32 GB of RAM running Maude version 3.1 (inside the Windows Subsystem for Linux) and Groove version 5.8.1.
-A description of how to run the benchmarks is available in \cite{krauterArtifactsBehavioralConsistency2023}.
+A description of how to run the benchmarks is available in \cite{krauterArtifactsECMFA20232023}.
 
 
 \begin{table}[ht]
