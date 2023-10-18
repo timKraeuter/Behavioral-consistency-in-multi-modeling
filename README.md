@@ -1,3 +1,5 @@
+[![DOI](https://zenodo.org/badge/517569299.svg)](https://zenodo.org/doi/10.5281/zenodo.10016470)
+
 This repository contains our paper's sources and **additional artifacts**. The ![paper](./paper.pdf) has been **submitted for review** to ECMFA2023.
 
 # Specification of the global behavior
