@@ -1,6 +1,6 @@
 [![DOI](https://zenodo.org/badge/517569299.svg)](https://zenodo.org/doi/10.5281/zenodo.10016470)
 
-This repository contains our paper's sources and **additional artifacts**. The ![paper](./paper.pdf) has been **submitted for review** to ECMFA2023.
+This repository contains our paper's sources and **additional artifacts**. The ![paper](./paper.pdf) has been **published** in the [Journal of Object Technology](https://www.jot.fm/contents/issue_2023_02/article9.html).
 
 # Specification of the global behavior
 
