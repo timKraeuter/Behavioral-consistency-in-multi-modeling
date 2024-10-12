@@ -34,7 +34,10 @@
 \RequirePackage[scaled]{helvet}
 \RequirePackage{times}
 \RequirePackage[T1]{fontenc}
-\RequirePackage[colorlinks=true,allcolors=blue]{hyperref}
+\RequirePackage[colorlinks=true,allcolors=blue,bookmarks,bookmarksopen,bookmarksdepth=2,
+pdftex,
+pdfauthor={Tim Kräuter, Harald König, Adrian Rutle, Yngve Lamo, Patrick Stünkel},
+pdftitle={Behavioral consistency in multi-modeling}]{hyperref}
 \RequirePackage{url}
 
 \RequirePackage{lettrine}

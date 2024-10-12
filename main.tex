@@ -20,6 +20,7 @@
     % {manual} manual
     % {column} column
 
+
 \title{Behavioral consistency in multi-modeling}
 
 \author[$\ast$]{Tim Kr\"{a}uter}
@@ -251,7 +252,7 @@ The \gls*{bpmn} model and communication for phase 2 of the controller can be def
 
 The phase 1 model uses an event-based gateway to respond to two different kinds of messages.
 First, the traffic light status can be requested, which is answered by sending a message declaring that the traffic lights A and C are green while B is red.
-Moreover, early green for traffic light B can be requested.
+Moreover, an early green for traffic light B can be requested.
 This request ends the subprocess, and the controller immediately switches to phase 2 (see \cref{fig:t_junction}), which results in the traffic light B turning green.
 
 The bottom of \autoref{fig:communication} shows the controller for a bus parameterized with direction B.
